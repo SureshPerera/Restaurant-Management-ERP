@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "FirstBlazerProject\\FirstBlazerProject\\FirstBlazerProject.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "FirstBlazerProject\\FirstBlazerProject.Client\\FirstBlazerProject.Client.csproj",
+        "Action": "Start",
+        "DebugTarget": "FirstBlazerProject.Client"
+      }
+    ]
+  }
+]
