@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\FirstBlazerProject.Client\Pages\Component.razor" Link="Component.razor" />
+    <None Include="..\FirstBlazerProject.Client\Pages\CounterBase.razor" Link="CounterBase.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EmployeeManagementModel\EmployeeManagementModel.csproj" />
     <ProjectReference Include="..\FirstBlazerProject.Client\FirstBlazerProject.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.13" />
   </ItemGroup>

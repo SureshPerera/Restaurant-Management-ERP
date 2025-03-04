@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstBlazerProject", "First
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstBlazerProject.Client", "FirstBlazerProject\FirstBlazerProject.Client\FirstBlazerProject.Client.csproj", "{E7004B7F-5F1D-4232-84F5-C6B6CD6ED7C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagementModel", "EmployeeManagementModel\EmployeeManagementModel.csproj", "{E3D363E2-48B7-4E4C-ABA1-4A5C8129156E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E7004B7F-5F1D-4232-84F5-C6B6CD6ED7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7004B7F-5F1D-4232-84F5-C6B6CD6ED7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7004B7F-5F1D-4232-84F5-C6B6CD6ED7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3D363E2-48B7-4E4C-ABA1-4A5C8129156E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D363E2-48B7-4E4C-ABA1-4A5C8129156E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D363E2-48B7-4E4C-ABA1-4A5C8129156E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D363E2-48B7-4E4C-ABA1-4A5C8129156E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
