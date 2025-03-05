@@ -3,7 +3,7 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "FirstBlazerProject\\FirstBlazerProject\\Restaurant Management ERP.csproj",
+        "Path": "FirstBlazerProject\\FirstBlazerProject\\FirstBlazerProject.csproj",
         "Action": "Start",
         "DebugTarget": "https"
       },
