@@ -7,13 +7,14 @@ namespace FirstBlazerProject.Components.Pages
     {
         public IEnumerable<Employee> Employees { get; set; }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            LoadEmployees();
-            return base.OnInitializedAsync();
+            await Task.Run(LoadEmployees);
+                
         }
         public void LoadEmployees()
         {
+            
             Employee e1 = new Employee
             {
                 EmpId = 1,
@@ -72,10 +73,6 @@ namespace FirstBlazerProject.Components.Pages
             Employees = new List<Employee> { e1, e2, e3, e4, e5 };
 
         }
-        public List<int> number = new List<int>
-            {
-                1,2,35,6,78,86,4,333
-            };
     }
 
 }

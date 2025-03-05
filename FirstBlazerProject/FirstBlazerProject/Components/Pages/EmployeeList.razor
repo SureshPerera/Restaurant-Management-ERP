@@ -1,8 +1,20 @@
 ﻿@page "/"
 @inherits EmployeeListBase
-<h3>Employee List</h3>
+<h3>Dash Bord</h3>
 
-
+<h2>Welcome To SP Software Solution PVT LTD</h2><br />
+<div class="container1">
+	<div class="container2">
+		<a href="#" class="btn btn-primary m-2">Sing Up</a>
+		<a href="/login" class="btn btn-primary m-2">Login</a>
+	</div>
+</div>
+@if(Employees == null)
+{
+	<div class="">Loading..</div>
+}
+else
+{
 <div class="card-group">
 	@foreach(var emp in Employees)
 	{
@@ -14,8 +26,10 @@
 				<a href="#" class="btn btn-primary m-1">View</a>
 				<a href="#" class="btn btn-primary m-1">Edit</a>
 				<a href="#" class="btn btn-primary m-1">Delete</a>
+				<a href="#" class="btn btn-primary m-1">Update</a>
 			</div>
 		</div>
 
 	}
 </div>
+}
