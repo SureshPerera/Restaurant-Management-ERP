@@ -1,6 +1,24 @@
 ﻿@page "/login"
-<h3>Login</h3>
+<h3>Login Page</h3>
+<h2>Welcome To SP Software Solution PVT LTD</h2>
 
+<div class="logindiv">
+	<img class="loginimg" src="Images/login.png"  alt="Alternate Text" />
+</div>
+<div class="login-con-1">
+	<div class="login-con-2">
+		<h3>ERP Login</h3>
+		<label  for="email">Email</label><br />
+		<input placeholder="Enter Email Address" style="width:20rem" type="email" id="logemail" /><br /> <hr />
+		<label for="password">Password</label><br />
+		<input placeholder="Enter Password" style="width:20rem" type="password" id="logpassword" /><br /> <hr />
+		<input type="checkbox" id="rememberme">Remember me <br /> <hr />
+		<button class="btn btn-primary m-2 id="loginbtn">Login</button>
+		<button class="btn btn-primary m-2 id="logincancel">Sing-Up</button>
+		<button class="btn btn-primary m-2 id="logincancel">Cancal</button>
+	</div>
+
+</div>
 
 @code {
 
