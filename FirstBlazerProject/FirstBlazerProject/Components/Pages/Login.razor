@@ -1,25 +1,45 @@
 ﻿@page "/login"
-<h3>Login Page</h3>
-<h2>Welcome To SP Software Solution PVT LTD</h2>
+<EditForm Model="login" >
+	<DataAnnotationsValidator/>
+	<h3>Login Page</h3>
+	<h2>Welcome To SP Software Solution PVT LTD</h2>
 
-<div class="logindiv">
-	<img class="loginimg" src="Images/login.png"  alt="Alternate Text" />
-</div>
-<div class="login-con-1">
-	<div class="login-con-2">
-		<h3>ERP Login</h3>
-		<label  for="email">Email</label><br />
-		<input placeholder="Enter Email Address" style="width:20rem" type="email" id="logemail" /><br /> <hr />
-		<label for="password">Password</label><br />
-		<input placeholder="Enter Password" style="width:20rem" type="password" id="logpassword" /><br /> <hr />
-		<input type="checkbox" id="rememberme">Remember me <br /> <hr />
-		<button class="btn btn-primary m-2 id="loginbtn">Login</button>
-		<button class="btn btn-primary m-2 id="logincancel">Sing-Up</button>
-		<button class="btn btn-primary m-2 id="logincancel">Cancal</button>
+	<div class="logindiv">
+		<img class="loginimg" src="Images/login.png"  alt="Alternate Text" />
 	</div>
 
-</div>
+	<div class="login-con-1">
+		<div class="login-con-2">
+			<h3>ERP Login</h3>
+			<label for="email">Email</label><br />
+			<input @bind-value="login.userName"  placeholder="Enter Email Address" style="width:20rem" type="email" id="logemail" /><br /> <hr />
+			<label for="password">Password</label><br />
+			<input @bind-value="login.password" placeholder="Enter Password" style="width:20rem" type="password" id="logpassword" /><br /> <hr />
+			<input type="checkbox" id="rememberme">Remember me <br /> <hr />
+			<button class="btn btn-primary m-2 id="loginbtn">Login</button>
+			<a href="/singup" class="btn btn-primary m-2">Sing Up</a>
+			<button class="btn btn-primary m-2 id="logincancel" @onclick="cancel">Cancal</button>
+		</div>
+
+	</div>
+</EditForm>
+
 
 @code {
+	private Logingmode login = new Logingmode();
 
+	public void cancel()
+	{
+		login.password = string.Empty;
+		login.userName = string.Empty;
+	}
+	public class Logingmode
+	{
+		public string userName { get; set; } = string.Empty;
+		public string password { get; set; } = string.Empty;
+	}
+	private void HandleLogin(EditContext args)
+	{
+		throw new NotImplementedException();
+	}
 }
