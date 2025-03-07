@@ -1,3 +1,7 @@
+using ERP_API.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +24,22 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+
 app.MapControllers();
 
 app.Run();
+
+public class Startup
+{
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+    public void ConfigureService(IServiceCollection service)
+    {
+        service.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
+        service.AddConnections();
+    }
+}
