@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagementModel", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP_API", "ERP_API\ERP_API.csproj", "{9F7871CD-AF92-4B05-9127-D90488DA5CDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResturentManagementERPServer", "ResturentManagementERPServer\ResturentManagementERPServer.csproj", "{91CAA37A-468C-431D-9C75-4DEFCCD37225}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPResturentManagementServerAuth", "ERPResturentManagementServerAuth\ERPResturentManagementServerAuth.csproj", "{BE701B7E-789C-40DF-9655-D56ED265A49C}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{9F7871CD-AF92-4B05-9127-D90488DA5CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7871CD-AF92-4B05-9127-D90488DA5CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7871CD-AF92-4B05-9127-D90488DA5CDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91CAA37A-468C-431D-9C75-4DEFCCD37225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91CAA37A-468C-431D-9C75-4DEFCCD37225}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91CAA37A-468C-431D-9C75-4DEFCCD37225}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91CAA37A-468C-431D-9C75-4DEFCCD37225}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE701B7E-789C-40DF-9655-D56ED265A49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE701B7E-789C-40DF-9655-D56ED265A49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE701B7E-789C-40DF-9655-D56ED265A49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
