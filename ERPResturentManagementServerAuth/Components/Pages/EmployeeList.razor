@@ -1,0 +1,52 @@
+﻿@page "/"
+@using FirstBlazerProject.Components.Pages
+
+@inject IJSRuntime jsruntime
+@inherits EmployeeListBase
+
+@rendermode InteractiveServer
+
+
+
+<PageTitle>Home</PageTitle>
+
+
+<h3></h3>
+
+<h2>Welcome To SP Software Solution PVT LTD</h2><br />
+
+
+<div class="container1">
+	<div class="container2">
+		<a href="/singup" class="btn btn-primary m-2">Sing Up</a>
+		<a href="/login" class="btn btn-primary m-2">Login</a>
+	</div>
+</div>
+
+
+<div>
+	<h4>Notification</h4>
+	<button class="btn btn-info" @onclick="Click">Enter</button>
+	<label>@name</label>
+</div>
+<Notification @ref="notificationComponent" />
+
+@code {
+	string name = "";
+
+	private Notification notificationComponent { get; set; }
+
+	private void Click(MouseEventArgs args)
+	{
+		if (notificationComponent != null)  // Check if the component is initialized
+		{
+			notificationComponent.ShowNotification("This is a test notification!", "success");
+			name = "working";
+		}
+		else
+		{
+			name = "Notification component is not initialized.";
+		}
+	}
+	
+}

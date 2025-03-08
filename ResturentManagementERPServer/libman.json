@@ -1,0 +1,34 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap-icons@1.11.3",
+      "destination": "wwwroot/bootstrap-icons/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "toastr@2.1.4",
+      "destination": "wwwroot/lib/toastr/",
+      "files": [
+        "build/toastr.css",
+        "build/toastr.js.map",
+        "build/toastr.min.css",
+        "build/toastr.min.js"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.js",
+        "jquery.min.js",
+        "jquery.min.map",
+        "jquery.slim.js",
+        "jquery.slim.min.js",
+        "jquery.slim.min.map"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+﻿<h3>Notification</h3>
+
+@if (IsVisible)
+{
+    <div class="@CssClass">
+        @Message
+    </div>
+}
+
+<style>
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        animation: fadeIn 0.5s, fadeOut 0.5s 2.5s forwards;
+    }
+
+    .success {
+        background-color: #4CAF50;
+    }
+
+    .error {
+        background-color: #F44336;
+    }
+
+    .warning {
+        background-color: #FF9800;
+    }
+
+  
+
+</style>
+
+
+    @code {
+        private string Message { get; set; }
+        private string CssClass { get; set; }
+        private bool IsVisible { get; set; }
+
+    public void ShowNotification(string message, string type)
+        {
+        Message = message;
+        CssClass = $"notification";
+            IsVisible = true;
+
+            // Hide after 3 seconds
+            Task.Delay(3000).ContinueWith(_ =>
+            {
+                IsVisible = false;
+                InvokeAsync(StateHasChanged); // Refresh UI
+            });
+        }
+    }
+
+
