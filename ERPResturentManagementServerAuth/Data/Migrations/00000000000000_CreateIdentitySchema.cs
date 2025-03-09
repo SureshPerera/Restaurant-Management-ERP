@@ -8,6 +8,7 @@ namespace ERPResturentManagementServerAuth.Migrations
     /// <inheritdoc />
     public partial class CreateIdentitySchema : Migration
     {
+        
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {

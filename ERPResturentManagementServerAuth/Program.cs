@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ERPResturentManagementServerAuth.Components;
 using ERPResturentManagementServerAuth.Components.Account;
 using ERPResturentManagementServerAuth.Data;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,11 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 var app = builder.Build();
 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAuthentication()
+    .AddIdentityServerJwt();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
