@@ -1,25 +1,37 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Threading
+@inherits LayoutComponentBase
+@implements IDisposable
 
+@inject NavigationManager NavigationManager
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-           
-            
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        <div style="background-color:black; width:100%; "  class="top-row px-4" >
+            <div style="margin-right:37.5rem; font-weight:bold; color :wheat">
+                <h3>@currentTime</h3>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                    <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Account/Register">
+                    <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Singup
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Account/Login">
+                    <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
+                </NavLink>
+            </div>
+
+            <a href="/about">About</a>
         </div>
 
         <article class="content px-4">
@@ -33,3 +45,37 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+@code {
+    private string? currentUrl;
+    private string currentTime = DateTime.Now.ToString("HH:mm:ss");
+    private CancellationTokenSource cts = new();
+
+    private async Task UpdateTime(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            currentTime = DateTime.Now.ToString("HH:mm:ss");
+            await InvokeAsync(StateHasChanged); // Ensures UI updates correctly
+            await Task.Delay(1000, token); // Allows UI to remain responsive
+        }
+    }
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+        _ = UpdateTime(cts.Token); // Run asynchronously in background
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+        cts.Cancel();
+        cts.Dispose();
+    }
+}

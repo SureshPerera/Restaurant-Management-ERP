@@ -163,7 +163,7 @@ namespace ERPResturentManagementServerAuth.Migrations
                     b.ToTable("PersistedGrants", (string)null);
                 });
 
-            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.CustomerDetails", b =>
+            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.Dealer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,26 +171,10 @@ namespace ERPResturentManagementServerAuth.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ContactNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -198,7 +182,7 @@ namespace ERPResturentManagementServerAuth.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("CustomerDetails");
+                    b.ToTable("Dealers");
                 });
 
             modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.Super", b =>
@@ -212,6 +196,9 @@ namespace ERPResturentManagementServerAuth.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -227,6 +214,8 @@ namespace ERPResturentManagementServerAuth.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Super");
                 });
@@ -429,10 +418,17 @@ namespace ERPResturentManagementServerAuth.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.CustomerDetails", b =>
+            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.Dealer", b =>
                 {
                     b.HasOne("ERPResturentManagementServerAuth.Data.ApplicationUser", null)
-                        .WithMany("CustomerDetails")
+                        .WithMany("Dealer")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.Super", b =>
+                {
+                    b.HasOne("ERPResturentManagementServerAuth.Data.ApplicationUser", null)
+                        .WithMany("Super")
                         .HasForeignKey("ApplicationUserId");
                 });
 
@@ -489,7 +485,9 @@ namespace ERPResturentManagementServerAuth.Migrations
 
             modelBuilder.Entity("ERPResturentManagementServerAuth.Data.ApplicationUser", b =>
                 {
-                    b.Navigation("CustomerDetails");
+                    b.Navigation("Dealer");
+
+                    b.Navigation("Super");
                 });
 #pragma warning restore 612, 618
         }

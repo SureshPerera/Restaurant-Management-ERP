@@ -21,8 +21,14 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     //: base(options)
     //{
     //}
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    base.OnModelCreating(modelBuilder);
 
-    public DbSet<Components.Tables.Super> Super => Set<Components.Tables.Super>();
-    
+    //    modelBuilder.Entity<Components.Tables.Dealer>()
+    //        .HasKey(d => d.Id); // Ensure DealerId is the primary key
+    //}
+    //public DbSet<Migrations.Dealer> Dealers => Set<Migrations.Dealer>();
+   public DbSet<Components.Tables.Super> Super => Set<Components.Tables.Super>();
 
 } 

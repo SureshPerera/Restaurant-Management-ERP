@@ -36,13 +36,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+
+//builder.Services.AddAuthentication()
+//    .AddIdentityServerJwt();
+
 var app = builder.Build();
-
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddAuthentication()
-    .AddIdentityServerJwt();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

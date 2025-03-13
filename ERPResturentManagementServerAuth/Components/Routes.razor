@@ -1,11 +1,44 @@
 ﻿@using ERPResturentManagementServerAuth.Components.Account.Shared
-<Router AppAssembly="typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
-            <NotAuthorized>
-                <RedirectToLogin />
-            </NotAuthorized>
-        </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
-</Router>
+@using ERPResturentManagementServerAuth.Components.Layout
+@using ERPResturentManagementServerAuth.Components.Pages
+@using ERPResturentManagementServerAuth.Components.Account.Pages
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            <Router AppAssembly="@typeof(Program).Assembly">
+                <Found Context="routeData">
+                    <RouteView RouteData="@routeData" DefaultLayout="@GetLayout(routeData)" />
+                    <FocusOnNavigate RouteData="routeData" Selector="h1" />
+                </Found>
+                <NotFound>
+                    <h3>Page not found!</h3>
+                </NotFound>
+            </Router>
+        </Authorized>
+        <NotAuthorized>
+            <Router AppAssembly="@typeof(Program).Assembly">
+                <Found Context="routeData">
+                    <RouteView RouteData="@routeData" DefaultLayout="@GetLayout(routeData)" />
+                    <FocusOnNavigate RouteData="routeData" Selector="h1" />
+                </Found>
+                <NotFound>
+                    <h3>Page not found!</h3>
+                </NotFound>
+            </Router>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    private Type GetLayout(RouteData routeData)
+    {
+        // Apply no layout for Index (EmployeeList) and Login pages
+        if (routeData.PageType == typeof(Error))
+        {
+            return null;
+        }
+
+        // Apply MainLayout for all other pages
+        return typeof(MainLayout);
+    }
+}
