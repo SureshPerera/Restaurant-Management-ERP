@@ -5,13 +5,14 @@ using ERPResturentManagementServerAuth.Components;
 using ERPResturentManagementServerAuth.Components.Account;
 using ERPResturentManagementServerAuth.Data;
 using Microsoft.AspNetCore.Authentication;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddMudServices();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();

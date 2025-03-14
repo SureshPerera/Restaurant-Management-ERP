@@ -1,8 +1,14 @@
 ﻿@using System.Threading
+@using MudBlazor
 @inherits LayoutComponentBase
 @implements IDisposable
 
 @inject NavigationManager NavigationManager
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -34,9 +40,11 @@
             <a href="/about">About</a>
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
+        <MudLayout>
+            <MudMainContent>
+                @Body
+            </MudMainContent>
+        </MudLayout>
     </main>
 </div>
 
