@@ -24,4 +24,8 @@
     <ProjectReference Include="..\EmployeeManagementModel\EmployeeManagementModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\ClientHomeImg\" />
+  </ItemGroup>
+
 </Project>

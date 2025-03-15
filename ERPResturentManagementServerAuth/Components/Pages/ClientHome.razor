@@ -10,14 +10,46 @@
 @rendermode InteractiveServer
 
 @page "/"
-<div>
+<div style="margin-top:-4rem;">
+
 	<section style="background-color:azure;">
-		<div class="con1-welcom-section1">
-			<div class="con1">
-				<h2>Welcome  </h2>
-				<h1>Solitary Green Resort</h1>
-				<h3>Nuwara Eliya</h3>
-			</div>
+		<div>
+			<MudCarousel Class="mud-width-full" Style="height:500px;" TData="object" AutoCycle="false">
+				<MudCarouselItem Color="@Color.Primary" Transition="Transition.Slide">
+					<div class="d-flex" style="height:100%">
+						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
+						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+					</div>
+				</MudCarouselItem>
+				<MudCarouselItem Color="@Color.Secondary" Transition="Transition.Fade">
+					<div class="d-flex" style="height:100%">
+						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
+						<img src="images/clienthomeimg/front3.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+
+					</div>
+				</MudCarouselItem>
+				<MudCarouselItem Color="@Color.Tertiary" Transition="Transition.Custom" CustomTransitionEnter="bounceIn" CustomTransitionExit="bounceOut">
+					<div class="d-flex" style="height:100%">
+						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
+						<img src="images/clienthomeimg/front4.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+
+					</div>
+				</MudCarouselItem>
+				<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="backInDown" CustomTransitionExit="backOutDown">
+					<div class="d-flex" style="background-color:lightgray; height:100%">
+						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" /> *@
+						<img src="images/clienthomeimg/front1.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+
+					</div>
+				</MudCarouselItem>
+				<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="rotateIn" CustomTransitionExit="rotateOut">
+					<div class="d-flex" style="background-color:lightgray; height:100%">
+						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Secondary" Size="@Size.Large" /> *@
+						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+
+					</div>
+				</MudCarouselItem>
+			</MudCarousel>
 		</div>
 		<hr />
 	</section>
@@ -44,60 +76,95 @@
 		<hr />
 	</section>
 	<section>
-	
-		<div class="con3-quckBooking-section3">
-			<div>
-				@* <MudSelect @bind-Value="stringValue" Placeholder="Please Select"  AdornmentColor="Color.Primary">
+
+		<div>
+			<form class="con3-quckBooking-section3" action="/frontoffice" method="post">
+				<div>
+					@* <MudSelect @bind-Value="stringValue" Placeholder="Please Select"  AdornmentColor="Color.Primary">
 					<MudSelectItem Value="@("Pizza")" Disabled="true"> Aaaa (Disabled)</MudSelectItem>
 					<MudSelectItem Value="@("Burger")">Burger</MudSelectItem>
 					<MudSelectItem Value="@("Hotdog")">Hot Dog</MudSelectItem>
 				</MudSelect> *@
-				<select required @bind="stringValue">
-					<option >Select Resort</option>
-					<option>Solitary Green Resort - Nuwara Eliya</option>
-					<option>Amazon Beach Resort - Trincomale</option>
-					<option disabled>JCUB Resort - Trincomale </option>
-					<option></option>
-				</select>
-			</div>
-			<div>
-				<MudStack AlignItems="AlignItems.Center" Style="width:650px; height:450px">
-					<MudDateRangePicker PickerVariant="@_variant" @bind-DateRange="@_dateRange" Margin="Margin.Dense" />
-					<MudSpacer />
-					<MudToggleGroup T="PickerVariant" SelectionMode="SelectionMode.SingleSelection" Value="@_variant" ValueChanged="@OnValueChanged"
-									Color="Color.Primary" CheckMark="true" FixedContent="false">
+					<select style="height:3rem; margin-top:-1rem;" required @bind="stringValue">
+						<option>Select Resort</option>
+						<option>Solitary Green Resort - Nuwara Eliya</option>
+						<option>Amazon Beach Resort - Trincomale</option>
+						<option disabled>JCUB Resort - Trincomale </option>
+						<option></option>
+					</select>
+				</div>
+				<span style="font-size:60px;margin-top:-2rem;">|</span>
 
-					</MudToggleGroup>
-				</MudStack>
-			</div>
-			<div>
-				<label>Rooms:</label>
-				<select required>
-					<option >0</option>
-					<option >1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
-				</select>
-			</div>
-			<div>
-				<label>Adults:</label>
-				<select required>
-					<option>0</option>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>4</option>
-				</select>
-			</div>
+				<div>
+					<MudStack AlignItems="AlignItems.Center" Style="width:450px; height:50px; margin:-1rem;">
+						<MudDateRangePicker PickerVariant="@_variant" @bind-DateRange="@_dateRange" Margin="Margin.Dense" Label="Select date range" />
+						<MudSpacer />
+						<MudToggleGroup T="PickerVariant" SelectionMode="SelectionMode.SingleSelection" Value="@_variant" ValueChanged="@OnValueChanged"
+										Color="Color.Primary" CheckMark="true" FixedContent="false">
+
+						</MudToggleGroup>
+					</MudStack>
+				</div>
+				<span style="font-size:60px;margin-top:-2rem;">|</span>
+
+				<div>
+					<label>Rooms:</label>
+					<select required>
+						<option>0</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</div>
+				<div>
+					<label>Adults:</label>
+					<select required>
+						<option>0</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>4</option>
+					</select>
+				</div>
+				<div>
+					<label>Children:</label>
+					<select required>
+						<option>0</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>4</option>
+					</select>
+				</div>
+				<span style="font-size:60px;margin-top:-2rem;">|</span>
+
+
+				<div>
+					<input type="text" name="promoCode" value="" placeholder="Promo Code" />
+				</div>
+				<span style="font-size:60px;margin-top:-2rem;">|</span>
+
+
+				<div>
+					<input class=" btn btn-primary" type="submit" name="booking" value="Book Now" />
+				</div>
+			</form>
+		</div>
+
+
+	</section>
+	<section>
+		<div>
 		</div>
 	</section>
 </div>
 
 
-<style>
+<style type="text/css">
 	.con1-welcom-section1 {
 		display: flex;
 		justify-content: center;
@@ -114,10 +181,16 @@
 
 	.con3-quckBooking-section3 {
 		display: flex;
-		gap: 2rem;
+		gap: 0.5rem;
 		justify-content: center;
 		height: 3rem;
 		color: black;
+	}
+
+	.cover-photo {
+		width: 100%;
+		height: 100%;
+		object-fit: cover; /* Ensures the image covers the entire container */
 	}
 </style>
 
@@ -133,4 +206,12 @@
 	}
 	private string stringValue { get; set; }
 
+	private string userInput { get; set; }
+	private string promoCodeInput { get; set; }
+
+	private bool arrows = true;
+	private bool bullets = true;
+	private bool enableSwipeGesture = true;
+	private bool autocycle = true;
+	private Transition transition = Transition.Slide;
 }
