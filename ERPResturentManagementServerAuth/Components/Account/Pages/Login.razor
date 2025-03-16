@@ -15,22 +15,23 @@
 
 <PageTitle>Log in</PageTitle>
 
-<h1>Log in</h1>
+
 <div class="row">
-    <div class="col-md-4">
-        <section>
+    <div class="col-md-4 form" >
+        <section style="" >
             <StatusMessage Message="@errorMessage" />
-            <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
+            <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login" class="" >
                 <DataAnnotationsValidator />
-                <h2>Use a local account to log in.</h2>
+                <h2 style="text-align:center;">Log in</h2>
+
                 <hr />
                 <ValidationSummary class="text-danger" role="alert" />
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3" style="color:black;">
                     <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                     <label for="email" class="form-label">Email</label>
                     <ValidationMessage For="() => Input.Email" class="text-danger" />
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3" style="color:black;">
                     <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
                     <label for="password" class="form-label">Password</label>
                     <ValidationMessage For="() => Input.Password" class="text-danger" />
@@ -44,15 +45,15 @@
                 <div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
-                <div>
+                <div style="color:white;">
                     <p>
-                        <a href="Account/ForgotPassword">Forgot your password?</a>
+                        <a style="color:white;" href="Account/ForgotPassword">Forgot your password?</a>
                     </p>
                     <p>
-                        <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Register as a new user</a>
+                        <a style="color:white;" href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Register as a new user</a>
                     </p>
                     <p>
-                        <a href="Account/ResendEmailConfirmation">Resend email confirmation</a>
+                        <a style="color:white;" href="Account/ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
                 </div>
             </EditForm>
@@ -67,6 +68,25 @@
     </div>
 </div>
 
+<style>
+    
+    .form{
+        position: relative;
+        margin-right: 15rem;
+        background-color: #000;
+        filter: drop-shadow(0 15px 50px #000);
+        height: 100%;
+        width: 25rem;
+        margin: 2rem;
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        overflow: hidden;
+       
+    }
+
+
+</style>
 @code {
     private string? errorMessage;
 

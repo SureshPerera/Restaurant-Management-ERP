@@ -6,8 +6,8 @@ namespace ERPResturentManagementServerAuth.Data;
 // Add profile data for application users by adding properties to the ApplicationUser class
 public class ApplicationUser : IdentityUser
 {
-    public List<Super> Super { get; set; } = new List<Super>();
-  
+    //public List<Super> Super { get; set; } = new List<Super>();
 
+    public List<User> User { get; set; } = new List<User>();
 }
 

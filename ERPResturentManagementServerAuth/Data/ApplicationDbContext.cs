@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Options;
 
 namespace ERPResturentManagementServerAuth.Data;
 
-public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+public class ApplicationDbContext : /*DbContext*/ ApiAuthorizationDbContext<ApplicationUser>
 {
     public ApplicationDbContext(
         DbContextOptions options,
@@ -28,7 +29,8 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     //    modelBuilder.Entity<Components.Tables.Dealer>()
     //        .HasKey(d => d.Id); // Ensure DealerId is the primary key
     //}
-    //public DbSet<Migrations.Dealer> Dealers => Set<Migrations.Dealer>();
-   public DbSet<Components.Tables.Super> Super => Set<Components.Tables.Super>();
 
-} 
+    //public DbSet<Components.Tables.Super> Super => Set<Components.Tables.Super>();
+    public DbSet<User> User => Set<User>();
+
+}

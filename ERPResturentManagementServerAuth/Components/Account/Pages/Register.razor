@@ -21,7 +21,7 @@
 <h1>Register</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 form">
         <StatusMessage Message="@Message" />
         <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
             <DataAnnotationsValidator />
@@ -29,18 +29,18 @@
             <hr />
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label for="email">Email</label>
+                <InputText  @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label style="color:black;" for="email">Email</label>
                 <ValidationMessage For="() => Input.Email" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="password">Password</label>
+                <label style="color:black;" for="password">Password</label>
                 <ValidationMessage For="() => Input.Password" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="confirm-password">Confirm Password</label>
+                <label style="color:black;" for="confirm-password">Confirm Password</label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
@@ -55,6 +55,22 @@
     </div>
 </div>
 
+<style>
+
+    .form {
+        position: relative;
+        margin-right: 15rem;
+        background-color: #000;
+        filter: drop-shadow(0 15px 50px #000);
+        height: 25rem;
+        width: 25rem;
+        margin: 2rem;
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+</style>
 @code {
     private IEnumerable<IdentityError>? identityErrors;
 
