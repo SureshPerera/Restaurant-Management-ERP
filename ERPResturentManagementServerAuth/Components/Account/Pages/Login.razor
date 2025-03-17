@@ -16,9 +16,9 @@
 <PageTitle>Log in</PageTitle>
 
 
-<div class="row">
+<div class="row" style="background-color:azure; display:flex; justify-content:center; flex-wrap:wrap;">
     <div class="col-md-4 form" >
-        <section style="" >
+        <section >
             <StatusMessage Message="@errorMessage" />
             <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login" class="" >
                 <DataAnnotationsValidator />
@@ -55,22 +55,18 @@
                     <p>
                         <a style="color:white;" href="Account/ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
+                    <ExternalLoginPicker />
                 </div>
             </EditForm>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            <ExternalLoginPicker />
-        </section>
-    </div>
+    
 </div>
 
 <style>
     
     .form{
+        
         position: relative;
         margin-right: 15rem;
         background-color: #000;
