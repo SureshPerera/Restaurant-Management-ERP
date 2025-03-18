@@ -162,7 +162,7 @@ namespace ERPResturentManagementServerAuth.Migrations
                     b.ToTable("PersistedGrants", (string)null);
                 });
 
-            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.User", b =>
+            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.ManagersDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,30 +171,31 @@ namespace ERPResturentManagementServerAuth.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("Fname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Number")
+                    b.Property<string>("Lname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Nic")
                         .HasColumnType("int");
 
-                    b.Property<int>("PinNumber")
+                    b.Property<int>("Pnumber")
                         .HasColumnType("int");
+
+                    b.Property<string>("Possition")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("User");
+                    b.ToTable("ManagersDetails");
                 });
 
             modelBuilder.Entity("ERPResturentManagementServerAuth.Data.ApplicationUser", b =>
@@ -395,10 +396,10 @@ namespace ERPResturentManagementServerAuth.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.User", b =>
+            modelBuilder.Entity("ERPResturentManagementServerAuth.Components.Tables.ManagersDetails", b =>
                 {
                     b.HasOne("ERPResturentManagementServerAuth.Data.ApplicationUser", null)
-                        .WithMany("User")
+                        .WithMany("ManageDetails")
                         .HasForeignKey("ApplicationUserId");
                 });
 
@@ -455,7 +456,7 @@ namespace ERPResturentManagementServerAuth.Migrations
 
             modelBuilder.Entity("ERPResturentManagementServerAuth.Data.ApplicationUser", b =>
                 {
-                    b.Navigation("User");
+                    b.Navigation("ManageDetails");
                 });
 #pragma warning restore 612, 618
         }

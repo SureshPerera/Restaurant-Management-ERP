@@ -8,6 +8,8 @@ public class ApplicationUser : IdentityUser
 {
     //public List<Super> Super { get; set; } = new List<Super>();
 
-    public List<User> User { get; set; } = new List<User>();
+    //public List<User> User { get; set; } = new List<User>();
+    public List<ManagersDetails> ManageDetails { get; set; } = new List<ManagersDetails>();
+
 }
 

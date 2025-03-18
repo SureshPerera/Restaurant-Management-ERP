@@ -31,6 +31,6 @@ public class ApplicationDbContext : /*DbContext*/ ApiAuthorizationDbContext<Appl
     //}
 
     //public DbSet<Components.Tables.Super> Super => Set<Components.Tables.Super>();
-    public DbSet<User> User => Set<User>();
+    public DbSet<Components.Tables.ManagersDetails> ManagersDetails { get; set; }
 
 }
