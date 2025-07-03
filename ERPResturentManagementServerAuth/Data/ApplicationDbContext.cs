@@ -1,5 +1,5 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
-using ERPResturentManagementServerAuth.Components.Tables;
+
 using ERPResturentManagementServerAuth.Migrations;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -31,6 +31,5 @@ public class ApplicationDbContext : /*DbContext*/ ApiAuthorizationDbContext<Appl
     //}
 
     //public DbSet<Components.Tables.Super> Super => Set<Components.Tables.Super>();
-    public DbSet<Components.Tables.ManagersDetails> ManagersDetails { get; set; }
-
+   
 }
