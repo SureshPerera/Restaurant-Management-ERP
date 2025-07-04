@@ -1,11 +1,10 @@
 ﻿@using ERPResturentManagementServerAuth.Components.Layout
-@using FirstBlazerProject.Components.Pages
 @using MudBlazor
 @using Microsoft.AspNetCore.Components
 @using System.Globalization;
 
 @inject IJSRuntime jsruntime
-@inherits EmployeeListBase
+
 @layout ClientLayout
 @rendermode InteractiveServer
 
@@ -18,34 +17,34 @@
 				<MudCarouselItem Color="@Color.Primary" Transition="Transition.Slide">
 					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 					</div>
 				</MudCarouselItem>
 				<MudCarouselItem Color="@Color.Secondary" Transition="Transition.Fade">
 					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front3.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+						<img src="images/clienthomeimg/front3.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
 				<MudCarouselItem Color="@Color.Tertiary" Transition="Transition.Custom" CustomTransitionEnter="bounceIn" CustomTransitionExit="bounceOut">
 					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front4.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+						<img src="images/clienthomeimg/front4.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
 				<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="backInDown" CustomTransitionExit="backOutDown">
 					<div class="d-flex" style="background-color:lightgray; height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front1.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+						<img src="images/clienthomeimg/front1.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
 				<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="rotateIn" CustomTransitionExit="rotateOut">
 					<div class="d-flex" style="background-color:lightgray; height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Secondary" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class=" mx-auto my-auto cover-photo" style="max-width:100%; height:100%;" />
+						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
@@ -150,7 +149,7 @@
 
 
 				<div>
-					<input class=" btn btn-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
+					<input class="btn btn-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
 				</div>
 			</form>
 		</div>

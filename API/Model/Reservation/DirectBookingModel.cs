@@ -1,15 +1,15 @@
-﻿using ERPResturentManagementServerAuth.Components.Account.Pages.Manage;
+﻿
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPResturentManagementServerAuth.Model.Reservation
+namespace API.Model.Reservation
 {
     [Index(nameof(NIC),IsUnique = true)]
     public class DirectBookingModel
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Please Enter First Name!")]
         [StringLength(100)]
         public string FirstName { get; set; }
@@ -28,13 +28,11 @@ namespace ERPResturentManagementServerAuth.Model.Reservation
         public string NIC{ get; set; }
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
-       
-        public int CustomerTypeId { get; set; }
+        
+        public Guid? CustomerTypeId { get; set; }
 
         [ForeignKey(nameof(CustomerTypeId))]
-        [Required (ErrorMessage = "Please Select Customer Type!")]
-
-        public CustomerType CustomerType { get; set; }
+        public CustomerType? CustomerType { get; set; }
         [Required (ErrorMessage ="Please Enter Nationality!")]
         public string Nationality { get; set; }
         public string? Remark { get; set; }
@@ -45,10 +43,10 @@ namespace ERPResturentManagementServerAuth.Model.Reservation
     public class CustomerType
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Type { get; set; }
         public ICollection<DirectBookingModel> DirectBookings { get; set; }
-        //public ICollection<OnlineBooking> OnlineBookings { get; set; }
+        public ICollection<OnlineBooking> OnlineBookings { get; set; }
     }
 }

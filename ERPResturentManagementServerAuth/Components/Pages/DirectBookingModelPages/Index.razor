@@ -1,0 +1,57 @@
+﻿@page "/directbookingmodels"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using ERPResturentManagementServerAuth.Model.Reservation
+@using Quick = Microsoft.AspNetCore.Components.QuickGrid
+
+@using ERPResturentManagementServerAuth.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<ERPResturentManagementServerAuth.Data.ApplicationDbContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="directbookingmodels/create">Create New</a>
+</p>
+
+@using MudBlazor
+@using ERPResturentManagementServerAuth.Model.Reservation
+
+<MudTable T="DirectBookingModel" Items="directBookingmodel" Hover="true" Bordered="true" Striped="true">
+    <HeaderContent>
+        <MudTh>First Name</MudTh>
+        <MudTh>Last Name</MudTh>
+        <MudTh>Phone</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>NIC</MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+        <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+        <MudTd DataLabel="Phone">@context.PhoneNumber</MudTd>
+        <MudTd DataLabel="Email">@context.EmailAddress</MudTd>
+        <MudTd DataLabel="NIC">@context.NIC</MudTd>
+        <MudTd>
+            <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary" Href=$"directbookingmodels/edit?id ={context.Id}">Edit</MudButton>
+            <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Error" Href=$"directbookingmodels/delete?id ={context.Id}">Delete</MudButton>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+
+@code {
+    private ApplicationDbContext context = default!;
+    private List<DirectBookingModel> directBookingmodel = new();
+
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

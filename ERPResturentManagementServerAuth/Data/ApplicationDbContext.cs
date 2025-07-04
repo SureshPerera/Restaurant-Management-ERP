@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Options;
+using ERPResturentManagementServerAuth.Model.Reservation;
 
 namespace ERPResturentManagementServerAuth.Data;
 
@@ -18,6 +19,8 @@ public class ApplicationDbContext : /*DbContext*/ ApiAuthorizationDbContext<Appl
         : base(options, operationalStoreOptions)
     {
     }
+
+public DbSet<ERPResturentManagementServerAuth.Model.Reservation.DirectBookingModel> DirectBookingModel { get; set; } = default!;
     //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     //: base(options)
     //{

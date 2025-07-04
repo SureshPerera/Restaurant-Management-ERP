@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPResturentManagementServerAuth.Model.Reservation
+namespace API.Model.Reservation
 {
     [Index(nameof(PackageName),IsUnique =true)]
     public class ManagePackage

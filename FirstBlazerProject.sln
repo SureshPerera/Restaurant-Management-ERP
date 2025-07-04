@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPResturentManagementServerAuth", "ERPResturentManagementServerAuth\ERPResturentManagementServerAuth.csproj", "{BE701B7E-789C-40DF-9655-D56ED265A49C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{763DCAFB-65FC-4C93-803C-67837EA079AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BE701B7E-789C-40DF-9655-D56ED265A49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE701B7E-789C-40DF-9655-D56ED265A49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE701B7E-789C-40DF-9655-D56ED265A49C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{763DCAFB-65FC-4C93-803C-67837EA079AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{763DCAFB-65FC-4C93-803C-67837EA079AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{763DCAFB-65FC-4C93-803C-67837EA079AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{763DCAFB-65FC-4C93-803C-67837EA079AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
