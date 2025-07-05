@@ -1,0 +1,67 @@
+﻿@page "/Reservations/DirectBooking"
+@using ResortManagementApp.Models.Reservation
+@inject HttpClient Http
+<div>
+	<h3 class="mb-3 text-center">Direct Booking</h3>
+</div>
+<div>
+	<div>
+		<a href="/Reservations/DirectBookingCreate" class="btn btn-primary mb-3">Register Customer</a>
+	</div>
+	<div>
+		<a href="/Reservations" class="btn btn-primary mb-3">Back</a>
+	</div>
+</div>
+<div>
+	@if (directBookingModels == null)
+	{
+		<p><em>Loading...</em></p>
+	}
+	<table class="table">
+		<thead>
+			<tr class="table">
+				<td>Name</td>
+				<td>Phone Number</td>
+				<td>Address</td>
+				<td>EmailAddress</td>
+				<td>NIC</td>
+				<td>CreditLimit</td>
+				<td>OpeningBalanace</td>
+				<td>Nationality</td>
+				<td>Remark</td>
+				<td>Acctions</td>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in directBookingModels)
+			{
+				<tr>
+					<td>@(item.FirstName + " " + @item.LastName)</td>
+
+					<td>@item.PhoneNumber</td>
+					<td>@item.Address</td>
+					<td>@item.EmailAddress</td>
+					<td>@item.NIC</td>
+					<td>@item.CreditLimit</td>
+					<td>@item.OpeningBalanace</td>
+					<td>@item.Nationality</td>
+					<td>@item.Remark</td>
+					<td style="white-space:nowrap">
+						<a class="btn btn-primary btn-sm" href="/Reservation/Edit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/Reservation/Delete/@item.Id">Delete</a>
+					</td>
+
+				</tr>
+			}
+		</tbody>
+
+	</table>
+</div>
+@code {
+	private List<DirectBookingModel>? directBookingModels;
+	protected override async Task OnInitializedAsync()
+	{
+		directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+	}
+}

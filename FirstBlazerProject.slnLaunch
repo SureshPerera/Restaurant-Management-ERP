@@ -3,14 +3,14 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "FirstBlazerProject\\FirstBlazerProject\\FirstBlazerProject.csproj",
+        "Path": "API\\API.csproj",
         "Action": "Start",
         "DebugTarget": "https"
       },
       {
-        "Path": "FirstBlazerProject\\FirstBlazerProject.Client\\FirstBlazerProject.Client.csproj",
+        "Path": "ResortManagementApp\\ResortManagementApp.csproj",
         "Action": "Start",
-        "DebugTarget": "FirstBlazerProject.Client"
+        "DebugTarget": "https"
       }
     ]
   }

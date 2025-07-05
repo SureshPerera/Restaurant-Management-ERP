@@ -1,0 +1,156 @@
+﻿@page "/Reservations/Edit/{Id:guid}"
+@using ResortManagementApp.Models.Reservation.DTO
+@using ResortManagementApp.Models.Reservation
+@using System.Text.Json.Nodes
+
+<div>
+	<h3 class="mb-3 text-center">Edit Customer</h3>
+</div>
+<div class="row">
+		<div class="col-lg-8">
+			<h1 class="mb-5">Edit Customer</h1>
+		</div>
+	@if(directBookingModel == null)
+	{
+		<p><em>Loading...</em></p>
+	}
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Customer Id</label>
+		<div class="col-md-8">
+			<input class="form-control-plaintext" @bind="@Id" readonly>
+			<span class="text-danger">@Errors["FirstName"]?[0]</span>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">First Name</label>
+		<div class="col-md-8">
+			<input class="form-control" @bind="directBookingDTO.FirstName">
+			<span class="text-danger">@Errors["FirstName"]?[0]</span>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Last Name</label>
+		<div class="col-md-8">
+			<input class="form-control" @bind="directBookingDTO.LastName">
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Address</label>
+		<div class="col-md-8">
+			<textarea class="form-control" @bind="directBookingDTO.Address"></textarea>
+			<span class="text-danger">@Errors["FirstName"]?[0]</span>
+
+		</div>
+	</div><div class="row mb-3">
+		<label class="col-md-4 col-form-label">Phone Number</label>
+		<div class="col-md-8">
+			<input class="form-control" type="number" @bind="directBookingDTO.PhoneNumber">
+			<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Email Address</label>
+		<div class="col-md-8">
+			<input class="form-control" type="email" @bind="directBookingDTO.EmailAddress">
+			<span class="text-danger">@Errors["Address"]?[0]</span>
+
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">NIC Number</label>
+		<div class="col-md-8">
+			<input class="form-control" @bind="directBookingDTO.NIC">
+			<span class="text-danger">@Errors["NIC"]?[0]</span>
+
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Date Of Birthday</label>
+		<div class="col-md-8">
+			<input class="form-control" type="date" @bind="directBookingDTO.DathOfBirth">
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Nationality</label>
+		<div class="col-md-8">
+			<input class="form-control" @bind="directBookingDTO.Nationality">
+			<span class="text-danger">@Errors["Nationality"]?[0]</span>
+
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">CreditLimit</label>
+		<div class="col-md-8">
+			<input class="form-control" type="number" @bind="directBookingDTO.CreditLimit">
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label class="col-md-4 col-form-label">Remark</label>
+		<div class="col-md-8">
+
+			<textarea class="form-control" @bind="directBookingDTO.Remark"></textarea>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="offset-md-4 col-md-4 d-grid">
+			<button class="btn btn-primary" type="button" @onclick="UpdateCustomer">Update Customer</button>
+		</div>
+		<div class="offset-md-4 col-md-4 d-grid">
+			<button class="btn btn-primary" type="reset">Clear</button>
+		</div>
+		<div class="offset-md-4 col-md-4 d-grid">
+			<a class="btn btn-outline-primary" href="/Reservations/DirectBooking">Back</a>
+		</div>
+	</div>
+</div>
+
+@inject HttpClient http
+@inject NavigationManager navManager
+@code {
+	[Parameter]
+	public Guid Id{ get; set; }
+	public DirectBookingModel? directBookingModel;
+	public DirectBookinDTO directBookingDTO = new();
+	public JsonNode Errors { get; set; } = new JsonObject();
+
+	protected override async Task OnParametersSetAsync()
+	{
+		try
+		{
+			directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>("https://localhost:4000/api/DirectBooking" + Id);
+			directBookingDTO.FirstName = directBookingModel?.FirstName ?? "";
+			directBookingDTO.LastName = directBookingModel?.LastName ?? "";
+			directBookingDTO.Address = directBookingModel?.LastName ?? "";
+			directBookingDTO.PhoneNumber = directBookingModel?.PhoneNumber ?? "";
+			directBookingDTO.DathOfBirth = directBookingModel?.DathOfBirth;
+			directBookingDTO.NIC = directBookingModel?.NIC ?? "";
+			directBookingDTO.CreditLimit = directBookingModel?.CreditLimit;
+			directBookingDTO.OpeningBalanace = directBookingModel?.OpeningBalanace;
+			directBookingDTO.Nationality = directBookingModel?.Nationality ?? "";
+			directBookingDTO.Remark = directBookingModel?.Remark ?? "";
+
+
+		}catch(Exception ex)
+		{
+			Console.WriteLine("Exceptions : " + ex.StackTrace);
+		}
+	} 
+	protected async Task UpdateCustomer()
+	{
+		var responce = await http.PutAsJsonAsync("https://localhost:4000/api/DirectBooking" + Id, directBookingDTO);
+		if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
+
+		var strResponce = await responce.Content.ReadAsStringAsync();
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["erros"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Erro Message : " + ex.Message);
+		}
+	}
+}

@@ -93,9 +93,18 @@ namespace API.Controllers
             exsistingModel.Nationality = directBookingDTO.Nationality;
             exsistingModel.Remark = directBookingDTO.Remark;
 
-            
             await dbContext.SaveChangesAsync();
             return Ok(exsistingModel);
+        }
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var domainModel = dbContext.DirectBookingModels.Find(id);
+            if(domainModel == null) { return NotFound(); }
+            dbContext.DirectBookingModels.Remove(domainModel);
+            await dbContext.SaveChangesAsync();
+            return Ok(domainModel.FirstName+" "+"Succusfully Delete");
         }
     }
 }
