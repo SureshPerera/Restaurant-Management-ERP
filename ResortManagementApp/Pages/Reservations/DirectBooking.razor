@@ -34,6 +34,10 @@
 			</tr>
 		</thead>
 		<tbody>
+			@if (directBookingModels == null)
+			{
+				<p><em>Loading...</em></p>
+			}
 			@foreach (var item in directBookingModels)
 			{
 				<tr>
@@ -48,8 +52,8 @@
 					<td>@item.Nationality</td>
 					<td>@item.Remark</td>
 					<td style="white-space:nowrap">
-						<a class="btn btn-primary btn-sm" href="/Reservation/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/Reservation/Delete/@item.Id">Delete</a>
+						<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
 					</td>
 
 				</tr>

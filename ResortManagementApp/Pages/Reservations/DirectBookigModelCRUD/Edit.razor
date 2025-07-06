@@ -17,7 +17,7 @@
 	<div class="row mb-3">
 		<label class="col-md-4 col-form-label">Customer Id</label>
 		<div class="col-md-8">
-			<input class="form-control-plaintext" @bind="@Id" readonly>
+			<input class="form-control-plaintext" value="@Id" readonly>
 			<span class="text-danger">@Errors["FirstName"]?[0]</span>
 		</div>
 	</div>
@@ -119,10 +119,10 @@
 	{
 		try
 		{
-			directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>("https://localhost:4000/api/DirectBooking" + Id);
-			directBookingDTO.FirstName = directBookingModel?.FirstName ?? "";
+			directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
+			directBookingDTO.FirstName = directBookingModel?.FirstName??"";
 			directBookingDTO.LastName = directBookingModel?.LastName ?? "";
-			directBookingDTO.Address = directBookingModel?.LastName ?? "";
+			directBookingDTO.Address = directBookingModel?.Address ?? "";
 			directBookingDTO.PhoneNumber = directBookingModel?.PhoneNumber ?? "";
 			directBookingDTO.DathOfBirth = directBookingModel?.DathOfBirth;
 			directBookingDTO.NIC = directBookingModel?.NIC ?? "";
@@ -130,7 +130,8 @@
 			directBookingDTO.OpeningBalanace = directBookingModel?.OpeningBalanace;
 			directBookingDTO.Nationality = directBookingModel?.Nationality ?? "";
 			directBookingDTO.Remark = directBookingModel?.Remark ?? "";
-
+			directBookingDTO.EmailAddress = directBookingModel?.EmailAddress ?? "";
+			Console.WriteLine("Succusfull");
 
 		}catch(Exception ex)
 		{
@@ -139,14 +140,14 @@
 	} 
 	protected async Task UpdateCustomer()
 	{
-		var responce = await http.PutAsJsonAsync("https://localhost:4000/api/DirectBooking" + Id, directBookingDTO);
+		var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/DirectBooking/{Id}", directBookingDTO);
 		if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
 
 		var strResponce = await responce.Content.ReadAsStringAsync();
 		try
 		{
 			var jsonResponce = JsonNode.Parse(strResponce);
-			Errors = jsonResponce?["erros"] ?? new JsonObject();
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
 		}
 		catch (Exception ex)
 		{

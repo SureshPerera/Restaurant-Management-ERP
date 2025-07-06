@@ -1,0 +1,23 @@
+﻿@page "/Reservations/Delete/{Id:Guid}"
+@using ResortManagementApp.Models.Reservation.DTO
+<div>
+	<h3 class="mb-3">Delete Customer</h3>
+	<p>Are you sure you want to delete customer with Id @Id? </p>
+	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
+	<a class="btn btn-secondary" href="/Reservations/DirectBooking">Cancel</a>
+</div>
+
+@inject HttpClient http
+@inject NavigationManager navManager
+@code {
+	[Parameter]
+	public Guid Id { get; set; }
+	public DirectBooking? directBooking { get; set; }
+	public DirectBookinDTO directBookingDTO = new();
+
+	private async Task DeleteCustomer(MouseEventArgs args)
+	{
+		var responce = await http.DeleteFromJsonAsync<DirectBooking>($"https://localhost:4000/api/DirectBooking/{Id}");
+		navManager.NavigateTo("/Reservations/DirectBooking");
+	}
+}

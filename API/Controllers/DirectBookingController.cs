@@ -94,6 +94,7 @@ namespace API.Controllers
             exsistingModel.Remark = directBookingDTO.Remark;
 
             await dbContext.SaveChangesAsync();
+            Console.WriteLine($"Received Update for ID: {id}, FirstName: {directBookingDTO.FirstName}");
             return Ok(exsistingModel);
         }
         [HttpDelete]
