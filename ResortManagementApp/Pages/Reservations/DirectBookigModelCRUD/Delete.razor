@@ -7,7 +7,8 @@
 	{
 		<p><em>Loading customer details...</em></p>
 	}
-	<p>Are you sure you want to delete customer with Name <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong></p>
+	<p>Are you sure you want to delete customer with Name  <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong> </p>
+	
 	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
 	<a class="btn btn-secondary" href="/Reservations/DirectBooking">Cancel</a>
 </div>
@@ -27,7 +28,8 @@
 		try
 		{
 			// Fetch the customer's info by ID
-			directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
+			 directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
+			
 		}
 		catch (Exception ex)
 		{

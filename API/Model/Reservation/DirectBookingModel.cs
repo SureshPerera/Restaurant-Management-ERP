@@ -29,14 +29,10 @@ namespace API.Model.Reservation
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
         
-        public Guid? CustomerTypeId { get; set; }
-
-        [ForeignKey(nameof(CustomerTypeId))]
-        public CustomerType? CustomerType { get; set; }
         [Required (ErrorMessage ="Please Enter Nationality!")]
         public string Nationality { get; set; }
         public string? Remark { get; set; }
-
+        
 
     }
 

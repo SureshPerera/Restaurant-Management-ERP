@@ -11,20 +11,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseSqlServer("name = DefaultConnection");
 
 });
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowBlazorClient", policy =>
-    {
-        policy.WithOrigins("https://localhost:7017") // Your Blazor app origin
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
+builder.Services.AddCors();
 
 
 
 var app = builder.Build();
-app.UseCors("AllowBlazorClient");
+app.UseCors(policy =>
+    policy.AllowAnyOrigin()
+          .AllowAnyHeader()
+          .AllowAnyMethod());
+
 
 
 // Configure the HTTP request pipeline.

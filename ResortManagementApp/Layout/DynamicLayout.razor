@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthStateProvider
+
+@inherits LayoutComponentBase
+
+<AuthorizeView>
+    <Authorized>
+        <LayoutView Layout="@typeof(MainLayout)">
+            @Body
+        </LayoutView>
+    </Authorized>
+    <NotAuthorized>
+        <LayoutView Layout="@typeof(ClientLayout)">
+            @Body
+        </LayoutView>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+
+}

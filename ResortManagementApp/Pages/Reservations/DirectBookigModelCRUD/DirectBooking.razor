@@ -41,20 +41,20 @@
 			@foreach (var item in directBookingModels)
 			{
 				<tr>
-					<td>@(item.FirstName + " " + @item.LastName)</td>
+					<th>@(item.FirstName + " " + @item.LastName)</th>
 
-					<td>@item.PhoneNumber</td>
-					<td>@item.Address</td>
-					<td>@item.EmailAddress</td>
-					<td>@item.NIC</td>
-					<td>@item.CreditLimit</td>
-					<td>@item.OpeningBalanace</td>
-					<td>@item.Nationality</td>
-					<td>@item.Remark</td>
-					<td style="white-space:nowrap">
+					<th>@item.PhoneNumber</th>
+					<th>@item.Address</th>
+					<th>@item.EmailAddress</th>
+					<th>@item.NIC</th>
+					<th>@item.CreditLimit</th>
+					<th>@item.OpeningBalanace</th>
+					<th>@item.Nationality</th>
+					<th>@item.Remark</th>
+					<th style="white-space:nowrap">
 						<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
 						<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
-					</td>
+					</th>
 
 				</tr>
 			}

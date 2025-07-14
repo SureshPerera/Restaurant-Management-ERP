@@ -1,7 +1,12 @@
-﻿<CascadingAuthenticationState>
+﻿<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(ClientLayout)">
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
@@ -17,7 +22,7 @@
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
+            <LayoutView Layout="@typeof(ClientLayout)">
                 <p role="alert">Sorry, there's nothing at this address.</p>
             </LayoutView>
         </NotFound>

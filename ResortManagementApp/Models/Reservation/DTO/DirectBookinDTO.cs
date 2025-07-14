@@ -16,6 +16,7 @@ namespace ResortManagementApp.Models.Reservation.DTO
 
         public string Nationality { get; set; }
         public string? Remark { get; set; }
+        public Guid CustomerTypeId { get; set; }
     }
     public class CustomerType
     {

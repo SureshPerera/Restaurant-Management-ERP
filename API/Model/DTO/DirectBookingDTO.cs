@@ -27,5 +27,6 @@ namespace API.Model.DTO
         [Required(ErrorMessage = "Please Enter Nationality!")]
         public string Nationality { get; set; }
         public string? Remark { get; set; }
+        public Guid CustomerTypeId { get; set; } 
     }
 }
