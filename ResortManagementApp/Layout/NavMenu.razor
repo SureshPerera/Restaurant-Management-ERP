@@ -1,4 +1,6 @@
-﻿<div class="top-row navbar navbar-dark ps-3">
+﻿@using MudBlazor
+
+<div class="top-row navbar navbar-dark ps-3">
     <div class="container-fluid">
         <a class="navbar-brand" href="">ResortManagementApp</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -11,27 +13,96 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+                <span class="bi bi-speedometer2" aria-hidden="true"></span> Dashboard
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/Reservations">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Reservation
+                <span class="bi bi-bag-plus-fill" aria-hidden="true"></span> Reservation
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/CheckInOut">
+                <span class="bi bi-building-fill-check" aria-hidden="true"></span> Check-In & Check-Out
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/Inhouse">
+                <span class="bi bi-house-exclamation-fill" aria-hidden="true"></span> Inhouse
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/HouseKeeping">
+                <span class="bi bi-house-heart" aria-hidden="true"></span> House-keeping
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/SmartSales">
+                <span class="bi bi-receipt-cutoff"  aria-hidden="true"></span> Smart sales & Billing
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/Stock">
+                <span class="bi bi-bag-check-fill" aria-hidden="true"></span> Stock & Inventory
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/AssetsManagement">
+                <span class="bi bi-wrench-adjustable-circle" aria-hidden="true"></span> Assets Management
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/Administration">
+                <span class="bi bi-file-earmark-person-fill" aria-hidden="true"></span> Administration
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/ClientManagement">
+                <span class="bi bi-person-vcard"  aria-hidden="true"></span> Client Management
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/UserManagement">
+                <span class="bi bi-shield-lock"  aria-hidden="true"></span> User Management
             </NavLink>
         </div>
     </nav>
 </div>
+
+@* <MudPaper Height="200px" Style="overflow:hidden; position:relative;">
+    <MudDrawerContainer Class="mud-height-full">
+        <MudDrawer @bind-Open="@_open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
+            <MudNavMenu>
+                <MudNavLink Match="NavLinkMatch.All" Href="" Icon="@Icons.Material.Filled.DashboardCustomize">Dashboard</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Href="/Reservations" Icon="@Icons.Material.Filled.MapsHomeWork">Reservation</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Check-In & Check-Out</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Inhouse</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">House-keeping</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Smart sales & Billing</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Stock & Inventory</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Assets Management</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Client Management</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">User Management</MudNavLink>
+               
+            </MudNavMenu>
+        </MudDrawer>
+        <div class="d-flex align-center mud-height-full justify-center">
+            <MudButton OnClick="@ToggleDrawer" Color="Color.Primary">Toggle</MudButton>
+        </div>
+    </MudDrawerContainer>
+</MudPaper> *@
 
 @code {
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    private bool _open = false;
+
+    private void ToggleDrawer()
+    {
+        _open = !_open;
+    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
