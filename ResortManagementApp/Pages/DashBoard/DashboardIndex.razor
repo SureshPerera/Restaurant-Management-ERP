@@ -1,9 +1,35 @@
 ﻿@page "/Reservations/Dashboard"
+@using ResortManagementApp.Pages.CheckInCheckOut
+@using ResortManagementApp.Pages.DashBoard.Chart
 @layout MainLayout
 
+<div>
+	<div>
+		<h3>Dashboard</h3>
+		<div class="flex gap-2">
+			<div>
+				<TotalBalance />
+			</div>
+			<div>
+				<TotalIncome />
+			</div>
+			<div>
+				<TotalExpenses/>
+			</div>
+		</div>
+		<div style="margin-left: 40rem">
+			<Piechart/>
+		</div>
+		
+		<br />
+		@* charts *@
+		<div  style="margin-top:-12rem;">
+			<Barchart/>
+		</div>
+	</div>
+</div>
 
 
-<h3>Dashboard</h3>
 
 @code {
 
