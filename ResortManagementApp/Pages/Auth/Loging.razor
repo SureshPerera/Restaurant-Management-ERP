@@ -3,23 +3,26 @@
 
 
 <!-- From Uiverse.io by Yaya12085 -->
-<div class="form-container">
-	<p class="titles">Login</p>
-	<form class="forms">
-		<div class="input-group">
-			<label for="username">Username</label>
-			<input type="text" name="username" id="username" @bind ="loginDto.UserName"   placeholder="">
-		</div>
-		<div class="input-group">
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password" @bind="loginDto.Password" placeholder="">
-			<div class="forgot">
-				<a rel="noopener noreferrer" href="Auth/FogetPassword">Forgot Password ?</a>
+<div style="display:flex; justify-content:center">
+	<div class="form-container">
+		<p class="titles">Login</p>
+		<form class="forms">
+			<div class="input-group">
+				<label for="username">Username</label>
+				<input type="text" name="username" id="username" @bind="loginDto.UserName" placeholder="">
 			</div>
-		</div>
-		<button class="sign" @onclick = "AsncyLoging" >Login</button>
-	</form>
+			<div class="input-group">
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" @bind="loginDto.Password" placeholder="">
+				<div class="forgot">
+					<a rel="noopener noreferrer" href="Auth/FogetPassword">Forgot Password ?</a>
+				</div>
+			</div>
+			<button class="sign" @onclick="AsncyLoging">Login</button>
+		</form>
+	</div>
 </div>
+
 @inject NavigationManager navManager
 @code {
 	public LogingDto loginDto { get; set; } = new();

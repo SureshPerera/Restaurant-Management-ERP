@@ -2,134 +2,182 @@
 @using MudBlazor
 @using ResortManagementApp.Pages.Auth.AuthDto
 
-<form class="form">
-    <p class="title">Register </p>
-    <p class="message">Register & create new user Account. </p>
-    <div class="flex">
-        <label>
-            <input class="input" type="text" @bind-value="registationDto.FirstName" placeholder="" required="">
-            <span>Firstname</span>
-        </label>
+<div style="display:flex; justify-content:center">
+    <form class="form">
+        <p class="title">Register </p>
+        <p class="message">Register & create new user Account. </p>
+        <div class="flex">
+            <label>
+                <input style="width:460px" class="input" type="text" @bind-value="registationDto.FirstName" placeholder="" required="">
+                <span>Firstname</span>
+            </label>
 
-        <label>
-            <input class="input" type="text" @bind-value="registationDto.LastName" placeholder="" required="">
-            <span>Lastname</span>
-        </label>
-        
-    </div>
-    <div class="flex">
-        <label>
-            <input class="input" type="number" @bind-value="registationDto.PhoneNumber" placeholder="" required="">
-            <span>Phone Number</span>
-        </label>
+            <label>
+                <input style="width:460px" class="input" type="text" @bind-value="registationDto.LastName" placeholder="" required="">
+                <span>Lastname</span>
+            </label>
 
-        <label>
-            <select class="input" @bind="registationDto.Gender">
+        </div>
+        <div class="flex">
+            <label>
+                <input style="width:460px" class="input" type="number" @bind-value="registationDto.PhoneNumber" placeholder="" required="">
+                <span>Phone Number</span>
+            </label>
+
+            <label>
+                <select style="width:460px" class="input" @bind="registationDto.Gender">
                     <option value="">--Gender--</option>
-                    @foreach(var item in Gender)
+                    @foreach (var item in Gender)
                     {
-                       <option >@item</option>
+                        <option>@item</option>
                     }
-               
-            </select>
-            <span>Gender</span>
-        </label>
-       
-      
-    </div>
-    
-    
-    <label>
-        <textarea class="input"  placeholder="" required=""></textarea>
-        <span>Address</span>
-    </label>
-    
-    <label>
-        <input class="input" type="email" placeholder="" required="">
-        <span>Email</span>
-    </label>
 
-    <label>
-        <input class="input" type="password" placeholder="" required="">
-        <span>Password</span>
-    </label>
-    <label>
-        <input class="input" type="password" placeholder="" required="">
-        <span>Confirm password</span>
-    </label>
-    <label>
-        <input class="input" type="text" placeholder="" required="">
-        <span>Comments</span>
-    </label>
-    <p class="message">
-        Main Manu Options
-    </p>
-    <div class="flex">
-        
-        <label>
-            <MudCheckBox @bind-Value="registationDto.Reservations_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>Reservations</span>
-        </label>
-        <label>
-            <MudCheckBox @bind-Value="registationDto.CheckIn_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>CheckInCheckOut</span>
-        </label>
-        <label>
-            <MudCheckBox @bind-Value="registationDto.Inhouse_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>Inhouse</span>
-        </label>
-        
+                </select>
+                <span>Gender</span>
+            </label>
 
 
-    </div>
-    <div class="flex">
+        </div>
+
+        <div class="flex">
+            <label>
+                <textarea style="width:460px" class="input" placeholder="" required=""></textarea>
+                <span>Address</span>
+            </label>
+            <label>
+                <select style="width:460px" class="input" @bind="registationDto.AccessLevel">
+
+                    <option value="--Select--"></option>
+                    @foreach (var item in AccessLevel)
+                    {
+
+                        <option>@item</option>
+                    }
+
+                </select>
+                <span>Access Level</span>
+            </label>
+        </div>
+
+
         <label>
-            <MudCheckBox @bind-Value="registationDto.HouseKeeping_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>HouseKeeping</span>
+            <input class="input" @bind-value="registationDto.Email" type="email" placeholder="" required="">
+            <span>Email</span>
+        </label>
+
+        <label>
+            <input class="input" id="password" @bind-value="registationDto.Password" type="password" placeholder="" required="">
+            <span>Password</span>
         </label>
         <label>
-            <MudCheckBox @bind-Value="registationDto.SmartSales_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>SmartSelling</span>
+            <input class="input" @bind="conformPassword" type="password" placeholder="" required="">
+            <span>Confirm password</span>
         </label>
         <label>
-            <MudCheckBox @bind-Value="registationDto.UserManagement_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>UserManagement</span>
+            <input class="input" @bind-value="registationDto.Comments" type="text" placeholder="" required="">
+            <span>Comments</span>
         </label>
-    </div>
-    <div class="flex">
-        <label>
-            <MudCheckBox @bind-Value="registationDto.ClientManagement_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>CustomerManagement</span>
-        </label>
-        <label>
-            <MudCheckBox @bind-Value="registationDto.Administration_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>Administration</span>
-        </label>
-        <label>
-            <MudCheckBox @bind-Value="registationDto.DashBoard_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
-            <span>Dashboard</span>
-        </label>
-    </div>
-    <button class="submit" @onclick="AsyncRegistation">Register</button>
-    @if(alart == true)
-    {
-        <MudAlert Severity="Severity.Success">The reactor is running at optimum temperature</MudAlert>
-    }
-    <p class="signin">Already have an acount ? <a href="#">Signin</a> </p>
-</form>
+        <div class="mainMenuOption">
+            <div>
+                <p class="message">
+                    Main Manu Options
+                </p>
+                <div class="flex">
+
+                    <label>
+                        <MudCheckBox @bind-Value="registationDto.Reservations_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                        <span>Reservations</span>
+                    </label>
+                    <label>
+                        <MudCheckBox @bind-Value="registationDto.CheckIn_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                        <span>CheckInCheckOut</span>
+                    </label>
+                    <label>
+                        <MudCheckBox @bind-Value="registationDto.Inhouse_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                        <span>Inhouse</span>
+                    </label>
+
+                    <div class="flex">
+                        <label>
+                            <MudCheckBox @bind-Value="registationDto.HouseKeeping_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <span>HouseKeeping</span>
+                        </label>
+                        <label>
+                            <MudCheckBox @bind-Value="registationDto.SmartSales_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <span>SmartSelling</span>
+                        </label>
+                        <label>
+                            <MudCheckBox @bind-Value="registationDto.UserManagement_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <span>UserManagement</span>
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label>
+                            <MudCheckBox @bind-Value="registationDto.ClientManagement_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <span>CustomerManagement</span>
+                        </label>
+                        <label>
+                            <MudCheckBox @bind-Value="registationDto.Administration_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <span>Administration</span>
+                        </label>
+                        <label>
+                            <MudCheckBox @bind-Value="registationDto.DashBoard_checkBox" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <span>Dashboard</span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <button class="submit" @onclick="AsyncRegistation">Register</button>
+        @if (alartSuccess == true)
+        {
+            <MudAlert Severity="Severity.Success">New Registation has been created succussfully</MudAlert>
+        }
+        @if (alartFail == true)
+        {
+            <MudAlert Severity="Severity.Warning">Please enter valid password</MudAlert>
+
+        }
+        <p class="signin">Already have an acount ? <a href="#">Signin</a> </p>
+
+
+    </form>
+</div>
+
 
 @inject NavigationManager navManager
-    @code {
+@code {
     public RegistationDto registationDto { get; set; } = new();
-    public bool alart = false;
+    public bool alartSuccess = false;
+    public bool alartFail = false;
+
+    public string conformPassword = ""; 
 
     public List<string> Gender = new List<string>
     {
         "Male","Female"
     };
+    public List<string> AccessLevel = new List<string>
+    {
+        "Staff","Administrator","SuperUser"
+    };
     private void AsyncRegistation()
     {
-        alart = true;
-        Console.WriteLine("registaion succussflly : " + registationDto.FirstName + registationDto.Password + registationDto.Administration_checkBox);
+        if (registationDto.Password != conformPassword)
+        {
+            conformPassword = "";
+            alartFail = true;
+
+        }
+        else
+        {
+            registationDto.FirstName = "";
+            alartSuccess = true;
+            Console.WriteLine("registaion succussflly : " + registationDto.FirstName + registationDto.Password + registationDto.Administration_checkBox);
+        }
     }
 }

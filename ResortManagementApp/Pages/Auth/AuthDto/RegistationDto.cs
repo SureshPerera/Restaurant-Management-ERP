@@ -12,7 +12,7 @@
         public string Gender { get; set; }
         public string Address { get; set; }
         public string Comments { get; set; }
-        public string MainManuOptions { get; set; }
+       
         public bool? Reservations_checkBox { get; set; }
         public bool? CheckIn_checkBox { get; set; }
         public bool? Inhouse_checkBox { get; set; }
