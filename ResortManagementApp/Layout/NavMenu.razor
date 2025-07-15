@@ -2,7 +2,8 @@
 
 <div class="top-row navbar navbar-dark ps-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">ResortManagementApp</a>
+		
+        <a class="navbar-brand" href="">Solitary Green Resorts</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,58 +13,58 @@
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-speedometer2" aria-hidden="true"></span> Dashboard
+            <NavLink class="nav-link" href="/Reservations/Dashboard" Match="NavLinkMatch.All">
+                <span class="bi bi-speedometer2 fs-4" aria-hidden="true"></span> Dashboard
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/Reservations">
-                <span class="bi bi-bag-plus-fill" aria-hidden="true"></span> Reservation
+                <span class="bi bi-bag-plus-fill fs-4" aria-hidden="true"></span> Reservation
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/CheckInOut">
-                <span class="bi bi-building-fill-check" aria-hidden="true"></span> Check-In & Check-Out
+            <NavLink class="nav-link" href="/Reservations/CheckInOut">
+                <span class="bi bi-building-fill-check fs-4" aria-hidden="true"></span> Check-In & Check-Out
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Inhouse">
-                <span class="bi bi-house-exclamation-fill" aria-hidden="true"></span> Inhouse
+            <NavLink class="nav-link" href="/Reservations/Inhouse">
+                <span class="bi bi-house-exclamation-fill fs-4" aria-hidden="true"></span> Inhouse
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/HouseKeeping">
-                <span class="bi bi-house-heart" aria-hidden="true"></span> House-keeping
+            <NavLink class="nav-link" href="/Reservations/HouseKeeping">
+                <span class="bi bi-house-heart fs-4" aria-hidden="true"></span> House-keeping
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/SmartSales">
-                <span class="bi bi-receipt-cutoff"  aria-hidden="true"></span> Smart sales & Billing
+            <NavLink class="nav-link" href="/Reservations/SmartSelling">
+                <span class="bi bi-receipt-cutoff fs-4" aria-hidden="true"></span> Smart sales & Billing
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Stock">
-                <span class="bi bi-bag-check-fill" aria-hidden="true"></span> Stock & Inventory
+            <NavLink class="nav-link" href="/Reservations/StockManagement">
+                <span class="bi bi-bag-check-fill fs-4" aria-hidden="true"></span> Stock & Inventory
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/AssetsManagement">
-                <span class="bi bi-wrench-adjustable-circle" aria-hidden="true"></span> Assets Management
+            <NavLink class="nav-link" href="/Reservations/AssetsManagement">
+                <span class="bi bi-wrench-adjustable-circle fs-4" aria-hidden="true"></span> Assets Management
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Administration">
-                <span class="bi bi-file-earmark-person-fill" aria-hidden="true"></span> Administration
+            <NavLink class="nav-link" href="/Reservations/Administration">
+                <span class="bi bi-file-earmark-person-fill fs-4" aria-hidden="true"></span> Administration
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/ClientManagement">
-                <span class="bi bi-person-vcard"  aria-hidden="true"></span> Client Management
+            <NavLink class="nav-link" href="/Reservations/CustomerManagement">
+                <span class="bi bi-person-vcard fs-4" aria-hidden="true"></span> Client Management
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/UserManagement">
-                <span class="bi bi-shield-lock"  aria-hidden="true"></span> User Management
+            <NavLink class="nav-link" href="/Reservations/UserManagement">
+                <span class="bi bi-shield-lock fs-4" aria-hidden="true"></span> User Management
             </NavLink>
         </div>
     </nav>
@@ -97,12 +98,6 @@
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private bool _open = false;
-
-    private void ToggleDrawer()
-    {
-        _open = !_open;
-    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
