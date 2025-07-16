@@ -7,7 +7,7 @@
 <div>
 	<h3 class="mb-3 text-center">Reservation Management</h3>
 </div>
-<div class="flex">
+<div class="" style="margin-left: -0.2rem" >
 	<div>
 		<a href="/Reservations/DirectBooking" class="btn btn-primary mb-3">Direct Booking</a>
 	</div>
@@ -18,7 +18,7 @@
 		<a href="/Reservations/OnlineBooking" class="btn btn-primary mb-3">Online Booking</a>
 	</div>
 </div>
-<div>
+<div style="width : 300px;height: 200px; margin-left: 9rem">
 	@if(directBookingModels == null)
 	{
 		<p><em>Loading...</em></p>
@@ -26,7 +26,7 @@
 	else
 	{
 		<table class="table">
-			<thead>
+			<thead class="bg-light">
 				<tr class="table">
 					<td>Name</td>
 					<td>Phone Number</td>
@@ -42,7 +42,7 @@
 
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="bg-light">
 				@foreach (var item in directBookingModels)
 				{
 					<tr>

@@ -13,19 +13,28 @@
             <img style="width:80px; height:80px" src="/imgs/maindashboard/logo.png" />
             
         </div>
-
-        <article class="content mainLayou px-4" >
-            @Body
-        </article>
+        
+        <div class="position-relative min-vh-100 bg-container">
+            <div class="bg-overlay"></div>
+            <div class="position-relative z-1 container py-5">
+                @Body
+            </div>
+        </div>
     </main>
 </div>
 <style>
-    .mainLayout{
-        background-image: url('/imgs/maindashboard/logo.png');
+    .bg-container {
+        overflow: hidden;
+    }
+
+    .bg-overlay {
+        position: absolute;
+        inset: 0;
+        background-image: url('/imgs/reservation/background.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        min-height: 100vh; /* Ensure it covers full page height */
-        
+        opacity: 0.3;
+        z-index: 0;
     }
 </style>
