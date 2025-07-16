@@ -6,7 +6,7 @@
         <NavMenu />
     </div>
 
-    <main>
+    <main >
         
         <div class="top-row auth px-4">
             <LoginDisplay />
@@ -14,8 +14,18 @@
             
         </div>
 
-        <article class="content px-4">
+        <article class="content mainLayou px-4" >
             @Body
         </article>
     </main>
 </div>
+<style>
+    .mainLayout{
+        background-image: url('/imgs/maindashboard/logo.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 100vh; /* Ensure it covers full page height */
+        
+    }
+</style>

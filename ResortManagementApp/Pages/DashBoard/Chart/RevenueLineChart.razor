@@ -1,0 +1,14 @@
+﻿<div>
+    <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="75%" Height="300px" ChartOptions="options" Class="bg-dark bg-opacity-10" Style="border-radius:1rem"></MudChart>
+
+</div>
+
+@code {
+    public List<ChartSeries> Series = new List<ChartSeries>()
+    {
+        // new ChartSeries() { Name = "Series 1", Data = new double[] { 90, 79, 72, 69, 62, 62, 55, 65, 70 } },
+        new ChartSeries() { Name = "Total Revenue", Data = new double[] { 35, 41, 35, 51, 49, 62, 69, 91, 148 } },
+    };
+    public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+    private ChartOptions options = new ChartOptions();
+}

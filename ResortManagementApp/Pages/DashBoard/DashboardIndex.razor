@@ -4,27 +4,44 @@
 @layout MainLayout
 
 <div>
-	<div>
+	<div class="" >
 		<h3>Dashboard</h3>
-		<div class="flex gap-2">
+		<div class="flex flex-wrap gap-x-3" style="row-gap: 8rem; width:70%">
+			<div>
+				<NewBooking/>
+			</div>
+			<div>
+				<CheckIn/>
+			</div>
+			<div>
+				<CheckOut/>
+			</div>
+			<TotalRevenue/>
 			<div>
 				<TotalBalance />
 			</div>
 			<div>
 				<TotalIncome />
 			</div>
-			<div>
+			<div style="">
 				<TotalExpenses/>
 			</div>
 		</div>
-		<div style="margin-left: 40rem">
+		
+		<div style="margin-left: 55rem; margin-top: -10rem" class="flex-wrap gap-x-3">
 			<Piechart/>
 		</div>
 		
 		<br />
 		@* charts *@
-		<div  style="margin-top:-12rem;">
-			<Barchart/>
+		
+		<div style="margin-top:-1rem; width:100%;" class="flex flex-wrap gap-x-3" >
+			<div>
+				<Barchart />
+			</div>
+			<div>
+				<RevenueLineChart />
+			</div>
 		</div>
 	</div>
 </div>
