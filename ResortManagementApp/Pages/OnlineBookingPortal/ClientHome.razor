@@ -9,73 +9,66 @@
 
 @page "/"
 <div style="margin-top:-4rem;">
-
+	
 	<section style="background-color:azure;">
 		<div>
-			<MudCarousel Class="mud-width-full" Style="height:500px;" TData="object" AutoCycle="false">
-				<MudCarouselItem Color="@Color.Primary" Transition="Transition.Slide">
+			<MudCarousel Class="mud-width-full" Style="height:500px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+				<MudCarouselItem Transition="transition" Color="@Color.Primary">
 					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
-					</div>
-				</MudCarouselItem>
-				<MudCarouselItem Color="@Color.Secondary" Transition="Transition.Fade">
-					<div class="d-flex" style="height:100%">
-						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front3.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
+						<img  src="/imgs/clientpotal/clienthomeimg/front1.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
-				<MudCarouselItem Color="@Color.Tertiary" Transition="Transition.Custom" CustomTransitionEnter="bounceIn" CustomTransitionExit="bounceOut">
+				<MudCarouselItem Transition="transition" Color="@Color.Secondary">
 					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front4.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
+						<img src="/imgs/clientpotal/clienthomeimg/front2.jpeg" alt="Image 2" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
-				<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="backInDown" CustomTransitionExit="backOutDown">
-					<div class="d-flex" style="background-color:lightgray; height:100%">
+				<MudCarouselItem Transition="transition">
+					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front1.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
+						<img src="/imgs/clientpotal/clienthomeimg/front3.jpeg" alt="Image 3" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
-				<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="rotateIn" CustomTransitionExit="rotateOut">
-					<div class="d-flex" style="background-color:lightgray; height:100%">
-						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Secondary" Size="@Size.Large" /> *@
-						<img src="images/clienthomeimg/front2.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
+				<MudCarouselItem Transition="transition">
+					<div class="d-flex" style="height:100%">
+						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" /> *@
+						<img src="/imgs/clientpotal/clienthomeimg/front4.jpeg" alt="Image 4" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
 			</MudCarousel>
+		
 		</div>
 		<hr />
 	</section>
 	<section style="background-color:aliceblue; margin-top:-1rem;">
-		<div class="con2-selectbar-secton2">
-			<div><p>OFFERS</p></div>
+		<div class="con2-selectbar-secton2" style="font-weight:bold">
+			<div><a href="" class="link-primary">OFFERS</a></div>
 			<span style="font-size:25px">*</span>
-			<div> <p>EXPERIENCES</p></div>
+			<div><a href="" class="link-primary">EXPERIENCES</a></div>
 			<span style="font-size:25px">*</span>
-			<div><p>EVENT</p></div>
+			<div><a href="" class="link-primary">EVENT</a></div>
 			<span style="font-size:25px">*</span>
-
-			<div><p>ESG</p></div>
-			<span style="font-size:25px">*</span>
-
-			<div><p>GIFT CARDS</p></div>
+			<div><a href="" class="link-primary">ESG</a></div>
 			<span style="font-size:25px">*</span>
 
-			<div><p>ABOUTUS</p></div>
+			<div><a href="" class="link-primary">GIFT CARDS</a></div>
 			<span style="font-size:25px">*</span>
 
-			<div><p>BOOK DIRECT</p></div>
+			<div><a href="" class="link-primary">ABOUT US</a></div>
+			<span style="font-size:25px">*</span>
+			<div><a href="" class="link-primary">BOOK DIRECT</a></div>
 		</div>
 		<hr />
 	</section>
 	<section>
 
-		<div>
+		<div class="" style="justify-content:center"> 
 			<form class="con3-quckBooking-section3" action="/frontoffice" method="post">
 				<div>
 					@* <MudSelect @bind-Value="stringValue" Placeholder="Please Select"  AdornmentColor="Color.Primary">
@@ -83,13 +76,21 @@
 					<MudSelectItem Value="@("Burger")">Burger</MudSelectItem>
 					<MudSelectItem Value="@("Hotdog")">Hot Dog</MudSelectItem>
 				</MudSelect> *@
-					<select style="height:3rem; margin-top:-1rem;" required @bind="stringValue">
+					@* <select style="height:3rem; margin-top:-1rem;" required @bind="stringValue">
 						<option>Select Resort</option>
 						<option>Solitary Green Resort - Nuwara Eliya</option>
 						<option>Amazon Beach Resort - Trincomale</option>
 						<option disabled>JCUB Resort - Trincomale </option>
 						<option></option>
-					</select>
+					</select> *@
+
+					<div style="width: 250px;">
+						<MudSelect T="DropdownWidth" Label="Resort Width" @bind-Value="@_dropdownWidth">
+							<MudSelectItem Value="@DropdownWidth.Relative">Solitary Green Resort - Nuwara Eliya</MudSelectItem>
+							
+						</MudSelect>
+					</div>
+					
 				</div>
 				<span style="font-size:60px;margin-top:-2rem;">|</span>
 
@@ -106,6 +107,7 @@
 				<span style="font-size:60px;margin-top:-2rem;">|</span>
 
 				<div>
+					
 					<label>Rooms:</label>
 					<select required>
 						<option>0</option>
@@ -137,6 +139,7 @@
 						<option>4</option>
 						<option>4</option>
 					</select>
+					
 				</div>
 				<span style="font-size:60px;margin-top:-2rem;">|</span>
 
@@ -153,11 +156,15 @@
 			</form>
 		</div>
 
-
 	</section>
-	<section>
-		<div class="" style=" text-align:center; font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center">
-			<img style="width:350px; height:300px;" src="images/clienthomeimg/sp_soft_ wite_background.jpeg" />
+	<section style="margin-top:-6rem">
+		<div class="" style=" display:flex ; font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center">
+			<div>
+
+			<BoxAnimation  />
+			</div>
+			<img style="width:550px; height:500px;" src="/imgs/maindashboard/logo.png" /> 
+			<BoxAnimation />
 
 		</div>
 		<div style="font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center; display:flex;">
@@ -181,42 +188,42 @@
 					<MudCollapse Expanded="_expanded">
 						<div style="display:flex; gap:2rem;	justify-content:center; font-family:'Lucida Sans Typewriter'">
 							<div style="display:grid; width:9rem; background-color: #C5E1A5; text-align:center; border-radius:2rem;">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/marketeq--wifi.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/marketeq--wifi.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">WiFi</label>
 								<label>Available throughout hotel.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/equptment.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/equptment.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">Equipment</label>
 								<label>Bicycles & snorkelling gear for guests’ use.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color: #C5E1A5;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/sweming.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/sweming.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">Swimming pools</label>
 								<label>Two gorgeous pools with views.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/parking.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/parking.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">Secure Parking</label>
 								<label>Available outside.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color: #C5E1A5;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/spa.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/spa.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">La Parenthèse</label>
 								<label>Spa.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/laudary.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/laudary.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">Laundry services</label>
 								<label>Available on request.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color: #C5E1A5;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/houseKeping.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/houseKeping.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">Housekeeping</label>
 								<label>Offered daily.</label>
 							</div>
 							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="images/clienthomeimg/Lounging.png" alt="Alternate Text" />
+								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/Lounging.png" alt="Alternate Text" />
 								<label style="font-size:18px; font-weight:bold;">Lounging</label>
 								<label>Sunbeds, hammocks and loungers.</label>
 							</div>
@@ -231,27 +238,18 @@
 	</section>
 	
 	<section class="bg-container-allSection" style="background-image:url('Images/ClientHomeImg/greanBackground2.jpg');">
-		<div style=" display:flex; justify-content:center; margin-top:1rem">
-			<div style=" height:30rem; width:40rem; ">
-
-				<MudCard  style=" height:30rem; width:40rem; ">
-					<MudCardContent>
-						<iframe  width="800" height="360" style="  filter: drop-shadow(0 15px 50px #000); background-color:transparent
-								; border-radius:5rem 2rem;"
-								src="Images/ClientHomeVideo/video2.mp4"
-								loop playsinline
-								frameborder="0" allowfullscreen>
-						</iframe>
-					</MudCardContent>
-				</MudCard>
+		<div style="display:flex; justify-content:center; margin-top:1rem">
+			<div>
+				<video id="promoVideo" controls muted style="width:100%; height:100%">
+					<source src="" type="video/mp4" />
+				</video>
 			</div>
-
 		</div>
-
 	</section>
 	<section>
 		
 	</section>
+	
 </div>
 
 
@@ -297,8 +295,16 @@
 	
 </style>
 
-
+@inject IJSRuntime JS
 @code {
+	private DropdownWidth _dropdownWidth = DropdownWidth.Ignore;
+
+	private bool arrows = true;
+	private bool bullets = true;
+	private bool enableSwipeGesture = true;
+	private bool autocycle = true;
+	private Transition transition = Transition.Fade;
+
 	private PickerVariant _variant = PickerVariant.Dialog;
 	private DateRange _dateRange { get; set; }
 
@@ -320,6 +326,5 @@
 	}
 
 	public string? VideoSource = "images/ClientHomeVideo/video.mp4";
-
-
+	
 }
