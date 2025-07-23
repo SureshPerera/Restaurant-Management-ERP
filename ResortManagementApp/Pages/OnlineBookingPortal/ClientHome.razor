@@ -238,12 +238,13 @@
 	</section>
 	
 	<section class="bg-container-allSection" style="background-image:url('Images/ClientHomeImg/greanBackground2.jpg');">
-		<div style="display:flex; justify-content:center; margin-top:1rem">
-			<div>
-				<video id="promoVideo" controls muted style="width:100%; height:100%">
-					<source src="" type="video/mp4" />
-				</video>
-			</div>
+		<div style="position: relative; padding-bottom: 56.25%; height: 0;  max-width: 100%;">
+			<video src="https://youtu.be/M4Xshrh4InA?si=myd3mZX45eqtTvVZ"
+					frameborder="0"
+					allow="autoplay; encrypted-media"
+					allowfullscreen
+					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+			</video>
 		</div>
 	</section>
 	<section>
@@ -306,17 +307,17 @@
 	private Transition transition = Transition.Fade;
 
 	private PickerVariant _variant = PickerVariant.Dialog;
-	private DateRange _dateRange { get; set; }
+	private DateRange? _dateRange { get; set; }
 
 	private void OnValueChanged(PickerVariant variant)
 	{
 		_dateRange = null;
 		_variant = variant;
 	}
-	private string stringValue { get; set; }
+	private string? stringValue { get; set; }
 
-	private string userInput { get; set; }
-	private string promoCodeInput { get; set; }
+	private string? userInput { get; set; }
+	private string? promoCodeInput { get; set; }
 
 	bool _expanded = true;
 
