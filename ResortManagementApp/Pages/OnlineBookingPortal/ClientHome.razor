@@ -66,9 +66,8 @@
 		</div>
 		<hr />
 	</section>
-	<section>
-
-		<div class="" style="justify-content:center"> 
+	<section style="background-color: antiquewhite; margin-top: -0.5rem">
+		<div class="" style="justify-content:center;"> 
 			<form class="con3-quckBooking-section3" action="/frontoffice" method="post">
 				<div>
 					@* <MudSelect @bind-Value="stringValue" Placeholder="Please Select"  AdornmentColor="Color.Primary">
@@ -92,9 +91,9 @@
 					</div>
 					
 				</div>
-				<span style="font-size:60px;margin-top:-2rem;">|</span>
+				<span style="font-size:50px;margin-top:-1rem;">|</span>
 
-				<div>
+				<div style="margin-top: 0.5rem">
 					<MudStack AlignItems="AlignItems.Center" Style="width:450px; height:50px; margin:-1rem;">
 						<MudDateRangePicker PickerVariant="@_variant" @bind-DateRange="@_dateRange" Margin="Margin.Dense" Label="Select date range" />
 						<MudSpacer />
@@ -104,9 +103,9 @@
 						</MudToggleGroup>
 					</MudStack>
 				</div>
-				<span style="font-size:60px;margin-top:-2rem;">|</span>
+				<span style="font-size:50px;margin-top:-1rem;">|</span>
 
-				<div>
+				<div style="margin-top: 1rem; ">
 					
 					<label>Rooms:</label>
 					<select required>
@@ -118,7 +117,7 @@
 						<option>5</option>
 					</select>
 				</div>
-				<div>
+				<div style="margin-top: 1rem">
 					<label>Adults:</label>
 					<select required>
 						<option>0</option>
@@ -129,7 +128,7 @@
 						<option>4</option>
 					</select>
 				</div>
-				<div>
+				<div style="margin-top: 1rem">
 					<label>Children:</label>
 					<select required>
 						<option>0</option>
@@ -141,13 +140,13 @@
 					</select>
 					
 				</div>
-				<span style="font-size:60px;margin-top:-2rem;">|</span>
+				<span style="font-size:50px;margin-top:-1rem;">|</span>
 
 
-				<div>
+				<div style="margin-top: 1rem">
 					<input type="text" name="promoCode" value="" placeholder="Promo Code" />
 				</div>
-				<span style="font-size:60px;margin-top:-2rem;">|</span>
+				<span style="font-size:50px;margin-top:-1rem;">|</span>
 
 
 				<div>
@@ -157,18 +156,18 @@
 		</div>
 
 	</section>
-	<section style="margin-top:-6rem">
+	<section style="margin-top:-4rem; width: 100%;">
 		<div class="" style=" display:flex ; font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center">
 			<div>
 
-			<BoxAnimation  />
-			</div>
+			
 			<img style="width:550px; height:500px;" src="/imgs/maindashboard/logo.png" /> 
-			<BoxAnimation />
+			</div>
+			
 
 		</div>
 		<div style="font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center; display:flex;">
-			<div style="margin-top:-2rem; width:50%;">
+			<div style="margin-top:-2rem; width:50%; font-size:16px;  font-weight: bold; color:white; backdrop-filter: blur(1rem); backdrop-filter:drop-shadow(20%);  justify-items: baseline ; background-color: rgba(0, 0, 0, 0.4);">
 				<p style="">"Perched amidst the misty hills and emerald tea plantations of Nuwara Eliya, Solitary Green Resort offers a serene escape into nature’s embrace. This boutique retreat combines tranquility and elegance, featuring private terraces with breathtaking views of rolling landscapes and lush greenery. Immerse yourself in the cool mountain air, unwind in comfort, and experience the perfect blend of luxury and solitude in Sri Lanka’s scenic highlands."</p>
 
 			</div>
@@ -179,6 +178,7 @@
 			</div>
 		</div>
 	</section>
+
 	<section >
 		<div>
 			<MudPaper Class="pa-4 bg-container-allSection" Style="background-image:url(Images/ClientHomeImg/greanBackground3.jpg)">
@@ -238,17 +238,15 @@
 	</section>
 	
 		
-	<section class="bg-container-allSection" style="background-image:url();">
-
-		<div class="video-container">
-			<video controls="controls">
+	<section style="margin:0; padding:0; ">
+		<div class="video-container" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; overflow:hidden;">
+			<video autoplay loop muted playsinline
+				   style="width:100vw; height:100vh; object-fit:cover; backdrop-filter: brightness(50%);">
 				<source src="/video/clientportel/promovideo.mp4" type="video/mp4" />
 			</video>
-
 		</div>
-
-
 	</section>
+
 	<section>
 		
 	</section>

@@ -2,73 +2,85 @@
 
 @inherits LayoutComponentBase
 
+<div>
+	<div style="">
 
-<div style="" >
-	
-	
-	<div class="card-header" style=" ">
-		<div style="color:white;font-family: cursive; " ; font-weight:bold;">
-			<h4 style="margin-left:-78rem; font-size:18px;">
-				SP SOFT
-			</h4>
-		</div>
-		
+		<div class="card-header" style=" ">
+			<div style="color:white;font-family: cursive; " ; font-weight:bold;">
+				<h4 style="margin-left:-78rem; font-size:18px;">
+					SP SOFT
+				</h4>
+			</div>
 
-		
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="Auth/Loging">
-				<span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-			</NavLink>
+
+
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="Auth/Loging">
+					<span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
+				</NavLink>
+			</div>
+
 		</div>
-		
+
 	</div>
-	
-</div>
-<div class="fixed-div">
-	<div style="font-size:25px;">
+
+	<div class="fixed-div">
+		<div style="font-size:25px;">
 			Solitary Green Resort
 		</div>
-	<div class="nav-item px-3" >
-		<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-			<span  class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> HOME
-		</NavLink>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> HOME
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> PACKAGES
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> DINING
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> GALLERY
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> SPA
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<input class="btn btn-outline-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
+		</div>
+
+
 	</div>
-	<div class="nav-item px-3">
-		<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-			<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> PACKAGES
-		</NavLink>
-	</div>
-	<div class="nav-item px-3">
-		<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-			<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> DINING
-		</NavLink>
-	</div>
-	<div class="nav-item px-3">
-		<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-			<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> GALLERY
-		</NavLink>
-	</div>
-	<div class="nav-item px-3">
-		<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-			<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> SPA
-		</NavLink>
-	</div>
-	<div class="nav-item px-3">
-		<input class="btn btn-outline-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
+
+
+
+
+	<div style="">
+		<MudLayout>
+			<MudMainContent>
+
+				@Body
+			</MudMainContent>
+
+		</MudLayout>
 	</div>
 
 	
 </div>
-<div style="">
-	<MudLayout>
-		<MudMainContent>
-			
-			@Body
-		</MudMainContent>
-		
-	</MudLayout>
-</div>
 
+<footer>
+	<div class="bg-dark">
+		<h3>this is footer</h3>
+	</div>
+</footer>
 
 <style>
 	html {
