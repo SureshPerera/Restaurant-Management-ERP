@@ -1,9 +1,170 @@
 ﻿@page "/Reservations/CheckInOut"
+@using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
+<div>
+	<h3 class="mb-3 text-center">Check In - Out Management</h3>
+</div>
+<div class="checkOutTop flex gap-5">
+	<div>
+		<div class="search">
+			<input id="search" placeholder="Search..." type="text">
+			<button type="submit">Go</button>
+		</div>
+	</div>
+	<div>
+		<div>
+			<label>From :</label>
+			<input type="date" name="name" value="" placeholder="From"/>
+		</div>
+		<div>
+			<label>To :</label>
+			<input type="date" name="name" value="" placeholder="To" />
+		</div>
+	</div>
+	<div>
+		<div>
+			<input type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation" />
+		</div>
+	</div>
+</div>
+<div style="display:flex; flex-direction: column; gap: 2rem;">
+	<section>
+		<div>
+			<div style="width : 300px;height: 200px; margin-left: 9rem">
+				@if (directBookingModels == null)
+				{
+					<div class="flex" style="justify-content: center">
+						<Searching />
+					</div>
+				}
+				else
+				{
+					<table class="table">
+						<thead class="bg-light">
+							<tr class="table">
+								<td>Name</td>
+								<td>Check-In</td>
+								<td>Check-Out</td>
+								<td>Agent Name</td>
+								<td>Status</td>
+								<td>Room Id</td>
+								<td>Voucher No</td>
 
-<h3>Check In - Out Index</h3>
 
+
+							</tr>
+						</thead>
+						<tbody class="bg-light">
+							@foreach (var item in directBookingModels)
+							{
+								<tr>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+									<td></td>
+									<th></th>
+									<th></th>
+
+								</tr>
+							}
+						</tbody>
+
+					</table>
+				}
+
+			</div>
+
+		</div>
+	</section>
+
+	<section style="">
+		<div style="display:flex; flex-direction:column; gap: 0.5rem;">
+			<div>
+				<label>Booking Status : </label>
+				<label></label>
+			</div>
+			<div>
+				<label>Current Balance : </label>
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="Conform" />
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="Advance Payment" />
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="Amend Booking" />
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="GRC Print" />
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="RCV Print" />
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="Cancellation" />
+			</div>
+			<div>
+				<input type="button" class="btn btn-success" name="name" value="Check-In" />
+			</div>
+		</div>
+
+	</section>
+</div>
+
+
+<style>
+	/* From Uiverse.io by Bodyhc */
+	.search {
+		display: inline-block;
+		position: relative;
+	}
+
+		.search input[type="text"] {
+			width: 200px;
+			padding: 10px;
+			border: none;
+			border-radius: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.search button[type="submit"] {
+			background-color: #4e99e9;
+			border: none;
+			color: #fff;
+			cursor: pointer;
+			padding: 10px 20px;
+			border-radius: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			position: absolute;
+			top: 0;
+			right: 0;
+			transition: .9s ease;
+		}
+
+			.search button[type="submit"]:hover {
+				transform: scale(1.1);
+				color: rgb(255, 255, 255);
+				background-color: blue;
+			}
+
+</style>
+@inject HttpClient Http
 @code {
+	private List<DirectBookingModel>? directBookingModels;
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
 
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error Massage : " + ex.Message);
+		}
+	}
 }
