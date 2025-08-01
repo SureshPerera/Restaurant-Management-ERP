@@ -1,13 +1,191 @@
-﻿<div class="checkInOutContainer">
-	@* logo *@
-	<div class="">
-		<img src="/imgs/maindashboard/logo.png" />
-	</div>
-	<div>
-		<label>Solitory Green Rosort</label>
-		<label></label><label></label>
-	</div>
+﻿<div style="flex-wrap: wrap; ">
+	<section>
+		<div class="checkInOutContainer justify-content-between flex" style="padding: 20px">
+			@* logo *@
+			<div class="" style="  border-radius: 5rem;">
+				<img src="/imgs/maindashboard/logo.png" width="200" height="200" />
+			</div>
+			<div style="display:flex; flex-direction:column;background-color: azure; margin: 5px; padding: 2rem;
+				border-radius: 1rem 2rem;">
+				
+				<label>Solitory Green Rosort</label>
+				<br />
+				<label>Oddington Estate,</label>
+				<br />
+				<label>Lindula,</label>
+				<br />
+				<label>Nuwara Eliya, Sri Lanka.</label>
+				<br />
+				<label>0761733573</label>
+				<br />
+				<label>sgncabins6@gmail.com</label>
+			</div>
+		</div>
+	</section>
+	<section style="background-color: azure; margin: 5px; padding: 2px;">
+		<div class="flex flex-wrap">
+			<div style="width:50%; position:inherit; display:flex; flex-direction:column; gap: 0.5rem;" class="input-container">
+				<label style="background-color: aquamarine ; font-size: 18px;">Profoma Invoice</label>
+				<div class="justify-content-between flex">
+					<label>Reserve Num :</label>
+					<input readonly id="inputs" type="text" name="reserveNum" value="" style="" />
+					<label>Status :</label>
+					<input readonly id="inputs" type="text" name="status" value="" />
+				</div>
+				<div class="justify-content-between flex">
+					<label>Check In Type :</label>
+					<input readonly id="inputs" type="text" name="checkType" value="" style="width: 8rem;" /> <br />
+				</div>
+				<div class="justify-content-between flex">
+					<label>Customer Type :</label>
+					<input readonly id="inputs" type="text" name="customerType" value="" style="width: 8rem;" /> <br />
+				</div>
+				<div class="justify-content-between flex">
+					<label>Accomadation Type :</label>
+					<input readonly id="inputs" type="text" name="accomadationType" value="" style="" />
+				</div>
+				
+				<div class="justify-content-between flex">
+					<label>Voucher No :</label>	
+					<input readonly id="inputs" type="text" name="VoucherNo" value="" style="margin-left: 1rem;" />
+					<label>Tour No :</label>	
+					<input readonly id="inputs" type="text" name="tourNo" value="" style=""  />
+				</div>
+			</div>
+			<div style="display:flex; flex-direction:column;">
+				<label style="background-color: aquamarine; font-size: 18px;">-</label>
+				<div class="justify-content-between flex">
+					<label>Customer Name : </label> <label class="lables">A.L.Chandrasiri</label><br />
+				</div>
+				<div class ="justify-content-between flex">
+					<label>Customer Address : </label> <label class="lables">Wellawaya, Rathmalana</label><br />
+				</div>
+				<div class="justify-content-between flex">
+					<label>Customer Phone : </label> <label class="lables">+94-703914685</label><br />
+				</div>
+				<div class="justify-content-between flex">
+					<label>Customer Email : </label> <label class="lables">aniki@gmail.com</label><br />
+				</div>
+				<div class="justify-content-between flex">
+					<label>Aget Name : </label> <label style="margin-right: 10rem;" class="lables">None</label>
+				</div>
+				<div style="display: flex; flex-direction: row; gap: 5rem">
+					<label>Adults : </label> <label class="lables"></label>
+					<label>Kids : </label> <label class ="lables"></label>
+				</div>
+				<div style="display: flex; flex-direction: row; gap: 4rem">
+					<label>USD Exch. :</label>
+					<input readonly style="height: 1.5rem; width: 3rem; border:2px solid black" type="text" name="usdExg" value="" />
+					<label style="display: flex; flex-wrap:wrap;">Room rate per day :</label>
+					<input readonly style="height: 1.5rem; width: 3rem; border:2px solid black" type="text" name="usdExg" value="" />
+				</div>
+			</div>
+		</div>
+	</section>
+	<section style="background-color: azure; margin: 5px; padding: 2px;">
+		<div style="display:flex; flex-direction:column;gap:0.5rem;">
+			<label style="background-color: aquamarine; font-size: 18px;">Total Stay (USD) </label>
+			<div class="justify-content-between flex flex-wrap">
+				<div>
+					<label>From</label><br />
+					<label class="lables"></label>
+				</div>
+				<div>
+					<label>To</label><br />
+					<label class="lables"></label>
+				</div>
+				<div>
+					<label>Basis</label><br />
+					<label class="lables">Full Board</label>
+				</div>
+				<div>
+					<label>Adults Stay</label><br />
+					<label class="lables"></label>
+				</div>
+				<div>
+					<label>Kid Stay</label><br />
+					<label class="lables"></label>
+				</div>
+				<div>
+					<label>Total</label><br />
+					<label class="lables"></label>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section style="background-color: azure; margin: 5px; padding: 2px;">
+		<label style="background-color: aquamarine; width:100%; font-size: 18px;">-</label>
+		<div>
+
+			<div class="justify-content-center flex gap-2" >
+				<div >
+					<label>Check_In Date : </label> <input readonly type="date" name="checkIndate" value="" /><br /><br />
+					<label>Arrival Time : </label>	<input type="time" name="arivalTime" value="" />
+				</div>
+				<div>
+					<label>Check_Out Date : </label> <input readonly type="date" name="checkOutdate" value="" /><br /><br />
+					<label>Depature Time : </label>	<input  type="time" name="depatureTime" value="" />
+				</div>
+			</div>
+		</div>
+	</section>
+	<section style="background-color: azure; margin: 5px; padding: 2px;">
+		<div class="" style="display:flex; flex-direction:column;gap:0.5rem;">
+			<label style="background-color: aquamarine; width:100%; font-size: 18px;">Discription</label>
+			<div class="justify-content-between flex">
+				<label>+ Adults Stay Total(LKR)</label>
+				<label>500</label>
+			</div>
+			<div class="justify-content-between flex">
+				<label>+ Kids Stay Total(LKR)</label>
+				<label>400</label>
+			</div>
+			<div class="justify-content-between flex">
+				<label>Grand Total (LKR) in c. tax</label>
+				<label>500</label>
+			</div>
+			<div class="justify-content-between flex">
+				<label>- Total Advance Payoment</label>
+				<label>100</label>
+			</div>
+			<div class="justify-content-between flex">
+				<label>Total Balance (LKR)</label>
+				<label>1000</label>
+			</div>
+			<div class="justify-content-between flex">
+				<label>Total Balance (USD)</label>
+				<label>10</label>
+			</div>
+			
+		</div>
+	</section>
+	<section>
+		<div class="" style="justify-items:center" >
+			<div><label>Remark</label></div>
+			<div><label>Trans part a Management</label></div>
+			<div><label>Powerd by SP SOFT PVT</label></div>
+		</div>
+		
+	</section>
 </div>
+
+<style>
+	#inputs{
+		border: 2px solid black;
+		height: 1.5rem;
+		width: 5rem;
+		/* margin-left: 3.5rem; */
+	}
+	label{
+		font-weight: bold;
+	}
+
+	.lables {
+		background-color: white;
+
+	}
+	
+</style>
 
 @code {
 

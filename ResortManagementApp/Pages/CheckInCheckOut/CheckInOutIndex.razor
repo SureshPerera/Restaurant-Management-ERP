@@ -2,118 +2,127 @@
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
-
-<div>
-	<h3 class="mb-3 text-center">Check In - Out Management</h3>
-</div>
-<div class="checkOutTop flex gap-5">
+<div style="flex-wrap:wrap;">
 	<div>
-		<div class="search">
-			<input id="search" placeholder="Search..." type="text">
-			<button type="submit">Go</button>
+		<h3 class="mb-3 text-center">Check In - Out Management</h3>
+	</div>
+	<div class="checkOutTop flex gap-5">
+		<div>
+			<div class="search">
+				<input id="search" placeholder="Search..." type="text">
+				<button type="submit">Go</button>
+			</div>
+		</div>
+		<div>
+			<div>
+				<label>From :</label>
+				<input type="date" name="name" value="" placeholder="From" />
+			</div>
+			<div>
+				<label>To :</label>
+				<input type="date" name="name" value="" placeholder="To" />
+			</div>
+		</div>
+		<div>
+			<div>
+				<input type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation" />
+			</div>
 		</div>
 	</div>
-	<div>
-		<div>
-			<label>From :</label>
-			<input type="date" name="name" value="" placeholder="From"/>
-		</div>
-		<div>
-			<label>To :</label>
-			<input type="date" name="name" value="" placeholder="To" />
-		</div>
-	</div>
-	<div>
-		<div>
-			<input type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation" />
-		</div>
-	</div>
-</div>
-<div style="display:flex; flex-direction: column; gap: 2rem;">
-	<section>
-		<div>
-			<div style="width : 300px;height: 200px; margin-left: 9rem">
-				@if (directBookingModels == null)
-				{
-					<div class="flex" style="justify-content: center">
-						<Searching />
-					</div>
-				}
-				else
-				{
-					<table class="table">
-						<thead class="bg-light">
-							<tr class="table">
-								<td>Name</td>
-								<td>Check-In</td>
-								<td>Check-Out</td>
-								<td>Agent Name</td>
-								<td>Status</td>
-								<td>Room Id</td>
-								<td>Voucher No</td>
+	<div style="display:flex; flex-direction: column; gap: 2rem;">
+		<section>
+			<div>
+				<div style="width : 300px;height: 200px; margin-left: 9rem">
+					@if (directBookingModels == null)
+					{
+						<div class="flex" style="justify-content: center">
+							<Searching />
+						</div>
+					}
+					else
+					{
+						<table class="table">
+							<thead class="bg-light">
+								<tr class="table">
+									<td>Name</td>
+									<td>Check-In</td>
+									<td>Check-Out</td>
+									<td>Agent Name</td>
+									<td>Status</td>
+									<td>Room Id</td>
+									<td>Voucher No</td>
 
 
-
-							</tr>
-						</thead>
-						<tbody class="bg-light">
-							@foreach (var item in directBookingModels)
-							{
-								<tr>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<td></td>
-									<th></th>
-									<th></th>
 
 								</tr>
-							}
-						</tbody>
+							</thead>
+							<tbody class="bg-light">
+								@foreach (var item in directBookingModels)
+								{
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<td></td>
+										<th></th>
+										<th></th>
 
-					</table>
-				}
+									</tr>
+								}
+							</tbody>
+
+						</table>
+					}
+
+				</div>
 
 			</div>
+		</section>
 
-		</div>
-	</section>
+		<section style="">
+			<div style="display:flex; flex-direction:column; gap: 0.5rem;">
+				<div>
+					<label>Booking Status : </label>
+					<label></label>
+				</div>
+				<div>
+					<label>Current Balance : </label>
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="Conform" />
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="Advance Payment" />
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="Amend Booking" />
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="GRC Print" />
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="RCV Print" />
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="Cancellation" />
+				</div>
+				<div>
+					<input type="button" class="btn btn-success" name="name" value="Check-In" />
+				</div>
+			</div>
+			<div class="justify-content-end flex">
+				<div class="" style="width: 80% ; margin:10px; background-color: antiquewhite;
+				margin-top: -26rem; border-radius: 2rem 1rem">
+					<CheckInInvoice />
+				</div>
+			</div>
+		</section>
 
-	<section style="">
-		<div style="display:flex; flex-direction:column; gap: 0.5rem;">
-			<div>
-				<label>Booking Status : </label>
-				<label></label>
-			</div>
-			<div>
-				<label>Current Balance : </label>
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="Conform" />
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="Advance Payment" />
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="Amend Booking" />
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="GRC Print" />
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="RCV Print" />
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="Cancellation" />
-			</div>
-			<div>
-				<input type="button" class="btn btn-success" name="name" value="Check-In" />
-			</div>
-		</div>
 
-	</section>
+	</div>
 </div>
+
 
 
 <style>
