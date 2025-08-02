@@ -6,7 +6,7 @@
 	<div>
 		<h3 class="mb-3 text-center">Check In - Out Management</h3>
 	</div>
-	<div class="checkOutTop flex gap-5">
+	<div class="checkOutTop flex gap-5" style="backdrop-filter:blur(100%); background-color:cornsilk">
 		<div>
 			<div class="search">
 				<input id="search" placeholder="Search..." type="text">
@@ -29,9 +29,10 @@
 			</div>
 		</div>
 	</div>
-	<div style="display:flex; flex-direction: column; gap: 2rem;">
+	<br />
+	<div >
 		<section>
-			<div>
+			<div class="justify-content-center flex">
 				<div style="width : 300px;height: 200px; margin-left: 9rem">
 					@if (directBookingModels == null)
 					{
@@ -41,19 +42,16 @@
 					}
 					else
 					{
-						<table class="table">
+						<table class="table-hover table">
 							<thead class="bg-light">
 								<tr class="table">
-									<td>Name</td>
-									<td>Check-In</td>
-									<td>Check-Out</td>
-									<td>Agent Name</td>
-									<td>Status</td>
-									<td>Room Id</td>
-									<td>Voucher No</td>
-
-
-
+									<td> <label>Name</label></td>
+									<td><label>Check-In</label></td>
+									<td><label>Check-Out</label></td>
+									<td><label>Agent Name</label></td>
+									<td><label>Status</label></td>
+									<td><label>Room Id</label></td>
+									<td><label>Voucher No</label></td>
 								</tr>
 							</thead>
 							<tbody class="bg-light">
@@ -79,14 +77,14 @@
 
 			</div>
 		</section>
-
+		<br />
 		<section style="">
 			<div style="display:flex; flex-direction:column; gap: 0.5rem;">
-				<div>
+				<div style="padding:10px; background-color: azure; width:14rem;">
 					<label>Booking Status : </label>
 					<label></label>
 				</div>
-				<div>
+				<div style="padding:10px; background-color: azure; width:14rem;">
 					<label>Current Balance : </label>
 				</div>
 				<div>
