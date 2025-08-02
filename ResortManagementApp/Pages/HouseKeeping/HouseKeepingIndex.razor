@@ -7,9 +7,9 @@
 <div>
 	<section>
 		@* Room details table *@
-		<div>
+		<div class="justify-content-around flex">
 			<div>
-				<table class="table-hover table">
+				<table class="table-hover table" style="background-color:azure">
 					<thead>
 						<tr>
 							<th><label>Room Id</label></th>
@@ -31,14 +31,38 @@
 					</tbody>
 				</table>
 			</div>
-			<div>
-				<div>
+			<div style="">
+				<div style="background-color:antiquewhite; width: 18rem; padding: 15px; border-radius:	2rem 1rem; border:2px solid black;
+				display: flex; flex-direction: column; gap: 1.5rem;">
 					<div>
-						<label>Room Status </label>
-						<input type="text" name="roomStatus" value="" />
+						<label>Room Status </label><br />
+						
+						<select style="height: 2rem;width: 16rem;">
+							<option style="text-align: center">------Select------</option>
+							@foreach (var item in RoomStatus)
+							{
+								<option >@item</option>
+							}
+						</select>
 					</div>
 					<div>
-						<label></label>
+						<label>Last Clean by  </label><br />
+						<input type="text" name="lastCleanBy" value="" />
+					</div>
+					<div>
+						<label>Maintenance Status  </label><br />
+						<input type="text" name="maintenanceStatus" value="" />
+					</div>
+					<div>
+						<label>Maintenance Comment  </label><br />
+						<textarea name="maintenanceComment"></textarea>
+					</div>
+					<div>
+						<label>Additional Details  </label><br />
+						<textarea name="additionalDetails"></textarea>
+					</div>
+					<div class="justify-content-center flex">
+						<input class="btn btn-success" type="button" name="submit" value="Update" />
 					</div>
 				</div>
 			</div>
@@ -46,6 +70,22 @@
 	</section>
 </div>
 
+<style>
+	label{
+		font-weight:bold;
+	}
+	input{
+		height: 2rem;
+		width: 16rem;
+	}
+	textarea{
+		height: 3rem;
+		width: 16rem;
+	}
+</style>
 @code {
-
+	public List<string>? RoomStatus = new List<string>
+	{
+		"Occupied","Ready","Reserved","Not Availavle","Closed for Maintains","Under Construction"
+	};
 }
