@@ -1,8 +1,70 @@
 ﻿@page "/Reservations/Inhouse"
 @layout MainLayout
 
-<h3>InhouseIndex</h3>
+<div>
+	<h3 class="mb-3 text-center">Reservation Management</h3>
+</div>
+<div>
+	<section>
+		<div class="justify-content-around flex">
+			<div>
+				<input class="btn btn-warning" type="button" name="previousDay" value="Previous Day" />
+			</div>
+			<div>
+				<input class="" type="date" name="calander" value="" readonly />
+			</div>
+			<div>
+				<input class="btn btn-warning" type="button" name="nextDay" value="Next Day" />
+			</div>
+			<div>
+				<label>Pick Date</label><br />
+				<input  type="date" name="pickDate" value="" />
+			</div>
+		</div>
+	</section>
+	<section>
+		<div class="justify-content-between flex flex-wrap" style="width: 100%">
+			<div>
+				<input class="btn btn-success" type="button" name="viewBooking" value="View Booking" />
+			</div>
+			<div class="flex-wrap">
+				<ViewBookingGrid/>
+			</div>
+			<div>
+				<div>
+					<label style="font-size: 18px;">In House List</label><br />
+					<div>
+						<label>Adults -</label>
+						<label>19</label><br />
+					</div>
+					<div>
+						<label>Kids -</label>
+						<label>0</label><br />
+					</div>
+					<div>
+						<label>Infunts -</label>
+						<label>0</label>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div style="background-color: azure; width: fit-content;">
+			<div style="margin: 10px;">
 
+				<MealBrackDown/>
+			</div>
+		</div>
+	</section>
+</div>
+
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
 @code {
 
 }
