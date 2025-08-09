@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+
+
+<div class="page" style="width: 50%;">
+    <main>
+        <div class="position-relative min-vh-100 bg-container">
+            <div class="bg-overlay"></div>
+            <div class="position-relative z-1 container py-5">
+                @Body
+            </div>
+        </div>
+    </main>
+</div>
+<style>
+    .bg-container {
+        overflow: hidden;
+    }
+
+    .bg-overlay {
+        position: absolute;
+        inset: 0;
+        background-image: url('/imgs/reservation/background.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.3;
+        z-index: 0;
+    }
+</style>

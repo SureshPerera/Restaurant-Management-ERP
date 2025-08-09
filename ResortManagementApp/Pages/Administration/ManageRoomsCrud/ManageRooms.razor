@@ -1,0 +1,76 @@
+﻿@page "/Administration/ManageRooms"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
+@layout MainLayout
+
+<div>
+	<div>
+		<div>
+			<div>
+				<a href="/Reservations/DirectBookingCreate" class="btn btn-primary mb-3">Register Customer</a>
+			</div>
+			<div>
+				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
+			</div>
+		</div>
+		<div>
+			@if (Rooms == null)
+			{
+				<Searching/>
+			}
+			<table class="table">
+				<thead class="bg-light">
+					<tr class="table">
+						<td>Room Id</td>
+						<td>Room Types</td>
+						<td>Room Floor</td>
+						<td>Room Status</td>
+						<td>Maintanance</td>
+						<td>Actions</td>
+
+					</tr>
+				</thead>
+				<tbody class="bg-light">
+					@if (Rooms == null)
+					{
+						<Searching />
+					}
+					@foreach (var item in Rooms)
+					{
+						<tr>
+							<th>@(item.RoomId)</th>
+							<th>@item.RoomType</th>
+							<th>@item.RoomFloor</th>
+							<th>@item.RoomStatus</th>
+							<th>@item.MaintainStatus</th>
+							<th style="white-space:nowrap">
+								<a class="btn btn-primary btn-sm" href="/Administration/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/Delete/@item.Id">Delete</a>
+							</th>
+
+						</tr>
+					}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+</div>
+
+@code {
+	public List<Rooms> Rooms = new List<Rooms>();
+
+	protected override void OnInitialized()
+	{
+		Rooms.Add(new Models.Administration.ManageRooms.Rooms
+			{
+				RoomId = "1",
+				RoomType = "Lucsary",
+				RoomFloor ="2",
+				RoomStatus = "Ready",
+				MaintainStatus = "Occupide"
+			});
+	}
+
+}

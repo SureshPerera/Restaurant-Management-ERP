@@ -1,0 +1,25 @@
+﻿@* @page "/Administration/Delete/{Id:guid}"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3">Delete Customer</h3>
+	@if (Rooms == null)
+	{
+		<p><em>Loading customer details...</em></p>
+	}
+	<p>Are you sure you want to delete customer with Name  <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong> </p>
+
+	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
+	<a class="btn btn-secondary" href="/Reservations/DirectBooking">Cancel</a>
+</div>
+@code {
+	public List<Rooms> Rooms = new List<Rooms>();
+	public List<RoomsDto> RoomsDtos = new List<RoomsDto>();
+	private Task DeleteCustomer(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}
+ *@

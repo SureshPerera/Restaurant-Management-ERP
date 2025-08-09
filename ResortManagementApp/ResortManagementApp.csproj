@@ -15,6 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Administration\ManagePackages\" />
+    <Folder Include="Models\Administration\ManageAgents\" />
+    <Folder Include="Models\Administration\ManageExRates\" />
+    <Folder Include="Models\Administration\ManageExtra\" />
+    <Folder Include="Models\Administration\ReportAnalysis\" />
     <Folder Include="Service\" />
     <Folder Include="wwwroot\Imgs\ClientPotal\Video\" />
   </ItemGroup>
