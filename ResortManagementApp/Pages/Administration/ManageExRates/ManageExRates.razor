@@ -1,0 +1,78 @@
+﻿@page "/Administration/ManageExRates"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Administration.ManageExRates
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3 text-center">Manage Exchange Rates</h3>
+</div>
+<div>
+	<div>
+		<div>
+			<div>
+				<a href="/Administration/ManageExRates/Create" class="btn btn-primary mb-3">Add New Currency</a>
+			</div>
+			<div>
+				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
+			</div>
+		</div>
+		<div>
+			@if (ExchangeRatesDtos == null)
+			{
+				<Searching />
+			}
+			<table class="table">
+				<thead class="bg-light">
+					<tr class="table">
+						<td>Currency Name</td>
+						<td>Selling</td>
+						<td>Buying</td>
+						<td>Actions</td>
+
+
+					</tr>
+				</thead>
+				<tbody class="bg-light">
+					@if (ExchangeRatesDtos == null)
+					{
+						<Searching />
+					}
+					@foreach (var item in ExchangeRatesDtos)
+					{
+						<tr>
+							<th>@(item.CurrencyName)</th>
+							<th>@item.SellingRate</th>
+							<th>@item.BuyingRate</th>
+							<th style="white-space:nowrap">
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageExRates/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManageExRates/Delete/@item.Id">Delete</a>
+							</th>
+
+						</tr>
+					}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+</div>
+
+@code {
+
+	public ExchangeRates? ExchangeRates { get; set; }
+
+	public List<ExchangeRatesDto> ExchangeRatesDtos { get; set; } = new List<ExchangeRatesDto>();
+	protected override void OnInitialized()
+	{
+		ExchangeRatesDtos.Add(new ExchangeRatesDto
+		{
+			CurrencyName = "USD",
+			SellingRate  = 300.37,
+			BuyingRate = 312
+		});
+	}
+
+}

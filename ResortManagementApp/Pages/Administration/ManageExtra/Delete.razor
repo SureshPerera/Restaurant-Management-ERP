@@ -1,0 +1,32 @@
+﻿@page "/Administration/ManageExtra/Delete/{Id:guid}"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Administration.ManageExtra
+@using ResortManagementApp.Models.Administration.ManagePackages
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
+
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3">Delete Extra Charge</h3>
+	@if (ExtraChargersDto == null)
+	{
+		<p><Searching /></p>
+	}
+	<p>Are you sure you want to delete this extra charge with name  <strong>@Id</strong> </p>
+
+	<button class="btn btn-danger" @onclick="DeletePackages">Delete</button>
+	<a class="btn btn-secondary" href="/Administration/ManageExtra">Cancel</a>
+</div>
+@code {
+	[Parameter]
+	public Guid Id { get; set; }
+	public ExtraChanrgers? ExtraChargers { get; set; }
+	public ExtraChargersDto ExtraChargersDto { get; set; } = new();
+
+	private Task DeletePackages(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}

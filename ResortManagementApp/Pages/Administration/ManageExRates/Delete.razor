@@ -1,0 +1,29 @@
+﻿@page "/Administration/ManageExRates/Delete/{Id:guid}"
+
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageExRates
+@using ResortManagementApp.Pages.ComponentCss
+
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3">Delete Agent</h3>
+	@if (ExchangeRatesDto == null)
+	{
+		<p><Searching/></p>
+	}
+	<p>Are you sure you want to delete exchange with name  <strong>@Id</strong> </p>
+
+	<button class="btn btn-danger" @onclick="DeletePackages">Delete</button>
+	<a class="btn btn-secondary" href="/Administration/ManageExRates">Cancel</a>
+</div>
+@code {
+	[Parameter]
+	public Guid Id { get; set; }
+	public ExchangeRates? ExchangeRates { get; set; }
+	public ExchangeRatesDto ExchangeRatesDto { get; set; } = new();
+	private Task DeletePackages(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}
