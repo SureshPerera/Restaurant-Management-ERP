@@ -1,8 +1,72 @@
-﻿@page "/Reservations/SmartSelling"
+﻿@page "/SmartSalesBilling"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Administration.ManageExRates
+@using ResortManagementApp.Models.Administration.ManageExtra
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
-<h3>Smart Selling </h3>
+<div>
+	<h3 class="mb-3 text-center">Smart Sales Manager (Expenses)</h3>
+</div>
+<div>
+	<div>
+		<div>
+			<div>
+				<a href="/SmartSalesBilling/Create" class="btn btn-primary mb-3">Make Sale</a>
+			</div>
+		</div>
+		<div>
+			@if (ExtraChargersDtos == null)
+			{
+				<Searching />
+			}
+			<table class="table">
+				<thead class="bg-light">
+					<tr class="table">
+						<td>Sandry Item</td>
+						<td>Unit Price</td>
+						<td>Stock</td>
+						<td>Actions</td>
+
+					</tr>
+				</thead>
+				<tbody class="bg-light">
+					@if (ExtraChargersDtos == null)
+					{
+						<Searching />
+					}
+					@foreach (var item in ExtraChargersDtos)
+					{
+						<tr>
+							<th>@(item.ExtraChargeType)</th>
+
+							<th>@("Rs " + item.Amount)</th>
+							<th style="white-space:nowrap">
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManageExtra/Delete/@item.Id">Delete</a>
+							</th>
+
+						</tr>
+					}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+</div>
 
 @code {
+	public ExtraChanrgers? ExtraChargers { get; set; }
+	public List<ExtraChargersDto> ExtraChargersDtos { get; set; } = new();
+	protected override void OnInitialized()
+	{
+		ExtraChargersDtos.Add(new ExtraChargersDto
+		{
+			ExtraChargeType = "Bed",
+			Amount = 2850
+		});
+	}
 
 }
