@@ -14,14 +14,11 @@
 	<div>
 		<div>
 			<div>
-				<a href="/SmartSalesBilling/Create" class="btn btn-primary mb-3">Make Sale</a>
+				<a href="/ManageExtra/Create" class="btn btn-primary mb-3">Make Sale</a>
 			</div>
 		</div>
 		<div>
-			@if (ExtraChargersDtos == null)
-			{
-				<Searching />
-			}
+			
 			<table class="table">
 				<thead class="bg-light">
 					<tr class="table">
@@ -33,23 +30,7 @@
 					</tr>
 				</thead>
 				<tbody class="bg-light">
-					@if (ExtraChargersDtos == null)
-					{
-						<Searching />
-					}
-					@foreach (var item in ExtraChargersDtos)
-					{
-						<tr>
-							<th>@(item.ExtraChargeType)</th>
-
-							<th>@("Rs " + item.Amount)</th>
-							<th style="white-space:nowrap">
-								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Edit/@item.Id">Edit</a>
-								<a class="btn btn-danger btn-sm" href="/Administration/ManageExtra/Delete/@item.Id">Delete</a>
-							</th>
-
-						</tr>
-					}
+					
 				</tbody>
 
 			</table>
@@ -58,15 +39,10 @@
 </div>
 
 @code {
-	public ExtraChanrgers? ExtraChargers { get; set; }
-	public List<ExtraChargersDto> ExtraChargersDtos { get; set; } = new();
+	
 	protected override void OnInitialized()
 	{
-		ExtraChargersDtos.Add(new ExtraChargersDto
-		{
-			ExtraChargeType = "Bed",
-			Amount = 2850
-		});
+		
 	}
 
 }

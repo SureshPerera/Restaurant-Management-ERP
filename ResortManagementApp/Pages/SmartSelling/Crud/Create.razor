@@ -1,0 +1,140 @@
+﻿@page "/ManageExtra/Create"
+
+@using System.Text.Json.Nodes
+@using ResortManagementApp.Models.SmartSales
+@using ResortManagementApp.Models.SmartSales.Dtos
+@using ResortManagementApp.Pages.ComponentCss
+
+
+@layout MainLayout
+<div>
+	<h3 class="card mb-3 text-center">Expenses</h3>
+</div>
+
+<form class="form flex-wrap" style="  background-color:antiquewhite; margin-left: 0.5rem;">
+	@if (SmartSaleDto == null)
+	{
+		<p><Searching /></p>
+	}
+
+	<div class="justify-content-around flex flex-wrap">
+		<div class="">
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Sundry Item</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="SmartSaleDto.SandryItem">
+					<span class="text-danger">@Errors["SandryItem"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Unit Price</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="SmartSaleDto.UnitPrice">
+					<span class="text-danger">@Errors["UnitPrice"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label style="" class="col-md-4 col-form-label">Quantity</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="SmartSaleDto.Quantity">
+					<span class="text-danger">@Errors["Quantity"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label style="" class="col-md-4 col-form-label">Total</label>
+				<div class="col-md-6">
+					@{
+						var total = SmartSaleDto.Quantity * SmartSaleDto.UnitPrice;
+					}
+					<input class="form-control" type="text" @bind="total" readonly>
+					<span class="text-danger">@Errors["Quantity"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label style="" class="col-md-4 col-form-label">Remark</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="SmartSaleDto.Remark">
+					<span class="text-danger">@Errors["Quantity"]?[0]</span>
+
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label style="" class="col-md-4 col-form-label">Discount </label>
+			<div class="col-md-6">
+				<input class="form-control" type="text" @bind="SmartSaleDto.Discuount" placeholder="%">
+				<span class="text-danger">@Errors["Quantity"]?[0]</span>
+
+			</div>
+			<div class="text-capitalize" style="height:10rem ;font-size: 18px; border-radius:2rem 1rem;align-items: center;
+				font-weight:bold; background-color:beige">
+				<label class="col-md-6">Item Name </label>
+				<label>@SmartSaleDto.SandryItem</label><br />
+				<label class="col-md-6">Unit Price</label>
+				<label>Rs @SmartSaleDto.UnitPrice</label><br />
+				<label class="col-md-6">Quantity </label>
+				<label>@SmartSaleDto.Quantity</label><br/>
+				<label class="col-md-6">Sub Total </label>
+				<label>@total</label><br />
+				<label class="col-md-6">Total Discount </label>
+				<label>(Rs @SmartSaleDto.Discuount)</label><br/>
+				<label class="col-md-6">Grand Total</label>
+				@{
+					var GrandTotal = total - SmartSaleDto.Discuount;
+					SmartSaleDto.TotalLKR = GrandTotal;
+				}
+				<input  class="text-success m-1" style="font-size: 20px" value="Rs @GrandTotal">
+			</div>
+			
+		</div>
+		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
+
+			<div class="offset-md-1 col-md-3 d-grid" style="">
+				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="CreateExpence">Save</button>
+			</div>
+			<div class="offset-md-1 col-md-3 d-grid">
+				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
+			</div>
+			<div class="offset-md-1 col-md-3 d-grid">
+				<a class="btn btn-primary fw-bold" style="width:8rem;" href="Administration/ManageExtra">Back</a>
+			</div>
+		</div>
+	</div>
+
+	
+
+</form>
+
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 100%;
+		font-weight: bold;
+		height: fit-content;
+	}
+
+	.inp {
+		margin-left: 3rem;
+	}
+</style>
+
+@code {
+	public JsonNode Errors { get; set; } = new JsonObject();
+	public SmartSale? SmartSale { get; set; }
+	public SmartSaleDto SmartSaleDto { get; set; } = new();
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+	}
+	private Task CreateExpence(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}
