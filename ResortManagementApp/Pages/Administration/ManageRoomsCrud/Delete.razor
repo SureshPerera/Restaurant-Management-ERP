@@ -1,25 +1,28 @@
-﻿@* @page "/Administration/Delete/{Id:guid}"
+﻿@page "/Administration/Delete/{id:guid}"
 @using ResortManagementApp.Models.Administration.DTOS
 @using ResortManagementApp.Models.Administration.ManageRooms
+
 @layout MainLayout
 
 <div>
-	<h3 class="mb-3">Delete Customer</h3>
-	@if (Rooms == null)
+	<h3 class="mb-3">Delete customer</h3>
+	@if (RoomsDtos == null)
 	{
-		<p><em>Loading customer details...</em></p>
+		<p><em>loading customer details...</em></p>
 	}
-	<p>Are you sure you want to delete customer with Name  <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong> </p>
+	<p>are you sure you want to delete customer with name  <strong>@Id</strong> </p>
 
-	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
-	<a class="btn btn-secondary" href="/Reservations/DirectBooking">Cancel</a>
+	<button class="btn btn-danger" @onclick="deleteRooms">Delete</button>
+	<a class="btn btn-secondary" href="/Administration/ManageRooms">Cancel</a>
 </div>
 @code {
-	public List<Rooms> Rooms = new List<Rooms>();
-	public List<RoomsDto> RoomsDtos = new List<RoomsDto>();
-	private Task DeleteCustomer(MouseEventArgs args)
+	[Parameter]
+	public Guid Id { get; set; }
+	public ManageRooms? ManageRooms { get; set; }
+	public RoomsDto RoomsDtos { get; set; } = new();
+
+	private Task deleteRooms(MouseEventArgs args)
 	{
 		throw new NotImplementedException();
 	}
 }
- *@

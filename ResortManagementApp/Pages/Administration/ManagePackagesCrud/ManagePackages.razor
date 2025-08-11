@@ -1,0 +1,79 @@
+﻿@page "/Administration/ManagePackages"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3 text-center">Manage Packages</h3>
+</div>
+<div>
+	<div>
+		<div>
+			<div>
+				<a href="/Administration/ManagePackages/Create" class="btn btn-primary mb-3">Add New Package</a>
+			</div>
+			<div>
+				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
+			</div>
+		</div>
+		<div>
+			@if (PackagesDtos == null)
+			{
+				<Searching />
+			}
+			<table class="table">
+				<thead class="bg-light">
+					<tr class="table">
+						<td>Package Name</td>
+						<td>Basis</td>
+						<td>Entitlemeal 1</td>
+						<td>Entitlemeal 2</td>
+						<td>Entitlemeal 3</td>
+						<td>Entitlemeal 4</td>
+						<td>Actions</td>
+
+					</tr>
+				</thead>
+				<tbody class="bg-light">
+					@if (PackagesDtos == null)
+					{
+						<Searching />
+					}
+					@foreach (var item in PackagesDtos)
+					{
+						<tr>
+							<th>@(item.PackageName)</th>
+							<th>@item.Basis</th>
+							<th>@item.Entitlemeal1</th>
+							<th>@item.Entitlemeal2</th>
+							<th>@item.Entitlemeal3</th>
+							<th>@item.Entitlemeal4</th>
+							<th style="white-space:nowrap">
+								<a class="btn btn-primary btn-sm" href="/Administration/ManagePackages/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManagePackages/Delete/@item.Id">Delete</a>
+							</th>
+
+						</tr>
+					}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+</div>
+
+@code {
+	
+	public List<PackagesDto> PackagesDtos = new List<PackagesDto>();
+	protected override void OnInitialized()
+	{
+		PackagesDtos.Add(new PackagesDto
+			{
+				PackageName = "AspringD0",
+				Basis = "B&B",
+				Entitlemeal1 = "Breckfast, Lunch"
+			});
+	}
+
+}

@@ -12,106 +12,107 @@
 <div class="col-lg-8">
 	<h1 class="mb-5">Edit Customer</h1>
 </div>
-<form class="row form" style="height:43rem">
+<form class="row form"  style="  background-color:antiquewhite; margin-left: 0.5rem;">
 	@if (ManageRooms == null)
 	{
 		<p><em>Loading...</em></p>
 	}
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Room Id</label>
-		<div class="col-md-6" style="background-color:antiquewhite">
-			<input class="form-control-plaintext" value="@Id" readonly>
-			<span class="text-danger">@Errors["RoomId"]?[0]</span>
-		</div>
-	</div>
-	<div class="flex">
-		<div class="row mb-3">
-			<label class="col-md-5 col-form-label">Room Type</label>
-			<div class="col-md-4">
-				<input style="margin-left:1.9rem;width:9rem" class="form-control" @bind="RoomsDtos.RoomType">
-				<span class="text-danger">@Errors["RoomType"]?[0]</span>
+			<div class="row justify-content-around mb-3">
+				<label class="col-md-4 col-form-label">Room Id</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="@Id" readonly>
+					<span class="text-danger">@Errors["RoomId"]?[0]</span>
+				</div>
+			</div>
+	<div class="justify-content-around flex flex-wrap">
+		<div class="">
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Room Type</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="RoomsDtos.RoomType">
+					<span class="text-danger">@Errors["RoomType"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label style="" class="col-md-4 col-form-label">Room Floor</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="RoomsDtos.RoomFloor">
+					<span class="text-danger">@Errors["RoomFloor"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Room Status</label>
+				<div  class="col-md-6">
+					<textarea class="form-control" @bind="RoomsDtos.RoomStatus"></textarea>
+					<span class="text-danger">@Errors["RoomStatus"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Maintain Status</label>
+				<div class="col-md-6" >
+					<input class="form-control" type="text" @bind="RoomsDtos.MaintainStatus">
+					<span class="text-danger">@Errors["MaintainStatus"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Maximum Occupancy</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="RoomsDtos.MaximumOccupancy">
+					<span class="text-danger">@Errors["MaximumOccupancy"]?[0]</span>
+
+				</div>
 			</div>
 		</div>
-		<div class="row mb-4">
-			<label style="margin-left:1.9rem" class="col-md-3 col-form-label">Room Floor</label>
-			<div class="col-md-7">
-				<input class="form-control" @bind="RoomsDtos.RoomFloor">
-				<span class="text-danger">@Errors["RoomFloor"]?[0]</span>
+		<div class="">
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Last Cleaned Date</label>
+				<div class="col-md-6">
+					<input class="form-control" type="date" @bind="RoomsDtos.LastCleanedDate">
+					<span class="text-danger">@Errors["LastCleanedDate"]?[0]</span>
 
+				</div>
+			</div>
+
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Last Cleaned By</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="RoomsDtos.LastCleanedBy">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Maintenance Comment</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="RoomsDtos.MaintenanceComment">
+					<span class="text-danger">@Errors["MaintenanceComment"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Additional Details</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="RoomsDtos.AdditionalDetails">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Room Display Title</label>
+				<div class="col-md-6">
+					<textarea class="form-control" @bind="RoomsDtos.RoomDisplayTitle"></textarea>
+				</div>
 			</div>
 		</div>
-	</div>
+		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
 
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Room Status</label>
-		<div class="col-md-6">
-			<textarea class="form-control" @bind="RoomsDtos.RoomStatus"></textarea>
-			<span class="text-danger">@Errors["RoomStatus"]?[0]</span>
-
-		</div>
-	</div><div class="row mb-3">
-		<label class="col-md-2 col-form-label">Maintain Status</label>
-		<div class="col-md-6">
-			<input class="form-control" type="number" @bind="RoomsDtos.MaintainStatus">
-			<span class="text-danger">@Errors["MaintainStatus"]?[0]</span>
-
-		</div>
-	</div>
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Maximum Occupancy</label>
-		<div class="col-md-6">
-			<input class="form-control" type="email" @bind="RoomsDtos.MaximumOccupancy">
-			<span class="text-danger">@Errors["MaximumOccupancy"]?[0]</span>
-
-		</div>
-	</div>
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Last Cleaned Date</label>
-		<div class="col-md-6">
-			<input class="form-control" @bind="RoomsDtos.LastCleanedDate">
-			<span class="text-danger">@Errors["LastCleanedDate"]?[0]</span>
-
-		</div>
-	</div>
-
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Last Cleaned By</label>
-		<div class="col-md-6">
-			<input class="form-control" type="date" @bind="RoomsDtos.LastCleanedBy">
-		</div>
-	</div>
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Maintenance Comment</label>
-		<div class="col-md-6">
-			<input class="form-control" @bind="RoomsDtos.MaintenanceComment">
-			<span class="text-danger">@Errors["MaintenanceComment"]?[0]</span>
-
-		</div>
-	</div>
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Additional Details</label>
-		<div class="col-md-6">
-			<input class="form-control" type="number" @bind="RoomsDtos.AdditionalDetails">
-		</div>
-	</div>
-	<div class="row mb-3">
-		<label class="col-md-2 col-form-label">Room Display Title</label>
-		<div class="col-md-6">
-
-			<textarea class="form-control" @bind="RoomsDtos.RoomDisplayTitle"></textarea>
-		</div>
-	</div>
-	<div style="margin-top:-28rem;">
-		<div class="row gap-2" style="justify-content:right; margin-top:-10rem;">
-
-			<div class="offset-md-4 col-md-4 d-grid">
-				<button class="btn btn-success fw-bold" type="button" @onclick="UpdateRooms">Update Details</button>
+			<div class="offset-md-1 col-md-3 d-grid" style="">
+				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="UpdateRooms">Add</button>
 			</div>
-			<div class="offset-md-4 col-md-4 d-grid">
-				<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+			<div class="offset-md-1 col-md-3 d-grid">
+				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
 			</div>
-			<div class="offset-md-4 col-md-4 d-grid">
-				<a class="btn btn-primary fw-bold" href="/Reservations/DirectBooking">Back</a>
+			<div class="offset-md-1 col-md-3 d-grid">
+				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/Administration/ManageRooms">Back</a>
 			</div>
 		</div>
 	</div>
@@ -123,9 +124,13 @@
 		flex-direction: column;
 		background-color: transparent;
 		color: black;
-		width: 60rem;
-		margin: 1rem;
+		width: 90%;
 		font-weight: bold;
+		height: fit-content;
+	}
+
+	.inp {
+		margin-left: 3rem;
 	}
 </style>
 @code {
@@ -133,7 +138,7 @@
 	public Guid Id { get; set; }
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public ManageRooms? ManageRooms { get; set; }
-	public RoomsDto? RoomsDtos { get; set; }
+	public RoomsDto RoomsDtos { get; set; } = new();
 	private Task UpdateRooms(MouseEventArgs args)
 	{
 		throw new NotImplementedException();
