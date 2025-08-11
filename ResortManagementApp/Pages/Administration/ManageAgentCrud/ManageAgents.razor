@@ -1,0 +1,81 @@
+﻿@page "/Administration/ManageAgents"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3 text-center">Manage Agents</h3>
+</div>
+<div>
+	<div>
+		<div>
+			<div>
+				<a href="/Administration/ManageAgents/Create" class="btn btn-primary mb-3">Add New Agent</a>
+			</div>
+			<div>
+				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
+			</div>
+		</div>
+		<div>
+			@if (AgentDtos == null)
+			{
+				<Searching />
+			}
+			<table class="table">
+				<thead class="bg-light">
+					<tr class="table">
+						<td>Agent Name</td>
+						<td>Address</td>
+						<td>Contact Person</td>
+						<td>Phone</td>
+						<td>Actions</td>
+						
+
+					</tr>
+				</thead>
+				<tbody class="bg-light">
+					@if (AgentDtos == null)
+					{
+						<Searching />
+					}
+					@foreach (var item in AgentDtos)
+					{
+						<tr>
+							<th>@(item.AgentName)</th>
+							<th>@item.AgentAddress</th>
+							<th>@item.ContactPerson</th>
+							<th>@item.Mobile</th>
+							
+							<th style="white-space:nowrap">
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageAgents/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManageAgents/Delete/@item.Id">Delete</a>
+							</th>
+
+						</tr>
+					}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+</div>
+
+@code {
+
+	public Agents? Agents { get; set; }
+
+	public List<AgentDto> AgentDtos { get; set; } = new List<AgentDto>();
+	protected override void OnInitialized()
+	{
+		AgentDtos.Add(new AgentDto
+		{
+			AgentName = "Sudeera Prasanga", 
+			AgentAddress = "Wellawaya, Rathmalana",
+			ContactPerson = "Sudeera",
+			Mobile = "0703914685"
+		});
+	}
+
+}

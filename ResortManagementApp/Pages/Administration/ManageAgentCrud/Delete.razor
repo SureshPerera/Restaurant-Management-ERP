@@ -1,0 +1,31 @@
+﻿@page "/Administration/ManageAgents/Delete/{Id:guid}"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Administration.ManagePackages
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
+
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3">Delete Agent</h3>
+	@if (AgentDto == null)
+	{
+		<p><Searching /></p>
+	}
+	<p>Are you sure you want to delete agent with name  <strong>@Id</strong> </p>
+
+	<button class="btn btn-danger" @onclick="DeletePackages">Delete</button>
+	<a class="btn btn-secondary" href="/Administration/ManagePackages">Cancel</a>
+</div>
+@code {
+	[Parameter]
+	public Guid Id { get; set; }
+	public Agents Agent { get; set; }
+	public AgentDto AgentDto{ get; set; } = new();
+
+	private Task DeletePackages(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}

@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Administration\ManageAgents\" />
     <Folder Include="Models\Administration\ManageExRates\" />
     <Folder Include="Models\Administration\ManageExtra\" />
     <Folder Include="Models\Administration\ReportAnalysis\" />
