@@ -1,0 +1,64 @@
+﻿@page "/ClientManagement/AdvancePay"
+@using ResortManagementApp.Models.ClientManagement.AdvancePay
+@using System.Text.Json.Nodes
+
+<div>
+	<div>
+		<form action="/" method="post">
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Paying Amount</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="AdvancePayDto.PaymentType">
+					<span class="text-danger">@Errors["PaymentType"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Paying Amount</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="AdvancePayDto.OderType">
+					<span class="text-danger">@Errors["OderType"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Paying Amount</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="AdvancePayDto.OderDate">
+					<span class="text-danger">@Errors["OderDate"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4 col-form-label">Paying Amount</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					
+					<textarea class="form-control" type="text" @bind="AdvancePayDto.Details">
+
+					</textarea>
+					<span class="text-danger">@Errors["Details"]?[0]</span>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 100%;
+		font-weight: bold;
+		height: fit-content;
+	}
+
+	.inp {
+		margin-left: 3rem;
+	}
+</style>
+@code{
+	
+	public JsonNode Errors { get; set; } = new JsonObject();
+
+	public List<AdvancePay>? AdvancePay { get; set; }
+	public AdvancePayDto AdvancePayDto { get; set; } = new();
+
+}

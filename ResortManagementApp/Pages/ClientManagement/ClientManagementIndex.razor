@@ -1,0 +1,91 @@
+﻿@page "/ClientManagement"
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Administration.ManageExRates
+@using ResortManagementApp.Models.Administration.ManageExtra
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Models.ClientManagement.Client
+@using ResortManagementApp.Pages.ClientManagement.ClientCrud
+@using ResortManagementApp.Pages.ComponentCss
+@using ResortManagementApp.Pages.Reservations.DirectBookigModelCRUD
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3 text-center">Smart Sales Manager (Expenses)</h3>
+</div>
+<div>
+	<div>
+		<div>
+
+			<div>
+				<ClientIndex/>
+
+				@* <select>
+					<option>--Select--</option>
+					<option>SMS</option>
+					<option>Email</option>
+				</select> *@
+			</div>
+		</div>
+		<div>
+			@* <table class="table">
+				<thead class="bg-light">
+					<tr class="table">
+						<td>Id</td>
+						<td>First Name</td>
+						<td>Last Name</td>
+						<td>Phone</td>
+						<td>Email</td>
+						<td>Remark</td>
+						<td>Actions</td>
+					
+					</tr>
+				</thead>
+				<tbody class="bg-light">
+					<tr>
+						@if (Client == null)
+						{
+							<Searching />
+						}
+						@foreach (var item in Client)
+						{
+							<th>@item.Id</th>
+							<th>@item.FirstName</th>
+							<th>@item.LastName</th>
+							<th>@item.PhoneNumber</th>
+							<th>@item.NIC</th>
+							<th>@item.Email</th>
+							<th style="white-space:nowrap">
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManageExtra/Delete/@item.Id">Delete</a>
+							</th>
+						}
+					</tr>
+					
+				</tbody>
+
+			</table> *@
+		</div>
+	</div>
+</div>
+
+@code {
+	public List<Client> Client { get; set; } = new List<Client>();
+	public ClientDto ClientDto { get; set; } = new();
+
+	protected override void OnInitialized()
+	{
+		Client.Add(new Client
+		{
+			FirstName = "Genadasa",
+			LastName = "Chandrapala",
+			Address = "Welidalla, Nikadalupotha",
+			Email = "gunadasa.gmail.com",
+			NIC = "25142516",
+			PhoneNumber = "+94-703914685",
+			Remark = ""
+			
+		});
+	}
+
+}
