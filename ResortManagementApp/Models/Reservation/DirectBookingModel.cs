@@ -1,4 +1,5 @@
 ﻿
+using ResortManagementApp.Models.ClientManagement.AdvancePay;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,6 +35,7 @@ namespace ResortManagementApp.Models.Reservation
         public string? Remark { get; set; }
 
         public string CustomerType { get; set; }
+        public ICollection<AdvancePay> AdvancePays { get; set; }
 
 
     }

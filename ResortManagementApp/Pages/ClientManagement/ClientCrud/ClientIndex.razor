@@ -1,5 +1,7 @@
 ﻿@page "/ClientManagement/Client/ClientIndex"
 @using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Models.Reservation.DTO
+@using ResortManagementApp.Pages.ComponentCss
 @inject HttpClient Http
 @layout MainLayout
 
@@ -8,17 +10,16 @@
 </div>
 <div>
 	<div>
-		<a href="/ClientManagement/Client/Create" class="btn btn-primary mb-3">Add Customer</a>
+		<a href="/ClientManagement/Create" class="btn btn-primary mb-3">Add Customer</a>
 	</div>
-	<div>
-		<a href="/ClientManagement" class="btn btn-primary mb-3">Back</a>
-	</div>
+
 </div>
 
 <div>
 	@if (directBookingModels == null)
 	{
-		<p><em>Loading...</em></p>
+		<p><Searching /></p>
+
 	}
 	<table class="table">
 		<thead class="bg-light">
@@ -37,7 +38,8 @@
 		<tbody class="bg-light">
 			@if (directBookingModels == null)
 			{
-				<p><em>Loading...</em></p>
+				<p><Searching /></p>
+
 			}
 			@foreach (var item in directBookingModels)
 			{
@@ -52,8 +54,112 @@
 					<th>@item.Remark</th>
 					<th style="white-space:nowrap">
 						<a class="btn btn-outline-danger btn-sm" href="/ClientManagement/AdvancePay/@item.Id">Advance Pay</a>
-						<a class="btn btn-primary btn-sm" href="/ClientManagement/Client/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/ClientManagement/Client/Delete/@item.Id">Delete</a>
+						<a class="btn btn-primary btn-sm" href="/ClientManagement/DirectEdit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/ClientManagement/DirectDelete/@item.Id">Delete</a>
+					</th>
+
+				</tr>
+			}
+		</tbody>
+
+	</table>
+
+</div>
+<div>
+	<h3 class="mb-3 text-center">Online Booking</h3>
+</div>
+<div>
+	@if (directBookingModels == null)
+	{
+		<p><Searching /></p>
+
+	}
+	<table class="table">
+		<thead class="bg-light">
+			<tr class="table">
+				<td>Name</td>
+				<td>Phone Number</td>
+				<td>Address</td>
+				<td>EmailAddress</td>
+				<td>NIC</td>
+				<td>Nationality</td>
+				<td>Remark</td>
+				<td>Actions</td>
+
+			</tr>
+		</thead>
+		<tbody class="bg-light">
+			@if (directBookingModels == null)
+			{
+				<p><Searching/></p>
+			}
+			@foreach (var item in directBookingModels)
+			{
+				<tr>
+					<th>@(item.FirstName + " " + @item.LastName)</th>
+					<th>@item.PhoneNumber</th>
+					<th>@item.Address</th>
+					<th>@item.EmailAddress</th>
+					<th>@item.NIC</th>
+					<th>@item.Nationality</th>
+					<th>@item.Remark</th>
+					<th style="white-space:nowrap">
+						<a class="btn btn-outline-danger btn-sm" href="/ClientManagement/AdvancePay/@item.Id">Advance Pay</a>
+						<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
+					</th>
+
+				</tr>
+			}
+		</tbody>
+
+	</table>
+</div>
+<div>
+	<h3 class="mb-3 text-center">Agent Booking</h3>
+</div>
+<div>
+	<a href="/ClientManagement/Create" class="btn btn-primary mb-3">Add Customer</a>
+</div>
+<div>
+	@if (directBookingModels == null)
+	{
+		<p><Searching /></p>
+
+	}
+	<table class="table">
+		<thead class="bg-light">
+			<tr class="table">
+				<td>Name</td>
+				<td>Phone Number</td>
+				<td>Address</td>
+				<td>EmailAddress</td>
+				<td>NIC</td>
+				<td>Nationality</td>
+				<td>Remark</td>
+				<td>Actions</td>
+
+			</tr>
+		</thead>
+		<tbody class="bg-light">
+			@if (directBookingModels == null)
+			{
+				<p><Searching /></p>
+			}
+			@foreach (var item in directBookingModels)
+			{
+				<tr>
+					<th>@(item.FirstName + " " + @item.LastName)</th>
+					<th>@item.PhoneNumber</th>
+					<th>@item.Address</th>
+					<th>@item.EmailAddress</th>
+					<th>@item.NIC</th>
+					<th>@item.Nationality</th>
+					<th>@item.Remark</th>
+					<th style="white-space:nowrap">
+						<a class="btn btn-outline-danger btn-sm" href="/ClientManagement/AdvancePay/@item.Id">Advance Pay</a>
+						<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
 					</th>
 
 				</tr>
@@ -63,7 +169,11 @@
 	</table>
 </div>
 @code {
-	private List<DirectBookingModel>? directBookingModels;
+	public List<DirectBookingModel>? directBookingModels { get; set; }
+	public List<OnlineBooking>? OnlineBookings { get; set; }
+	public  List<OnlineBookingDto>? OnlineBookingsDto { get; set; }
+
+
 	protected override async Task OnInitializedAsync()
 	{
 		directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");

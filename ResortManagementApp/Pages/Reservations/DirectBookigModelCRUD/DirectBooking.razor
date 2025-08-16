@@ -1,5 +1,6 @@
 ﻿@page "/Reservations/DirectBooking"
 @using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Pages.ComponentCss
 @inject HttpClient Http
 @layout MainLayout
 
@@ -18,7 +19,7 @@
 <div>
 	@if (directBookingModels == null)
 	{
-		<p><em>Loading...</em></p>
+		<p><Searching/></p>
 	}
 	<table class="table">
 		<thead class="bg-light">

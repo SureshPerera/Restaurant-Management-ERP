@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ResortManagementApp.Pages.Reservations.DirectBookigModelCRUD;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ResortManagementApp.Models.ClientManagement.AdvancePay
 {
@@ -15,5 +17,8 @@ namespace ResortManagementApp.Models.ClientManagement.AdvancePay
         
         public DateTime OderDate { get; set; }
         public string Details { get; set; }
+        public Guid DirectBookingId { get; set; }
+        [ForeignKey(nameof(DirectBookingId))]
+        public DirectBooking? DirectBooking { get; set; }
     }
 }
