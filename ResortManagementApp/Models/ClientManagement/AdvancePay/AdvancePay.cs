@@ -11,7 +11,7 @@ namespace ResortManagementApp.Models.ClientManagement.AdvancePay
         [Required]
         public double PayingAmount{ get; set; }
         [Required]
-        public double PaymentType { get; set; }
+        public string PaymentType { get; set; }
         
         public string OderType { get; set; }
         

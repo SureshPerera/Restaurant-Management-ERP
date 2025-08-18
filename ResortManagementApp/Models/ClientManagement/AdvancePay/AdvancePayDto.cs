@@ -12,13 +12,13 @@ namespace ResortManagementApp.Models.ClientManagement.AdvancePay
        
         public double PayingAmount { get; set; }
        
-        public double PaymentType { get; set; }
+        public string PaymentType { get; set; }
 
         public string OderType { get; set; }
 
         public DateTime OderDate { get; set; }
         public string Details { get; set; }
-        public string DirectBookingId { get; set; }
+        public Guid DirectBookingId { get; set; }
         [ForeignKey(nameof(DirectBookingId))]
         public DirectBooking? DirectBooking { get; set; }
     }

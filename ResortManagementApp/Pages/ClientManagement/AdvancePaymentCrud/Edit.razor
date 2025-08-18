@@ -134,7 +134,7 @@
 	private async Task SaveCustomer(MouseEventArgs args)
 	{
 		var response = await http.PostAsJsonAsync("https://localhost:4000/api/DirectBooking", directBookingDTO);
-		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/ClientManagement"); }
 
 		var strResponce = await response.Content.ReadAsStringAsync();
 		Console.WriteLine("Json Response :" + strResponce);

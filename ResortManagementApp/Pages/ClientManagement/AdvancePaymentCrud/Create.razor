@@ -1,4 +1,4 @@
-﻿@page "/ClientManagement/Create"
+﻿@page "/ClientManagement/Create/{Id:guid}"
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
 
@@ -120,6 +120,8 @@
 @inject HttpClient http
 @inject NavigationManager navManager
 @code {
+	[Parameter]
+	public Guid guid { get; set; }
 	public DirectBookinDTO directBookingDTO { set; get; } = new();
 	public JsonNode Errors { set; get; } = new JsonObject();
 	private async Task SaveCustomer(MouseEventArgs args)

@@ -1,7 +1,8 @@
-﻿@page "/ClientManagement/Client/AdvancePayIndex"
+﻿@page "/ClientManagement/AdvancePay/{Id:guid}"
 @using ResortManagementApp.Models.ClientManagement.AdvancePay
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Pages.ComponentCss
+@using System.Text.Json.Nodes
 @inject HttpClient Http
 @layout MainLayout
 
@@ -9,65 +10,139 @@
 	<h3 class="mb-3 text-center">Advance Payment</h3>
 </div>
 <div>
-	@foreach (var item in AdvancePayDtos)
-	{
-		
-	<div>
-		<a href="/ClientManagement/Client/Create/@item.Id" class="btn btn-primary mb-3">Create Payment</a>
-	</div>
-	}
-	<div>
-		<a href="/ClientManagement" class="btn btn-primary mb-3">Back</a>
-	</div>
+	<form class="form">
+		<div class="flex" style="height: fit-content; width: fit-content;">
+			<div class="gap-4">
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Booking Id</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="AdvancePayDto.DirectBookingId">
+						<span class="text-danger">@Errors["DirectBookingId"]?[0]</span>
+					</div>
+				</div>
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Paying Amount</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="AdvancePayDto.PayingAmount">
+						<span class="text-danger">@Errors["PayingAmount"]?[0]</span>
+					</div>
+				</div>
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Payment Type</label>
+					<div class="col-md-8">
+						<select class="form-select" @bind="AdvancePayDto.PaymentType">
+							<options>--Select--</options>
+							@foreach (var item in PaymentType)
+							{
+								<option>@item</option>
+							}
+
+						</select>
+						<span class="text-danger">@Errors["PaymentType"]?[0]</span>
+					</div>
+				</div>
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Order Type</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="AdvancePayDto.OderType">
+						<span class="text-danger">@Errors["OderType"]?[0]</span>
+					</div>
+				</div>
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Order Date</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="AdvancePayDto.OderDate" readonly>
+						<span class="text-danger">@Errors["OderDate"]?[0]</span>
+					</div>
+				</div>
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Order Details</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="AdvancePayDto.Details">
+						<span class="text-danger">@Errors["Details"]?[0]</span>
+					</div>
+				</div>
+			</div>
+			<div class="">
+				@if (AdvancePayDto.PaymentType == "Bank")
+				{
+					<div  class="row form-group mb-3">
+						<label class="col-md-4 col-form-label">Bank Account No</label>
+						<div class="col-md-8">
+							<select class="form-select" >
+								<options>--Select--</options>
+								@foreach (var item in BankAccountNos)
+								{
+									<option>@item</option>
+								}
+
+							</select>
+							<span class="text-danger">@Errors["PaymentType"]?[0]</span>
+						</div>
+					</div>
+				}
+				
+			</div>
+			<div class="row">
+				<div>
+					<div class="row gap-2" style="justify-content:end; ">
+						<div class="offset-md-4 col-md-4 d-grid">
+							<button class="btn btn-success fw-bold" type="button" @onclick="MakePay">Pay</button>
+						</div>
+						<div class="offset-md-4 col-md-4 d-grid">
+							<a class="btn btn-primary fw-bold" href="/ClientManagement/AdvancePayHistory/@Id">Advance Pay History</a>
+						</div>
+						<div class="offset-md-4 col-md-4 d-grid">
+							<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+						</div>
+						<div class="offset-md-4 col-md-4 d-grid">
+							<a class="btn btn-primary fw-bold" href="/ClientManagement">Back</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</form>
+
 </div>
-
-<div>
-	@if (AdvancePayDtos == null)
-	{
-		<p><Searching/></p>
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 60rem;
+		font-weight: bold;
 	}
-	<table class="table">
-		<thead class="bg-light">
-			<tr class="table">
-				<td>Customer Id</td>
-				<td>Paying Amount</td>
-				<td>Payment Type</td>
-				<td>Order Type</td>
-				<td>Order Date</td>
-				<td>Order Details</td>
-				<td>Actions</td>
-			</tr>
-		</thead>
-		<tbody class="bg-light">
-			@if (AdvancePayDtos == null)
-			{
-				<p><Searching/></p>
-			}
-			@foreach (var item in AdvancePayDtos)
-			{
-				<tr>
-					<th></th>
-
-					<th>@item.PayingAmount</th>
-					<th>@item.PaymentType</th>
-					<th>@item.OderType</th>
-					<th>@item.OderDate</th>
-					<th>@item.Details</th>
-					<th style="white-space:nowrap">
-						<a class="btn btn-primary btn-sm" href="/ClientManagement/Client/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/ClientManagement/Client/Delete/@item.Id">Delete</a>
-					</th>
-
-				</tr>
-			}
-		</tbody>
-
-	</table>
-</div>
+</style>
 @code {
-	
+	[Parameter]
+	public Guid Id { get; set; }
 	public List<AdvancePay>? AdvancePays { get; set; }
-	public List<AdvancePayDto> AdvancePayDtos { get; set; } = new();
+	public AdvancePayDto AdvancePayDto { get; set; } = new();
 
-	
+	public JsonNode Errors { get; set; } = new JsonObject();
+	public List<string> PaymentType = new List<string>
+	{
+		"Cash","Card","Bank","Cheque","Vaucher","Takeaway"
+	};
+	public List<string> BankAccountNos = new List<string>
+	{
+		"BOC - 256854751","Peoples - 2513625421874568","HNB - 25364128"
+	};
+	protected override Task OnInitializedAsync()
+	{
+
+		AdvancePayDto.DirectBookingId = this.Id;
+
+		AdvancePayDto.OderDate = DateTime.Now;
+		return base.OnInitializedAsync();
+	}
+
+	private Task MakePay(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
 }

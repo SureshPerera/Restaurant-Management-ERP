@@ -1,19 +1,18 @@
-﻿@page "/Reservations/Delete/{Id:guid}"
+﻿@page "/ClientManagement/DirectDelete/{Id:guid}"
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Models.Reservation.DTO
-@using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
 <div>
 	<h3 class="mb-3">Delete Customer</h3>
 	@if (directBookingModel == null)
 	{
-		<p><Searching/>></p>
+		<p><em>Loading customer details...</em></p>
 	}
 	<p>Are you sure you want to delete customer with Name  <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong> </p>
-	
+
 	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
-	<a class="btn btn-secondary" href="/Reservations/DirectBooking">Cancel</a>
+	<a class="btn btn-secondary" href="/ClientManagement">Cancel</a>
 </div>
 
 @inject HttpClient http
@@ -31,15 +30,15 @@
 		try
 		{
 			// Fetch the customer's info by ID
-			 directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
-			
+			directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
+
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine("Error loading customer: " + ex.Message);
 		}
 	}
-	
+
 
 	public async Task DeleteCustomer()
 	{
@@ -47,12 +46,12 @@
 		{
 			var responce = await http.DeleteFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
 			
-			navManager.NavigateTo("/Reservations");
+			navManager.NavigateTo("/ClientManagement/Client");
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine("Erro : " + ex.Message);
+			Console.WriteLine("Error : " + ex.Message);
 		}
 	}
-	
+
 }
