@@ -1,0 +1,62 @@
+﻿@page "/UserManagement/Delete/{Id:guid}"
+@using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Models.Reservation.DTO
+@using ResortManagementApp.Models.UserManagement
+@using ResortManagementApp.Pages.ComponentCss
+@layout MainLayout
+
+<div>
+	<h3 class="mb-3">Delete User</h3>
+	@if (UserManagementDto == null)
+	{
+		<p><Searching />></p>
+	}
+	<p>Are you sure you want to delete user with Name  <strong>@UserManagementDto?.FirstName @UserManagementDto?.LastName</strong> </p>
+
+	<button class="btn btn-danger" @onclick="DeleteUser">Delete</button>
+	<a class="btn btn-secondary" href="/UserManagement">Cancel</a>
+</div>
+
+@inject HttpClient http
+@inject NavigationManager navManager
+
+
+@code {
+	[Parameter]
+	public Guid Id { get; set; }
+	public List<UserManagement>? UserManagements { get; set; }
+	public UserManagementDto UserManagementDto { get; set; } = new();
+
+	// protected override async Task OnInitializedAsync()
+	// {
+	// 	try
+	// 	{
+	// 		// Fetch the customer's info by ID
+	// 		directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
+
+	// 	}
+	// 	catch (Exception ex)
+	// 	{
+	// 		Console.WriteLine("Error loading customer: " + ex.Message);
+	// 	}
+	// }
+
+
+	// public async Task DeleteCustomer()
+	// {
+	// 	try
+	// 	{
+	// 		var responce = await http.DeleteFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
+
+	// 		navManager.NavigateTo("/Reservations");
+	// 	}
+	// 	catch (Exception ex)
+	// 	{
+	// 		Console.WriteLine("Erro : " + ex.Message);
+	// 	}
+	// }
+	private Task DeleteUser(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}

@@ -1,8 +1,81 @@
-﻿@page "/Reservations/UserManagement"
+﻿@page "/UserManagement"
+@using ResortManagementApp.Models.UserManagement
+@using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
-<h3>User Management </h3>
+<div>
+	<h3 class="mb-3 text-center">User Management</h3>
+</div>
+<div class="justify-content-between flex">
+	<div>
+		<a href="/UserManagement/Create" class="btn btn-primary mb-3">Register User</a>
+	</div>
+	<div>
+		<input @bind="Search" type="search" class="form-control input" placeholder="Search..." />
+	</div>
 
+</div>
+
+<div class="flex flex-wrap">
+	@if (UserManagementDto == null)
+	{
+		<p><Searching/></p>
+	}
+	<table class="table">
+		<thead class="bg-light">
+			<tr class="table">
+				<td>Staff Id</td>
+				<td>Name</td>
+				<td>NIC</td>
+				<td>Phone</td>
+				<td>Access Level</td>
+				<td>Comments</td>
+				<td>Actions</td>
+
+			</tr>
+		</thead>
+		<tbody class="bg-light">
+			@if (UserManagementDto == null)
+			{
+				<p><Searching/></p>
+			}
+			@foreach (var item in UserManagementDto)
+			{
+				<tr>
+					<th>@item.Id</th>
+					<th>@(item.FirstName + " " + @item.LastName)</th>
+					<th>@item.NIC</th>
+					<th>@item.PhoneNumber</th>
+					<th>@item.AccessLevel</th>
+					<th>@item.Comment</th>
+					<th style="white-space:nowrap">
+						<a class="btn btn-primary btn-sm" href="/UserManagement/Edit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/UserManagement/Delete/@item.Id">Delete</a>
+					</th>
+
+				</tr>
+			}
+		</tbody>
+
+	</table>
+</div>
 @code {
+	public List<UserManagement>? directBookingModels;
+	public List<UserManagementDto> UserManagementDto { get; set; } = new List<UserManagementDto>();
+	public string? Search { get; set; }
 
+	protected override async Task OnInitializedAsync()
+	{
+		UserManagementDto.Add(new UserManagementDto
+		{
+			Id = Guid.NewGuid(),
+			FirstName = "Gunadasa",
+			LastName = "Perera",
+			NIC = "200008136524",
+			PhoneNumber = "0703914685",
+			AccessLevel ="Staff",
+			Comment = "HouseKeeping Staff"
+		});
+		// directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+	}
 }

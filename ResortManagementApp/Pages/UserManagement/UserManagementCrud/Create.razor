@@ -1,0 +1,179 @@
+﻿@page "/UserManagement/Create"
+@using ResortManagementApp.Models.Reservation.DTO
+@using System.Text.Json.Nodes
+@using ResortManagementApp.Models.UserManagement
+
+@layout MainLayout
+
+<div class="card">
+	<h3 class="mb-3 text-center">Register User</h3>
+</div>
+
+<div class="col-lg-8">
+	<h1 class="title mb-5">New User</h1>
+</div>
+
+<form class="form flex flex-wrap">
+	<div class="flex">
+		<div class="row">
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">First Name</label>
+				<div class="col-md-6">
+					<input class="form-control" @bind="UserManagementDto.FirstName">
+					<span class="text-danger">@Errors["FirstName"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Last Name</label>
+				<div class="col-md-6">
+					<input class="form-control" @bind="UserManagementDto.LastName">
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Address</label>
+				<div class="col-md-6">
+					<textarea class="form-control" @bind="UserManagementDto.Address"></textarea>
+					<span class="text-danger">@Errors["FirstName"]?[0]</span>
+				</div>
+			</div><div class="row mb-3">
+				<label class="col-md-3 col-form-label">Phone Number</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="UserManagementDto.PhoneNumber">
+					<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Email Address</label>
+				<div class="col-md-6">
+					<input class="form-control" type="email" @bind="UserManagementDto.Email">
+					<span class="text-danger">@Errors["Address"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">NIC Number</label>
+				<div class="col-md-6">
+					<input class="form-control" @bind="UserManagementDto.NIC">
+					<span class="text-danger">@Errors["NIC"]?[0]</span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Date Of Birthday</label>
+				<div class="col-md-6">
+					<input class="form-control" type="date" @bind="UserManagementDto.DOB">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Access Level</label>
+				<div class="col-md-6">
+					<select class="form-control" @bind="UserManagementDto.AccessLevel">
+						<option>--Select--</option>
+						@foreach (var item in AcessLevel)
+						{
+							<option>@item</option>
+						}
+					</select>
+					<span class="text-danger">@Errors["Nationality"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Gender</label>
+				<div class="col-md-6">
+					<select class="form-control" @bind="UserManagementDto.Gender">
+						<option>--Select--</option>
+						@foreach (var item in Gender)
+						{
+							<option>@item</option>
+						}
+					</select>
+					<span class="text-danger">@Errors["Nationality"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Password</label>
+				<div class="col-md-6">
+					<input class="form-control" type="password" @bind="UserManagementDto.PassWord">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-3 col-form-label">Comments</label>
+				<div class="col-md-6">
+					<textarea class="form-control" @bind="UserManagementDto.Comment"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div style="">
+				<div class="row gap-2" style="">
+
+					<div class="">
+						<button class="btn btn-success fw-bold" type="button" @onclick="AddUsers">Add User</button>
+					</div>
+					<div class="">
+						<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+					</div>
+					<div class="">
+						<a class="btn btn-primary fw-bold" href="/UserManagement">Back</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</form>
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 60rem;
+		font-weight: bold;
+	}
+</style>
+
+@inject HttpClient http
+@inject NavigationManager navManager
+@code {
+	public List<UserManagement> UserManagements { get; set; } = new List<UserManagement>();
+	public UserManagementDto UserManagementDto { get; set; } = new();
+	public List<string> AcessLevel = new List<string>
+	{
+		"Staff","Administrator","SuperUser", "NewUser"
+	};
+	public List<string> Gender = new List<string>
+	{
+		"Male", "Female" ,"Other"
+	};
+
+	public JsonNode Errors { set; get; } = new JsonObject();
+
+	// private async Task SaveCustomer(MouseEventArgs args)
+	// {
+	// 	var response = await http.PostAsJsonAsync("https://localhost:4000/api/DirectBooking", directBookingDTO);
+	// 	if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
+
+	// 	var strResponce = await response.Content.ReadAsStringAsync();
+	// 	Console.WriteLine("Json Response :" + strResponce);
+
+	// 	try
+	// 	{
+	// 		var jsonResponce = JsonNode.Parse(strResponce);
+	// 		Errors = jsonResponce?["errors"] ?? new JsonObject();
+	// 	}
+	// 	catch (Exception ex)
+	// 	{
+	// 		Console.WriteLine(ex.Message);
+	// 	}
+	// }
+	private Task AddUsers(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+}
