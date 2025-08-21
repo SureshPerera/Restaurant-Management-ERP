@@ -22,6 +22,40 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DirectBookingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("OderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OderType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PayingAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DirectBookingId");
+
+                    b.ToTable("AdvancePaymentModels");
+                });
+
             modelBuilder.Entity("API.Model.Reservation.DirectBookingModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -128,6 +162,17 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OnlineBookingModels");
+                });
+
+            modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
+                {
+                    b.HasOne("API.Model.Reservation.DirectBookingModel", "DirectBooking")
+                        .WithMany()
+                        .HasForeignKey("DirectBookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DirectBooking");
                 });
 #pragma warning restore 612, 618
         }
