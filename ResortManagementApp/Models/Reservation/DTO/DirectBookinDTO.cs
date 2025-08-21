@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ResortManagementApp.Models.Reservation.OnlineBooking;
+using System.ComponentModel.DataAnnotations;
 
 namespace ResortManagementApp.Models.Reservation.DTO
 {
@@ -23,6 +24,6 @@ namespace ResortManagementApp.Models.Reservation.DTO
 
         public string Type { get; set; }
         public ICollection<DirectBookingModel> DirectBookings { get; set; }
-        public ICollection<OnlineBooking> OnlineBookings { get; set; }
+        //public ICollection<OnlineBooking> OnlineBookings { get; set; }
     }
 }

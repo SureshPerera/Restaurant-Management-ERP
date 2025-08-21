@@ -1,23 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Model.Reservation.OnlineBooking
+namespace API.Model.DTO
 {
-    public class OnlineBookingModel
+    public class OnlineBookingModelDto
     {
-        [Key]
         public Guid Id { get; set; }
 
-        [StringLength(100)]
         public string FirstName { get; set; }
-        [StringLength(100)]
+
         public string? LastName { get; set; }
 
-        [Phone]
         public string PhoneNumber { get; set; }
         public DateOnly? DathOfBirth { get; set; }
 
 
-        public string? Address { get; set; }
+        public string Address { get; set; }
         [EmailAddress]
         public string? EmailAddress { get; set; }
 
@@ -26,9 +23,10 @@ namespace API.Model.Reservation.OnlineBooking
         public double? OpeningBalanace { get; set; }
 
 
+
         public string Nationality { get; set; }
         public string? Remark { get; set; }
-
         public string CustomerType { get; set; }
+
     }
 }

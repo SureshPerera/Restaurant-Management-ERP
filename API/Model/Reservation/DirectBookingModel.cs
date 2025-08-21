@@ -1,4 +1,5 @@
 ﻿
+using API.Model.Reservation.OnlineBooking;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,6 +44,6 @@ namespace API.Model.Reservation
         [Required]
         public string Type { get; set; }
         public ICollection<DirectBookingModel> DirectBookings { get; set; }
-        public ICollection<OnlineBooking> OnlineBookings { get; set; }
+        public ICollection<OnlineBookingModel> OnlineBookings { get; set; }
     }
 }
