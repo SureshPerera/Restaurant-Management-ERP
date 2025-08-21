@@ -17,6 +17,7 @@ namespace API.Services
         public DbSet<AgentModel> AgentModels { get; set; }
         public DbSet<ExRateModel> ExRateModel { get; set; }
         public DbSet<ExtraChargeModel> ExtraChargeModels { get; set; }
+        public DbSet<PackageModel> PackageModels { get; set; }
        
      
     }
