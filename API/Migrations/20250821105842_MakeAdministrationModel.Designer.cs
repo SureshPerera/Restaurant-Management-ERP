@@ -4,6 +4,7 @@ using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250821105842_MakeAdministrationModel")]
+    partial class MakeAdministrationModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,9 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPerson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("CreditLimit")
+                    b.Property<double>("CreditLimit")
                         .HasColumnType("float");
 
                     b.Property<string>("Email")
@@ -48,6 +50,7 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fax")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mobile")
@@ -55,35 +58,16 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VatRegNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WebSite")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("AgentModels");
-                });
-
-            modelBuilder.Entity("API.Model.Administration.ExRateModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("BuyingRate")
-                        .HasColumnType("float");
-
-                    b.Property<string>("CurrencyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SellingRate")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExRateModel");
                 });
 
             modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
