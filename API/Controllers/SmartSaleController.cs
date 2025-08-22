@@ -70,8 +70,8 @@ namespace API.Controllers
             DomainModel.SandryItem = smartSaleModelDto.SandryItem;
             DomainModel.Quantity = smartSaleModelDto.Quantity;
             DomainModel.Discouunt = smartSaleModelDto.Discouunt;
-            DomainModel.TotalLKR = smartSaleModelDto.Quantity + smartSaleModelDto.UnitPrice;
-            DomainModel.UnitPrice = smartSaleModelDto.UnitPrice;
+            DomainModel.TotalLKR = smartSaleModelDto.Quantity * smartSaleModelDto.UnitPrice - smartSaleModelDto.Discouunt;
+            DomainModel.UnitPrice = smartSaleModelDto.UnitPrice; 
             DomainModel.Remark = smartSaleModelDto.Remark;
 
             await dbContext.SaveChangesAsync();

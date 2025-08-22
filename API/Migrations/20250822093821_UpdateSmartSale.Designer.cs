@@ -4,6 +4,7 @@ using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250822093821_UpdateSmartSale")]
+    partial class UpdateSmartSale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,89 +402,6 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SmartSaleModels");
-                });
-
-            modelBuilder.Entity("API.Model.UserManagement.UserManagementModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AccessLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Administration")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("AssetsManagement")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("CheckInOut")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ClientManagement")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("DOB")
-                        .HasColumnType("date");
-
-                    b.Property<bool?>("DashBoard")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HouseKeeping")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Inhouse")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NIC")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PassWord")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Reservation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("SmartSalling")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("StockInventory")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("UserManagements")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserManagementModels");
                 });
 
             modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
