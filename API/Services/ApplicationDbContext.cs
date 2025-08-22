@@ -2,6 +2,8 @@
 using API.Model.ClientManagemnet;
 using API.Model.Reservation;
 using API.Model.Reservation.OnlineBooking;
+using API.Model.SmartSale_Billing;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -18,6 +20,8 @@ namespace API.Services
         public DbSet<ExRateModel> ExRateModel { get; set; }
         public DbSet<ExtraChargeModel> ExtraChargeModels { get; set; }
         public DbSet<PackageModel> PackageModels { get; set; }
+        public DbSet<RoomModel> RoomModels { get; set; }
+        public DbSet<SmartSaleModel> SmartSaleModels { get; set; }
        
      
     }

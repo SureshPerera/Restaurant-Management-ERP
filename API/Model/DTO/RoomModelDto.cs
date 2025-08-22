@@ -1,22 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ResortManagementApp.Models.Administration.ManageRooms
+namespace API.Model.DTO
 {
-    public class Rooms
+    public class RoomModelDto
     {
-        [Key]
+        
         public Guid Id { get; set; }
-        [Required]
+       
         public string RoomId { get; set; }
-        [Required]
+        
         public string RoomType { get; set; }
-        [Required]
+        
         public string RoomFloor { get; set; }
-        [Required]
-        public int MaximumOccupancy{ get; set; }
         
+        public int MaximumOccupancy { get; set; }
+
         public string? RoomStatus { get; set; }
-        
+
         public DateTime LastCleanedDate { get; set; }
 
         public string? LastCleanedBy { get; set; }

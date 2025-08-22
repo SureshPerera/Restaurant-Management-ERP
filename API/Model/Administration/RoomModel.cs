@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ResortManagementApp.Models.Administration.ManageRooms
+namespace API.Model.Administration
 {
-    public class Rooms
+    public class RoomModel
     {
         [Key]
         public Guid Id { get; set; }
@@ -13,11 +13,11 @@ namespace ResortManagementApp.Models.Administration.ManageRooms
         [Required]
         public string RoomFloor { get; set; }
         [Required]
-        public int MaximumOccupancy{ get; set; }
-        
+        public int MaximumOccupancy { get; set; }
+
         public string? RoomStatus { get; set; }
-        
-        public DateTime LastCleanedDate { get; set; }
+
+        public DateTime? LastCleanedDate { get; set; }
 
         public string? LastCleanedBy { get; set; }
 
