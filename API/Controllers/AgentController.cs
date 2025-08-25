@@ -1,4 +1,5 @@
 ﻿using API.Model.Administration;
+using API.Model.ClientManagemnet;
 using API.Model.DTO;
 using API.Model.Reservation.OnlineBooking;
 using API.Services;
@@ -59,7 +60,18 @@ namespace API.Controllers
                 WebSite = agentModelDto.WebSite,
 
             };
+            var Dtos = new ClientModel
+            {
+                FirstName = agentModelDto.AgentName,
+                PhoneNumber = agentModelDto.Mobile,
+                Address = agentModelDto.AgentAddress,
+                EmailAddress = agentModelDto.Email,
+                NIC = agentModelDto.NIC,
+                CreditLimit = agentModelDto.CreditLimit,
+            };
+
             await dbContext.AgentModels.AddAsync(Dto);
+            await dbContext.ClientModels.AddAsync(Dtos);
             await dbContext.SaveChangesAsync();
             return Ok(Dto);
 

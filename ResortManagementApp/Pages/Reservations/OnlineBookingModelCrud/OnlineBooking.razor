@@ -1,5 +1,7 @@
 ﻿@page "/Reservations/OnlineBooking"
 @using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
+@using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
 
@@ -12,7 +14,7 @@
 <div>
 	@if (directBookingModels == null)
 	{
-		<p><em>Loading...</em></p>
+		<p><Searching/></p>
 	}
 	<table class="table">
 		<thead class="bg-light">
@@ -31,11 +33,11 @@
 			</tr>
 		</thead>
 		<tbody class="bg-light">
-			@if (directBookingModels == null)
+			@if (OnlineBookings == null)
 			{
-				<p><em>Loading...</em></p>
+				<p><Searching/></p>
 			}
-			@foreach (var item in directBookingModels)
+			@foreach (var item in OnlineBookings)
 			{
 				<tr>
 					<th>@(item.FirstName + " " + @item.LastName)</th>
@@ -62,8 +64,11 @@
 @inject HttpClient Http
 @code {
 	private List<DirectBookingModel>? directBookingModels;
+	private List<OnlineBookingModel>? OnlineBookings;
+
 	protected override async Task OnInitializedAsync()
 	{
-		directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+		// directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https:localhost:4000/api/DirectBooking");
+		OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
 	}
 }

@@ -17,7 +17,7 @@
 </div>
 
 <form class="form flex-wrap" style="  background-color:antiquewhite; margin-left: 0.5rem;">
-	@if (AgentDto == null)
+	@if (Agents == null)
 	{
 		<p><Searching /></p>
 	}
@@ -26,21 +26,21 @@
 			<div class="row mb-3">
 				<label class="col-md-3 col-form-label">Name</label>
 				<div class="col-md-6" style="background-color:antiquewhite">
-					<input class="form-control" type="text" @bind="AgentDto.AgentName">
+					<input class="form-control" type="text" @bind="Agents.AgentName">
 					<span class="text-danger">@Errors["AgentName"]?[0]</span>
 				</div>
 			</div>
 			<div class="row mb-3">
 				<label class="col-md-3 col-form-label">Address</label>
 				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="AgentDto.AgentAddress">
+					<input class="form-control" type="text" @bind="Agents.AgentAddress">
 					<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
 				</div>
 			</div>
 			<div class="row mb-3">
 				<label style="" class="col-md-3 col-form-label">Contact Person</label>
 				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="AgentDto.ContactPerson">
+					<input class="form-control" type="text" @bind="Agents.ContactPerson">
 					<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
 
 				</div>
@@ -48,7 +48,7 @@
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">Mobile Number</label>
 				<div style="margin-left:2.2rem;" class="col-md-6">
-					<input class="form-control" type="text" @bind="AgentDto.Mobile">
+					<input class="form-control" type="text" @bind="Agents.Mobile">
 					<span class="text-danger">@Errors["Mobile"]?[0]</span>
 
 				</div>
@@ -57,7 +57,7 @@
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">Fax</label>
 				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="text" @bind="AgentDto.Fax">
+					<input class="form-control" type="text" @bind="Agents.Fax">
 					<span class="text-danger">@Errors["Fax"]?[0]</span>
 
 				</div>
@@ -65,7 +65,7 @@
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">Email</label>
 				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="email" @bind="AgentDto.Email">
+					<input class="form-control" type="email" @bind="Agents.Email">
 					<span class="text-danger">@Errors["Email"]?[0]</span>
 
 				</div>
@@ -73,7 +73,7 @@
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">Website</label>
 				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="text" @bind="AgentDto.WebSite">
+					<input class="form-control" type="text" @bind="Agents.WebSite">
 					<span class="text-danger">@Errors["WebSite"]?[0]</span>
 
 				</div>
@@ -81,7 +81,7 @@
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">Credit Limit</label>
 				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="number" @bind="AgentDto.CreditLimit">
+					<input class="form-control" type="number" @bind="Agents.CreditLimit">
 					<span class="text-danger">@Errors["CreditLimit"]?[0]</span>
 
 				</div>
@@ -91,7 +91,7 @@
 			<div class="row mb-3">
 				<label class="col-md-3 col-form-label">Vat Reg.No</label>
 				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="AgentDto.VatRegNo">
+					<input class="form-control" type="text" @bind="Agents.VatRegNo">
 					<span class="text-danger">@Errors["VatRegNo"]?[0]</span>
 
 				</div>
@@ -140,7 +140,7 @@
 @code {
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public Agents? Agents { get; set; }
-	public AgentDto AgentDto { get; set; } = new();
+	
 	
 	private Task CreateAgent(MouseEventArgs args)
 	{

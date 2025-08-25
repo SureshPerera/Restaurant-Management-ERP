@@ -64,7 +64,7 @@
 		<div class="row mb-3">
 			<label style="" class="col-md-4 col-form-label">Discount </label>
 			<div class="col-md-6">
-				<input class="form-control" type="text" @bind="SmartSaleDto.Discuount" placeholder="%">
+				<input class="form-control" type="text" @bind="SmartSaleDto.Discouunt" placeholder="%">
 				<span class="text-danger">@Errors["Quantity"]?[0]</span>
 
 			</div>
@@ -79,10 +79,10 @@
 				<label class="col-md-6">Sub Total </label>
 				<label>@total</label><br />
 				<label class="col-md-6">Total Discount </label>
-				<label>(Rs @SmartSaleDto.Discuount)</label><br/>
+				<label>(Rs @SmartSaleDto.Discouunt)</label><br />
 				<label class="col-md-6">Grand Total</label>
 				@{
-					var GrandTotal = total - SmartSaleDto.Discuount;
+					var GrandTotal = total - SmartSaleDto.Discouunt;
 					SmartSaleDto.TotalLKR = GrandTotal;
 				}
 				<input  class="text-success m-1" style="font-size: 20px" value="Rs @GrandTotal">

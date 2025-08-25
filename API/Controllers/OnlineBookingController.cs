@@ -1,4 +1,5 @@
-﻿using API.Model.DTO;
+﻿using API.Model.ClientManagemnet;
+using API.Model.DTO;
 using API.Model.Reservation.OnlineBooking;
 using API.Services;
 using Microsoft.AspNetCore.Http;
@@ -60,7 +61,22 @@ namespace API.Controllers
                 CustomerType = onlineBookingModelDto.CustomerType
                 
             };
+            var Dtos = new ClientModel
+            {
+                FirstName = onlineBookingModelDto.FirstName,
+                LastName = onlineBookingModelDto.LastName,
+                PhoneNumber = onlineBookingModelDto.PhoneNumber,
+                DathOfBirth = onlineBookingModelDto.DathOfBirth,
+                Address = onlineBookingModelDto.Address,
+                EmailAddress = onlineBookingModelDto.EmailAddress,
+                NIC = onlineBookingModelDto.NIC,
+                CreditLimit = onlineBookingModelDto.CreditLimit,
+                OpeningBalanace = onlineBookingModelDto.OpeningBalanace,
+                Nationality = onlineBookingModelDto.Nationality,
+                Remark = onlineBookingModelDto.Remark,
+            };
             await dbContext.OnlineBookingModels.AddAsync(Dto);
+            await dbContext.ClientModels.AddAsync(Dtos);
             await dbContext.SaveChangesAsync();
             return Ok(Dto);
 

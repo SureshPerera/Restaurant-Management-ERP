@@ -66,10 +66,10 @@
 
 	public Agents? Agents { get; set; }
 
-	public List<AgentDto> AgentDtos { get; set; } = new List<AgentDto>();
+	public List<AgentModelDto> AgentDtos { get; set; } = new List<AgentModelDto>();
 	protected override void OnInitialized()
 	{
-		AgentDtos.Add(new AgentDto
+		AgentDtos.Add(new AgentModelDto
 		{
 			AgentName = "Sudeera Prasanga", 
 			AgentAddress = "Wellawaya, Rathmalana",

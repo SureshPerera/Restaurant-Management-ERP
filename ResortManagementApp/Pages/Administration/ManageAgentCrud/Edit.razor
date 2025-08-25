@@ -149,7 +149,7 @@
 	public Guid Id { get; set; }
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public Agents? Agents { get; set; }
-	public AgentDto AgentDto { get; set; } = new();
+	public AgentModelDto AgentDto { get; set; } = new();
 
 	private Task CreateAgent(MouseEventArgs args)
 	{

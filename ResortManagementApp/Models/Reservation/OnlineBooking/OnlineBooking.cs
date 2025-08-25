@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ResortManagementApp.Models.Reservation.OnlineBooking
+namespace ResortManagementApp.Models.Reservation.OnlineBookingModel
 {
-    public class OnlineBooking
+    public class OnlineBookingModel
     {
         [Key]
         public Guid Id { get; set; }

@@ -19,6 +19,7 @@ namespace API.Model.DTO
 
         [EmailAddress]
         public string Email { get; set; }
+        public string NIC { get; set; }
         public string WebSite { get; set; }
         public double CreditLimit { get; set; }
         public string VatRegNo { get; set; }

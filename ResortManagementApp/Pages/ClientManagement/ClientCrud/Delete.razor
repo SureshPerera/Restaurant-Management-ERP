@@ -7,14 +7,14 @@
 
 <div>
 	<h3 class="mb-3">Delete Customer</h3>
-	@if (ClientDto == null)
+	@if (Clients == null)
 	{
 		<p><Searching/></p>
 	}
-	<p>Are you sure you want to delete customer with Name  <strong>@ClientDto.FirstName @ClientDto?.LastName</strong> </p>
+	<p>Are you sure you want to delete customer with Name  <strong>@Clients.Id @Clients.FirstName</strong> </p>
 
 	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
-	<a class="btn btn-secondary" href="/ClientManagement">Cancel</a>
+	<a class="btn btn-secondary" href="/ClientManagement">Cancel</a> 
 </div>
 
 @inject HttpClient http
@@ -24,8 +24,8 @@
 @code {
 	[Parameter]
 	public Guid Id { get; set; }
-	public List<Client> Clients { get; set; }
-	public ClientDto ClientDto { get; set; } = new();
+	public ClientModel Clients { get; set; } = new();
+
 
 	protected override async Task OnInitializedAsync()
 	{

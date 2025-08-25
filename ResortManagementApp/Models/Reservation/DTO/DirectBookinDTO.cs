@@ -1,4 +1,4 @@
-﻿using ResortManagementApp.Models.Reservation.OnlineBooking;
+﻿using ResortManagementApp.Models.Reservation;
 using System.ComponentModel.DataAnnotations;
 
 namespace ResortManagementApp.Models.Reservation.DTO

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Administration\ReportAnalysis\" />
-    <Folder Include="Models\ClientManagement\Client\" />
     <Folder Include="Pages\ClientManagement\MassageCrud\" />
     <Folder Include="Service\" />
     <Folder Include="wwwroot\Imgs\ClientPotal\Video\" />

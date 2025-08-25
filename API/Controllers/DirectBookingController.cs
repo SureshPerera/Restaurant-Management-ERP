@@ -1,4 +1,5 @@
-﻿using API.Model.DTO;
+﻿using API.Model.ClientManagemnet;
+using API.Model.DTO;
 using API.Model.Reservation;
 using API.Services;
 using Microsoft.AspNetCore.Http;
@@ -62,7 +63,23 @@ namespace API.Controllers
                 Nationality = directBookingDTO.Nationality,
                 Remark = directBookingDTO.Remark,
             };
+            var Dtos = new ClientModel
+            {
+                FirstName = directBookingDTO.FirstName,
+                LastName = directBookingDTO.LastName,
+                PhoneNumber = directBookingDTO.PhoneNumber,
+                DathOfBirth = directBookingDTO.DathOfBirth,
+                Address = directBookingDTO.Address,
+                EmailAddress = directBookingDTO.EmailAddress,
+                NIC = directBookingDTO.NIC,
+                CreditLimit = directBookingDTO.CreditLimit,
+                OpeningBalanace = directBookingDTO.OpeningBalanace,
+                Nationality = directBookingDTO.Nationality,
+                Remark = directBookingDTO.Remark,
+            };
             await dbContext.DirectBookingModels.AddAsync(Dto);
+            await dbContext.ClientModels.AddAsync(Dtos);
+            
             await dbContext.SaveChangesAsync();
             return Ok(Dto);
 

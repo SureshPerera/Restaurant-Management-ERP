@@ -19,7 +19,7 @@ namespace API.Model.Reservation
         [Required(ErrorMessage = "Please Enter Phone Number!")]
         [Phone]
         public string PhoneNumber { get; set; }
-        public DateTime? DathOfBirth { get; set; }
+        public DateOnly? DathOfBirth { get; set; }
         [Required(ErrorMessage = "Please Enter Address!")]
 
         public string Address {  get; set; }

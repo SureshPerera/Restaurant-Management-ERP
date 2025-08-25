@@ -70,17 +70,17 @@
 </div>
 
 @code {
-	public List<Client> Client { get; set; } = new List<Client>();
-	public ClientDto ClientDto { get; set; } = new();
+	public List<ClientModel> Client { get; set; } = new List<ClientModel>();
+	
 
 	protected override void OnInitialized()
 	{
-		Client.Add(new Client
+		Client.Add(new ClientModel
 		{
 			FirstName = "Genadasa",
 			LastName = "Chandrapala",
 			Address = "Welidalla, Nikadalupotha",
-			Email = "gunadasa.gmail.com",
+			EmailAddress = "gunadasa.gmail.com",
 			NIC = "25142516",
 			PhoneNumber = "+94-703914685",
 			Remark = ""

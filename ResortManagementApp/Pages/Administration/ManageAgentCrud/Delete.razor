@@ -22,7 +22,7 @@
 	[Parameter]
 	public Guid Id { get; set; }
 	public Agents Agent { get; set; }
-	public AgentDto AgentDto{ get; set; } = new();
+	public AgentModelDto AgentDto{ get; set; } = new();
 
 	private Task DeletePackages(MouseEventArgs args)
 	{

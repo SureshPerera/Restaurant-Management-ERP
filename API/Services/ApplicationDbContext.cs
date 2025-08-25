@@ -23,6 +23,7 @@ namespace API.Services
         public DbSet<RoomModel> RoomModels { get; set; }
         public DbSet<SmartSaleModel> SmartSaleModels { get; set; }
         public DbSet<UserManagementModel> UserManagementModels { get; set; }
+        public DbSet<ClientModel> ClientModels { get; set; }
        
      
     }

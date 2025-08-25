@@ -60,7 +60,7 @@
 			<div class="row mb-3">
 				<label style="" class="col-md-4 col-form-label">Email</label>
 				<div class="col-md-6">
-					<input class="form-control" type="email" @bind="ClientDto.Email">
+					<input class="form-control" type="email" @bind="ClientDto.EmailAddress">
 					<span class="text-danger">@Errors["Email"]?[0]</span>
 
 				</div>
@@ -116,8 +116,8 @@
 	public Guid Id { get; set; }
 
 	public JsonNode Errors { get; set; } = new JsonObject();
-	public List<Client>? Clients { get; set; }
-	public ClientDto ClientDto { get; set; } = new();
+	public ClientModel? ClientDto { get; set; } = new();
+
 	
 
 	protected override void OnInitialized()
