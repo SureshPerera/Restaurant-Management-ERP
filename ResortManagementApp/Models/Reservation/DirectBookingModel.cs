@@ -40,16 +40,5 @@ namespace ResortManagementApp.Models.Reservation
 
     }
 
-    public enum CustomerType
-    {
-        [Display(Name = "Local Customer")]
-        Local,
-        [Display(Name = "Foreign Customer")]
-
-        Foreign,
-        [Display(Name = "VIP Customer")]
-
-        VIP
-
-    }
+    
 }

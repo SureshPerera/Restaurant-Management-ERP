@@ -51,6 +51,7 @@ namespace API.Controllers
             }
             var Dto = new DirectBookingModel
             {
+                Id = Guid.NewGuid(),
                 FirstName = directBookingDTO.FirstName,
                 LastName = directBookingDTO.LastName,
                 PhoneNumber = directBookingDTO.PhoneNumber,
@@ -65,6 +66,7 @@ namespace API.Controllers
             };
             var Dtos = new ClientModel
             {
+                Id = Guid.NewGuid(),
                 FirstName = directBookingDTO.FirstName,
                 LastName = directBookingDTO.LastName,
                 PhoneNumber = directBookingDTO.PhoneNumber,

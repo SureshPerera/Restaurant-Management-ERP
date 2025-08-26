@@ -57,6 +57,21 @@
 		</div>
 	</div>
 	<div class="row mb-3">
+		<label class="col-md-2 col-form-label">Customer Type</label>
+		<div class="col-md-6">
+			
+			<select class="form-control" type="email" @bind="directBookingDTO.CustomerType">
+				<option>--Select--</option>
+				@foreach(var item in CustomerType)
+				{
+					<option>@item</option>
+				}
+			</select>
+			<span class="text-danger">@Errors["CustomerType"]?[0]</span>
+
+		</div>
+	</div>
+	<div class="row mb-3">
 		<label class="col-md-2 col-form-label">NIC Number</label>
 		<div class="col-md-6">
 			<input class="form-control" @bind="directBookingDTO.NIC">
@@ -127,7 +142,10 @@
 	public DirectBookingModel? directBookingModel;
 	public DirectBookinDTO directBookingDTO = new();
 	public JsonNode Errors { get; set; } = new JsonObject();
-	public  Models.Reservation.CustomerType[] customerTypes = Array.Empty<Models.Reservation.CustomerType>();
+	public List<string> CustomerType = new List<string>
+	{
+		"Local","Foreign"
+	};
 
 
 
@@ -135,7 +153,7 @@
 	{
 		try
 		{
-			customerTypes = Enum.GetValues<Models.Reservation.CustomerType>();
+			
 			directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
 			directBookingDTO.FirstName = directBookingModel?.FirstName??"";
 			directBookingDTO.LastName = directBookingModel?.LastName ?? "";

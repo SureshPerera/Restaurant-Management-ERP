@@ -14,11 +14,11 @@ namespace API.Model.Administration
         public string ContactPerson { get; set; }
         [Required]
         [Phone]
-        public string Mobile { get; set; }
+        public string? Mobile { get; set; }
         public string? Fax { get; set; }
 
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         public string NIC { get; set; }
         public string? WebSite { get; set; }
         public double? CreditLimit { get; set; }

@@ -53,6 +53,21 @@
 
 				</div>
 			</div>
+		<div class="row mb-3">
+			<label class="col-md-2 col-form-label">Customer Type</label>
+			<div class="col-md-6">
+
+				<select class="control" type="email" @bind="directBookingDTO.CustomerType">
+					<option>--Select--</option>
+					@foreach (var item in CustomerType)
+					{
+						<option>@item</option>
+					}
+				</select>
+				<span class="text-danger">@Errors["CustomerType"]?[0]</span>
+
+			</div>
+		</div>
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">NIC Number</label>
 				<div class="col-md-6">
@@ -122,6 +137,11 @@
 @code {
 	public DirectBookinDTO directBookingDTO { set; get; } = new();
 	public JsonNode Errors { set; get; } = new JsonObject();
+	public List<string> CustomerType = new List<string>
+	{
+		"Local","Foreign"
+	};
+
 	private async Task SaveCustomer(MouseEventArgs args)
 	{
 		var response = await http.PostAsJsonAsync("https://localhost:4000/api/DirectBooking", directBookingDTO);

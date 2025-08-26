@@ -140,8 +140,13 @@
 @code {
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public Agents? Agents { get; set; }
-	
-	
+
+	protected override Task OnInitializedAsync()
+	{
+		
+		return base.OnInitializedAsync();
+	}
+
 	private Task CreateAgent(MouseEventArgs args)
 	{
 		throw new NotImplementedException();
