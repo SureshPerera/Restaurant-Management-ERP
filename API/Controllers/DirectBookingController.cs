@@ -63,6 +63,7 @@ namespace API.Controllers
                 OpeningBalanace = directBookingDTO.OpeningBalanace,
                 Nationality = directBookingDTO.Nationality,
                 Remark = directBookingDTO.Remark,
+                CustomerType = directBookingDTO.CustomerType,
             };
             var Dtos = new ClientModel
             {
@@ -78,6 +79,7 @@ namespace API.Controllers
                 OpeningBalanace = directBookingDTO.OpeningBalanace,
                 Nationality = directBookingDTO.Nationality,
                 Remark = directBookingDTO.Remark,
+                CustomerType = directBookingDTO.CustomerType,
             };
             await dbContext.DirectBookingModels.AddAsync(Dto);
             await dbContext.ClientModels.AddAsync(Dtos);

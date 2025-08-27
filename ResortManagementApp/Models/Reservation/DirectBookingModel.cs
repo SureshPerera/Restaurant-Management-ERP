@@ -19,7 +19,7 @@ namespace ResortManagementApp.Models.Reservation
         
         [Phone]
         public string PhoneNumber { get; set; }
-        public DateTime? DathOfBirth { get; set; }
+        public DateOnly? DathOfBirth { get; set; }
         
 
         public string Address {  get; set; }
@@ -35,9 +35,7 @@ namespace ResortManagementApp.Models.Reservation
         public string? Remark { get; set; }
 
         public string CustomerType { get; set; }
-        public ICollection<AdvancePay> AdvancePays { get; set; }
-
-
+       
     }
 
     
