@@ -16,7 +16,7 @@ namespace ResortManagementApp.Models.Administration.ManageAgents
         [Phone]
         public string? Mobile{ get; set; }
         public string? Fax{ get; set; }
-        public string NIC{ get; set; }
+        public string? NIC{ get; set; }
         
         [EmailAddress]
         public string? Email{ get; set; }

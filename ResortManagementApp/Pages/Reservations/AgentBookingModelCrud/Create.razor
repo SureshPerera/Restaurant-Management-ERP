@@ -1,0 +1,157 @@
+﻿@page "/Reservations/AgentBooking/Create"
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Models.Reservation.DTO
+@using System.Text.Json.Nodes
+
+@layout MainLayout
+<div class="card">
+	<h3 class="mb-3 text-center">Register Agent</h3>
+</div>
+
+<div class="col-lg-8">
+	<h1 class="title mb-5">New Agent Booking</h1>
+</div>
+
+<form class="form">
+	<div class="justify-content-around flex">
+		<div class="row">
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Agent Name</label>
+				<div class="col-md-6">
+					<input class="form-control" @bind="Agent.AgentName">
+					<span class="text-danger">@Errors["AgentName"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Address</label>
+				<div class="col-md-6">
+					<textarea class="form-control" @bind="Agent.AgentAddress"></textarea>
+					<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Contact Person</label>
+				<div class="col-md-6">
+					<textarea class="form-control" @bind="Agent.ContactPerson"></textarea>
+					<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Phone Number</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="Agent.Mobile">
+					<span class="text-danger">@Errors["Mobile"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Email Address</label>
+				<div class="col-md-6">
+					<input class="form-control" type="email" @bind="Agent.Email">
+					<span class="text-danger">@Errors["Email"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Fax</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="Agent.Fax">
+					<span class="text-danger">@Errors["Fax"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Vat Reg No</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="Agent.VatRegNo">
+					<span class="text-danger">@Errors["VatRegNo"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Web Site</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="Agent.WebSite">
+					<span class="text-danger">@Errors["WebSite"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">NIC Number</label>
+				<div class="col-md-6">
+					<input class="form-control" @bind="Agent.NIC">
+					<span class="text-danger">@Errors["NIC"]?[0]</span>
+
+				</div>
+			</div>
+
+
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">CreditLimit</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="Agent.CreditLimit">
+				</div>
+			</div>
+
+
+
+		</div>
+		<div>
+			<div style="">
+				<div class="row gap-2" style="">
+
+					<div class="offset-md-4 col-md-4 d-grid">
+						<button class="btn btn-success fw-bold" type="button" @onclick="SaveCustomer">Register Customer</button>
+					</div>
+					<div class="offset-md-4 col-md-4 d-grid">
+						<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+					</div>
+					<div class="offset-md-4 col-md-4 d-grid">
+						<a class="btn btn-primary fw-bold" href="/Reservations/AgentBooking">Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 60rem;
+		font-weight: bold;
+	}
+</style>
+
+@inject HttpClient http
+@inject NavigationManager navManager
+@code {
+	// public DirectBookinDTO directBookingDTO { set; get; } = new();
+	public Agents Agent { get; set; } = new Agents();
+	public JsonNode Errors { set; get; } = new JsonObject();
+
+	private async Task SaveCustomer(MouseEventArgs args)
+	{
+		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Agent", Agent);
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
+
+		var strResponce = await response.Content.ReadAsStringAsync();
+		Console.WriteLine("Json Response :" + strResponce);
+
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
+	}
+}

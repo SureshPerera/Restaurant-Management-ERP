@@ -58,20 +58,21 @@ namespace API.Controllers
                 Mobile = agentModelDto.Mobile,
                 VatRegNo = agentModelDto.VatRegNo,
                 WebSite = agentModelDto.WebSite,
-
-            };
-            var Dtos = new ClientModel
-            {
-                FirstName = agentModelDto.AgentName,
-                PhoneNumber = agentModelDto.Mobile,
-                Address = agentModelDto.AgentAddress,
-                EmailAddress = agentModelDto.Email,
                 NIC = agentModelDto.NIC,
-                CreditLimit = agentModelDto.CreditLimit,
+                
             };
+            //var Dtos = new ClientModel
+            //{
+            //    FirstName = agentModelDto.AgentName,
+            //    PhoneNumber = agentModelDto.Mobile,
+            //    Address = agentModelDto.AgentAddress,
+            //    EmailAddress = agentModelDto.Email,
+            //    NIC = agentModelDto.NIC,
+            //    CreditLimit = agentModelDto.CreditLimit,
+            //};
 
             await dbContext.AgentModels.AddAsync(Dto);
-            await dbContext.ClientModels.AddAsync(Dtos);
+            //await dbContext.ClientModels.AddAsync(Dtos);
             await dbContext.SaveChangesAsync();
             return Ok(Dto);
 
