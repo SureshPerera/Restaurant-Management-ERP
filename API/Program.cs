@@ -12,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 });
 builder.Services.AddCors();
-
+builder.Services.AddHttpClient();
 
 
 var app = builder.Build();

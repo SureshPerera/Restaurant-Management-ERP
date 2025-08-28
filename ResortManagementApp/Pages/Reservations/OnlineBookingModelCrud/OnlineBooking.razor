@@ -64,7 +64,7 @@
 @inject HttpClient Http
 @code {
 	
-	private List<OnlineBookingModel> OnlineBookings  = new List<OnlineBookingModel>();
+	private List<OnlineBookingModel>? OnlineBookings  = new List<OnlineBookingModel>();
 
 	protected override async Task OnInitializedAsync()
 	{

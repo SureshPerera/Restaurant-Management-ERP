@@ -24,7 +24,7 @@ namespace API.Model.DTO
 
 
 
-        public string Nationality { get; set; }
+        public string? Nationality { get; set; }
         public string? Remark { get; set; }
         public string CustomerType { get; set; }
 

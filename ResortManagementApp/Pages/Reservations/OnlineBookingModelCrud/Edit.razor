@@ -143,17 +143,24 @@
 	public OnlineBookingModel? OnlineBookingModel = new OnlineBookingModel();
 	public OnlineBookingDto OnlineBookingDto = new();
 	public JsonNode Errors { get; set; } = new JsonObject();
+	private string? country;
 	public List<string> CustomerType = new List<string>
 	{
 		"Local","Foreign"
 	};
 
-
+	public class GeoResult
+	{
+		public string? country_name { get; set; }
+		public string? country_code { get; set; }
+	}
 
 	protected override async Task OnParametersSetAsync()
 	{
 		try
 		{
+			var result = await http.GetFromJsonAsync<GeoResult>("api/Geo/country");
+			country = result?.country_name;
 
 			OnlineBookingModel = await http.GetFromJsonAsync<OnlineBookingModel>($"https://localhost:4000/api/OnlineBooking/{Id}");
 			OnlineBookingDto.FirstName = OnlineBookingModel.FirstName ?? "";
@@ -164,7 +171,7 @@
 			OnlineBookingDto.NIC = OnlineBookingModel?.NIC ?? "";
 			OnlineBookingDto.CreditLimit = OnlineBookingModel?.CreditLimit;
 			OnlineBookingDto.OpeningBalanace = OnlineBookingModel?.OpeningBalanace;
-			OnlineBookingDto.Nationality = OnlineBookingModel?.Nationality ?? "";
+			OnlineBookingDto.Nationality = country ?? "";
 			OnlineBookingDto.Remark = OnlineBookingModel?.Remark ?? "";
 			OnlineBookingDto.EmailAddress = OnlineBookingModel?.EmailAddress ?? "";
 			Console.WriteLine("Succusfull");

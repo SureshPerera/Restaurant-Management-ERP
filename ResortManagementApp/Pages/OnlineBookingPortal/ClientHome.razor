@@ -1,7 +1,11 @@
-﻿@using ResortManagementApp.Pages
+﻿@using ResortManagementApp.Models.Reservation.DTO
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
+@using ResortManagementApp.Pages
 @using MudBlazor
 @using Microsoft.AspNetCore.Components
 @using System.Globalization
+@using ResortManagementApp.Pages.Reservations.OnlineBookingModelCrud
+@using static System.Net.WebRequestMethods
 
 @inject IJSRuntime jsruntime
 @layout ClientLayout
@@ -147,7 +151,11 @@
 					<input type="text" name="promoCode" value="" placeholder="Promo Code" />
 				</div>
 				<span style="font-size:50px;margin-top:-1rem;">|</span>
+				<div>
+					<input type="text" name="promoCode" value="" placeholder="@UserCountry"  readonly />
 
+				</div>
+				<span style="font-size:50px;margin-top:-1rem;">|</span>
 
 				<div>
 					<input class="btn btn-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
@@ -174,7 +182,7 @@
 		</div>
 		<div style="display:flex; justify-content:center;">
 			<div style="">
-				<input class="btn btn-outline-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
+				<button class="btn btn-success fw-bold" type="button" @onclick="ClickBooking">Booking Now</button>
 			</div>
 		</div>
 	</section>
@@ -298,9 +306,12 @@
 </style>
 
 @inject IJSRuntime JS
+@inject HttpClient http
 @code {
+	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new ();
+	public string? UserCountry;
 	private DropdownWidth _dropdownWidth = DropdownWidth.Ignore;
-
+	public OnlineBookingModel onlineBooking = new();
 	private bool arrows = true;
 	private bool bullets = true;
 	private bool enableSwipeGesture = true;
@@ -310,6 +321,11 @@
 	private PickerVariant _variant = PickerVariant.Dialog;
 	private DateRange? _dateRange { get; set; }
 
+	protected async override Task OnInitializedAsync()
+	{
+		UserCountry = CustomerUsePcInfoDto.Country;
+
+	}
 	private void OnValueChanged(PickerVariant variant)
 	{
 		_dateRange = null;
@@ -328,5 +344,10 @@
 	}
 
 	public string? VideoSource = "images/ClientHomeVideo/video.mp4";
-	
+
+
+	private Task ClickBooking(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
 }
