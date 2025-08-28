@@ -23,8 +23,8 @@
 			<a href="/Reservations/OnlineBooking" class="btn btn-primary mb-3">Online Booking</a>
 		</div>
 	</div>
-	
-	<div class="flex-wrap" >
+
+	<div class="flex-wrap">
 		<div class="justify-content-end flex flex-wrap gap-1" style="font-weight:bolder">
 			<div style="">
 				<input style="width: auto; height: 50px;" type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation" />
@@ -50,7 +50,10 @@
 				</div>
 				@if (directBookingModels == null)
 				{
-					<p><Searching /></p>
+					<div class="flex" >
+
+						<Searching />
+					</div>
 				}
 				else
 				{
@@ -92,15 +95,18 @@
 
 			</div>
 			@* onlineBookingTable *@
-		
 
-			<div style="width : 300px;height: 200px; margin-top: 15rem;" >
+
+			<div style="width : 300px;height: 200px; margin-top: 15rem;">
 				<div>
 					<label>Online Booking List</label>
 				</div>
 				@if (OnlineBookings == null)
 				{
-					<p><Searching /></p>
+					<div class="flex">
+
+						<Searching />
+					</div>
 				}
 				else
 				{
@@ -152,7 +158,9 @@
 				</div>
 				@if (Agents == null)
 				{
-					<p><Searching /></p>
+					<div class="flex">
+						<Searching />
+					</div>
 				}
 				else
 				{
@@ -187,14 +195,14 @@
 
 			</div>
 		</div>
-		
 
-		
+
+
 	</div>
 </div>
 
 <style>
-	label{
+	label {
 		color: white;
 		background-color: black;
 		font-size: 16px;
@@ -205,9 +213,9 @@
 
 
 @code {
-    private List<DirectBookingModel>? directBookingModels;
-    private List<OnlineBookingDto>? OnlineBookings;
-    private List<Agents>? Agents;
+	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
+	private List<OnlineBookingDto>? OnlineBookings = new List<OnlineBookingDto>();
+	private List<Agents>? Agents = new List<Agents>();
 
 	protected override async Task OnInitializedAsync()
 	{

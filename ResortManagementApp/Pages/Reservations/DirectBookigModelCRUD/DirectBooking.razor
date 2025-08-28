@@ -69,7 +69,7 @@
 	</table>
 </div>
 @code {
-	private List<DirectBookingModel>? directBookingModels;
+	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
 	protected override async Task OnInitializedAsync()
 	{
 		directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");

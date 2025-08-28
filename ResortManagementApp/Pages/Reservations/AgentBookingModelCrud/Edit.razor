@@ -1,20 +1,35 @@
-﻿@page "/Reservations/AgentBooking/Create"
+﻿@page "/Reservations/AgentBooking/Edit/{Id:guid}"
+
+@using ResortManagementApp.Models.Administration.DTOS
 @using ResortManagementApp.Models.Administration.ManageAgents
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
+@using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
 <div class="card">
-	<h3 class="mb-3 text-center">Register Agent</h3>
+	<h3 class="mb-3 text-center">Update Agent</h3>
 </div>
 
 <div class="col-lg-8">
-	<h1 class="title mb-5">New Agent Booking</h1>
+	<h1 class="title mb-5">Update Agent Booking</h1>
 </div>
 
+
 <form class="form">
+	@if (Agent == null)
+	{
+		<p><Searching/></p>
+	}
 	<div class="flex">
 		<div class="row">
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Agent Id</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="@Id" readonly>
+					<span class="text-danger">@Errors["AgentId"]?[0]</span>
+				</div>
+			</div>
 			<div class="row mb-3">
 				<label class="col-md-2 col-form-label">Agent Name</label>
 				<div class="col-md-6">
@@ -103,7 +118,7 @@
 				<div class="row gap-2" style="">
 
 					<div class="offset-md-4 col-md-4 d-grid">
-						<button class="btn btn-success fw-bold" type="button" @onclick="SaveCustomer">Register Customer</button>
+						<button class="btn btn-success fw-bold" type="button" @onclick="UpdateCustomer">Update Agent</button>
 					</div>
 					<div class="offset-md-4 col-md-4 d-grid">
 						<button class="btn btn-warning fw-bold" type="reset">Clear</button>
@@ -117,7 +132,6 @@
 	</div>
 
 </form>
-
 <style>
 	.form {
 		display: flex;
@@ -132,19 +146,42 @@
 @inject HttpClient http
 @inject NavigationManager navManager
 @code {
+	[Parameter]
+	public Guid Id { get; set; }
 	// public DirectBookinDTO directBookingDTO { set; get; } = new();
-	public Agents Agent { get; set; } = new();
-
+	public Agents? Agent = new Agents();
 	public JsonNode Errors { set; get; } = new JsonObject();
-
-	private async Task SaveCustomer(MouseEventArgs args)
+	public AgentModelDto agentModelDto = new();
+	protected override async Task OnInitializedAsync()
 	{
-		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Agent", Agent);
-		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
+		try
+		{
+			Agent = await http.GetFromJsonAsync<Agents>($"https://localhost:4000/api/Agent/{Id}");
+			agentModelDto.NIC = Agent.NIC ?? "";
+			agentModelDto.WebSite = Agent.WebSite ?? "";
+			agentModelDto.Mobile = Agent.Mobile ?? "";
+			agentModelDto.Email = Agent.Email ?? "";
+			agentModelDto.Fax = Agent.Fax ?? "";
+			agentModelDto.AgentAddress = Agent.AgentAddress ?? "";
+			agentModelDto.AgentName = Agent.AgentName ?? "";
+			agentModelDto.ContactPerson = Agent.ContactPerson ?? "";
+			agentModelDto.CreditLimit = Agent.CreditLimit ?? 0;
+			agentModelDto.VatRegNo = Agent.VatRegNo ?? "";
 
-		var strResponce = await response.Content.ReadAsStringAsync();
-		Console.WriteLine("Json Response :" + strResponce);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
 
+	}
+
+	private async Task UpdateCustomer(MouseEventArgs args)
+	{
+		var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/Agent/{Id}", agentModelDto);
+		if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
+
+		var strResponce = await responce.Content.ReadAsStringAsync();
 		try
 		{
 			var jsonResponce = JsonNode.Parse(strResponce);
@@ -152,7 +189,7 @@
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine(ex.Message);
+			Console.WriteLine("Erro Message : " + ex.Message);
 		}
 	}
 }

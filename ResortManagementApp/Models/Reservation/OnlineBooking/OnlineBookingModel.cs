@@ -14,7 +14,7 @@ namespace ResortManagementApp.Models.Reservation.OnlineBookingModel
 
         [Phone]
         public string PhoneNumber { get; set; }
-        public DateTime? DathOfBirth { get; set; }
+        public DateOnly? DathOfBirth { get; set; }
 
 
         public string Address { get; set; }

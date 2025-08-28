@@ -21,7 +21,7 @@ namespace API.Model.ClientManagemnet
         [EmailAddress]
         public string? EmailAddress { get; set; }
 
-        public string NIC { get; set; }
+        public string? NIC { get; set; }
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
 
@@ -29,6 +29,6 @@ namespace API.Model.ClientManagemnet
         public string Nationality { get; set; }
         public string? Remark { get; set; }
 
-        public string CustomerType { get; set; }
+        public string? CustomerType { get; set; }
     }
 }

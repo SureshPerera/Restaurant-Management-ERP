@@ -12,7 +12,7 @@
 	<a href="/Reservations" class="btn btn-primary mb-3">Back</a>
 </div>
 <div>
-	@if (directBookingModels == null)
+	@if (OnlineBookings == null)
 	{
 		<p><Searching/></p>
 	}
@@ -51,8 +51,8 @@
 					<th>@item.Nationality</th>
 					<th>@item.Remark</th>
 					<th style="white-space:nowrap">
-						<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
+						<a class="btn btn-primary btn-sm" href="/Reservations/OnlineBooking/Edit/@item.Id">Edit</a>
+						<a class="btn btn-danger btn-sm" href="/Reservations/OnlineBooking/Delete/@item.Id">Delete</a>
 					</th>
 
 				</tr>
@@ -63,8 +63,8 @@
 </div>
 @inject HttpClient Http
 @code {
-	private List<DirectBookingModel>? directBookingModels;
-	private List<OnlineBookingModel>? OnlineBookings;
+	
+	private List<OnlineBookingModel> OnlineBookings  = new List<OnlineBookingModel>();
 
 	protected override async Task OnInitializedAsync()
 	{

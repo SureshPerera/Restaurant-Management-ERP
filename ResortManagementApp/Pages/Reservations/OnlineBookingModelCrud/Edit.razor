@@ -1,0 +1,196 @@
+﻿@page "/Reservations/OnlineBooking/Edit/{Id:guid}"
+@using ResortManagementApp.Models.Reservation.DTO
+@using System.Text.Json.Nodes
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
+
+@layout MainLayout
+<div class="card">
+	<h3 class="mb-3 text-center">Register Customer</h3>
+</div>
+
+<div class="col-lg-8">
+	<h1 class="title mb-5">New Customer</h1>
+</div>
+
+<form class="form">
+	<div class="flex">
+		<div >
+			<div class="row mb-3">
+				<label class="col-md-2 col-form-label">Customer Id</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="@Id" readonly>
+					<span class="text-danger">@Errors["CustomerId"]?[0]</span>
+				</div>
+			</div>
+			<div class="flex gap-4">
+
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">First Name</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="OnlineBookingDto.FirstName">
+						<span class="text-danger">@Errors["FirstName"]?[0]</span>
+					</div>
+				</div>
+				<div class="row form-group mb-3">
+					<label class="col-md-4 col-form-label">Last Name</label>
+					<div class="col-md-8">
+						<input class="form-control" @bind="OnlineBookingDto.LastName">
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">Address</label>
+					<div class="col-md-6">
+						<textarea class="form-control" @bind="OnlineBookingDto.Address"></textarea>
+						<span class="text-danger">@Errors["FirstName"]?[0]</span>
+
+					</div>
+				</div><div class="row mb-3">
+					<label class="col-md-2 col-form-label">Phone Number</label>
+					<div class="col-md-6">
+						<input class="form-control" type="number" @bind="OnlineBookingDto.PhoneNumber">
+						<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">Email Address</label>
+					<div class="col-md-6">
+						<input class="form-control" type="email" @bind="OnlineBookingDto.EmailAddress">
+						<span class="text-danger">@Errors["Address"]?[0]</span>
+
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">NIC Number</label>
+					<div class="col-md-6">
+						<input class="form-control" @bind="OnlineBookingDto.NIC">
+						<span class="text-danger">@Errors["NIC"]?[0]</span>
+
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">Date Of Birthday</label>
+					<div class="col-md-6">
+						<input class="form-control" type="date" @bind="OnlineBookingDto.DathOfBirth">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">Nationality</label>
+					<div class="col-md-6">
+						<input class="form-control" @bind="OnlineBookingDto.Nationality">
+						<span class="text-danger">@Errors["Nationality"]?[0]</span>
+
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">CreditLimit</label>
+					<div class="col-md-6">
+						<input class="form-control" type="number" @bind="OnlineBookingDto.CreditLimit">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-md-2 col-form-label">Remark</label>
+					<div class="col-md-6">
+
+						<textarea class="form-control" @bind="OnlineBookingDto.Remark"></textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div>
+			<div>
+				<div style="">
+					<div class="row gap-2" style="">
+
+						<div class="offset-md-4 col-md-4 d-grid">
+							<button class="btn btn-success fw-bold" type="button" @onclick="UpdateCustomer">Edit Customer</button>
+						</div>
+						<div class="offset-md-4 col-md-4 d-grid">
+							<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+						</div>
+						<div class="offset-md-4 col-md-4 d-grid">
+							<a class="btn btn-primary fw-bold" href="/Reservations/OnlineBooking">Back</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</form>
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 60rem;
+		font-weight: bold;
+	}
+</style>
+@inject HttpClient http
+@inject NavigationManager navManager
+@code {
+	[Parameter]
+	public Guid Id { get; set; }
+	public OnlineBookingModel? OnlineBookingModel = new OnlineBookingModel();
+	public OnlineBookingDto OnlineBookingDto = new();
+	public JsonNode Errors { get; set; } = new JsonObject();
+	public List<string> CustomerType = new List<string>
+	{
+		"Local","Foreign"
+	};
+
+
+
+	protected override async Task OnParametersSetAsync()
+	{
+		try
+		{
+
+			OnlineBookingModel = await http.GetFromJsonAsync<OnlineBookingModel>($"https://localhost:4000/api/OnlineBooking/{Id}");
+			OnlineBookingDto.FirstName = OnlineBookingModel.FirstName ?? "";
+			OnlineBookingDto.LastName = OnlineBookingModel?.LastName ?? "";
+			OnlineBookingDto.Address = OnlineBookingModel?.Address ?? "";
+			OnlineBookingDto.PhoneNumber = OnlineBookingModel?.PhoneNumber ?? "";
+			OnlineBookingDto.DathOfBirth = OnlineBookingModel?.DathOfBirth;
+			OnlineBookingDto.NIC = OnlineBookingModel?.NIC ?? "";
+			OnlineBookingDto.CreditLimit = OnlineBookingModel?.CreditLimit;
+			OnlineBookingDto.OpeningBalanace = OnlineBookingModel?.OpeningBalanace;
+			OnlineBookingDto.Nationality = OnlineBookingModel?.Nationality ?? "";
+			OnlineBookingDto.Remark = OnlineBookingModel?.Remark ?? "";
+			OnlineBookingDto.EmailAddress = OnlineBookingModel?.EmailAddress ?? "";
+			Console.WriteLine("Succusfull");
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exceptions : " + ex.StackTrace);
+		}
+	}
+	protected async Task UpdateCustomer()
+	{
+		var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/DirectBooking/{Id}", OnlineBookingDto);
+		if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/OnlineBooking"); }
+
+		var strResponce = await responce.Content.ReadAsStringAsync();
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Erro Message : " + ex.Message);
+		}
+	}
+
+}
+

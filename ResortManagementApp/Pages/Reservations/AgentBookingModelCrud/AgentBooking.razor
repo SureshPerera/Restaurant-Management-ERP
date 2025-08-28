@@ -59,10 +59,11 @@
 </div>
 @inject HttpClient Http
 @code {
- 
-    private List<Agents>? Agents;
-    protected override async Task OnInitializedAsync()
+
+	private List<Agents> Agents { get; set; } = new List<Agents>();
+	protected override async Task OnInitializedAsync()
 	{
+		
 		Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
 	}
 }
