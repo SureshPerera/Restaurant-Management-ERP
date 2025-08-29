@@ -308,7 +308,7 @@
 @inject IJSRuntime JS
 @inject HttpClient http
 @code {
-	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new ();
+	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new CustomerUsePcInfoDto();
 	public string? UserCountry;
 	private DropdownWidth _dropdownWidth = DropdownWidth.Ignore;
 	public OnlineBookingModel onlineBooking = new();
@@ -323,8 +323,28 @@
 
 	protected async override Task OnInitializedAsync()
 	{
-		UserCountry = CustomerUsePcInfoDto.Country;
 
+		try
+		{
+			var result = await http.GetFromJsonAsync<CustomerUsePcInfoDto>(
+				"https://localhost:4000/api/Geo/country"
+			);
+
+			if (result != null)
+			{
+				UserCountry = result.City;
+
+			}
+			else
+			{
+				UserCountry = "Unknown";
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Error fetching country info: {ex.Message}");
+			UserCountry = "Unknown";
+		}
 	}
 	private void OnValueChanged(PickerVariant variant)
 	{
@@ -348,6 +368,7 @@
 
 	private Task ClickBooking(MouseEventArgs args)
 	{
+		
 		throw new NotImplementedException();
 	}
 }
