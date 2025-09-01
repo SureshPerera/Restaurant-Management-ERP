@@ -13,14 +13,14 @@
 
 @page "/"
 <div style="margin-top:-4rem;">
-	
+
 	<section style="background-color:azure;">
 		<div>
 			<MudCarousel Class="mud-width-full" Style="height:500px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
 				<MudCarouselItem Transition="transition" Color="@Color.Primary">
 					<div class="d-flex" style="height:100%">
 						@* <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" /> *@
-						<img  src="/imgs/clientpotal/clienthomeimg/front1.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
+						<img src="/imgs/clientpotal/clienthomeimg/front1.jpeg" alt="Image 1" class="cover-photo mx-auto my-auto" style="max-width:100%; height:100%;" />
 
 					</div>
 				</MudCarouselItem>
@@ -46,120 +46,120 @@
 					</div>
 				</MudCarouselItem>
 			</MudCarousel>
-		
-		</div>
-		<hr />
-	</section>
-	<section style="background-color:aliceblue; margin-top:-1rem;">
-		<div class="con2-selectbar-secton2" style="font-weight:bold">
-			<div><a href="" class="link-primary">OFFERS</a></div>
-			<span style="font-size:25px">*</span>
-			<div><a href="" class="link-primary">EXPERIENCES</a></div>
-			<span style="font-size:25px">*</span>
-			<div><a href="" class="link-primary">EVENT</a></div>
-			<span style="font-size:25px">*</span>
-			<div><a href="" class="link-primary">ESG</a></div>
-			<span style="font-size:25px">*</span>
 
-			<div><a href="" class="link-primary">GIFT CARDS</a></div>
-			<span style="font-size:25px">*</span>
-
-			<div><a href="" class="link-primary">ABOUT US</a></div>
-			<span style="font-size:25px">*</span>
-			<div><a href="" class="link-primary">BOOK DIRECT</a></div>
 		</div>
-		<hr />
+
 	</section>
-	<section style="background-color: lightgreen; margin-top: -0.5rem">
-		<div class="" style="justify-content:center;"> 
+	<section style="background-color:#344E41; margin-top:-2.1rem; height:3rem;">
+		<div class="fixed-div" style="background-color:#344E41">
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> OFFERS
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> EXPERIENCES
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> EVENT
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> ESG
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> GIFT CARDS
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> ABOUT US
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> BOOK DIRECT
+				</NavLink>
+			</div>
+		</div>
+
+	</section>
+
+	<section style="background-color: #A3B18A; margin-top: 0.4rem; padding: 10px;">
+		<div class="">
 			<form class="con3-quckBooking-section3" action="/frontoffice" method="post">
-				<div>
-					@* <MudSelect @bind-Value="stringValue" Placeholder="Please Select"  AdornmentColor="Color.Primary">
-					<MudSelectItem Value="@("Pizza")" Disabled="true"> Aaaa (Disabled)</MudSelectItem>
-					<MudSelectItem Value="@("Burger")">Burger</MudSelectItem>
-					<MudSelectItem Value="@("Hotdog")">Hot Dog</MudSelectItem>
-				</MudSelect> *@
-					@* <select style="height:3rem; margin-top:-1rem;" required @bind="stringValue">
-						<option>Select Resort</option>
-						<option>Solitary Green Resort - Nuwara Eliya</option>
-						<option>Amazon Beach Resort - Trincomale</option>
-						<option disabled>JCUB Resort - Trincomale </option>
-						<option></option>
-					</select> *@
-
+				<div class="position-absolute justify-content-center flex">
 					<div style="width: 250px;">
 						<MudSelect T="DropdownWidth" Label="Resort Width" @bind-Value="@_dropdownWidth">
 							<MudSelectItem Value="@DropdownWidth.Relative">Solitary Green Resort - Nuwara Eliya</MudSelectItem>
-							
 						</MudSelect>
 					</div>
+					<span style="font-size:50px;margin-top:-1rem;">|</span>
+					<div style="margin-top: 0.5rem">
+						<MudStack AlignItems="AlignItems.Center" Style="width:450px; height:50px; margin:-1rem;">
+							<MudDateRangePicker PickerVariant="@_variant" @bind-DateRange="@_dateRange" Margin="Margin.Dense" Label="Select date range" />
+							<MudSpacer />
+							<MudToggleGroup T="PickerVariant" SelectionMode="SelectionMode.SingleSelection" Value="@_variant" ValueChanged="@OnValueChanged"
+											Color="Color.Primary" CheckMark="true" FixedContent="false">
+
+							</MudToggleGroup>
+						</MudStack>
+					</div>
+					<span style="font-size:50px;margin-top:-1rem;">|</span>
 					
-				</div>
-				<span style="font-size:50px;margin-top:-1rem;">|</span>
+					<div style="">
+						<select style="height:3rem; background-color:transparent" required>
+							<option>--Rooms--</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+					</div>
+					<div style="">
+						<select style="height:3rem; background-color:transparent" required>
+							<option>--Adults--</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+					</div>
+					<div style="">
+						
+						<select style="height:3rem; background-color:transparent" required>
+							<option>--Children--</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
 
-				<div style="margin-top: 0.5rem">
-					<MudStack AlignItems="AlignItems.Center" Style="width:450px; height:50px; margin:-1rem;">
-						<MudDateRangePicker PickerVariant="@_variant" @bind-DateRange="@_dateRange" Margin="Margin.Dense" Label="Select date range" />
-						<MudSpacer />
-						<MudToggleGroup T="PickerVariant" SelectionMode="SelectionMode.SingleSelection" Value="@_variant" ValueChanged="@OnValueChanged"
-										Color="Color.Primary" CheckMark="true" FixedContent="false">
+					</div>
+					<span style="font-size:50px;margin-top:-1rem;">|</span>
+					<div style="">
+						<input style="height:3rem; background-color:transparent" type="text" name="promoCode" value="" placeholder="Promo Code" />
+					</div>
+					<span style="font-size:50px;margin-top:-1rem;">|</span>
+					<div style="">
+						<input style="height:3rem; background-color:transparent" type="text" name="promoCode" value="" placeholder="@UserCountry" readonly />
 
-						</MudToggleGroup>
-					</MudStack>
-				</div>
-				<span style="font-size:50px;margin-top:-1rem;">|</span>
+					</div>
+					<span style="font-size:50px;margin-top:-1rem;">|</span>
 
-				<div style="margin-top: 1rem; ">
-					
-					<label>Rooms:</label>
-					<select required>
-						<option>0</option>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-					</select>
-				</div>
-				<div style="margin-top: 1rem">
-					<label>Adults:</label>
-					<select required>
-						<option>0</option>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>4</option>
-					</select>
-				</div>
-				<div style="margin-top: 1rem">
-					<label>Children:</label>
-					<select required>
-						<option>0</option>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>4</option>
-					</select>
-					
-				</div>
-				<span style="font-size:50px;margin-top:-1rem;">|</span>
-
-
-				<div style="margin-top: 1rem">
-					<input type="text" name="promoCode" value="" placeholder="Promo Code" />
-				</div>
-				<span style="font-size:50px;margin-top:-1rem;">|</span>
-				<div>
-					<input type="text" name="promoCode" value="" placeholder="@UserCountry"  readonly />
-
-				</div>
-				<span style="font-size:50px;margin-top:-1rem;">|</span>
-
-				<div>
-					<input class="btn btn-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
-				</div>
+					<div>
+						<input class="btn btn-primary" style="" type="submit" name="booking" value="Book Now" />
+					</div>
+				</div>	
 			</form>
 		</div>
 
@@ -168,10 +168,10 @@
 		<div class="" style=" display:flex ; font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center">
 			<div>
 
-			
-			<img style="width:550px; height:500px;" src="/imgs/maindashboard/logo.png" />  
+
+				<img style="width:550px; height:500px;" src="/imgs/maindashboard/logo.png" />
 			</div>
-			
+
 
 		</div>
 		<div style="font-family:'Lucida Sans Typewriter'; font-weight:bold	; margin-top:-2rem; justify-content:center; display:flex;">
@@ -180,16 +180,12 @@
 
 			</div>
 		</div>
-		<div style="display:flex; justify-content:center;">
-			<div style="">
-				<button class="btn btn-success fw-bold" type="button" @onclick="ClickBooking">Booking Now</button>
-			</div>
-		</div>
+
 	</section>
 
-	<section >
+	<section>
 		<div>
-			<MudPaper Class="pa-4 bg-container-allSection" Style="background-image:url(Images/ClientHomeImg/greanBackground3.jpg) ; background-color: azure">
+			<MudPaper Class="pa-4 bg-container-allSection" style="background-color:#A3B18A">
 				<MudStack Spacing="2">
 					<MudButton OnClick="OnExpandCollapseClick">@(_expanded ? "Collapse" : " SERVICES & FACILITIES")</MudButton>
 					<MudDivider />
@@ -244,8 +240,8 @@
 
 		</div>
 	</section>
-	
-		
+
+
 	<section style="margin:0; padding:0; ">
 		<div class="video-container" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; overflow:hidden; backdrop-filter:blur(80px)">
 			<video autoplay loop muted playsinline
@@ -257,9 +253,8 @@
 	</section>
 
 	<section>
-		
 	</section>
-	
+
 </div>
 
 
@@ -290,7 +285,7 @@
 		object-fit: cover; /* Ensures the image covers the entire container */
 	}
 
-	.bg-container-allSection{
+	.bg-container-allSection {
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -302,7 +297,6 @@
 		color: black;
 	}
 
-	
 </style>
 
 @inject IJSRuntime JS
@@ -310,7 +304,7 @@
 @code {
 	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new CustomerUsePcInfoDto();
 	public string? UserCountry;
-	private DropdownWidth _dropdownWidth = DropdownWidth.Ignore;
+	private DropdownWidth _dropdownWidth ;
 	public OnlineBookingModel onlineBooking = new();
 	private bool arrows = true;
 	private bool bullets = true;
@@ -368,7 +362,7 @@
 
 	private Task ClickBooking(MouseEventArgs args)
 	{
-		
+
 		throw new NotImplementedException();
 	}
 }
