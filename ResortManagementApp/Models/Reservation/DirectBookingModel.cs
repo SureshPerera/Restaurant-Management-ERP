@@ -35,7 +35,11 @@ namespace ResortManagementApp.Models.Reservation
         public string? Remark { get; set; }
 
         public string CustomerType { get; set; }
-       
+
+        public DateOnly CheckInDate { get; set; }
+        
+        public DateOnly CheckOutDate { get; set; }
+
     }
 
     

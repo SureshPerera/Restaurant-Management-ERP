@@ -30,5 +30,10 @@ namespace API.Model.Reservation.OnlineBooking
         public string? Remark { get; set; }
 
         public string CustomerType { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Check In Date!")]
+        public DateTime CheckInDate { get; set; }
+        [Required(ErrorMessage = "Please Enter Check Out Date!")]
+        public DateTime CheckOutDate { get; set; }
     }
 }

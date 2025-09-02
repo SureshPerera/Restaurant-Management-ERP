@@ -34,7 +34,11 @@ namespace API.Model.Reservation
         public string? Nationality { get; set; }
         public string CustomerType { get; set; }
         public string? Remark { get; set; }
-        
+        [Required(ErrorMessage = "Please Enter Check In Date!")]
+        public DateOnly CheckInDate { get; set; }
+        [Required(ErrorMessage = "Please Enter Check Out Date!")]
+        public DateOnly CheckOutDate { get; set; }
+       
 
     }
 

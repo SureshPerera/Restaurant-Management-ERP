@@ -303,6 +303,7 @@
 @inject HttpClient http
 @code {
 	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new CustomerUsePcInfoDto();
+	public OnlineBookingModel onlineBookingModel = new OnlineBookingModel();
 	public string? UserCountry;
 	private DropdownWidth _dropdownWidth ;
 	public OnlineBookingModel onlineBooking = new();
@@ -311,9 +312,8 @@
 	private bool enableSwipeGesture = true;
 	private bool autocycle = true;
 	private Transition transition = Transition.Fade;
-
 	private PickerVariant _variant = PickerVariant.Dialog;
-	private DateRange? _dateRange { get; set; }
+	private DateRange _dateRange { get; set; }
 
 	protected async override Task OnInitializedAsync()
 	{
@@ -360,9 +360,27 @@
 	public string? VideoSource = "images/ClientHomeVideo/video.mp4";
 
 
-	private Task ClickBooking(MouseEventArgs args)
+	private async Task ClickBooking(MouseEventArgs args)
 	{
+		var OnlineBookingModel = new OnlineBookingModel
+			{
+				CheckInDate = _dateRange.Start,
+				CheckOutDate = _dateRange.End
+			};
+		// var response = await http.PostAsJsonAsync("https:localhost:4000/api/OnlienBooking", directBookingDTO);
+		// if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
 
-		throw new NotImplementedException();
+		// var strResponce = await response.Content.ReadAsStringAsync();
+		// Console.WriteLine("Json Response :" + strResponce);
+
+		// try
+		// {
+		// 	var jsonResponce = JsonNode.Parse(strResponce);
+		// 	Errors = jsonResponce?["errors"] ?? new JsonObject();
+		// }
+		// catch (Exception ex)
+		// {
+		// 	Console.WriteLine(ex.Message);
+		// }
 	}
 }

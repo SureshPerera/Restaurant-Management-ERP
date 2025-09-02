@@ -27,5 +27,8 @@ namespace ResortManagementApp.Models.Reservation.DTO
      
         public string Nationality { get; set; }
         public string? Remark { get; set; }
+        public DateOnly CheckInDate { get; set; }
+        
+        public DateOnly CheckOutDate { get; set; }
     }
 }
