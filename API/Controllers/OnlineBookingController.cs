@@ -62,7 +62,14 @@ namespace API.Controllers
                 Nationality = onlineBookingModelDto.Nationality,
                 Remark = onlineBookingModelDto.Remark,
                 Address = onlineBookingModelDto.Address,
-                CustomerType = onlineBookingModelDto.CustomerType
+                CustomerType = onlineBookingModelDto.CustomerType,
+                CheckInDate = onlineBookingModelDto.CheckInDate,
+                CheckOutDate = onlineBookingModelDto.CheckOutDate,
+                NoOfAdults = onlineBookingModelDto.NoOfAdults,
+                NoOfChildren = onlineBookingModelDto.NoOfChildren,
+                NoOfRooms = onlineBookingModelDto.NoOfRooms,
+                PramoCode = onlineBookingModelDto.PramoCode
+                
                 
             };
             var Dtos = new ClientModel
@@ -70,7 +77,7 @@ namespace API.Controllers
                 FirstName = onlineBookingModelDto.FirstName,
                 LastName = onlineBookingModelDto.LastName,
                 PhoneNumber = onlineBookingModelDto.PhoneNumber,
-                DathOfBirth = onlineBookingModelDto.DathOfBirth,
+                //DathOfBirth = onlineBookingModelDto.DathOfBirth,
                 Address = onlineBookingModelDto.Address,
                 EmailAddress = onlineBookingModelDto.EmailAddress,
                 NIC = onlineBookingModelDto.NIC,

@@ -6,19 +6,19 @@ namespace API.Model.DTO
     {
         public Guid Id { get; set; }
 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
 
-        public string PhoneNumber { get; set; }
-        public DateOnly? DathOfBirth { get; set; }
+        public string? PhoneNumber { get; set; }
+        public DateTime? DathOfBirth { get; set; }
 
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
         [EmailAddress]
         public string? EmailAddress { get; set; }
 
-        public string NIC { get; set; }
+        public string? NIC { get; set; }
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
 
@@ -26,9 +26,14 @@ namespace API.Model.DTO
 
         public string? Nationality { get; set; }
         public string? Remark { get; set; }
-        public string CustomerType { get; set; }
-        public DateOnly CheckInDate { get; set; }
+        public string? CustomerType { get; set; }
+        public DateTime CheckInDate { get; set; }
 
-        public DateOnly CheckOutDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
+        public int? NoOfRooms { get; set; } = 0;
+        public int? NoOfAdults { get; set; } = 0;
+        public int? NoOfChildren { get; set; } = 0;
+        public string? PramoCode { get; set; }
+
     }
 }

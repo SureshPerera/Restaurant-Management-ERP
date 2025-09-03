@@ -5,7 +5,9 @@
 @using Microsoft.AspNetCore.Components
 @using System.Globalization
 @using ResortManagementApp.Pages.Reservations.OnlineBookingModelCrud
+@using System.Text.Json.Nodes
 @using static System.Net.WebRequestMethods
+@inject MudBlazor.IDialogService DialogService
 
 @inject IJSRuntime jsruntime
 @layout ClientLayout
@@ -114,7 +116,7 @@
 					<span style="font-size:50px;margin-top:-1rem;">|</span>
 					
 					<div style="">
-						<select style="height:3rem; background-color:transparent" required>
+						<select style="height:3rem; background-color:transparent" @bind="onlineBookingModel.NoOfRooms"  required>
 							<option>--Rooms--</option>
 							<option>1</option>
 							<option>2</option>
@@ -124,7 +126,7 @@
 						</select>
 					</div>
 					<div style="">
-						<select style="height:3rem; background-color:transparent" required>
+						<select style="height:3rem; background-color:transparent" @bind="onlineBookingModel.NoOfAdults" required>
 							<option>--Adults--</option>
 							<option>1</option>
 							<option>2</option>
@@ -135,7 +137,7 @@
 					</div>
 					<div style="">
 						
-						<select style="height:3rem; background-color:transparent" required>
+						<select style="height:3rem; background-color:transparent" @bind="onlineBookingModel.NoOfChildren" required>
 							<option>--Children--</option>
 							<option>1</option>
 							<option>2</option>
@@ -147,17 +149,17 @@
 					</div>
 					<span style="font-size:50px;margin-top:-1rem;">|</span>
 					<div style="">
-						<input style="height:3rem; background-color:transparent" type="text" name="promoCode" value="" placeholder="Promo Code" />
+						<input style="height:3rem; background-color:transparent" type="text" name="promoCode" @bind="onlineBookingModel.PramoCode" placeholder="Promo Code" />
 					</div>
 					<span style="font-size:50px;margin-top:-1rem;">|</span>
 					<div style="">
-						<input style="height:3rem; background-color:transparent" type="text" name="promoCode" value="" placeholder="@UserCountry" readonly />
+						<input style="height:3rem; background-color:transparent" type="text" name="country"  placeholder="@UserCountry" readonly />
 
 					</div>
 					<span style="font-size:50px;margin-top:-1rem;">|</span>
 
 					<div>
-						<input class="btn btn-primary" style="" type="submit" name="booking" value="Book Now" />
+						<button class="btn btn-primary" @onclick="NavigateToCustomerDetails">ClickToBooking</button>
 					</div>
 				</div>	
 			</form>
@@ -301,10 +303,12 @@
 
 @inject IJSRuntime JS
 @inject HttpClient http
+@inject NavigationManager navManager
+
 @code {
 	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new CustomerUsePcInfoDto();
 	public OnlineBookingModel onlineBookingModel = new OnlineBookingModel();
-	public string? UserCountry;
+	public string UserCountry;
 	private DropdownWidth _dropdownWidth ;
 	public OnlineBookingModel onlineBooking = new();
 	private bool arrows = true;
@@ -314,6 +318,8 @@
 	private Transition transition = Transition.Fade;
 	private PickerVariant _variant = PickerVariant.Dialog;
 	private DateRange _dateRange { get; set; }
+	public JsonNode Errors { set; get; } = new JsonObject();
+
 
 	protected async override Task OnInitializedAsync()
 	{
@@ -326,7 +332,7 @@
 
 			if (result != null)
 			{
-				UserCountry = result.City;
+				UserCountry = result.Country;
 
 			}
 			else
@@ -360,27 +366,21 @@
 	public string? VideoSource = "images/ClientHomeVideo/video.mp4";
 
 
-	private async Task ClickBooking(MouseEventArgs args)
+
+	private void NavigateToCustomerDetails(MouseEventArgs args)
 	{
-		var OnlineBookingModel = new OnlineBookingModel
-			{
-				CheckInDate = _dateRange.Start,
-				CheckOutDate = _dateRange.End
-			};
-		// var response = await http.PostAsJsonAsync("https:localhost:4000/api/OnlienBooking", directBookingDTO);
-		// if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
+		var queryParams = new Dictionary<string, object?>
+		{
+			["country"] = UserCountry,
+			["checkIn"] = _dateRange?.Start?.ToString("yyyy-MM-dd"),
+			["checkOut"] = _dateRange?.End?.ToString("yyyy-MM-dd"),
+			["rooms"] = onlineBookingModel.NoOfRooms,
+			["adults"] = onlineBookingModel.NoOfAdults,
+			["children"] = onlineBookingModel.NoOfChildren,
+			["pramoCode"] = onlineBookingModel.PramoCode
+		};
 
-		// var strResponce = await response.Content.ReadAsStringAsync();
-		// Console.WriteLine("Json Response :" + strResponce);
-
-		// try
-		// {
-		// 	var jsonResponce = JsonNode.Parse(strResponce);
-		// 	Errors = jsonResponce?["errors"] ?? new JsonObject();
-		// }
-		// catch (Exception ex)
-		// {
-		// 	Console.WriteLine(ex.Message);
-		// }
+		var uri = navManager.GetUriWithQueryParameters("/Reservations/OnlineBookingModel/CustomerDetailsForm", queryParams);
+		navManager.NavigateTo(uri);
 	}
 }

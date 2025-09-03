@@ -1,0 +1,148 @@
+﻿@page "/Reservations/OnlineBookingModel/CustomerDetailsForm"
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
+@using System.Text.Json.Nodes
+
+<div>
+	<div class="justify-content-center flex">
+		<form class="form" style="background-color: #A3B18A">
+			<div class="justify-content-center flex">
+				<div class="" style="color: black; font-weight: bold; font-size: 17px;">
+					<div class="row">
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">First Name</label>
+							<div class="col-md-6">
+								<input class="form-control" @bind="OnlineBookingDto.FirstName">
+								<span class="text-danger">@Errors["FirstName"]?[0]</span>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">Last Name</label>
+							<div class="col-md-6">
+								<input class="form-control" @bind="OnlineBookingDto.LastName">
+
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">Address</label>
+							<div class="col-md-6">
+								<textarea class="form-control" @bind="OnlineBookingDto.Address"></textarea>
+								<span class="text-danger">@Errors["FirstName"]?[0]</span>
+
+							</div>
+						</div><div class="row mb-3">
+							<label class="col-md-2 col-form-label">Phone Number</label>
+							<div class="col-md-6">
+								<input class="form-control" type="number" @bind="OnlineBookingDto.PhoneNumber">
+								<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">Email Address</label>
+							<div class="col-md-6">
+								<input class="form-control" type="email" @bind="OnlineBookingDto.EmailAddress">
+								<span class="text-danger">@Errors["Address"]?[0]</span>
+
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">NIC Number</label>
+							<div class="col-md-6">
+								<input class="form-control" @bind="OnlineBookingDto.NIC">
+								<span class="text-danger">@Errors["NIC"]?[0]</span>
+
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">Date Of Birthday</label>
+							<div class="col-md-6">
+								<input class="form-control" type="date" @bind="OnlineBookingDto.DathOfBirth">
+							</div>
+						</div>
+						
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">CreditLimit</label>
+							<div class="col-md-6">
+								<input class="form-control" type="number" @bind="OnlineBookingDto.CreditLimit">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-md-2 col-form-label">Remark</label>
+							<div class="col-md-6">
+
+								<textarea class="form-control" @bind="OnlineBookingDto.Remark"></textarea>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div>
+					<div>
+						<div style="">
+							<div class="row gap-2" style="">
+
+								<div class="offset-md-1 col-md-4 d-grid">
+									<button class="btn btn-success fw-bold" type="button" @onclick="ClickSaveCustomer">Edit Customer</button>
+								</div>
+								<div class="offset-md-4 col-md-4 d-grid">
+									<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+								</div>
+								<div class="offset-md-4 col-md-4 d-grid">
+									<a class="btn btn-primary fw-bold" href="/">Back</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</form>
+	</div>
+</div>
+@inject HttpClient http
+@inject NavigationManager navManager
+@code{
+	public OnlineBookingModel OnlineBookingDto { get; set; } = new();
+	public JsonNode Errors { get; set; } = new JsonObject();
+
+	[SupplyParameterFromQuery] public string? Country { get; set; }
+	[SupplyParameterFromQuery] public DateTime? CheckIn { get; set; }
+	[SupplyParameterFromQuery] public DateTime? CheckOut { get; set; }
+	[SupplyParameterFromQuery] public int? Rooms { get; set; }
+	[SupplyParameterFromQuery] public int? Adults { get; set; }
+	[SupplyParameterFromQuery] public int? Children { get; set; }
+	[SupplyParameterFromQuery] public string? PramoCode { get; set; }
+
+	protected override void OnInitialized()
+	{
+		OnlineBookingDto.Nationality = Country;
+		OnlineBookingDto.CheckInDate = CheckIn;
+		OnlineBookingDto.CheckOutDate = CheckOut;
+		OnlineBookingDto.NoOfRooms = Rooms ?? 0;
+		OnlineBookingDto.NoOfAdults = Adults ?? 0;
+		OnlineBookingDto.NoOfChildren = Children?? 0;
+		OnlineBookingDto.NoOfAdults = Adults;
+
+	}
+
+
+	private async Task ClickSaveCustomer(MouseEventArgs args)
+	{
+		var response = await http.PostAsJsonAsync("https://localhost:4000/api/OnlineBooking", OnlineBookingDto);
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/"); }
+
+		var strResponce = await response.Content.ReadAsStringAsync();
+		Console.WriteLine("Json Response :" + strResponce);
+
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
+	}
+}
