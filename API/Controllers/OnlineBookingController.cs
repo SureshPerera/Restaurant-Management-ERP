@@ -77,7 +77,7 @@ namespace API.Controllers
                 FirstName = onlineBookingModelDto.FirstName,
                 LastName = onlineBookingModelDto.LastName,
                 PhoneNumber = onlineBookingModelDto.PhoneNumber,
-                //DathOfBirth = onlineBookingModelDto.DathOfBirth,
+                DathOfBirth = onlineBookingModelDto.DathOfBirth,
                 Address = onlineBookingModelDto.Address,
                 EmailAddress = onlineBookingModelDto.EmailAddress,
                 NIC = onlineBookingModelDto.NIC,
@@ -112,6 +112,12 @@ namespace API.Controllers
             DomainModel.Nationality = onlineBookingModelDto.Nationality;
             DomainModel.Remark = onlineBookingModelDto.Remark;
             DomainModel.CustomerType = onlineBookingModelDto.CustomerType;
+            DomainModel.CheckOutDate = onlineBookingModelDto.CheckOutDate;
+            DomainModel.CheckInDate = onlineBookingModelDto.CheckInDate;
+            DomainModel.NoOfAdults = onlineBookingModelDto.NoOfAdults;
+            DomainModel.NoOfRooms = onlineBookingModelDto.NoOfRooms;
+            DomainModel.NoOfChildren = onlineBookingModelDto.NoOfChildren;
+            DomainModel.PramoCode = onlineBookingModelDto.PramoCode;
 
             await dbContext.SaveChangesAsync();
             Console.WriteLine($"Received Update for ID: {id}, FirstName: {onlineBookingModelDto.FirstName}");

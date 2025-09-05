@@ -33,9 +33,10 @@ namespace ResortManagementApp.Models.Reservation.OnlineBookingModel
         public DateTime? CheckInDate { get; set; }
         
         public DateTime? CheckOutDate { get; set; }
-        public int? NoOfRooms { get; set; } = 0;
-        public int? NoOfAdults { get; set; } = 0;
-        public int? NoOfChildren { get; set; } = 0;
+        public int? NoOfRooms { get; set; }
+        public int? NoOfAdults { get; set; } 
+        public int? NoOfChildren { get; set; } 
         public string? PramoCode { get; set; }
+        public bool? Conformation { get; set; }
     }
 }

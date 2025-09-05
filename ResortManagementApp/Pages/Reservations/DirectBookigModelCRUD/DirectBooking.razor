@@ -21,9 +21,9 @@
 	{
 		<p><Searching/></p>
 	}
-	<table class="table">
+	<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
 		<thead class="bg-light">
-			<tr class="table">
+			<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
 				<td>Name</td>
 				<td>Phone Number</td>
 				<td>Address</td>
@@ -45,7 +45,7 @@
 			}
 			@foreach (var item in directBookingModels)
 			{
-				<tr>
+				<tr style="background-color: #DAD7CD">
 					<th>@(item.FirstName + " " + @item.LastName)</th>
 
 					<th>@item.PhoneNumber</th>

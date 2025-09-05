@@ -14,7 +14,7 @@ namespace API.Model.Reservation.OnlineBooking
 
         [Phone]
         public string? PhoneNumber { get; set; }
-        public DateTime? DathOfBirth { get; set; }
+        public DateOnly? DathOfBirth { get; set; }
 
 
         public string? Address { get; set; }
@@ -39,5 +39,6 @@ namespace API.Model.Reservation.OnlineBooking
         public int? NoOfAdults { get; set; } = 0;
         public int? NoOfChildren { get; set; } = 0;
         public string? PramoCode { get; set; }
+        public bool? Conformation { get; set; }
     }
 }

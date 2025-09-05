@@ -29,7 +29,7 @@ namespace API.Model.DTO
         public string? Remark { get; set; }
         public string CustomerType { get; set; }
         public DateOnly CheckInDate { get; set; }
-
+        public bool? Conformation { get; set; }
         public DateOnly CheckOutDate { get; set; }
 
     }

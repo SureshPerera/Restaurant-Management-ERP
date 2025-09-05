@@ -21,7 +21,9 @@ namespace ResortManagementApp.Models.Reservation.DTO
         public DateOnly CheckInDate { get; set; }
 
         public DateOnly CheckOutDate { get; set; }
+        public bool? Conformation { get; set; }
+
 
     }
-   
+
 }
