@@ -68,9 +68,8 @@ namespace API.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] RoomModelDto roomModelDto)
         {
 
-            var DomainModel = dbContext.RoomModels.Find(id);
+            var DomainModel = await dbContext.RoomModels.FindAsync(id);
             if (DomainModel == null) { return NotFound(); }
-
             DomainModel.RoomFloor = roomModelDto.RoomFloor;
             DomainModel.AdditionalDetails = roomModelDto.AdditionalDetails;
             DomainModel.RoomDisplayTitle = roomModelDto.RoomDisplayTitle;

@@ -1,6 +1,7 @@
-﻿@page "/Administration/Delete/{id:guid}"
+﻿@page "/Administration/ManageRooms/Delete/{Id:guid}"
 @using ResortManagementApp.Models.Administration.DTOS
 @using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
 
@@ -8,21 +9,53 @@
 	<h3 class="mb-3">Delete customer</h3>
 	@if (RoomsDtos == null)
 	{
-		<p><em>loading customer details...</em></p>
+		<Searching/>
 	}
 	<p>are you sure you want to delete customer with name  <strong>@Id</strong> </p>
 
 	<button class="btn btn-danger" @onclick="deleteRooms">Delete</button>
 	<a class="btn btn-secondary" href="/Administration/ManageRooms">Cancel</a>
 </div>
+@inject HttpClient http;
+@inject NavigationManager navManager;
 @code {
 	[Parameter]
-	public Guid Id { get; set; }
+	public Guid? Id { get; set; }
 	public ManageRooms? ManageRooms { get; set; }
-	public RoomsDto RoomsDtos { get; set; } = new();
+	public RoomsDto? RoomsDtos { get; set; } = new();
 
-	private Task deleteRooms(MouseEventArgs args)
+	protected override async Task OnInitializedAsync()
 	{
-		throw new NotImplementedException();
+		try
+		{
+			// Fetch the customer's info by ID
+			RoomsDtos = await http.GetFromJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{Id}");
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error loading customer: " + ex.Message);
+		}
+	}
+	private async Task deleteRooms(MouseEventArgs args)
+	{
+		try
+		{
+			try
+			{
+				var responce = await http.DeleteFromJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{Id}");
+
+				navManager.NavigateTo("/Administration/ManageRooms");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+			
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Erro : " + ex.Message);
+		}
 	}
 }

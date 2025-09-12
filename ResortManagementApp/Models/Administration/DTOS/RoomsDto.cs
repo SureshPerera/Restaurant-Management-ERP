@@ -5,6 +5,7 @@ namespace ResortManagementApp.Models.Administration.DTOS
     public class RoomsDto
     {
      
+        public Guid Id { get; set; }
         public string RoomId { get; set; }
         
         public string RoomType { get; set; }

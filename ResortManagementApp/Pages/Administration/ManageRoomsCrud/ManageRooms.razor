@@ -11,7 +11,7 @@
 	<div>
 		<div>
 			<div>
-				<a href="/Administration/Create" class="btn btn-primary mb-3">Add New Room</a>
+				<a href="/Administration/ManageRooms/Create" class="btn btn-primary mb-3">Add New Room</a>
 			</div>
 			<div>
 				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
@@ -48,8 +48,8 @@
 							<th>@item.RoomStatus</th>
 							<th>@item.MaintainStatus</th>
 							<th style="white-space:nowrap">
-								<a class="btn btn-primary btn-sm" href="/Administration/Edit/@item.RoomId">Edit</a>
-								<a class="btn btn-danger btn-sm" href="/Administration/Delete/@item.RoomId">Delete</a>
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageRooms/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManageRooms/Delete/@item.Id">Delete</a>
 							</th>
 
 						</tr>
@@ -62,11 +62,11 @@
 </div>
 @inject HttpClient Http
 @code {
-	private List<RoomsDto>? Roomss { get; set; } = new List<RoomsDto>();
+	private List<Rooms>? Roomss { get; set; } = new List<Rooms>();
 
 	protected override async Task OnInitializedAsync()
 	{
-		Roomss = await Http.GetFromJsonAsync<List<RoomsDto>>("https://localhost:4000/api/Rooms");
+		Roomss = await Http.GetFromJsonAsync<List<Rooms>>("https://localhost:4000/api/Rooms");
 	}
 
 

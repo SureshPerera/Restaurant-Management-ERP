@@ -6,7 +6,7 @@ namespace API.Model.Administration
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
+        
         public string RoomId { get; set; }
         [Required]
         public string RoomType { get; set; }

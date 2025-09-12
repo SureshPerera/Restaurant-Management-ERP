@@ -1,9 +1,11 @@
-﻿@page "/Administration/Edit/{Id:guid}"
+﻿@page "/Administration/ManageRooms/Edit/{Id:guid}"
 
 @using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
 @using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Models.Reservation
 @using System.Text.Json.Nodes
+@using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
 <div>
@@ -15,15 +17,15 @@
 <form class="row form"  style="  background-color:antiquewhite; margin-left: 0.5rem;">
 	@if (ManageRooms == null)
 	{
-		<p><em>Loading...</em></p>
+		<Searching/>
 	}
-			<div class="row justify-content-around mb-3">
+			@* <div class="row justify-content-around mb-3">
 				<label class="col-md-4 col-form-label">Room Id</label>
 				<div class="col-md-6" style="background-color:antiquewhite">
-					<input class="form-control" type="text" @bind="@Id" readonly>
+					<input class="form-control" type="text" @bind="RoomsDtos.RoomId" readonly>
 					<span class="text-danger">@Errors["RoomId"]?[0]</span>
 				</div>
-			</div>
+			</div> *@
 	<div class="justify-content-around flex flex-wrap">
 		<div class="">
 			<div class="row mb-3">
@@ -106,7 +108,7 @@
 		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
 
 			<div class="offset-md-1 col-md-3 d-grid" style="">
-				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="UpdateRooms">Add</button>
+				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="UpdateRooms">Update</button>
 			</div>
 			<div class="offset-md-1 col-md-3 d-grid">
 				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
@@ -133,14 +135,72 @@
 		margin-left: 3rem;
 	}
 </style>
+@inject HttpClient http;
+@inject NavigationManager navManager;
 @code {
 	[Parameter]
-	public Guid Id { get; set; }
+	public Guid? Id { get; set; }
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public ManageRooms? ManageRooms { get; set; }
-	public RoomsDto RoomsDtos { get; set; } = new();
-	private Task UpdateRooms(MouseEventArgs args)
+	public RoomsDto? RoomsDtos { get; set; } = new();
+	public Rooms? Rooms { get; set; } = new();
+
+	protected override async Task OnParametersSetAsync()
 	{
-		throw new NotImplementedException();
+		try
+		{
+
+			Rooms = await http.GetFromJsonAsync<Rooms>($"https://localhost:4000/api/Rooms/{Id}");
+			RoomsDtos.RoomId = Rooms?.RoomId ?? "";
+			RoomsDtos.RoomType = Rooms?.RoomType ?? "";
+			RoomsDtos.RoomStatus = Rooms?.RoomStatus ?? "";
+			RoomsDtos.RoomDisplayTitle = Rooms?.RoomDisplayTitle ?? "";
+			RoomsDtos.RoomFloor = Rooms?.RoomFloor ?? "";
+			RoomsDtos.AdditionalDetails = Rooms?.AdditionalDetails ?? "";
+			RoomsDtos.MaximumOccupancy = Rooms?.MaximumOccupancy ?? 0;
+			RoomsDtos.MaintainStatus = Rooms?.MaintainStatus ?? "";
+			RoomsDtos.LastCleanedBy = Rooms?.LastCleanedBy ?? "";
+			RoomsDtos.LastCleanedDate = Rooms?.LastCleanedDate ?? DateTime.Today;
+			RoomsDtos.MaintenanceComment = Rooms?.MaintenanceComment ?? "";
+
+			Console.WriteLine("Succusfull Loading...");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exceptions : " + ex.StackTrace);
+		}
 	}
+	private async Task UpdateRooms(MouseEventArgs args)
+	{
+		try
+		{
+			var response = await http.PutAsJsonAsync(
+				$"https://localhost:4000/api/Rooms/{Id}", RoomsDtos);
+
+			if (response.IsSuccessStatusCode)
+			{
+				navManager.NavigateTo("/Administration/ManageRooms");
+			}
+			else
+			{
+				var strResponse = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Update failed: " + strResponse);
+
+				try
+				{
+					var jsonResponse = JsonNode.Parse(strResponse);
+					Errors = jsonResponse?["errors"] ?? new JsonObject();
+				}
+				catch
+				{
+					Errors = new JsonObject();
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exception: " + ex.Message);
+		}
+	}
+
 }
