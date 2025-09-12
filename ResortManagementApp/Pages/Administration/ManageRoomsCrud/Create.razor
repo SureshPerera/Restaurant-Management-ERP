@@ -1,9 +1,11 @@
 ﻿@page "/Administration/Create"
 
 @using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
 @using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Models.Reservation
 @using System.Text.Json.Nodes
+@using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
 <div>
@@ -14,9 +16,9 @@
 </div>
 
 <form class="form flex-wrap" style="  background-color:antiquewhite; margin-left: 0.5rem;">
-	@if (ManageRooms == null)
+	@if (RoomsDtos == null)
 	{
-		<p><em>Loading...</em></p>
+		<Searching/>
 	}
 	<div class="justify-content-around flex flex-wrap">
 		<div class="">
@@ -144,12 +146,26 @@
 @inject NavigationManager navManager
 @code {
 	public JsonNode Errors { get; set; } = new JsonObject();
-	public ManageRooms? ManageRooms { get; set; }
+	public Rooms? Rooms { get; set; } = new();
 	public RoomsDto RoomsDtos { get; set; } = new();
 
-	private Task CreateRoom(MouseEventArgs args)
+	private async Task CreateRoom(MouseEventArgs args)
 	{
-		throw new NotImplementedException();
+		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Rooms", RoomsDtos);
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManageRooms");}
+
+		var strResponce = await response.Content.ReadAsStringAsync();
+		Console.WriteLine("Json Response :" + strResponce);
+
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
 	}
 }
 

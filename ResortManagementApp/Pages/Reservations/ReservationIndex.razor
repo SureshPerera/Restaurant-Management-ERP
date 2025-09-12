@@ -60,7 +60,7 @@
 					else
 					{
 						<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-							<thead class="bg-light" >
+							<thead class="bg-light">
 								<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
 									<td>Name</td>
 									<td>Phone Number</td>
@@ -74,7 +74,7 @@
 									<td>Remark</td>
 								</tr>
 							</thead>
-							<tbody class="bg-light" >
+							<tbody class="bg-light">
 								@foreach (var item in directBookingModels)
 								{
 									<tr style="background-color: #DAD7CD">
@@ -112,7 +112,7 @@
 					}
 					else
 					{
-						<table class="table-active" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
+						<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
 							<thead class="bg-light">
 								<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
 									<td>Name</td>
@@ -121,15 +121,10 @@
 									<td>Rooms</td>
 									<td>Adults</td>
 									<td>Children</td>
-									<td>Promo code</td>
 									<td>Phone Number</td>
-									<td>Address</td>
 									<td>EmailAddress</td>
 									<td>NIC</td>
 									<td>Nationality</td>
-									<td>Remark</td>
-
-
 								</tr>
 							</thead>
 							<tbody class="bg-light">
@@ -142,13 +137,13 @@
 										<th>@item.NoOfRooms</th>
 										<th>@item.NoOfAdults</th>
 										<th>@item.NoOfChildren</th>
-										<th>@item.PramoCode</th>
+
 										<th>@item.PhoneNumber</th>
-										<th>@item.Address</th>
+
 										<th>@item.EmailAddress</th>
 										<th>@item.NIC</th>
 										<th>@item.Nationality</th>
-										<th>@item.Remark</th>
+
 
 
 									</tr>

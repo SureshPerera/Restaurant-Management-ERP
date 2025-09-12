@@ -64,22 +64,25 @@ namespace API.Controllers
                 Nationality = directBookingDTO.Nationality,
                 Remark = directBookingDTO.Remark,
                 CustomerType = directBookingDTO.CustomerType,
+                CheckOutDate = directBookingDTO.CheckOutDate,
+                CheckInDate = directBookingDTO.CheckInDate,
+                Conformation = directBookingDTO.Conformation
             };
             var Dtos = new ClientModel
             {
-                Id = Guid.NewGuid(),
-                FirstName = directBookingDTO.FirstName,
-                LastName = directBookingDTO.LastName,
-                PhoneNumber = directBookingDTO.PhoneNumber,
-                DathOfBirth = directBookingDTO.DathOfBirth,
-                Address = directBookingDTO.Address,
-                EmailAddress = directBookingDTO.EmailAddress,
-                NIC = directBookingDTO.NIC,
-                CreditLimit = directBookingDTO.CreditLimit,
-                OpeningBalanace = directBookingDTO.OpeningBalanace,
-                Nationality = directBookingDTO.Nationality,
-                Remark = directBookingDTO.Remark,
-                CustomerType = directBookingDTO.CustomerType,
+                Id = Dto.Id,
+                FirstName = Dto.FirstName,
+                LastName = Dto.LastName,
+                PhoneNumber = Dto.PhoneNumber,
+                DathOfBirth = Dto.DathOfBirth,
+                Address = Dto.Address,
+                EmailAddress = Dto.EmailAddress,
+                NIC = Dto.NIC,
+                CreditLimit = Dto.CreditLimit,
+                OpeningBalanace = Dto.OpeningBalanace,
+                Nationality = Dto.Nationality,
+                Remark = Dto.Remark,
+                CustomerType = Dto.CustomerType,
             };
             await dbContext.DirectBookingModels.AddAsync(Dto);
             await dbContext.ClientModels.AddAsync(Dtos);
@@ -113,6 +116,10 @@ namespace API.Controllers
             exsistingModel.OpeningBalanace = directBookingDTO.OpeningBalanace;
             exsistingModel.Nationality = directBookingDTO.Nationality;
             exsistingModel.Remark = directBookingDTO.Remark;
+            exsistingModel.CheckOutDate = directBookingDTO.CheckOutDate;
+            exsistingModel.Conformation = directBookingDTO.Conformation;
+            exsistingModel.CheckInDate = directBookingDTO.CheckInDate;
+          
 
             await dbContext.SaveChangesAsync();
             Console.WriteLine($"Received Update for ID: {id}, FirstName: {directBookingDTO.FirstName}");

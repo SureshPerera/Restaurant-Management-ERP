@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div>
-			@if (Rooms == null)
+			@if (Roomss == null)
 			{
 				<Searching/>
 			}
@@ -35,11 +35,11 @@
 					</tr>
 				</thead>
 				<tbody class="bg-light">
-					@if (Rooms == null)
+					@if (Roomss == null)
 					{
 						<Searching />
 					}
-					@foreach (var item in Rooms)
+					@foreach (var item in Roomss)
 					{
 						<tr>
 							<th>@(item.RoomId)</th>
@@ -48,8 +48,8 @@
 							<th>@item.RoomStatus</th>
 							<th>@item.MaintainStatus</th>
 							<th style="white-space:nowrap">
-								<a class="btn btn-primary btn-sm" href="/Administration/Edit/@item.Id">Edit</a>
-								<a class="btn btn-danger btn-sm" href="/Administration/Delete/@item.Id">Delete</a>
+								<a class="btn btn-primary btn-sm" href="/Administration/Edit/@item.RoomId">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/Delete/@item.RoomId">Delete</a>
 							</th>
 
 						</tr>
@@ -60,20 +60,14 @@
 		</div>
 	</div>
 </div>
-
+@inject HttpClient Http
 @code {
-	public List<Rooms> Rooms = new List<Rooms>();
+	private List<RoomsDto>? Roomss { get; set; } = new List<RoomsDto>();
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		Rooms.Add(new Models.Administration.ManageRooms.Rooms
-			{
-				RoomId = "1",
-				RoomType = "Lucsary",
-				RoomFloor ="2",
-				RoomStatus = "Ready",
-				MaintainStatus = "Occupide"
-			});
+		Roomss = await Http.GetFromJsonAsync<List<RoomsDto>>("https://localhost:4000/api/Rooms");
 	}
+
 
 }
