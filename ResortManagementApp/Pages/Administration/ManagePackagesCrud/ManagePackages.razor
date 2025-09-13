@@ -27,10 +27,15 @@
 					<tr class="table">
 						<td>Package Name</td>
 						<td>Basis</td>
+						<td>Package Details</td>
+						<td>Room Rate Autumn</td>
+						<td>Room Rate Spring</td>
+						<td>Room Rate Summer</td>
+						<td>Room Rate Winter</td>
 						<td>Entitlemeal 1</td>
 						<td>Entitlemeal 2</td>
-						<td>Entitlemeal 3</td>
-						<td>Entitlemeal 4</td>
+						<td>Special Package 1</td>
+						<td>Special Package 2</td>
 						<td>Actions</td>
 
 					</tr>
@@ -45,10 +50,15 @@
 						<tr>
 							<th>@(item.PackageName)</th>
 							<th>@item.Basis</th>
+							<th>@item.PackageDetails</th>
+							<th>@item.RoomRateAutumn</th>
+							<th>@item.RoomRateSpring</th>
+							<th>@item.RoomRateSummer</th>
+							<th>@item.RoomRateWinter</th>
 							<th>@item.Entitlemeal1</th>
 							<th>@item.Entitlemeal2</th>
-							<th>@item.Entitlemeal3</th>
-							<th>@item.Entitlemeal4</th>
+							<th>@item.SpecialPackage1</th>
+							<th>@item.SpecialPackage2</th>
 							<th style="white-space:nowrap">
 								<a class="btn btn-primary btn-sm" href="/Administration/ManagePackages/Edit/@item.Id">Edit</a>
 								<a class="btn btn-danger btn-sm" href="/Administration/ManagePackages/Delete/@item.Id">Delete</a>
@@ -62,18 +72,14 @@
 		</div>
 	</div>
 </div>
+@inject HttpClient Http;
 
 @code {
 	
-	public List<PackagesDto> PackagesDtos = new List<PackagesDto>();
-	protected override void OnInitialized()
+	public List<PackagesDto>? PackagesDtos = new List<PackagesDto>();
+	protected async override Task OnInitializedAsync()
 	{
-		PackagesDtos.Add(new PackagesDto
-			{
-				PackageName = "AspringD0",
-				Basis = "B&B",
-				Entitlemeal1 = "Breckfast, Lunch"
-			});
+		PackagesDtos = await Http.GetFromJsonAsync<List<PackagesDto>>("https://localhost:4000/api/Package");
 	}
 
 }

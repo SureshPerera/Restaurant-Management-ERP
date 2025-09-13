@@ -207,9 +207,23 @@
 	{
 		"Room Only","B & B", "Half Board", "Full Board"
 	};
-	private Task CreatePackage(MouseEventArgs args)
+	private async Task CreatePackage(MouseEventArgs args)
 	{
-		throw new NotImplementedException();
+		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Package", PackagesDto);
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManagePackages"); }
+
+		var strResponce = await response.Content.ReadAsStringAsync();
+		Console.WriteLine("Json Response :" + strResponce);
+
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
 	}
 }
 

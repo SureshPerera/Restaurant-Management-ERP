@@ -1,0 +1,166 @@
+﻿@page "/Administration/ManageAgent/Create"
+@using System.Text.Json.Nodes
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageAgents
+@using ResortManagementApp.Pages.ComponentCss
+
+@layout MainLayout
+<div>
+	<h3 class="card mb-3 text-center">Add New Agents</h3>
+</div>
+<div class="col-lg-8">
+	<h1 class="mb-5">New Agent</h1>
+</div>
+
+<form class="form flex-wrap" style="background-color:antiquewhite; margin-left: 0.5rem;">
+	@if (AgentModelDto == null)
+	{
+		<p><Searching /></p>
+	}
+	<div class="justify-content-around flex flex-wrap">
+		<div class="">
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Agent Name</label>
+				<div class="col-md-6" style="background-color:antiquewhite">
+					<input class="form-control" type="text" @bind="AgentModelDto.AgentName">
+					<span class="text-danger">@Errors["AgentName"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Agent Address </label>
+				<div class="col-md-6">
+					<textarea class="form-control" type="text" @bind="AgentModelDto.AgentAddress"></textarea>
+					<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label style="" class="col-md-5 col-form-label">Contact Person</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="AgentModelDto.ContactPerson">
+					<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Mobile</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="AgentModelDto.Mobile">
+					<span class="text-danger">@Errors["Mobile"]?[0]</span>
+
+				</div>
+			</div>
+
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Fax</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="AgentModelDto.Fax">
+					<span class="text-danger">@Errors["Fax"]?[0]</span>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="">
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">NIC</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="AgentModelDto.NIC">
+					<span class="text-danger">@Errors["NIC"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Email</label>
+				<div class="col-md-6">
+					<input class="form-control" type="email" @bind="AgentModelDto.Email">
+					<span class="text-danger">@Errors["Email"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Web Site</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="AgentModelDto.WebSite">
+					<span class="text-danger">@Errors["WebSite"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Credit Limit</label>
+				<div class="col-md-6">
+					<input class="form-control" type="number" @bind="AgentModelDto.CreditLimit">
+					<span class="text-danger">@Errors["CreditLimit"]?[0]</span>
+
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-5 col-form-label">Vat Reg No</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" @bind="AgentModelDto.VatRegNo">
+					<span class="text-danger">@Errors["VatRegNo"]?[0]</span>
+
+				</div>
+			</div>
+		</div>
+		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
+
+			<div class="offset-md-1 col-md-3 d-grid" style="">
+				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="CreatePackage">Add</button>
+			</div>
+			<div class="offset-md-1 col-md-3 d-grid">
+				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
+			</div>
+			<div class="offset-md-1 col-md-3 d-grid">
+				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/Administration/ManageAgents">Back</a>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+</form>
+
+
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		color: black;
+		width: 80%;
+		font-weight: bold;
+		height: fit-content;
+	}
+
+	.inp {
+		margin-left: 3rem;
+	}
+</style>
+
+@inject HttpClient http
+@inject NavigationManager navManager
+@code {
+	public JsonNode Errors { get; set; } = new JsonObject();
+
+	public AgentModelDto AgentModelDto { get; set; } = new ();
+	private async Task CreatePackage(MouseEventArgs args)
+	{
+		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Agent", AgentModelDto);
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManageAgents"); }
+
+		var strResponce = await response.Content.ReadAsStringAsync();
+		Console.WriteLine("Json Response :" + strResponce);
+
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
+	}
+}

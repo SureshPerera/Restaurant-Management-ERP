@@ -12,7 +12,7 @@
 	<div>
 		<div>
 			<div>
-				<a href="/Administration/ManageAgents/Create" class="btn btn-primary mb-3">Add New Agent</a>
+				<a href="/Administration/ManageAgent/Create" class="btn btn-primary mb-3">Add New Agent</a>
 			</div>
 			<div>
 				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
@@ -49,8 +49,8 @@
 							<th>@item.Mobile</th>
 							
 							<th style="white-space:nowrap">
-								<a class="btn btn-primary btn-sm" href="/Administration/ManageAgents/Edit/@item.Id">Edit</a>
-								<a class="btn btn-danger btn-sm" href="/Administration/ManageAgents/Delete/@item.Id">Delete</a>
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageAgent/Edit/@item.Id">Edit</a>
+								<a class="btn btn-danger btn-sm" href="/Administration/ManageAgent/Delete/@item.Id">Delete</a>
 							</th>
 
 						</tr>
@@ -62,20 +62,15 @@
 	</div>
 </div>
 
+@inject HttpClient Http
 @code {
 
 	public Agents? Agents { get; set; }
+	public List<AgentModelDto>? AgentDtos { get; set; } = new List<AgentModelDto>();
 
-	public List<AgentModelDto> AgentDtos { get; set; } = new List<AgentModelDto>();
-	protected override void OnInitialized()
+	protected async override Task OnInitializedAsync()
 	{
-		AgentDtos.Add(new AgentModelDto
-		{
-			AgentName = "Sudeera Prasanga", 
-			AgentAddress = "Wellawaya, Rathmalana",
-			ContactPerson = "Sudeera",
-			Mobile = "0703914685"
-		});
+		AgentDtos = await Http.GetFromJsonAsync<List<AgentModelDto>>("https://localhost:4000/api/Agent");
 	}
 
 }

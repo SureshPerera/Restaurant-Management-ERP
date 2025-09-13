@@ -12,19 +12,51 @@
 	{
 		<p><Searching/></p>
 	}
-	<p>Are you sure you want to delete package with name  <strong>@Id</strong> </p>
+	<p>Are you sure you want to delete package with name  <strong>@PackagesDto.PackageName</strong> </p>
 
 	<button class="btn btn-danger" @onclick="DeletePackages">Delete</button>
-	<a class="btn btn-secondary" href="/Administration/ManageRooms">Cancel</a>
+	<a class="btn btn-secondary" href="/Administration/ManagePackages">Cancel</a>
 </div>
+@inject HttpClient http
+@inject NavigationManager navManager
 @code {
 	[Parameter]
 	public Guid Id { get; set; }
 	public Packages? Packages { get; set; }
-	public PackagesDto PackagesDto { get; set; } = new();
+	public PackagesDto? PackagesDto { get; set; } = new();
 
-	private Task DeletePackages(MouseEventArgs args)
+	protected override async Task OnInitializedAsync()
 	{
-		throw new NotImplementedException();
+		try
+		{
+			// Fetch the customer's info by ID
+			PackagesDto = await http.GetFromJsonAsync<PackagesDto>($"https://localhost:4000/api/Package/{Id}");
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error loading customer: " + ex.Message);
+		}
+	}
+	private async Task DeletePackages(MouseEventArgs args)
+	{
+		try
+		{
+			try
+			{
+				var responce = await http.DeleteFromJsonAsync<PackagesDto>($"https://localhost:4000/api/Package/{Id}");
+
+				navManager.NavigateTo("/Administration/ManagePackages");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error : " + ex.Message);
+		}
 	}
 }

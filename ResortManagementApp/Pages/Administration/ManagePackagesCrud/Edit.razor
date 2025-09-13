@@ -176,7 +176,7 @@
 				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
 			</div>
 			<div class="offset-md-1 col-md-3 d-grid">
-				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/Administration/ManageRooms">Back</a>
+				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/Administration/ManagePackages">Back</a>
 			</div>
 		</div>
 	</div>
@@ -211,14 +211,73 @@
 	public Guid Id { get; set; }
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public Packages? Packages { get; set; }
-	public PackagesDto PackagesDto { get; set; } = new();
+	public PackagesDto? PackagesDto { get; set; } = new();
 	public List<string> BasisList = new List<string>
 	{
 		"Room Only","B & B", "Half Board", "Full Board"
 	};
-	private Task CreatePackage(MouseEventArgs args)
+	protected override async Task OnParametersSetAsync()
 	{
-		throw new NotImplementedException();
+		try
+		{
+
+			Packages = await http.GetFromJsonAsync<Packages>($"https://localhost:4000/api/Package/{Id}");
+			PackagesDto.AccomadationType = Packages?.AccomadationType?? "";
+			PackagesDto.Basis = Packages?.Basis?? "";
+			PackagesDto.Entitlemeal1 = Packages?.Entitlemeal1 ?? "";
+			PackagesDto.Entitlemeal2 = Packages?.Entitlemeal2 ?? "";
+			PackagesDto.PackageName = Packages?.PackageName?? "";
+			PackagesDto.PackageDetails = Packages?.PackageDetails ?? "";
+			PackagesDto.Entitlemeal3 = Packages?.Entitlemeal3 ?? "";
+			PackagesDto.Entitlemeal4 = Packages?.Entitlemeal4 ?? "";
+			PackagesDto.RoomRateAutumn = Packages?.RoomRateAutumn ?? 0;
+			PackagesDto.RoomRateSpring = Packages?.RoomRateSpring ?? 0;
+			PackagesDto.RoomRateSummer = Packages?.RoomRateSummer ?? 0;
+			PackagesDto.RoomRateWinter = Packages?.RoomRateWinter ?? 0;
+			PackagesDto.RoomType = Packages?.RoomType ?? "";
+			PackagesDto.SpecialPackage1 = Packages?.SpecialPackage1 ?? "";
+			PackagesDto.SpecialPackage2 = Packages?.SpecialPackage2 ?? "";
+			PackagesDto.SpecialPackage3 = Packages?.SpecialPackage3 ?? "";
+			PackagesDto.SpecialPackage4 = Packages?.SpecialPackage4 ?? "";
+
+			Console.WriteLine("Succusfull Loading...");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exceptions : " + ex.StackTrace);
+		}
+	}
+	private async Task CreatePackage(MouseEventArgs args)
+	{
+		try
+		{
+			var response = await http.PutAsJsonAsync(
+				$"https://localhost:4000/api/Package/{Id}", PackagesDto);
+
+			if (response.IsSuccessStatusCode)
+			{
+				navManager.NavigateTo("/Administration/ManagePackages");
+			}
+			else
+			{
+				var strResponse = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Update failed: " + strResponse);
+
+				try
+				{
+					var jsonResponse = JsonNode.Parse(strResponse);
+					Errors = jsonResponse?["errors"] ?? new JsonObject();
+				}
+				catch
+				{
+					Errors = new JsonObject();
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exception: " + ex.Message);
+		}
 	}
 }
 
