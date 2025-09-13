@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div>
-			@if (ExchangeRatesDtos == null)
+			@if (ExchangeRatesDtoss == null)
 			{
 				<Searching />
 			}
@@ -31,19 +31,17 @@
 						<td>Selling</td>
 						<td>Buying</td>
 						<td>Actions</td>
-
-
 					</tr>
 				</thead>
 				<tbody class="bg-light">
-					@if (ExchangeRatesDtos == null)
+					@if (ExchangeRatesDtoss == null)
 					{
-						<Searching />
+						<Searching/>
 					}
-					@foreach (var item in ExchangeRatesDtos)
+					@foreach (var item in ExchangeRatesDtoss)
 					{
 						<tr>
-							<th>@(item.CurrencyName)</th>
+							<th>@item.CurrencyName</th>
 							<th>@item.SellingRate</th>
 							<th>@item.BuyingRate</th>
 							<th style="white-space:nowrap">
@@ -59,20 +57,14 @@
 		</div>
 	</div>
 </div>
-
+@inject HttpClient Http
 @code {
-
 	public ExchangeRates? ExchangeRates { get; set; }
-
-	public List<ExchangeRatesDto> ExchangeRatesDtos { get; set; } = new List<ExchangeRatesDto>();
-	protected override void OnInitialized()
+	public List<ExchangeRatesDto>? ExchangeRatesDtoss { get; set; } = new List<ExchangeRatesDto>();
+	protected async override Task OnInitializedAsync()
 	{
-		ExchangeRatesDtos.Add(new ExchangeRatesDto
-		{
-			CurrencyName = "USD",
-			SellingRate  = 300.37,
-			BuyingRate = 312
-		});
+		ExchangeRatesDtoss = await Http.GetFromJsonAsync<List<ExchangeRatesDto>>("https://localhost:4000/api/ExtraModel");
+	}
 	}
 
 }

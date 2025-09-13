@@ -99,9 +99,56 @@
 	public ExchangeRates? ExchangeRates { get; set; }
 	public ExchangeRatesDto ExchangeRatesDto { get; set; } = new();
 	
-	private Task CreateExchangeRate(MouseEventArgs args)
+	
+	protected override async Task OnParametersSetAsync()
 	{
-		throw new NotImplementedException();
+		try
+		{
+
+			ExchangeRates = await http.GetFromJsonAsync<ExchangeRates>($"https://localhost:4000/api/ExtraModel/{Id}");
+			ExchangeRatesDto.BuyingRate = ExchangeRates?.BuyingRate?? 0;
+			ExchangeRatesDto.CurrencyName = ExchangeRates?.CurrencyName?? "";
+			ExchangeRatesDto.SellingRate = ExchangeRates?.SellingRate?? 0;
+			
+
+			Console.WriteLine("Succusfull Loading...");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exceptions : " + ex.StackTrace);
+		}
+	}
+	private async Task CreateExchangeRate(MouseEventArgs args)
+	{
+		try
+		{
+			var response = await http.PutAsJsonAsync(
+				$"https://localhost:4000/api/ExtraModel/{Id}", ExchangeRatesDto);
+
+			if (response.IsSuccessStatusCode)
+			{
+				navManager.NavigateTo("/Administration/ManageExRates");
+			}
+			else
+			{
+				var strResponse = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Update failed: " + strResponse);
+
+				try
+				{
+					var jsonResponse = JsonNode.Parse(strResponse);
+					Errors = jsonResponse?["errors"] ?? new JsonObject();
+				}
+				catch
+				{
+					Errors = new JsonObject();
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Exception: " + ex.Message);
+		}
 	}
 }
 

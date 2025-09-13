@@ -91,9 +91,23 @@
 	public ExchangeRates? ExchangeRates { get; set; }
 	public ExchangeRatesDto ExchangeRatesDto { get; set; } = new();
 
-	private Task CreateExchangeRate(MouseEventArgs args)
+	private async Task CreateExchangeRate(MouseEventArgs args)
 	{
-		throw new NotImplementedException();
+		var response = await http.PostAsJsonAsync("https://localhost:4000/api/ExtraModel", ExchangeRatesDto);
+		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManageExRates"); }
+
+		var strResponce = await response.Content.ReadAsStringAsync();
+		Console.WriteLine("Json Response :" + strResponce);
+
+		try
+		{
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
 	}
 }
 
