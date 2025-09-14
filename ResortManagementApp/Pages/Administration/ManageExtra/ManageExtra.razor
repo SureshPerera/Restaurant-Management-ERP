@@ -54,7 +54,8 @@
 							<th>@(item.DateTime)</th>
 							
 							<th style="white-space:nowrap">
-								<button class="btn btn-primary btn-sm" @onclick="ClickToPrintBill">PrintBill</button>
+								@* <button class="btn btn-primary btn-sm">PrintBill</button> *@
+								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Invoice/@item.Id">PrintBill</a>
 								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Edit/@item.Id">Edit</a>
 								<a class="btn btn-danger btn-sm" href="/Administration/ManageExtra/Delete/@item.Id">Delete</a>
 							</th>

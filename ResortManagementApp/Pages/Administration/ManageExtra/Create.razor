@@ -153,8 +153,7 @@
 		"Children Cap"
 	};
 
-	public double? TotalAmount =>
-	ExtraChargersDtos is not null
+	public decimal? TotalAmount => ExtraChargersDtos is not null
 		? (ExtraChargersDtos.RateUSD > 0
 			? ExtraChargersDtos.RateUSD * ExtraChargersDtos.Amount
 			: ExtraChargersDtos.RateLKR * ExtraChargersDtos.Amount)

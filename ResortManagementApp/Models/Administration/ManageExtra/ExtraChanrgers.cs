@@ -8,10 +8,10 @@ namespace ResortManagementApp.Models.Administration.ManageExtra
         public Guid Id { get; set; }
         [Required]
         public string ExtraChargeType { get; set; }
-        
-        public double Amount { get; set; }
-        public double RateUSD { get; set; }
-        public double RateLKR { get; set; }
+
+        public decimal? Amount { get; set; }
+        public decimal? RateUSD { get; set; }
+        public decimal? RateLKR { get; set; }
         public string Comment { get; set; }
         public string Details{ get; set; }
 
