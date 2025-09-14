@@ -1,0 +1,349 @@
+﻿@page "/Administration/ManageExtra/Invoice/{Id:guid}"
+
+@page "/invoice"
+@using Microsoft.JSInterop
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageExtra
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Invoice Generator</PageTitle>
+
+<div class="container">
+    <h3>Invoice Generator</h3>
+
+    <!-- Invoice Form -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Invoice Details</h5>
+                </div>
+                <div class="card-body">
+                   
+
+                        <div class="mb-3">
+                            <label class="form-label">Invoice ID</label>
+                        <input @bind="@Id" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Extra Charge Type</label>
+                            <InputText @bind-Value="invoice.ExtraChargeType" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Amount (LKR)</label>
+                            <InputNumber @bind-Value="invoice.Amount" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Rate USD</label>
+                            <InputNumber @bind-Value="invoice.RateUSD" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Rate LKR</label>
+                            <InputNumber @bind-Value="invoice.RateLKR" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <InputTextArea @bind-Value="invoice.Comment" class="form-control" rows="3" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Details</label>
+                            <InputTextArea @bind-Value="invoice.Details" class="form-control" rows="3" />
+                        </div>
+
+                        <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary" @onclick="GenerateInvoice">Generate Invoice</button>
+                            <button type="button" class="btn btn-success" @onclick="PrintInvoice" disabled="@(!isInvoiceGenerated)">Print Invoice</button>
+                        </div>
+                   
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoice Preview -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Invoice Preview</h5>
+                </div>
+                <div class="card-body p-0">
+                    @if (isInvoiceGenerated)
+                    {
+                        <div id="invoice-content" class="invoice-container">
+                            @((MarkupString)invoiceHtml)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted p-3 text-center">
+                            <i class="fas fa-file-invoice fa-3x mb-3"></i>
+                            <p>Fill in the details and click "Generate Invoice" to see preview</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .invoice-container {
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        line-height: 1.3;
+        width: 80mm;
+        margin: 0 auto;
+        padding: 5mm;
+        background: white;
+        color: #000;
+        border: 1px solid #ddd;
+    }
+
+    .invoice-header {
+        text-align: center;
+        border-bottom: 2px solid #000;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+    }
+
+    .company-name {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+
+    .invoice-title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .invoice-info {
+        margin-bottom: 10px;
+        font-size: 11px;
+    }
+
+    .field {
+        margin-bottom: 4px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .field-label {
+        font-weight: bold;
+        width: 40%;
+    }
+
+    .field-value {
+        width: 58%;
+        text-align: right;
+        word-wrap: break-word;
+    }
+
+    .amounts {
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        padding: 8px 0;
+        margin: 10px 0;
+    }
+
+    .amount-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3px;
+        font-weight: bold;
+    }
+
+    .total {
+        border-top: 1px solid #000;
+        padding-top: 5px;
+        margin-top: 5px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .details-section {
+        margin: 10px 0;
+        border-top: 1px dashed #000;
+        padding-top: 8px;
+    }
+
+    .details-title {
+        font-weight: bold;
+        margin-bottom: 4px;
+        text-decoration: underline;
+    }
+
+    .details-text {
+        font-size: 11px;
+        word-wrap: break-word;
+    }
+
+    .comment-section {
+        margin: 8px 0;
+    }
+
+    .comment-title {
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+
+    .comment-text {
+        font-size: 11px;
+        font-style: italic;
+    }
+
+    .invoice-footer {
+        text-align: center;
+        margin-top: 15px;
+        border-top: 2px solid #000;
+        padding-top: 8px;
+        font-size: 11px;
+    }
+
+    .thank-you {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .separator {
+        text-align: center;
+        margin: 8px 0;
+        font-size: 16px;
+    }
+
+
+    .invoice-container {
+        width: 80mm;
+        margin: 0;
+        padding: 2mm;
+        border: none;
+    }
+
+    }
+</style>
+@inject HttpClient http
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+    private ExtraChargersDto? invoice { get; set; } = new ExtraChargersDto();
+    private ExtraChanrgers? ExtraChanrgers { get; set; } = new ExtraChanrgers();
+
+    private bool isInvoiceGenerated = false;
+    private string invoiceHtml = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            ExtraChanrgers = await http.GetFromJsonAsync<ExtraChanrgers>($"https://localhost:4000/api/ExtraCharge/{Id}");
+
+            invoice.RateLKR = ExtraChanrgers?.RateLKR ?? 0;
+            invoice.RateUSD = ExtraChanrgers?.RateUSD ?? 0;
+            invoice.Details = ExtraChanrgers?.Details ?? "";
+            invoice.Amount = ExtraChanrgers?.Amount ?? 0;
+            invoice.Comment = ExtraChanrgers?.Comment ?? "";
+            invoice.ExtraChargeType = ExtraChanrgers?.ExtraChargeType ?? "";
+
+            Console.WriteLine("Succusfull Loading...");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exceptions : " + ex.StackTrace);
+        }
+    }
+    
+    private void GenerateInvoice()
+    {
+        invoice.DateTime = DateTime.Now;
+        invoiceHtml = GenerateInvoiceHtml();
+        isInvoiceGenerated = true;
+        StateHasChanged();
+    }
+
+    private async Task PrintInvoice()
+    {
+        if (isInvoiceGenerated)
+        {
+            await JSRuntime.InvokeVoidAsync("window.print");
+        }
+    }
+
+    private string GenerateInvoiceHtml()
+    {
+        return $@"
+            <div class='invoice-header'>
+                <div class='company-name'>YOUR COMPANY</div>
+                <div>Address Line 1</div>
+                <div>Address Line 2</div>
+                <div>Phone: +94 XX XXX XXXX</div>
+                <div class='invoice-title'>INVOICE</div>
+            </div>
+
+            <div class='invoice-info'>
+                <div class='field'>
+                    <span class='field-label'>Invoice ID:</span>
+                    <span class='field-value'>{invoice.Id}</span>
+                </div>
+                <div class='field'>
+                    <span class='field-label'>Date & Time:</span>
+                    <span class='field-value'>{invoice.DateTime:dd/MM/yyyy hh:mm tt}</span>
+                </div>
+                <div class='field'>
+                    <span class='field-label'>Charge Type:</span>
+                    <span class='field-value'>{invoice.ExtraChargeType}</span>
+                </div>
+            </div>
+
+            <div class='amounts'>
+                <div class='amount-line'>
+                    <span>Amount:</span>
+                    <span>Rs. {invoice.Amount:N2}</span>
+                </div>
+                <div class='amount-line'>
+                    <span>Rate USD:</span>
+                    <span>${invoice.RateUSD:N2}</span>
+                </div>
+                <div class='amount-line'>
+                    <span>Rate LKR:</span>
+                    <span>Rs. {invoice.RateLKR:N2}</span>
+                </div>
+                <div class='total'>
+                    <div class='amount-line'>
+                        <span>TOTAL:</span>
+                        <span>Rs. {invoice.Amount:N2}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class='details-section'>
+                <div class='details-title'>Details:</div>
+                <div class='details-text'>{invoice.Details}</div>
+            </div>
+
+            <div class='comment-section'>
+                <div class='comment-title'>Comment:</div>
+                <div class='comment-text'>{invoice.Comment}</div>
+            </div>
+
+            <div class='separator'>* * * * * * * * * *</div>
+
+            <div class='invoice-footer'>
+                <div class='thank-you'>THANK YOU FOR USING OUR SERVICES!</div>
+                <div>We appreciate your business</div>
+                <div>Visit us again soon</div>
+                <div style='margin-top: 8px; font-size: 10px;'>
+                    Invoice generated on: {DateTime.Now:dd/MM/yyyy hh:mm:ss tt}
+                </div>
+            </div>
+
+            <div class='separator'>* * * * * * * * * *</div>";
+    }
+
+    
+}

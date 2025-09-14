@@ -48,14 +48,14 @@ namespace API.Controllers
             {
                 Id = Guid.NewGuid(),
                 Amount = extraChargeModelDto.Amount,
-                Comment = extraChargeModelDto.Comment,  
-                Details = extraChargeModelDto.Details,  
+                Comment = extraChargeModelDto.Comment,
+                Details = extraChargeModelDto.Details,
                 ExtraChargeType = extraChargeModelDto.ExtraChargeType,
                 RateLKR = extraChargeModelDto.RateLKR,
                 RateUSD = extraChargeModelDto.RateUSD,
-               
-
+                DateTime = DateTime.Now
             };
+
             await dbContext.ExtraChargeModels.AddAsync(Dto);
             await dbContext.SaveChangesAsync();
             return Ok(Dto);
@@ -75,7 +75,7 @@ namespace API.Controllers
             DomainModel.Details = extraChargeModel.Details;
             DomainModel.Comment = extraChargeModel.Comment; 
             DomainModel.ExtraChargeType = extraChargeModel.ExtraChargeType;
-            
+            DomainModel.DateTime = DateTime.Now;
 
             await dbContext.SaveChangesAsync();
             Console.WriteLine($"Received Update for ID: {id}");

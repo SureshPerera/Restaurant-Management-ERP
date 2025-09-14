@@ -29,11 +29,13 @@
 				<thead class="bg-light">
 					<tr class="table">
 						<td>Extra Charge Type</td>
+						<td>Details</td>
+						<td>RateLKR</td>
+						<td>RateUSD</td>
 						<td>Amount</td>
+						<td>Invoice Date-Time</td>
+
 						<td>Actions</td>
-						
-
-
 					</tr>
 				</thead>
 				<tbody class="bg-light">
@@ -45,9 +47,14 @@
 					{
 						<tr>
 							<th>@(item.ExtraChargeType)</th>
-				
-							<th>@("Rs "+item.Amount)</th>
+							<th>@(item.Details)</th>
+							<th>@("Rs "+item.RateLKR)</th>
+							<th>@("USD "+item.RateUSD)</th>
+							<th>@(item.Amount)</th>
+							<th>@(item.DateTime)</th>
+							
 							<th style="white-space:nowrap">
+								<button class="btn btn-primary btn-sm" @onclick="ClickToPrintBill">PrintBill</button>
 								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Edit/@item.Id">Edit</a>
 								<a class="btn btn-danger btn-sm" href="/Administration/ManageExtra/Delete/@item.Id">Delete</a>
 							</th>
@@ -60,17 +67,17 @@
 		</div>
 	</div>
 </div>
-
+@inject HttpClient Http
 @code {
 	public ExtraChanrgers? ExtraChargers { get; set; }
-	public List<ExtraChargersDto> ExtraChargersDtos { get; set; } = new();
-	protected override void OnInitialized()
-	{
-		ExtraChargersDtos.Add(new ExtraChargersDto
-		{
-			ExtraChargeType = "Bed",
-			Amount = 2850
-		});
-	}
+	public List<ExtraChargersDto>? ExtraChargersDtos { get; set; } = new List<ExtraChargersDto>();
 
+	protected async override Task OnInitializedAsync()
+	{
+		ExtraChargersDtos = await Http.GetFromJsonAsync<List<ExtraChargersDto>>("https://localhost:4000/api/ExtraCharge");
+	}
+	private Task ClickToPrintBill(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
 }
