@@ -1,7 +1,10 @@
 ﻿@page "/Reservations/CheckInOut"
 @using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
+@inject IJSRuntime JS
+
 <div style="flex-wrap:wrap;">
 	<div>
 		<h3 class="mb-3 text-center">Check In - Out Management</h3>
@@ -31,9 +34,9 @@
 	</div>
 	<br />
 	<div >
-		<section>
-			<div class="justify-content-center flex">
-				<div style="width : 300px;height: 200px; margin-left: 9rem">
+		<section style="display:flex; flex-direction: column; gap:5rem;">
+			<div class="flex">
+				<div style="margin-left: 9rem">
 					@if (directBookingModels == null)
 					{
 						<div class="flex" style="justify-content: center">
@@ -44,28 +47,31 @@
 					{
 						<table class="table-hover table">
 							<thead class="bg-light">
-								<tr class="table">
+								<tr class="">
+									<td> <label>Id</label></td>
 									<td> <label>Name</label></td>
 									<td><label>Check-In</label></td>
 									<td><label>Check-Out</label></td>
-									<td><label>Agent Name</label></td>
-									<td><label>Status</label></td>
-									<td><label>Room Id</label></td>
-									<td><label>Voucher No</label></td>
+									<td><label>NIC</label></td>
+									<td><label>Conformation</label></td>
+									<td><label>Customer Type</label></td>									
+									<td><label>Actions</label></td>									
 								</tr>
 							</thead>
 							<tbody class="bg-light">
 								@foreach (var item in directBookingModels)
 								{
 									<tr>
-										<th></th>
-										<th></th>
-										<th></th>
-										<th></th>
-										<td></td>
-										<th></th>
-										<th></th>
-
+										<th>@item.Id</th>
+										<th>@(item.FirstName +  " "+ item.LastName)</th>
+										<th>@item.CheckInDate</th>
+										<th>@item.CheckOutDate</th>
+										<th>@item.NIC</th>
+										<th>@item.Conformation</th>
+										<th>@item.CustomerType</th>
+										<th style="white-space:nowrap">
+											<button class="btn btn-primary btn-sm" @onclick="() => ClickConformations(item.Id)">Conformation</button>
+										</th>
 									</tr>
 								}
 							</tbody>
@@ -78,7 +84,7 @@
 			</div>
 		</section>
 		<br />
-		<section style="">
+		<section style="" id="invoice-section">
 			<div style="display:flex; flex-direction:column; gap: 0.5rem;">
 				<div style="padding:10px; background-color: azure; width:14rem;">
 					<label>Booking Status : </label>
@@ -112,7 +118,176 @@
 			<div class="justify-content-end flex">
 				<div class="" style="width: 80% ; margin:10px; background-color: antiquewhite;
 				margin-top: -26rem; border-radius: 2rem 1rem">
-					<CheckInInvoice />
+					<div style="flex-wrap: wrap; background-color:cornsilk">
+						<section>
+							<div class="checkInOutContainer justify-content-between flex" style="padding: 20px">
+								@* logo *@
+								<div class="" style="  border-radius: 5rem;">
+									<img src="/imgs/maindashboard/logo.png" width="200" height="200" /><br />
+									<label style="font-size: 18px;">Master Room Bill : 10 </label>
+								</div>
+								<div style="background-color: azure; margin: 5px; padding: 2rem;border-radius: 1rem 2rem;">
+
+									<label>Solitory Green Rosort</label>
+									<br />
+									<label>Oddington Estate,</label>
+									<br />
+									<label>Lindula,</label>
+									<br />
+									<label>Nuwara Eliya, Sri Lanka.</label>
+									<br />
+									<label>0761733573</label>
+									<br />
+									<label>sgncabins6@gmail.com</label>
+								</div>
+							</div>
+						</section>
+						<section style="background-color: azure; margin: 5px; padding: 2px; margin-top: -1.5rem;">
+							<div class="flex flex-wrap">
+								<div style="width:50%; position:inherit; display:flex; flex-direction:column; gap: 0.5rem;" class="input-container">
+									<label style="background-color: aquamarine ; font-size: 18px;">Profoma Invoice</label>
+									<div class="justify-content-between flex">
+										<label>Reserve Num :</label>
+										<input readonly id="inputs"  type="text" @bind="@Id" name="reserveNum"  style="" />
+										<label>Status :</label>
+										<input readonly id="inputs" @bind="DirectBookinDTO.NIC" type="text" name="status" />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Check In Type :</label>
+										<input readonly id="inputs" type="text" name="checkType"  style="width: 8rem;" /> <br />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Customer Type :</label>
+										<input readonly id="inputs" type="text" @bind="DirectBookinDTO.CustomerType" name="customerType" style="width: 8rem;" /> <br />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Accomadation Type :</label>
+										<input readonly id="inputs" type="text"  name="accomadationType" style="" />
+									</div>
+
+									<div class="justify-content-between flex">
+										<label>Voucher No :</label>
+										<input readonly id="inputs"  type="text" name="VoucherNo"  style="margin-left: 1rem;" />
+										<label>Tour No :</label>
+										<input readonly id="inputs" type="text" name="tourNo"  style="" />
+									</div>
+								</div>
+								<div style="display:flex; flex-direction:column;">
+									<label style="background-color: aquamarine; font-size: 18px;">-</label>
+									<div class="justify-content-between flex">
+										<label>Customer Name : </label> <label class="lables">@name </label><br />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Customer Address : </label> <label class="lables">@address</label><br />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Customer Phone : </label> <label class="lables">@phone</label><br />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Customer Email : </label> <label class="lables">@email</label><br />
+									</div>
+									<div class="justify-content-between flex">
+										<label>Aget Name : </label> <label style="margin-right: 10rem;" class="lables">@agentName</label>
+									</div>
+									<div style="display: flex; flex-direction: row; gap: 5rem">
+										<label>Adults : </label> <label class="lables"> @adults</label>
+										<label>Kids : </label> <label class="lables">@kids</label>
+									</div>
+									<div style="display: flex; flex-direction: row; gap: 4rem">
+										<label>USD Exch :</label>
+										<input readonly style="height: 1.5rem; width: 3rem; border:2px solid black" type="text" name="usdExg" value="" />
+										<label style="display: flex; flex-wrap:wrap;">Room rate per day :</label>
+										<input readonly style="height: 1.5rem; width: 3rem; border:2px solid black" type="text" name="usdExg" value="" />
+									</div>
+								</div>
+							</div>
+						</section>
+						<section style="background-color: azure; margin: 5px; padding: 2px;">
+							<div style="display:flex; flex-direction:column;gap:0.5rem;">
+								<label style="background-color: aquamarine; font-size: 18px;">Total Stay (USD) </label>
+								<div class="justify-content-between flex flex-wrap">
+									<div>
+										<label>From</label><br />
+										<label class="lables"> @from</label>
+									</div>
+									<div>
+										<label>To</label><br />
+										<label class="lables">@to</label>
+									</div>
+									<div>
+										<label>Basis</label><br />
+										<label class="lables">@basis</label>
+									</div>
+									<div>
+										<label>Adults Stay</label><br />
+										<label class="lables">@adults</label>
+									</div>
+									<div>
+										<label>Kid Stay</label><br />
+										<label class="lables">@kids</label>
+									</div>
+									<div>
+										<label>Total</label><br />
+										<label class="lables">@total</label>
+									</div>
+								</div>
+							</div>
+						</section>
+						<section style="background-color: azure; margin: 5px; padding: 2px;">
+							<label style="background-color: aquamarine; width:100%; font-size: 18px;">-</label>
+							<div>
+
+								<div class="justify-content-center flex gap-2">
+									<div>
+										<label>Check_In Date : </label> <input readonly type="date" name="checkIndate" value="" /><br /><br />
+										<label>Arrival Time : </label>	<input type="time" name="arivalTime" value="" />
+									</div>
+									<div>
+										<label>Check_Out Date : </label> <input readonly type="date" name="checkOutdate" value="" /><br /><br />
+										<label>Depature Time : </label>	<input type="time" name="depatureTime" value="" />
+									</div>
+								</div>
+							</div>
+						</section>
+						<section style="background-color: azure; margin: 5px; padding: 2px;">
+							<div class="" style="display:flex; flex-direction:column;gap:0.5rem;">
+								<label style="background-color: aquamarine; width:100%; font-size: 18px;">Discription</label>
+								<div class="justify-content-between flex">
+									<label>+ Adults Stay Total(LKR)</label>
+									<label>500</label>
+								</div>
+								<div class="justify-content-between flex">
+									<label>+ Kids Stay Total(LKR)</label>
+									<label>400</label>
+								</div>
+								<div class="justify-content-between flex">
+									<label>Grand Total (LKR) in c. tax</label>
+									<label>500</label>
+								</div>
+								<div class="justify-content-between flex">
+									<label>- Total Advance Payoment</label>
+									<label>100</label>
+								</div>
+								<div class="justify-content-between flex">
+									<label>Total Balance (LKR)</label>
+									<label>1000</label>
+								</div>
+								<div class="justify-content-between flex">
+									<label>Total Balance (USD)</label>
+									<label>10</label>
+								</div>
+
+							</div>
+						</section>
+						<section>
+							<div class="" style="justify-items:center">
+								<div><label>Remark</label></div>
+								<div><label>Trans part a Management</label></div>
+								<div><label>Powerd by SP SOFT PVT</label></div>
+							</div>
+
+						</section>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -121,7 +296,22 @@
 	</div>
 </div>
 
+<style>
+	#inputs {
+		border: 2px solid black;
+		height: 1.5rem;
+		width: 5rem;
+		/* margin-left: 3.5rem; */
+	}
 
+	label {
+		font-weight: bold;
+	}
+
+	.lables {
+		background-color: white;
+	}
+</style>
 
 <style>
 	/* From Uiverse.io by Bodyhc */
@@ -161,17 +351,87 @@
 </style>
 @inject HttpClient Http
 @code {
-	private List<DirectBookingModel>? directBookingModels;
+	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
+	public DirectBookinDTO? DirectBookinDTO = new();
+	public DirectBookinDTO DirectBookinDTOs = new();
+	public Guid Id { get; set; }
+
+	public string? name;
+	public string? address;
+	public string? phone;
+	public string? email;
+	public string? agentName = "None";
+	public double adults;
+	public double kids;
+	public DateOnly from;
+	public DateOnly to;
+	public string? basis;
+	public double total ;
+	public DateTime checkInDate;
+	public DateTime checkOutDate;
+	public TimeOnly arrivalTime;
+	public TimeOnly depatureTime;
+	public double adultsStayTotal;
+	public double kidsStayTotal;
+	public double grandTotal;
+	public double totalAdvancePayment;
+	public double totalBalanceLKR;
+	public double totalBalanceUSD;
+
+
+
+
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
 			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+			Console.WriteLine("Pass");
 
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine("Error Massage : " + ex.Message);
+		}
+	}
+	private async Task ClickConformations(Guid id)
+	{
+		try
+		{
+			DirectBookinDTO = await Http.GetFromJsonAsync<DirectBookinDTO>(
+				$"https://localhost:4000/api/DirectBooking/{id}"
+			);
+			this.Id = id;
+			total = kids + adults;
+			name = $"{DirectBookinDTO?.FirstName + "" + DirectBookinDTO?.LastName}";
+			address = DirectBookinDTO?.Address ?? "";
+			phone = DirectBookinDTO?.PhoneNumber ?? "";
+			email = DirectBookinDTO?.EmailAddress ?? "";
+			from = DirectBookinDTO.CheckInDate;
+			to = DirectBookinDTO.CheckOutDate;
+			total = adults + kids;
+
+			await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
+
+			DirectBookinDTOs.NIC = DirectBookinDTO?.NIC ?? "";
+			DirectBookinDTOs.Nationality = DirectBookinDTO?.Nationality ?? "";
+			DirectBookinDTOs.Conformation = DirectBookinDTO?.Conformation ;
+			DirectBookinDTOs.OpeningBalanace = DirectBookinDTO?.OpeningBalanace ?? 0;
+			DirectBookinDTOs.Address = DirectBookinDTO?.Address ?? "";
+			DirectBookinDTOs.CheckInDate = (DateOnly)DirectBookinDTO?.CheckInDate;
+			DirectBookinDTOs.CheckOutDate = (DateOnly)DirectBookinDTO?.CheckOutDate;
+			DirectBookinDTOs.DathOfBirth = DirectBookinDTO?.DathOfBirth ;
+			DirectBookinDTOs.CreditLimit = DirectBookinDTO?.CreditLimit ?? 0;
+			DirectBookinDTOs.EmailAddress = DirectBookinDTO?.EmailAddress ?? "";
+			DirectBookinDTOs.PhoneNumber = DirectBookinDTO?.PhoneNumber ?? "";
+			DirectBookinDTOs.Remark = DirectBookinDTO?.Remark ?? "";
+			
+
+			StateHasChanged();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex);
 		}
 	}
 }

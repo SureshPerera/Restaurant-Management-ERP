@@ -6,17 +6,37 @@
 
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3">Delete Package</h3>
-	@if (PackagesDto == null)
-	{
-		<p><Searching/></p>
-	}
-	<p>Are you sure you want to delete package with name  <strong>@PackagesDto.PackageName</strong> </p>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-6">
+			<div class="card shadow-lg">
+				<div class="card-header bg-danger text-center text-white">
+					<h3>Delete Package</h3>
+				</div>
 
-	<button class="btn btn-danger" @onclick="DeletePackages">Delete</button>
-	<a class="btn btn-secondary" href="/Administration/ManagePackages">Cancel</a>
+				<div class="card-body" style="font-size: 15px;">
+					@if (PackagesDto == null)
+					{
+						<p><Searching /></p>
+					}
+					else
+					{
+						<p>
+							Are you sure you want to delete package with name
+							<strong>@PackagesDto.PackageName</strong>?
+						</p>
+
+						<div class="d-flex justify-content-center mt-4 gap-3">
+							<button class="btn btn-danger fw-bold" @onclick="DeletePackages">Delete</button>
+							<a class="btn btn-secondary fw-bold" href="/Administration/ManagePackages">Cancel</a>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
 @inject HttpClient http
 @inject NavigationManager navManager
 @code {

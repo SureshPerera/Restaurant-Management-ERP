@@ -7,64 +7,65 @@
 @using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
-<div>
-	<h3 class="card mb-3 text-center">Add New Exchange Rates</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Card -->
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-center text-white">
+                    <h3>Add New Exchange Rates</h3>
+                </div>
+
+                <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+                    @if (ExchangeRatesDto == null)
+                    {
+                        <p><Searching /></p>
+                    }
+                    else
+                    {
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Currency Name</label>
+                                        <input class="form-control" type="text" @bind="ExchangeRatesDto.CurrencyName" />
+                                        <span class="text-danger">@Errors["CurrencyName"]?[0]</span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Selling Rate</label>
+                                        <input class="form-control" type="text" @bind="ExchangeRatesDto.SellingRate" />
+                                        <span class="text-danger">@Errors["SellingRate"]?[0]</span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Buying Rate</label>
+                                        <input class="form-control" type="text" @bind="ExchangeRatesDto.BuyingRate" />
+                                        <span class="text-danger">@Errors["BuyingRate"]?[0]</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-grid d-md-flex justify-content-md-center mt-4 gap-2">
+                                <button class="btn btn-success fw-bold" type="button" @onclick="CreateExchangeRate">
+                                    Add
+                                </button>
+                                <button class="btn btn-warning fw-bold" type="reset">
+                                    Clear
+                                </button>
+                                <a class="btn btn-secondary fw-bold" href="/Administration/ManageExRates">
+                                    Back
+                                </a>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="col-lg-8">
-	<h1 class="mb-5">New Exchange Rates</h1>
-</div>
 
-<form class="form flex-wrap" style="  background-color:antiquewhite; margin-left: 0.5rem;">
-	@if (ExchangeRatesDto == null)
-	{
-		<p><Searching /></p>
-	}
-	
-	<div class="justify-content-around flex flex-wrap">
-		<div class="">
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Currency Name</label>
-				<div class="col-md-6" style="background-color:antiquewhite">
-					<input class="form-control" type="text" @bind="ExchangeRatesDto.CurrencyName">
-					<span class="text-danger">@Errors["CurrencyName"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Selling Rate</label>
-				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="ExchangeRatesDto.SellingRate">
-					<span class="text-danger">@Errors["SellingRate"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label style="" class="col-md-3 col-form-label">Room Type</label>
-				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="ExchangeRatesDto.BuyingRate">
-					<span class="text-danger">@Errors["BuyingRate"]?[0]</span>
-
-				</div>
-			</div>
-
-
-		</div>
-		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
-
-			<div class="offset-md-1 col-md-3 d-grid" style="">
-				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="CreateExchangeRate">Add</button>
-			</div>
-			<div class="offset-md-1 col-md-3 d-grid">
-				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
-			</div>
-			<div class="offset-md-1 col-md-3 d-grid">
-				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/Administration/ManageExRates">Back</a>
-			</div>
-		</div>
-	</div>
-
-
-
-
-</form>
 
 
 

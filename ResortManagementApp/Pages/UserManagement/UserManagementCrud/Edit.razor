@@ -5,134 +5,130 @@
 
 @layout MainLayout
 
-<div class="card">
-	<h3 class="mb-3 text-center">Register User</h3>
+<div class="card mb-3 p-3">
+    <h3 class="text-center">Register User</h3>
 </div>
 
 <div class="col-lg-8">
-	<h1 class="title mb-5">New User</h1>
+    <h1 class="title mb-5">New User</h1>
 </div>
 
+<form class="form flex flex-wrap p-3" style="background-color: #fdf5e6;">
+    <div class="row mb-3">
+        <label class="col-md-2 col-form-label">User Id</label>
+        <div class="col-md-5">
+            <input class="form-control" @bind="Id">
+            <span class="text-danger">@Errors["Id"]?[0]</span>
+        </div>
+    </div>
 
-<form class="form flex flex-wrap">
-	<div class="row mb-2">
-		<label class="col-md-2 col-form-label">User Id</label>
-		<div class="col-md-5">
-			<input class="form-control" @bind="Id">
-			<span class="text-danger">@Errors["Id"]?[0]</span>
-		</div>
-	</div>
-	<div class="flex">
-		<div class="row">
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">First Name</label>
-				<div class="col-md-6">
-					<input class="form-control" @bind="UserManagementDto.FirstName">
-					<span class="text-danger">@Errors["FirstName"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Last Name</label>
-				<div class="col-md-6">
-					<input class="form-control" @bind="UserManagementDto.LastName">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">First Name</label>
+                <div class="col-md-8">
+                    <input class="form-control" @bind="UserManagementDto.FirstName">
+                    <span class="text-danger">@Errors["FirstName"]?[0]</span>
+                </div>
+            </div>
 
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Address</label>
-				<div class="col-md-6">
-					<textarea class="form-control" @bind="UserManagementDto.Address"></textarea>
-					<span class="text-danger">@Errors["FirstName"]?[0]</span>
-				</div>
-			</div><div class="row mb-3">
-				<label class="col-md-3 col-form-label">Phone Number</label>
-				<div class="col-md-6">
-					<input class="form-control" type="number" @bind="UserManagementDto.PhoneNumber">
-					<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Email Address</label>
-				<div class="col-md-6">
-					<input class="form-control" type="email" @bind="UserManagementDto.Email">
-					<span class="text-danger">@Errors["Address"]?[0]</span>
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Last Name</label>
+                <div class="col-md-8">
+                    <input class="form-control" @bind="UserManagementDto.LastName">
+                </div>
+            </div>
 
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">NIC Number</label>
-				<div class="col-md-6">
-					<input class="form-control" @bind="UserManagementDto.NIC">
-					<span class="text-danger">@Errors["NIC"]?[0]</span>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Date Of Birthday</label>
-				<div class="col-md-6">
-					<input class="form-control" type="date" @bind="UserManagementDto.DOB">
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Access Level</label>
-				<div class="col-md-6">
-					<select class="form-control" @bind="UserManagementDto.AccessLevel">
-						<option>--Select--</option>
-						@foreach (var item in AcessLevel)
-						{
-							<option>@item</option>
-						}
-					</select>
-					<span class="text-danger">@Errors["Nationality"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Gender</label>
-				<div class="col-md-6">
-					<select class="form-control" @bind="UserManagementDto.Gender">
-						<option>--Select--</option>
-						@foreach (var item in Gender)
-						{
-							<option>@item</option>
-						}
-					</select>
-					<span class="text-danger">@Errors["Nationality"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Password</label>
-				<div class="col-md-6">
-					<input class="form-control" type="password" @bind="UserManagementDto.PassWord">
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Comments</label>
-				<div class="col-md-6">
-					<textarea class="form-control" @bind="UserManagementDto.Comment"></textarea>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div style="">
-				<div class="row gap-2" style="">
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Address</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" @bind="UserManagementDto.Address"></textarea>
+                    <span class="text-danger">@Errors["Address"]?[0]</span>
+                </div>
+            </div>
 
-					<div class="">
-						<button class="btn btn-success fw-bold" type="button" @onclick="UpdateUser">Add User</button>
-					</div>
-					<div class="">
-						<button class="btn btn-warning fw-bold" type="reset">Clear</button>
-					</div>
-					<div class="">
-						<a class="btn btn-primary fw-bold" href="/UserManagement">Back</a>
-					</div>
-				</div>
-			</div>
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Phone Number</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="number" @bind="UserManagementDto.PhoneNumber">
+                    <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+                </div>
+            </div>
 
-		</div>
-	</div>
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Email Address</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="email" @bind="UserManagementDto.Email">
+                    <span class="text-danger">@Errors["Email"]?[0]</span>
+                </div>
+            </div>
 
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">NIC Number</label>
+                <div class="col-md-8">
+                    <input class="form-control" @bind="UserManagementDto.NIC">
+                    <span class="text-danger">@Errors["NIC"]?[0]</span>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Date Of Birth</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="date" @bind="UserManagementDto.DOB">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Access Level</label>
+                <div class="col-md-8">
+                    <select class="form-control" @bind="UserManagementDto.AccessLevel">
+                        <option>--Select--</option>
+                        @foreach (var item in AcessLevel)
+                        {
+                            <option>@item</option>
+                        }
+                    </select>
+                    <span class="text-danger">@Errors["AccessLevel"]?[0]</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Gender</label>
+                <div class="col-md-8">
+                    <select class="form-control" @bind="UserManagementDto.Gender">
+                        <option>--Select--</option>
+                        @foreach (var item in Gender)
+                        {
+                            <option>@item</option>
+                        }
+                    </select>
+                    <span class="text-danger">@Errors["Gender"]?[0]</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Password</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="password" @bind="UserManagementDto.PassWord">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Comments</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" @bind="UserManagementDto.Comment"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex mt-3 gap-2">
+        <button class="btn btn-success fw-bold" type="button" @onclick="UpdateUser">Add User</button>
+        <button class="btn btn-warning fw-bold" type="reset">Clear</button>
+        <a class="btn btn-primary fw-bold" href="/UserManagement">Back</a>
+    </div>
 </form>
 
 <style>

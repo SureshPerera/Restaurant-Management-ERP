@@ -8,176 +8,146 @@
 @using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
-<div>
-	<h3 class="card mb-3 text-center">Add New Package</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Card -->
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-center text-white">
+                    <h3>Add New Package</h3>
+                </div>
+
+                <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+                    @if (PackagesDto == null)
+                    {
+                        <p><Searching /></p>
+                    }
+                    else
+                    {
+                        <form class="row g-3">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Package Name</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.PackageName" />
+                                    <span class="text-danger">@Errors["PackageName"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Package Details</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.PackageDetails" />
+                                    <span class="text-danger">@Errors["PackageDetails"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Room Type</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.RoomType" />
+                                    <span class="text-danger">@Errors["RoomType"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Accomadation Type</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.AccomadationType" />
+                                    <span class="text-danger">@Errors["AccomadationType"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Basis</label>
+                                    <select class="form-control" @bind="PackagesDto.Basis">
+                                        <option>--Select--</option>
+                                        @foreach (var item in BasisList)
+                                        {
+                                            <option>@item</option>
+                                        }
+                                    </select>
+                                    <span class="text-danger">@Errors["Basis"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Room Rate (Spring)</label>
+                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateSpring" />
+                                    <span class="text-danger">@Errors["RoomRateSpring"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Room Rate (Summer)</label>
+                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateSummer" />
+                                    <span class="text-danger">@Errors["RoomRateSummer"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Room Rate (Autumn)</label>
+                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateAutumn" />
+                                    <span class="text-danger">@Errors["RoomRateAutumn"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Room Rate (Winter)</label>
+                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateWinter" />
+                                    <span class="text-danger">@Errors["RoomRateWinter"]?[0]</span>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Entitle Meal 1</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal1" />
+                                    <span class="text-danger">@Errors["Entitlemeal1"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Entitle Meal 2</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal2" />
+                                    <span class="text-danger">@Errors["Entitlemeal2"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Entitle Meal 3</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal3" />
+                                    <span class="text-danger">@Errors["Entitlemeal3"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Entitle Meal 4</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal4" />
+                                    <span class="text-danger">@Errors["Entitlemeal4"]?[0]</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Special Package 1</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage1" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Special Package 2</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage2" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Special Package 3</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage3" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Special Package 4</label>
+                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage4" />
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="col-12 d-flex justify-content-center mt-4 gap-3">
+                                <button class="btn btn-success fw-bold" type="button" @onclick="CreatePackage">Add</button>
+                                <button class="btn btn-warning fw-bold" type="reset">Clear</button>
+                                <a class="btn btn-primary fw-bold" href="/Administration/ManagePackages">Back</a>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="col-lg-8">
-	<h1 class="mb-5">New Package</h1>
-</div>
-
-<form class="form flex-wrap" style="  background-color:antiquewhite; margin-left: 0.5rem;">
-	@if (PackagesDto == null)
-	{
-		<p><Searching/></p>
-	}
-	<div class="justify-content-around flex flex-wrap">
-		<div class="">
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Package Name</label>
-				<div class="col-md-6" style="background-color:antiquewhite">
-					<input class="form-control" type="text" @bind="PackagesDto.PackageName">
-					<span class="text-danger">@Errors["PackageName"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Package Details</label>
-				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="PackagesDto.PackageDetails">
-					<span class="text-danger">@Errors["PackageDetails"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label style="" class="col-md-3 col-form-label">Room Type</label>
-				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="PackagesDto.RoomType">
-					<span class="text-danger">@Errors["RoomType"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-2 col-form-label">Accomadation Type</label>
-				<div style="margin-left:2.2rem;" class="col-md-6">
-					<input class="form-control" type="text" @bind="PackagesDto.AccomadationType">
-					<span class="text-danger">@Errors["AccomadationType"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-2 col-form-label">Basis</label>
-				<div class="col-md-6" style="margin-left:2.2rem;">
-					<select class="form-control" @bind="PackagesDto.Basis">
-						<option class="" style="align-items: center">--Select--</option>
-						@foreach (var item in BasisList)
-						{
-							<option>@item</option>
-						}
-					</select>
-				
-					<span class="text-danger">@Errors["Basis"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-2 col-form-label">Room Rate(Spring)</label>
-				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="number" @bind="PackagesDto.RoomRateSpring">
-					<span class="text-danger">@Errors["RoomRateSpring"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-2 col-form-label">Room Rate(Summer)</label>
-				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="number" @bind="PackagesDto.RoomRateSummer">
-					<span class="text-danger">@Errors["RoomRateSummer"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-2 col-form-label">Room Rate(Autuman)</label>
-				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="number" @bind="PackagesDto.RoomRateAutumn">
-					<span class="text-danger">@Errors["RoomRateAutumn"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-2 col-form-label">Room Rate(Winter)</label>
-				<div class="col-md-6" style="margin-left:2.2rem;">
-					<input class="form-control" type="number" @bind="PackagesDto.RoomRateWinter">
-					<span class="text-danger">@Errors["RoomRateWinter"]?[0]</span>
-
-				</div>
-			</div>
-		</div>
-		<div class="">
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Entitle Meal 1</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal1">
-					<span class="text-danger">@Errors["Entitlemeal1"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Entitle Meal 2</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal2">
-					<span class="text-danger">@Errors["Entitlemeal2"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Entitle Meal 3</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal3">
-					<span class="text-danger">@Errors["Entitlemeal3"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Entitle Meal 4</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal4">
-					<span class="text-danger">@Errors["Entitlemeal4"]?[0]</span>
-
-				</div>
-			</div>
-
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Special Package 1</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage1">
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Special Package 2</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage2">
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Special Package 3</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage3">
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-3 col-form-label">Special Package 4</label>
-				<div class="col-md-6 inp">
-					<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage4">
-				</div>
-			</div>
-			
-		</div>
-		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
-
-			<div class="offset-md-1 col-md-3 d-grid" style="">
-				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="CreatePackage">Add</button>
-			</div>
-			<div class="offset-md-1 col-md-3 d-grid">
-				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
-			</div>
-			<div class="offset-md-1 col-md-3 d-grid">
-				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/Administration/ManagePackages">Back</a>
-			</div>
-		</div>
-	</div>
-
-
-
-
-</form>
 
 
 

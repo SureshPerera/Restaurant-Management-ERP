@@ -6,16 +6,21 @@
 @layout MainLayout
 
 <div>
-	<h3 class="mb-3">Delete customer</h3>
+	<h3 class="mb-3">Delete Customer</h3>
+
 	@if (RoomsDtos == null)
 	{
-		<Searching/>
+		<p><Searching /></p>
 	}
-	<p>are you sure you want to delete customer with name  <strong>@Id</strong> </p>
 
-	<button class="btn btn-danger" @onclick="deleteRooms">Delete</button>
-	<a class="btn btn-secondary" href="/Administration/ManageRooms">Cancel</a>
+	<p>Are you sure you want to delete the customer with name <strong>@Id</strong>?</p>
+
+	<div class="d-flex gap-2">
+		<button class="btn btn-danger" @onclick="deleteRooms">Delete</button>
+		<a class="btn btn-secondary" href="/Administration/ManageRooms">Cancel</a>
+	</div>
 </div>
+
 @inject HttpClient http;
 @inject NavigationManager navManager;
 @code {

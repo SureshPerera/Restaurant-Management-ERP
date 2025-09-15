@@ -8,17 +8,42 @@
 
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3">Delete Extra Charge</h3>
-	@if (ExtraChargersDto == null)
-	{
-		<p><Searching /></p>
-	}
-	<p>Are you sure you want to delete this extra charge with name  <strong>@Id</strong> </p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <!-- Card -->
+            <div class="card shadow-lg">
+                <div class="card-header bg-danger text-center text-white">
+                    <h3>Delete Extra Charge</h3>
+                </div>
 
-	<button class="btn btn-danger" @onclick="DeletePackages">Delete</button>
-	<a class="btn btn-secondary" href="/Administration/ManageExtra">Cancel</a>
+                <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+                    @if (ExtraChargersDto == null)
+                    {
+                        <p><Searching /></p>
+                    }
+                    else
+                    {
+                        <p>
+                            Are you sure you want to delete this extra charge with name
+                            <strong>@Id</strong>?
+                        </p>
+
+                        <div class="d-grid d-md-flex justify-content-md-center mt-4 gap-2">
+                            <button class="btn btn-danger fw-bold" type="button" @onclick="DeletePackages">
+                                Delete
+                            </button>
+                            <a class="btn btn-secondary fw-bold" href="/Administration/ManageExtra">
+                                Cancel
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 @code {
 	[Parameter]
 	public Guid Id { get; set; }

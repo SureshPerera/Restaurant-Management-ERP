@@ -4,16 +4,38 @@
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3">Delete Customer</h3>
-	@if (directBookingModel == null)
-	{
-		<p><Searching/>></p>
-	}
-	<p>Are you sure you want to delete customer with Name  <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong> </p>
-	
-	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
-	<a class="btn btn-secondary" href="/Reservations/DirectBooking">Cancel</a>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-6">
+			<!-- Card -->
+			<div class="card shadow-lg">
+				<div class="card-header bg-danger text-center text-white">
+					<h3>Delete Customer</h3>
+				</div>
+
+				<div class="card-body text-center" style="background-color: #A3B18A; font-weight: bold; font-size: 15px;">
+					@if (directBookingModel == null)
+					{
+						<p><Searching /></p>
+					}
+					else
+					{
+						<p>
+							Are you sure you want to delete customer
+							<br />
+							<strong>@directBookingModel.FirstName @directBookingModel.LastName</strong>?
+						</p>
+
+						<!-- Action Buttons -->
+						<div class="d-grid d-md-flex justify-content-md-center mt-4 gap-2">
+							<button class="btn btn-danger fw-bold" @onclick="DeleteCustomer">Delete</button>
+							<a class="btn btn-secondary fw-bold" href="/Reservations/DirectBooking">Cancel</a>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @inject HttpClient http

@@ -19,7 +19,6 @@
     <Folder Include="Pages\ClientManagement\MassageCrud\" />
     <Folder Include="Service\" />
     <Folder Include="wwwroot\Imgs\ClientPotal\Video\" />
-    <Folder Include="wwwroot\Js\" />
   </ItemGroup>
 
 </Project>

@@ -5,17 +5,28 @@
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3">Delete Customer</h3>
+<div class="card p-3">
+	<h3 class="mb-3 text-center">Delete Customer</h3>
+
 	@if (Clients == null)
 	{
-		<p><Searching/></p>
+		<p><em>Loading customer details...</em></p>
 	}
-	<p>Are you sure you want to delete customer with Name  <strong>@Clients.Id @Clients.FirstName</strong> </p>
+	else
+	{
+		<p>
+			Are you sure you want to delete customer with ID
+			<strong>@Clients.Id</strong> and Name
+			<strong>@Clients.FirstName</strong>?
+		</p>
 
-	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
-	<a class="btn btn-secondary" href="/ClientManagement">Cancel</a> 
+		<div class="d-flex gap-2">
+			<button class="btn btn-danger fw-bold" @onclick="DeleteCustomer">Delete</button>
+			<a class="btn btn-secondary fw-bold" href="/ClientManagement">Cancel</a>
+		</div>
+	}
 </div>
+
 
 @inject HttpClient http
 @inject NavigationManager navManager

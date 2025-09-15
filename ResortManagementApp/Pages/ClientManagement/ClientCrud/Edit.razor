@@ -8,91 +8,84 @@
 
 
 @layout MainLayout
-<div>
-	<h3 class="card mb-3 text-center">Expenses Update</h3>
+<div class="card p-3">
+    <h3 class="mb-3 text-center">Expenses Update</h3>
+
+    <form class="form p-3" style="background-color: antiquewhite;">
+        @if (ClientDto == null)
+        {
+            <p><em>Loading client details...</em></p>
+        }
+        else
+        {
+            <!-- Customer Id -->
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Customer Id</label>
+                <div class="col-md-6">
+                    <input class="form-control-plaintext" value="@Id" readonly />
+                    <span class="text-danger">@Errors["FirstName"]?[0]</span>
+                </div>
+            </div>
+
+            <!-- Client Details -->
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">First Name</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" @bind="ClientDto.FirstName" />
+                    <span class="text-danger">@Errors["FirstName"]?[0]</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Last Name</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" @bind="ClientDto.LastName" />
+                    <span class="text-danger">@Errors["LastName"]?[0]</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Phone Number</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="number" @bind="ClientDto.PhoneNumber" />
+                    <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">NIC</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" @bind="ClientDto.NIC" />
+                    <span class="text-danger">@Errors["NIC"]?[0]</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Email</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="email" @bind="ClientDto.EmailAddress" />
+                    <span class="text-danger">@Errors["Email"]?[0]</span>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Note</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" @bind="ClientDto.Remark" rows="3"></textarea>
+                    <span class="text-danger">@Errors["Remark"]?[0]</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex mt-3 gap-2">
+                <button class="btn btn-success fw-bold" type="button" @onclick="UpdateUser">Update</button>
+                <button class="btn btn-warning fw-bold" type="reset">Clear</button>
+                <a class="btn btn-primary fw-bold" href="/ClientManagement">Back</a>
+            </div>
+        }
+    </form>
 </div>
-
-<form class="form flex-wrap" style="  background-color:antiquewhite; margin-left: 0.5rem;">
-	@if (ClientDto == null)
-	{
-		<p><Searching /></p>
-	}
-	<div class="row justify-content-center fs-6 mb-3 flex">
-		<label class="col-md-3 col-form-label" style="">Customer Id</label>
-		<div class="col-md-6" style="background-color:antiquewhite">
-			<input class="form-control-plaintext" value="@Id" readonly>
-			<span class="text-danger">@Errors["FirstName"]?[0]</span>
-		</div>
-	</div>
-	<div class="justify-content-around flex flex-wrap">
-		<div class="">
-			<div class="row mb-3">
-				<label class="col-md-4 col-form-label">First Name</label>
-				<div class="col-md-6" style="background-color:antiquewhite">
-					<input class="form-control" type="text" @bind="ClientDto.FirstName">
-					<span class="text-danger">@Errors["FirstName"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-md-4 col-form-label">Last Name</label>
-				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="ClientDto.LastName">
-					<span class="text-danger">@Errors["LastName"]?[0]</span>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label style="" class="col-md-4 col-form-label">Phone Number</label>
-				<div class="col-md-6">
-					<input class="form-control" type="number" @bind="ClientDto.PhoneNumber">
-					<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
-
-				</div>
-			</div>
-			<div class="row mb-3">
-				<label style="" class="col-md-4 col-form-label">NIC</label>
-				<div class="col-md-6">
-					<input class="form-control" type="text" @bind="ClientDto.NIC">
-					<span class="text-danger">@Errors["NIC"]?[0]</span>
-
-				</div>
-			</div>
-
-			<div class="row mb-3">
-				<label style="" class="col-md-4 col-form-label">Email</label>
-				<div class="col-md-6">
-					<input class="form-control" type="email" @bind="ClientDto.EmailAddress">
-					<span class="text-danger">@Errors["Email"]?[0]</span>
-
-				</div>
-			</div>
-		</div>
-		<div class="row mb-3">
-			<label style="" class="col-md-4 col-form-label">Note </label>
-			<div class="col-md-6">
-
-				<textarea class="form-control" type="text" @bind="ClientDto.Remark" style="width: 20rem;">
-
-				</textarea>
-				<span class="text-danger">@Errors["Remark"]?[0]</span>
-
-			</div>
-
-
-		</div>
-		<div class="" style="display:flex; flex-direction: column; gap: 1rem;">
-
-			<div class="offset-md-1 col-md-3 d-grid" style="">
-				<button class="btn btn-success fw-bold" style="width:8rem;" type="button" @onclick="UpdateUser">Update</button>
-			</div>
-			<div class="offset-md-1 col-md-3 d-grid">
-				<button class="btn btn-warning fw-bold" style="width:8rem;" type="reset">Clear</button>
-			</div>
-			<div class="offset-md-1 col-md-3 d-grid">
-				<a class="btn btn-primary fw-bold" style="width:8rem;" href="/ClientManagement">Back</a>
-			</div>
-		</div>
-	</div>
-</form>
 
 
 <style>

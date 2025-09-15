@@ -3,16 +3,25 @@
 @using ResortManagementApp.Models.Reservation.DTO
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3">Delete Customer</h3>
+<div class="card p-3">
+	<h3 class="mb-3 text-center">Delete Customer</h3>
+
 	@if (directBookingModel == null)
 	{
 		<p><em>Loading customer details...</em></p>
 	}
-	<p>Are you sure you want to delete customer with Name  <strong>@directBookingModel?.FirstName @directBookingModel?.LastName</strong> </p>
+	else
+	{
+		<p>
+			Are you sure you want to delete customer with name
+			<strong>@directBookingModel.FirstName @directBookingModel.LastName</strong>?
+		</p>
 
-	<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
-	<a class="btn btn-secondary" href="/ClientManagement">Cancel</a>
+		<div class="d-flex gap-2">
+			<button class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
+			<a class="btn btn-secondary" href="/ClientManagement">Cancel</a>
+		</div>
+	}
 </div>
 
 @inject HttpClient http
