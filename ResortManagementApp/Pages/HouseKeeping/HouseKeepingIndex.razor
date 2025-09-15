@@ -1,73 +1,90 @@
 ﻿@page "/Reservations/HouseKeeping"
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3 text-center">House-Keeping Management</h3>
-</div>
-<div>
-	<section>
-		@* Room details table *@
-		<div class="justify-content-around flex">
-			<div>
-				<table class="table-hover table" style="background-color:azure">
-					<thead>
-						<tr>
-							<th><label>Room Id</label></th>
-							<th><label>Room Type</label></th>
-							<th><label>Room Floor</label></th>
-							<th><label>Room Status</label></th>
-							<th><label>Maintenance</label></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div style="">
-				<div style="background-color:antiquewhite; width: 18rem; padding: 15px; border-radius:	2rem 1rem; border:2px solid black;
-				display: flex; flex-direction: column; gap: 1.5rem;">
-					<div>
-						<label>Room Status </label><br />
-						
-						<select style="height: 2rem;width: 16rem;">
-							<option style="text-align: center">------Select------</option>
-							@foreach (var item in RoomStatus)
-							{
-								<option >@item</option>
-							}
-						</select>
-					</div>
-					<div>
-						<label>Last Clean by  </label><br />
-						<input type="text" name="lastCleanBy" value="" />
-					</div>
-					<div>
-						<label>Maintenance Status  </label><br />
-						<input type="text" name="maintenanceStatus" value="" />
-					</div>
-					<div>
-						<label>Maintenance Comment  </label><br />
-						<textarea name="maintenanceComment"></textarea>
-					</div>
-					<div>
-						<label>Additional Details  </label><br />
-						<textarea name="additionalDetails"></textarea>
-					</div>
-					<div class="justify-content-center flex">
-						<input class="btn btn-success" type="button" name="submit" value="Update" />
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<div class="container my-4">
+
+    <!-- Header -->
+    <h3 class="mb-4 text-center">House-Keeping Management</h3>
+
+    <section class="d-flex flex-wrap gap-4">
+
+        <!-- Room Details Table -->
+        <div class="flex-fill">
+            <table class="table-hover table-bordered bg-azure table rounded shadow-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th>Room Id</th>
+                        <th>Room Type</th>
+                        <th>Room Floor</th>
+                        <th>Room Status</th>
+                        <th>Maintenance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="text-center">No data available</td>
+                    </tr>
+                    @* Example loop for dynamic data *@
+                    @* 
+                    @foreach (var room in Rooms)
+                    {
+                        <tr>
+                            <td>@room.Id</td>
+                            <td>@room.Type</td>
+                            <td>@room.Floor</td>
+                            <td>@room.Status</td>
+                            <td>@room.MaintenanceStatus</td>
+                        </tr>
+                    }
+                    *@
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Room Update Form -->
+        <div class="flex-shrink-0" style="min-width: 300px;">
+            <div class="bg-light border-dark d-flex flex-column gap-3 rounded border border-2 p-4 shadow-sm">
+
+                <div>
+                    <label class="fw-bold">Room Status</label>
+                    <select class="form-select">
+                        <option selected>------Select------</option>
+                        @foreach (var item in RoomStatus)
+                        {
+                            <option>@item</option>
+                        }
+                    </select>
+                </div>
+
+                <div>
+                    <label class="fw-bold">Last Cleaned By</label>
+                    <input type="text" class="form-control" name="lastCleanBy" />
+                </div>
+
+                <div>
+                    <label class="fw-bold">Maintenance Status</label>
+                    <input type="text" class="form-control" name="maintenanceStatus" />
+                </div>
+
+                <div>
+                    <label class="fw-bold">Maintenance Comment</label>
+                    <textarea class="form-control" name="maintenanceComment" rows="2"></textarea>
+                </div>
+
+                <div>
+                    <label class="fw-bold">Additional Details</label>
+                    <textarea class="form-control" name="additionalDetails" rows="2"></textarea>
+                </div>
+
+                <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-success w-50">Update</button>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
 </div>
 
 <style>

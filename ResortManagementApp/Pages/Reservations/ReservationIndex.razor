@@ -9,202 +9,169 @@
 
 @layout MainLayout
 
-<div style="">
-	<div>
-		<h3 class="mb-3 text-center">Reservation Management</h3>
-	</div>
-	<div class="flex">
-		<div class="" style="margin-left: -0.2rem">
-			<div>
-				<a href="/Reservations/DirectBooking" class="btn btn-primary mb-3">Direct Booking</a>
-			</div>
-			<div>
-				<a href="/Reservations/AgentBooking" class="btn btn-primary mb-3">Agent Booking</a>
-			</div>
-			<div>
-				<a href="/Reservations/OnlineBooking" class="btn btn-primary mb-3">Online Booking</a>
-			</div>
-		</div>
+<div class="container my-4">
 
-		<div class="flex-wrap" style="display:flex; flex-direction: column; gap: 2rem;">
-			<div class="justify-content-end flex flex-wrap gap-1" style="font-weight:bolder">
-				<div style="">
-					<input style="width: auto; height: 50px;" type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation" />
-				</div>
-				<div>
-					<input style="width: auto; height: 50px;" type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all confirmed reservation" />
-				</div>
-				<div>
-					<input style="width: auto; height: 50px;" type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all tempary reservation" />
-				</div>
-				<div>
-					<input style="width: auto; height: 50px;" type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation by agent" />
-				</div>
-				<div>
-					<input style="width: auto; height: 50px;" type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all cancell reservation" />
-				</div>
-			</div>
-			<div style="">
-				@* directBookingTable *@
-				<div style="">
-					<div>
-						<label>Direct Booking List</label>
-					</div>
-					@if (directBookingModels == null)
-					{
-						<div class="flex">
+    <!-- Header -->
+    <h3 class="mb-4 text-center">Reservation Management</h3>
 
-							<Searching />
-						</div>
-					}
-					else
-					{
-						<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-							<thead class="bg-light">
-								<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-									<td>Name</td>
-									<td>Phone Number</td>
-									<td>Address</td>
-									<td>EmailAddress</td>
-									<td>NIC</td>
-									<td>Customer Type</td>
-									<td>CreditLimit</td>
-									<td>OpeningBalanace</td>
-									<td>Nationality</td>
-									<td>Remark</td>
-								</tr>
-							</thead>
-							<tbody class="bg-light">
-								@foreach (var item in directBookingModels)
-								{
-									<tr style="background-color: #DAD7CD">
-										<th>@(item.FirstName + " " + @item.LastName)</th>
-										<th>@item.PhoneNumber</th>
-										<th>@item.Address</th>
-										<th>@item.EmailAddress</th>
-										<th>@item.NIC</th>
-										<td>@item.CustomerType</td>
-										<th>@item.CreditLimit</th>
-										<th>@item.OpeningBalanace</th>
-										<th>@item.Nationality</th>
-										<th>@item.Remark</th>
-									</tr>
-								}
-							</tbody>
+    <div class="row g-4">
 
-						</table>
-					}
+        <!-- Booking Type Buttons -->
+        <div class="col-md-3 d-flex flex-column gap-3">
+            <a href="/Reservations/DirectBooking" class="btn btn-primary">Direct Booking</a>
+            <a href="/Reservations/AgentBooking" class="btn btn-primary">Agent Booking</a>
+            <a href="/Reservations/OnlineBooking" class="btn btn-primary">Online Booking</a>
 
-				</div>
-				@* onlineBookingTable *@
+            <div class="d-grid mt-3 gap-2">
+                <button class="btn btn-warning">View All Reservations</button>
+                <button class="btn btn-warning">View All Confirmed Reservations</button>
+                <button class="btn btn-warning">View All Temporary Reservations</button>
+                <button class="btn btn-warning">View All Reservations by Agent</button>
+                <button class="btn btn-warning">View All Cancellations</button>
+            </div>
+        </div>
 
+        <!-- Booking Lists -->
+        <div class="col-md-9">
 
-				<div style="">
-					<div>
-						<label>Online Booking List</label>
-					</div>
-					@if (OnlineBookings == null)
-					{
-						<div class="flex">
+            <!-- Direct Booking Table -->
+            <div class="mb-5">
+                <h5>Direct Booking List</h5>
+                @if (directBookingModels == null)
+                {
+                    <div class="d-flex justify-content-center"><Searching /></div>
+                }
+                else
+                {
+                    <div class="table-responsive rounded shadow-sm">
+                        <table class="table-hover table">
+                            <thead class="table-light text-center">
+                                <tr style="background-color: #A3B18A; font-weight:bold;">
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>Email Address</th>
+                                    <th>NIC</th>
+                                    <th>Customer Type</th>
+                                    <th>Credit Limit</th>
+                                    <th>Opening Balance</th>
+                                    <th>Nationality</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in directBookingModels)
+                                {
+                                    <tr class="table-light text-center" style="background-color: #DAD7CD;">
+                                        <td>@($"{item.FirstName} {item.LastName}")</td>
+                                        <td>@item.PhoneNumber</td>
+                                        <td>@item.Address</td>
+                                        <td>@item.EmailAddress</td>
+                                        <td>@item.NIC</td>
+                                        <td>@item.CustomerType</td>
+                                        <td>@item.CreditLimit</td>
+                                        <td>@item.OpeningBalanace</td>
+                                        <td>@item.Nationality</td>
+                                        <td>@item.Remark</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
 
-							<Searching />
-						</div>
-					}
-					else
-					{
-						<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-							<thead class="bg-light">
-								<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-									<td>Name</td>
-									<td>Check-In_Date</td>
-									<td>Check-Out-Date</td>
-									<td>Rooms</td>
-									<td>Adults</td>
-									<td>Children</td>
-									<td>Phone Number</td>
-									<td>EmailAddress</td>
-									<td>NIC</td>
-									<td>Nationality</td>
-								</tr>
-							</thead>
-							<tbody class="bg-light">
-								@foreach (var item in OnlineBookings)
-								{
-									<tr style="background-color: #DAD7CD">
-										<th>@(item.FirstName + " " + @item.LastName)</th>
-										<th>@item.CheckInDate</th>
-										<th>@item.CheckOutDate</th>
-										<th>@item.NoOfRooms</th>
-										<th>@item.NoOfAdults</th>
-										<th>@item.NoOfChildren</th>
+            <!-- Online Booking Table -->
+            <div class="mb-5">
+                <h5>Online Booking List</h5>
+                @if (OnlineBookings == null)
+                {
+                    <div class="d-flex justify-content-center"><Searching /></div>
+                }
+                else
+                {
+                    <div class="table-responsive rounded shadow-sm">
+                        <table class="table-hover table">
+                            <thead class="table-light text-center">
+                                <tr style="background-color: #A3B18A; font-weight:bold;">
+                                    <th>Name</th>
+                                    <th>Check-In Date</th>
+                                    <th>Check-Out Date</th>
+                                    <th>Rooms</th>
+                                    <th>Adults</th>
+                                    <th>Children</th>
+                                    <th>Phone Number</th>
+                                    <th>Email Address</th>
+                                    <th>NIC</th>
+                                    <th>Nationality</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in OnlineBookings)
+                                {
+                                    <tr class="table-light text-center" style="background-color: #DAD7CD;">
+                                        <td>@($"{item.FirstName} {item.LastName}")</td>
+                                        <td>@item.CheckInDate</td>
+                                        <td>@item.CheckOutDate</td>
+                                        <td>@item.NoOfRooms</td>
+                                        <td>@item.NoOfAdults</td>
+                                        <td>@item.NoOfChildren</td>
+                                        <td>@item.PhoneNumber</td>
+                                        <td>@item.EmailAddress</td>
+                                        <td>@item.NIC</td>
+                                        <td>@item.Nationality</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
 
-										<th>@item.PhoneNumber</th>
+            <!-- Agent Booking Table -->
+            <div class="mb-5">
+                <h5>Agent Booking List</h5>
+                @if (Agents == null)
+                {
+                    <div class="d-flex justify-content-center"><Searching /></div>
+                }
+                else
+                {
+                    <div class="table-responsive rounded shadow-sm">
+                        <table class="table-hover table">
+                            <thead class="table-light text-center">
+                                <tr style="background-color: #A3B18A; font-weight:bold;">
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>Email Address</th>
+                                    <th>NIC</th>
+                                    <th>Credit Limit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Agents)
+                                {
+                                    <tr class="table-light text-center" style="background-color: #DAD7CD;">
+                                        <td>@item.AgentName</td>
+                                        <td>@item.Mobile</td>
+                                        <td>@item.AgentAddress</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.NIC</td>
+                                        <td>@item.CreditLimit</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
 
-										<th>@item.EmailAddress</th>
-										<th>@item.NIC</th>
-										<th>@item.Nationality</th>
+        </div>
 
-
-
-									</tr>
-								}
-							</tbody>
-
-						</table>
-					}
-
-				</div>
-				@* AgentBooking *@
-				<div style="">
-					<div>
-						<label>Agent Booking List</label>
-					</div>
-					@if (Agents == null)
-					{
-						<div class="flex">
-							<Searching />
-						</div>
-					}
-					else
-					{
-						<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-							<thead class="bg-light">
-								<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-									<td>Name</td>
-									<td>Phone Number</td>
-									<td>Address</td>
-									<td>EmailAddress</td>
-									<td>NIC</td>
-									<td>CreditLimit</td>
-								</tr>
-							</thead>
-							<tbody class="bg-light">
-								@foreach (var item in Agents)
-								{
-									<tr style="background-color: #DAD7CD">
-										<th>@(item.AgentName)</th>
-
-										<th>@item.Mobile</th>
-										<th>@item.AgentAddress</th>
-										<th>@item.Email</th>
-										<th>@item.NIC</th>
-										<th>@item.CreditLimit</th>
-									</tr>
-								}
-							</tbody>
-
-						</table>
-					}
-
-				</div>
-			</div>
-
-
-
-		</div>
-	</div>
-
+    </div>
 </div>
+
 
 <style>
 	label {

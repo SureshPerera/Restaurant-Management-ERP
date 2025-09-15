@@ -6,291 +6,270 @@
 @inject IJSRuntime JS
 
 <div style="flex-wrap:wrap;">
-	<div>
-		<h3 class="mb-3 text-center">Check In - Out Management</h3>
+	<div class="container my-4">
+		<h3 class="mb-4 text-center">Check In - Out Management</h3>
+
+		<div class="card p-3 shadow-sm" style="background-color: cornsilk;">
+			<div class="row g-3 align-items-center">
+
+				<!-- Search -->
+				<div class="col-md-4">
+					<div class="input-group">
+						<input type="text" id="search" class="form-control" placeholder="Search..." />
+						<button class="btn btn-primary" type="button">Go</button>
+					</div>
+				</div>
+
+				<!-- Date Range -->
+				<div class="col-md-4 d-flex gap-2">
+					<div class="d-flex flex-column">
+						<label for="fromDate" class="form-label mb-1">From:</label>
+						<input type="date" id="fromDate" class="form-control" />
+					</div>
+					<div class="d-flex flex-column">
+						<label for="toDate" class="form-label mb-1">To:</label>
+						<input type="date" id="toDate" class="form-control" />
+					</div>
+				</div>
+
+				<!-- Action Button -->
+				<div class="col-md-4 d-flex align-items-end">
+					<button class="btn btn-warning w-100">View All Reservations</button>
+				</div>
+
+			</div>
+		</div>
 	</div>
-	<div class="checkOutTop flex gap-5" style="backdrop-filter:blur(100%); background-color:cornsilk">
-		<div>
-			<div class="search">
-				<input id="search" placeholder="Search..." type="text">
-				<button type="submit">Go</button>
-			</div>
-		</div>
-		<div>
-			<div>
-				<label>From :</label>
-				<input type="date" name="name" value="" placeholder="From" />
-			</div>
-			<div>
-				<label>To :</label>
-				<input type="date" name="name" value="" placeholder="To" />
-			</div>
-		</div>
-		<div>
-			<div>
-				<input type="button" class="btn btn-warning mb-3 text-center" name="name" value="View all reservation" />
-			</div>
-		</div>
-	</div>
+
 	<br />
 	<div >
-		<section style="display:flex; flex-direction: column; gap:5rem;">
-			<div class="flex">
-				<div style="margin-left: 9rem">
+		<section class="container-fluid my-4">
+			<div class="row">
+				<div class="col-lg-10 mx-auto">
+
 					@if (directBookingModels == null)
 					{
-						<div class="flex" style="justify-content: center">
+						<div class="d-flex justify-content-center py-5">
 							<Searching />
 						</div>
 					}
 					else
 					{
-						<table class="table-hover table">
-							<thead class="bg-light">
-								<tr class="">
-									<td> <label>Id</label></td>
-									<td> <label>Name</label></td>
-									<td><label>Check-In</label></td>
-									<td><label>Check-Out</label></td>
-									<td><label>NIC</label></td>
-									<td><label>Conformation</label></td>
-									<td><label>Customer Type</label></td>									
-									<td><label>Actions</label></td>									
-								</tr>
-							</thead>
-							<tbody class="bg-light">
-								@foreach (var item in directBookingModels)
-								{
-									<tr>
-										<th>@item.Id</th>
-										<th>@(item.FirstName +  " "+ item.LastName)</th>
-										<th>@item.CheckInDate</th>
-										<th>@item.CheckOutDate</th>
-										<th>@item.NIC</th>
-										<th>@item.Conformation</th>
-										<th>@item.CustomerType</th>
-										<th style="white-space:nowrap">
-											<button class="btn btn-primary btn-sm" @onclick="() => ClickConformations(item.Id)">Conformation</button>
-										</th>
-									</tr>
-								}
-							</tbody>
-
-						</table>
+						<div class="card rounded-3 border-0 shadow-sm">
+							<div class="card-header bg-primary text-white">
+								<h5 class="mb-0">Direct Bookings</h5>
+							</div>
+							<div class="card-body p-0">
+								<div class="table-responsive">
+									<table class="table-hover mb-0 table align-middle">
+										<thead class="table-light">
+											<tr>
+												<th scope="col">Id</th>
+												<th scope="col">Name</th>
+												<th scope="col">Check-In</th>
+												<th scope="col">Check-Out</th>
+												<th scope="col">NIC</th>
+												<th scope="col">Confirmation</th>
+												<th scope="col">Customer Type</th>
+												<th scope="col" class="text-center">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in directBookingModels)
+											{
+												<tr>
+													<td>@item.Id</td>
+													<td>@($"{item.FirstName} {item.LastName}")</td>
+													<td>@item.CheckInDate.ToString("yyyy-MM-dd")</td>
+													<td>@item.CheckOutDate.ToString("yyyy-MM-dd")</td>
+													<td>@item.NIC</td>
+													<td>
+														@if (@Conformation)
+														{
+															<span class="badge bg-success">Confirmed</span>
+														}
+														else
+														{
+															<span class="badge bg-warning text-dark">Pending</span>
+														}
+													</td>
+													<td>@item.CustomerType</td>
+													<td class="text-center" style="white-space:nowrap;">
+														<button class="btn btn-sm btn-outline-primary"
+																@onclick="() => ClickConformations(item.Id)">
+															Confirm
+														</button>
+													</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					}
-
 				</div>
-
 			</div>
 		</section>
+
 		<br />
-		<section style="" id="invoice-section">
-			<div style="display:flex; flex-direction:column; gap: 0.5rem;">
-				<div style="padding:10px; background-color: azure; width:14rem;">
-					<label>Booking Status : </label>
-					<label></label>
+		<section id="invoice-section" class="container-fluid my-3">
+			<div class="row">
+				<!-- Left Sidebar: Booking actions -->
+				<div class="col-md-3 mb-3">
+					<div class="card shadow-sm">
+						<div class="card-body d-flex flex-column gap-2">
+							<div class="bg-light rounded p-2">
+								<strong>Booking Status:</strong> <span class="text-danger"></span>
+							</div>
+							<div class="bg-light rounded p-2">
+								<strong>Current Balance:</strong> <span class="text-success"></span>
+							</div>
+							<button class="btn btn-success w-100">Confirm</button>
+							<button class="btn btn-primary w-100">Advance Payment</button>
+							<button class="btn btn-warning w-100">Amend Booking</button>
+							<button class="btn btn-info w-100">GRC Print</button>
+							<button class="btn btn-info w-100">RCV Print</button>
+							<button class="btn btn-danger w-100">Cancellation</button>
+							<button class="btn btn-dark w-100">Check-In</button>
+						</div>
+					</div>
 				</div>
-				<div style="padding:10px; background-color: azure; width:14rem;">
-					<label>Current Balance : </label>
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="Conform" />
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="Advance Payment" />
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="Amend Booking" />
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="GRC Print" />
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="RCV Print" />
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="Cancellation" />
-				</div>
-				<div>
-					<input type="button" class="btn btn-success" name="name" value="Check-In" />
-				</div>
-			</div>
-			<div class="justify-content-end flex">
-				<div class="" style="width: 80% ; margin:10px; background-color: antiquewhite;
-				margin-top: -26rem; border-radius: 2rem 1rem">
-					<div style="flex-wrap: wrap; background-color:cornsilk">
-						<section>
-							<div class="checkInOutContainer justify-content-between flex" style="padding: 20px">
-								@* logo *@
-								<div class="" style="  border-radius: 5rem;">
-									<img src="/imgs/maindashboard/logo.png" width="200" height="200" /><br />
-									<label style="font-size: 18px;">Master Room Bill : 10 </label>
-								</div>
-								<div style="background-color: azure; margin: 5px; padding: 2rem;border-radius: 1rem 2rem;">
 
-									<label>Solitory Green Rosort</label>
-									<br />
-									<label>Oddington Estate,</label>
-									<br />
-									<label>Lindula,</label>
-									<br />
-									<label>Nuwara Eliya, Sri Lanka.</label>
-									<br />
-									<label>0761733573</label>
-									<br />
-									<label>sgncabins6@gmail.com</label>
-								</div>
-							</div>
-						</section>
-						<section style="background-color: azure; margin: 5px; padding: 2px; margin-top: -1.5rem;">
-							<div class="flex flex-wrap">
-								<div style="width:50%; position:inherit; display:flex; flex-direction:column; gap: 0.5rem;" class="input-container">
-									<label style="background-color: aquamarine ; font-size: 18px;">Profoma Invoice</label>
-									<div class="justify-content-between flex">
-										<label>Reserve Num :</label>
-										<input readonly id="inputs"  type="text" @bind="@Id" name="reserveNum"  style="" />
-										<label>Status :</label>
-										<input readonly id="inputs" @bind="DirectBookinDTO.NIC" type="text" name="status" />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Check In Type :</label>
-										<input readonly id="inputs" type="text" name="checkType"  style="width: 8rem;" /> <br />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Customer Type :</label>
-										<input readonly id="inputs" type="text" @bind="DirectBookinDTO.CustomerType" name="customerType" style="width: 8rem;" /> <br />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Accomadation Type :</label>
-										<input readonly id="inputs" type="text"  name="accomadationType" style="" />
-									</div>
+				<!-- Main Invoice Content -->
+				<div class="col-md-9">
+					<div class="card rounded-3 border-0 shadow-lg">
+						<div class="card-body bg-light">
 
-									<div class="justify-content-between flex">
-										<label>Voucher No :</label>
-										<input readonly id="inputs"  type="text" name="VoucherNo"  style="margin-left: 1rem;" />
-										<label>Tour No :</label>
-										<input readonly id="inputs" type="text" name="tourNo"  style="" />
-									</div>
+							<!-- Header -->
+							<div class="d-flex justify-content-between align-items-center mb-4">
+								<div class="text-md-start text-center">
+									<img src="/imgs/maindashboard/logo.png" width="150" class="mb-2" />
+									<h6 class="fw-bold">Master Room Bill : <span class="text-primary">10</span></h6>
 								</div>
-								<div style="display:flex; flex-direction:column;">
-									<label style="background-color: aquamarine; font-size: 18px;">-</label>
-									<div class="justify-content-between flex">
-										<label>Customer Name : </label> <label class="lables">@name </label><br />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Customer Address : </label> <label class="lables">@address</label><br />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Customer Phone : </label> <label class="lables">@phone</label><br />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Customer Email : </label> <label class="lables">@email</label><br />
-									</div>
-									<div class="justify-content-between flex">
-										<label>Aget Name : </label> <label style="margin-right: 10rem;" class="lables">@agentName</label>
-									</div>
-									<div style="display: flex; flex-direction: row; gap: 5rem">
-										<label>Adults : </label> <label class="lables"> @adults</label>
-										<label>Kids : </label> <label class="lables">@kids</label>
-									</div>
-									<div style="display: flex; flex-direction: row; gap: 4rem">
-										<label>USD Exch :</label>
-										<input readonly style="height: 1.5rem; width: 3rem; border:2px solid black" type="text" name="usdExg" value="" />
-										<label style="display: flex; flex-wrap:wrap;">Room rate per day :</label>
-										<input readonly style="height: 1.5rem; width: 3rem; border:2px solid black" type="text" name="usdExg" value="" />
-									</div>
+								<div class="rounded bg-white p-3 text-end shadow-sm">
+									<h5 class="fw-bold mb-1">Solitory Green Resort</h5>
+									<small>Oddington Estate, Lindula,<br />Nuwara Eliya, Sri Lanka.</small><br />
+									<small>📞 0761733573</small><br />
+									<small>✉️ sgncabins6@gmail.com</small>
 								</div>
-							</div>
-						</section>
-						<section style="background-color: azure; margin: 5px; padding: 2px;">
-							<div style="display:flex; flex-direction:column;gap:0.5rem;">
-								<label style="background-color: aquamarine; font-size: 18px;">Total Stay (USD) </label>
-								<div class="justify-content-between flex flex-wrap">
-									<div>
-										<label>From</label><br />
-										<label class="lables"> @from</label>
-									</div>
-									<div>
-										<label>To</label><br />
-										<label class="lables">@to</label>
-									</div>
-									<div>
-										<label>Basis</label><br />
-										<label class="lables">@basis</label>
-									</div>
-									<div>
-										<label>Adults Stay</label><br />
-										<label class="lables">@adults</label>
-									</div>
-									<div>
-										<label>Kid Stay</label><br />
-										<label class="lables">@kids</label>
-									</div>
-									<div>
-										<label>Total</label><br />
-										<label class="lables">@total</label>
-									</div>
-								</div>
-							</div>
-						</section>
-						<section style="background-color: azure; margin: 5px; padding: 2px;">
-							<label style="background-color: aquamarine; width:100%; font-size: 18px;">-</label>
-							<div>
-
-								<div class="justify-content-center flex gap-2">
-									<div>
-										<label>Check_In Date : </label> <input readonly type="date" name="checkIndate" value="" /><br /><br />
-										<label>Arrival Time : </label>	<input type="time" name="arivalTime" value="" />
-									</div>
-									<div>
-										<label>Check_Out Date : </label> <input readonly type="date" name="checkOutdate" value="" /><br /><br />
-										<label>Depature Time : </label>	<input type="time" name="depatureTime" value="" />
-									</div>
-								</div>
-							</div>
-						</section>
-						<section style="background-color: azure; margin: 5px; padding: 2px;">
-							<div class="" style="display:flex; flex-direction:column;gap:0.5rem;">
-								<label style="background-color: aquamarine; width:100%; font-size: 18px;">Discription</label>
-								<div class="justify-content-between flex">
-									<label>+ Adults Stay Total(LKR)</label>
-									<label>500</label>
-								</div>
-								<div class="justify-content-between flex">
-									<label>+ Kids Stay Total(LKR)</label>
-									<label>400</label>
-								</div>
-								<div class="justify-content-between flex">
-									<label>Grand Total (LKR) in c. tax</label>
-									<label>500</label>
-								</div>
-								<div class="justify-content-between flex">
-									<label>- Total Advance Payoment</label>
-									<label>100</label>
-								</div>
-								<div class="justify-content-between flex">
-									<label>Total Balance (LKR)</label>
-									<label>1000</label>
-								</div>
-								<div class="justify-content-between flex">
-									<label>Total Balance (USD)</label>
-									<label>10</label>
-								</div>
-
-							</div>
-						</section>
-						<section>
-							<div class="" style="justify-items:center">
-								<div><label>Remark</label></div>
-								<div><label>Trans part a Management</label></div>
-								<div><label>Powerd by SP SOFT PVT</label></div>
 							</div>
 
-						</section>
+							<!-- Invoice Info -->
+							<h5 class="fw-bold text-secondary mb-3">Proforma Invoice</h5>
+							<div class="row g-3 mb-4">
+								<div class="col-md-6">
+									<label class="form-label">Reserve No:</label>
+									<input readonly class="form-control form-control-sm" @bind="@Id" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Status:</label>
+									<input readonly class="form-control form-control-sm" @bind="DirectBookinDTO.NIC" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Customer Type:</label>
+									<input readonly class="form-control form-control-sm" @bind="DirectBookinDTO.CustomerType" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Accommodation Type:</label>
+									<input readonly class="form-control form-control-sm" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Voucher No:</label>
+									<input readonly class="form-control form-control-sm" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Tour No:</label>
+									<input readonly class="form-control form-control-sm" />
+								</div>
+							</div>
+
+							<!-- Customer Info -->
+							<h5 class="fw-bold text-secondary mb-3">Customer Information</h5>
+							<div class="row mb-4">
+								<div class="col-md-6">
+									<p><strong>Name:</strong> @name</p>
+									<p><strong>Address:</strong> @address</p>
+									<p><strong>Phone:</strong> @phone</p>
+									<p><strong>Email:</strong> @email</p>
+								</div>
+								<div class="col-md-6">
+									<p><strong>Agent:</strong> @agentName</p>
+									<p><strong>Adults:</strong> @adults | <strong>Kids:</strong> @kids</p>
+									<p><strong>USD Exch:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" /></p>
+									<p><strong>Room rate/day:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" /></p>
+								</div>
+							</div>
+
+							<!-- Stay Summary -->
+							<h5 class="fw-bold text-secondary mb-3">Total Stay (USD)</h5>
+							<div class="table-responsive mb-4">
+								<table class="table-bordered table-sm table text-center">
+									<thead class="table-light">
+										<tr>
+											<th>From</th>
+											<th>To</th>
+											<th>Basis</th>
+											<th>Adults Stay</th>
+											<th>Kids Stay</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>@from</td>
+											<td>@to</td>
+											<td>@basis</td>
+											<td>@adults</td>
+											<td>@kids</td>
+											<td>@total</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<!-- Check In/Out -->
+							<h5 class="fw-bold text-secondary mb-3">Check-In / Check-Out</h5>
+							<div class="row mb-4">
+								<div class="col-md-6">
+									<label class="form-label">Check-In Date:</label>
+									<input readonly type="date" class="form-control form-control-sm mb-2" />
+									<label class="form-label">Arrival Time:</label>
+									<input type="time" class="form-control form-control-sm" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">Check-Out Date:</label>
+									<input readonly type="date" class="form-control form-control-sm mb-2" />
+									<label class="form-label">Departure Time:</label>
+									<input type="time" class="form-control form-control-sm" />
+								</div>
+							</div>
+
+							<!-- Price Breakdown -->
+							<h5 class="fw-bold text-secondary mb-3">Price Breakdown</h5>
+							<table class="table-sm table">
+								<tbody>
+									<tr><td>+ Adults Stay Total (LKR)</td><td class="text-end">500</td></tr>
+									<tr><td>+ Kids Stay Total (LKR)</td><td class="text-end">400</td></tr>
+									<tr><td>Grand Total (LKR incl. tax)</td><td class="text-end">500</td></tr>
+									<tr><td>- Total Advance Payment</td><td class="text-end">100</td></tr>
+									<tr class="table-active fw-bold"><td>Total Balance (LKR)</td><td class="text-end">1000</td></tr>
+									<tr class="table-active fw-bold"><td>Total Balance (USD)</td><td class="text-end">10</td></tr>
+								</tbody>
+							</table>
+
+							<!-- Footer -->
+							<div class="border-top mt-4 pt-3 text-center">
+								<p><strong>Remark:</strong> Transparent Management</p>
+								<p class="text-muted small">Powered by SP SOFT PVT</p>
+							</div>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</section>
+
 
 
 	</div>
@@ -377,6 +356,7 @@
 	public double totalAdvancePayment;
 	public double totalBalanceLKR;
 	public double totalBalanceUSD;
+	public bool Conformation { get; set; }
 
 
 

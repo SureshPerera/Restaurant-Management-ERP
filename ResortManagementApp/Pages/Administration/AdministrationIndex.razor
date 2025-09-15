@@ -2,42 +2,42 @@
 @layout MainLayout
 
 
-<div>
-	<h3 class="mb-3 text-center">Administration</h3>
-</div>
-<div>
-	<section>
-		<div>
-			<div style="display:flex; flex-direction: column; gap: 1.5rem;">
-				<div>
-					<a href="/Administration/ManageRooms" class="btn btn-primary mb-3">Manage Rooms</a>
-				</div>
-				<div>
-					<a href="/Administration/ManagePackages" class="btn btn-primary mb-3">Manage Packages</a>
-				</div>
-				<div>
-					<a href="/Administration/ManageAgents" class="btn btn-primary mb-3">Manage Agent</a>
-				</div>
-				<div>
-					<a href="/Administration/ManageExRates" class="btn btn-primary mb-3">Manage Ex.Rates</a>
-				</div>
-				<div>
-					<a href="/Administration/ManageExtra" class="btn btn-primary mb-3">Manage Extra</a>
-				</div>
-				<div>
-					<a href="/Administration/ReportAnalysis" class="btn btn-primary mb-3">Report & Analysis</a>
-				</div>
-			</div>
-			
-			<div>
-				<div>
+<div class="container my-5">
 
-				</div>
-			</div>
-		</div>
-		
-	</section>
+    <!-- Header -->
+    <h3 class="mb-4 text-center">Administration</h3>
+
+    <section class="d-flex justify-content-center flex-wrap gap-4">
+
+        <!-- Administration Cards / Buttons -->
+        <a href="/Administration/ManageRooms" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
+            Manage Rooms
+        </a>
+
+        <a href="/Administration/ManagePackages" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
+            Manage Packages
+        </a>
+
+        <a href="/Administration/ManageAgents" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
+            Manage Agents
+        </a>
+
+        <a href="/Administration/ManageExRates" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
+            Manage Ex.Rates
+        </a>
+
+        <a href="/Administration/ManageExtra" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
+            Manage Extra
+        </a>
+
+        <a href="/Administration/ReportAnalysis" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
+            Report & Analysis
+        </a>
+
+    </section>
+
 </div>
+
 @code {
 
 }

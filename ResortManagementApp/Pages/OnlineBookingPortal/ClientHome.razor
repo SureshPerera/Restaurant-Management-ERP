@@ -185,63 +185,57 @@
 
 	</section>
 
-	<section>
-		<div>
-			<MudPaper Class="pa-4 bg-container-allSection" style="background-color:#A3B18A">
-				<MudStack Spacing="2">
-					<MudButton OnClick="OnExpandCollapseClick">@(_expanded ? "Collapse" : " SERVICES & FACILITIES")</MudButton>
-					<MudDivider />
-					<MudCollapse Expanded="_expanded">
-						<div style="display:flex; gap:2rem;	justify-content:center; font-family:'Lucida Sans Typewriter'">
-							<div style="display:grid; width:9rem; background-color: #C5E1A5; text-align:center; border-radius:2rem;">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/marketeq--wifi.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">WiFi</label>
-								<label>Available throughout hotel.</label>
+	<section class="services-section" style="padding:2rem; ">
+		<MudPaper Class="pa-4">
+			<MudStack Spacing="2">
+				<MudButton OnClick="OnExpandCollapseClick" Color="Color.Primary">
+					@(_expanded ? "Collapse" : "SERVICES & FACILITIES")
+				</MudButton>
+				<MudDivider />
+				<MudCollapse Expanded="_expanded">
+					<div class="services-grid"
+						 style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+                            gap:2rem; justify-items:center; align-items:start; font-family:'Lucida Sans Typewriter';">
+						@foreach (var service in new (string Img, string Title, string Desc)[] {
+												("/imgs/clientpotal/clienthomeimg/marketeq--wifi.png", "WiFi", "Available throughout hotel."),
+												("/imgs/clientpotal/clienthomeimg/equptment.png","Equipment","Bicycles & snorkelling gear for guests’ use."),
+												("/imgs/clientpotal/clienthomeimg/sweming.png","Swimming Pools","Two gorgeous pools with views."),
+												("/imgs/clientpotal/clienthomeimg/parking.png","Secure Parking","Available outside."),
+												("/imgs/clientpotal/clienthomeimg/spa.png","La Parenthèse","Spa."),
+												("/imgs/clientpotal/clienthomeimg/laudary.png","Laundry Services","Available on request."),
+												("/imgs/clientpotal/clienthomeimg/houseKeping.png","Housekeeping","Offered daily."),
+												("/imgs/clientpotal/clienthomeimg/Lounging.png","Lounging","Sunbeds, hammocks and loungers.")
+												})
+						{
+							<div class="service-card" style="background-color:@(service.Title.GetHashCode() % 2 == 0 ? "#C5E1A5" : "antiquewhite");
+	                                                         width:150px; border-radius:1.5rem; padding:1rem; text-align:center;
+	                                                         box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s;">
+								<img src="@service.Img" alt="@service.Title" style="width:50px; height:50px; margin-bottom:0.5rem;" />
+								<div style="font-size:16px; font-weight:bold; margin-bottom:0.25rem;">@service.Title</div>
+								<div style="font-size:14px; color:#333;">@service.Desc</div>
 							</div>
-							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/equptment.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">Equipment</label>
-								<label>Bicycles & snorkelling gear for guests’ use.</label>
-							</div>
-							<div style="display:grid; width:9rem; background-color: #C5E1A5;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/sweming.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">Swimming pools</label>
-								<label>Two gorgeous pools with views.</label>
-							</div>
-							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/parking.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">Secure Parking</label>
-								<label>Available outside.</label>
-							</div>
-							<div style="display:grid; width:9rem; background-color: #C5E1A5;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/spa.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">La Parenthèse</label>
-								<label>Spa.</label>
-							</div>
-							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/laudary.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">Laundry services</label>
-								<label>Available on request.</label>
-							</div>
-							<div style="display:grid; width:9rem; background-color: #C5E1A5;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/houseKeping.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">Housekeeping</label>
-								<label>Offered daily.</label>
-							</div>
-							<div style="display:grid; width:9rem; background-color:antiquewhite;border-radius:2rem; text-align:center">
-								<img style="width:50px; height:50px; justify-self:center" src="/imgs/clientpotal/clienthomeimg/Lounging.png" alt="Alternate Text" />
-								<label style="font-size:18px; font-weight:bold;">Lounging</label>
-								<label>Sunbeds, hammocks and loungers.</label>
-							</div>
-
-						</div>
-					</MudCollapse>
-				</MudStack>
-			</MudPaper>
-
-
-		</div>
+						}
+					</div>
+				</MudCollapse>
+			</MudStack>
+		</MudPaper>
 	</section>
+
+	<style>
+		.service-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+		}
+
+		
+
+		.service-card {
+			width: 100%;
+		}
+
+		
+	</style>
+
 
 
 	<section style="margin:0; padding:0; ">
