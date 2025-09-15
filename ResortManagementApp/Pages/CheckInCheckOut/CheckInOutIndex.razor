@@ -387,7 +387,7 @@
 		{
 			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
 			Console.WriteLine("Pass");
-
+			StateHasChanged();
 		}
 		catch (Exception ex)
 		{

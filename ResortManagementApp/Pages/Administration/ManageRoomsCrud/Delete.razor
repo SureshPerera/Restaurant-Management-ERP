@@ -35,7 +35,7 @@
 		{
 			// Fetch the customer's info by ID
 			RoomsDtos = await http.GetFromJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{Id}");
-
+			StateHasChanged();
 		}
 		catch (Exception ex)
 		{
@@ -51,6 +51,7 @@
 				var responce = await http.DeleteFromJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{Id}");
 
 				navManager.NavigateTo("/Administration/ManageRooms");
+				StateHasChanged();
 			}
 			catch (Exception ex)
 			{

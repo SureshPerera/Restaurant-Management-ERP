@@ -110,7 +110,8 @@
 			ExchangeRatesDto.BuyingRate = ExchangeRates?.BuyingRate?? 0;
 			ExchangeRatesDto.CurrencyName = ExchangeRates?.CurrencyName?? "";
 			ExchangeRatesDto.SellingRate = ExchangeRates?.SellingRate?? 0;
-			
+			StateHasChanged();
+
 
 			Console.WriteLine("Succusfull Loading...");
 		}
@@ -129,6 +130,8 @@
 			if (response.IsSuccessStatusCode)
 			{
 				navManager.NavigateTo("/Administration/ManageExRates");
+				StateHasChanged();
+
 			}
 			else
 			{

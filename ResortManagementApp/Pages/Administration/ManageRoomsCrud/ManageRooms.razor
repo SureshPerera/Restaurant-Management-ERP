@@ -67,6 +67,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		Roomss = await Http.GetFromJsonAsync<List<Rooms>>("https://localhost:4000/api/Rooms");
+		StateHasChanged();
 	}
 
 

@@ -71,6 +71,8 @@
 	protected async override Task OnInitializedAsync()
 	{
 		AgentDtos = await Http.GetFromJsonAsync<List<AgentModelDto>>("https://localhost:4000/api/Agent");
+		StateHasChanged();
+
 	}
 
 }

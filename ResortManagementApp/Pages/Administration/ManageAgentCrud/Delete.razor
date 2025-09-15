@@ -33,7 +33,7 @@
                             <button class="btn btn-danger fw-bold" @onclick="DeletePackages">
                                 Delete
                             </button>
-                            <a class="btn btn-secondary fw-bold" href="/Administration/ManageAgents">
+                            <a class="btn btn-secondary fw-bold" href="/Reservations/AgentBooking">
                                 Cancel
                             </a>
                         </div>
@@ -61,6 +61,7 @@
 				var responce = await http.DeleteFromJsonAsync<AgentModelDto>($"https://localhost:4000/api/Agent/{Id}");
 
 				navManager.NavigateTo("/Administration/ManageAgents");
+                StateHasChanged();
 			}
 			catch (Exception ex)
 			{

@@ -64,6 +64,8 @@
 	protected async override Task OnInitializedAsync()
 	{
 		ExchangeRatesDtoss = await Http.GetFromJsonAsync<List<ExchangeRatesDto>>("https://localhost:4000/api/ExtraModel");
+		StateHasChanged();
+
 	}
 	
 

@@ -158,6 +158,8 @@
 			directBookingDTO.Remark = directBookingModel?.Remark ?? "";
 			directBookingDTO.EmailAddress = directBookingModel?.EmailAddress ?? "";
 			Console.WriteLine("Succusfull");
+            StateHasChanged();
+
 
 		}catch(Exception ex)
 		{
@@ -166,14 +168,17 @@
 	} 
 	protected async Task UpdateCustomer()
 	{
-		var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/DirectBooking/{Id}", directBookingDTO);
-		if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
-
-		var strResponce = await responce.Content.ReadAsStringAsync();
+		
 		try
 		{
+            var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/DirectBooking/{Id}", directBookingDTO);
+            if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
+
+            var strResponce = await responce.Content.ReadAsStringAsync();
 			var jsonResponce = JsonNode.Parse(strResponce);
 			Errors = jsonResponce?["errors"] ?? new JsonObject();
+            StateHasChanged();
+
 		}
 		catch (Exception ex)
 		{

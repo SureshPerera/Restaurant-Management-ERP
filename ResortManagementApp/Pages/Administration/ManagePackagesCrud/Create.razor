@@ -9,144 +9,144 @@
 
 @layout MainLayout
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Card -->
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-center text-white">
-                    <h3>Add New Package</h3>
-                </div>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<!-- Card -->
+			<div class="card shadow-lg">
+				<div class="card-header bg-primary text-center text-white">
+					<h3>Add New Package</h3>
+				</div>
 
-                <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
-                    @if (PackagesDto == null)
-                    {
-                        <p><Searching /></p>
-                    }
-                    else
-                    {
-                        <form class="row g-3">
-                            <!-- Left Column -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Package Name</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.PackageName" />
-                                    <span class="text-danger">@Errors["PackageName"]?[0]</span>
-                                </div>
+				<div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+					@if (PackagesDto == null)
+					{
+						<p><Searching /></p>
+					}
+					else
+					{
+						<form class="row g-3">
+							<!-- Left Column -->
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label">Package Name</label>
+									<input class="form-control" type="text" @bind="PackagesDto.PackageName" />
+									<span class="text-danger">@Errors["PackageName"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Package Details</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.PackageDetails" />
-                                    <span class="text-danger">@Errors["PackageDetails"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Package Details</label>
+									<input class="form-control" type="text" @bind="PackagesDto.PackageDetails" />
+									<span class="text-danger">@Errors["PackageDetails"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Room Type</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.RoomType" />
-                                    <span class="text-danger">@Errors["RoomType"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Room Type</label>
+									<input class="form-control" type="text" @bind="PackagesDto.RoomType" />
+									<span class="text-danger">@Errors["RoomType"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Accomadation Type</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.AccomadationType" />
-                                    <span class="text-danger">@Errors["AccomadationType"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Accomadation Type</label>
+									<input class="form-control" type="text" @bind="PackagesDto.AccomadationType" />
+									<span class="text-danger">@Errors["AccomadationType"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Basis</label>
-                                    <select class="form-control" @bind="PackagesDto.Basis">
-                                        <option>--Select--</option>
-                                        @foreach (var item in BasisList)
-                                        {
-                                            <option>@item</option>
-                                        }
-                                    </select>
-                                    <span class="text-danger">@Errors["Basis"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Basis</label>
+									<select class="form-control" @bind="PackagesDto.Basis">
+										<option>--Select--</option>
+										@foreach (var item in BasisList)
+										{
+											<option>@item</option>
+										}
+									</select>
+									<span class="text-danger">@Errors["Basis"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Room Rate (Spring)</label>
-                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateSpring" />
-                                    <span class="text-danger">@Errors["RoomRateSpring"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Room Rate (Spring)</label>
+									<input class="form-control" type="number" @bind="PackagesDto.RoomRateSpring" />
+									<span class="text-danger">@Errors["RoomRateSpring"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Room Rate (Summer)</label>
-                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateSummer" />
-                                    <span class="text-danger">@Errors["RoomRateSummer"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Room Rate (Summer)</label>
+									<input class="form-control" type="number" @bind="PackagesDto.RoomRateSummer" />
+									<span class="text-danger">@Errors["RoomRateSummer"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Room Rate (Autumn)</label>
-                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateAutumn" />
-                                    <span class="text-danger">@Errors["RoomRateAutumn"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Room Rate (Autumn)</label>
+									<input class="form-control" type="number" @bind="PackagesDto.RoomRateAutumn" />
+									<span class="text-danger">@Errors["RoomRateAutumn"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Room Rate (Winter)</label>
-                                    <input class="form-control" type="number" @bind="PackagesDto.RoomRateWinter" />
-                                    <span class="text-danger">@Errors["RoomRateWinter"]?[0]</span>
-                                </div>
-                            </div>
+								<div class="mb-3">
+									<label class="form-label">Room Rate (Winter)</label>
+									<input class="form-control" type="number" @bind="PackagesDto.RoomRateWinter" />
+									<span class="text-danger">@Errors["RoomRateWinter"]?[0]</span>
+								</div>
+							</div>
 
-                            <!-- Right Column -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Entitle Meal 1</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal1" />
-                                    <span class="text-danger">@Errors["Entitlemeal1"]?[0]</span>
-                                </div>
+							<!-- Right Column -->
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label">Entitle Meal 1</label>
+									<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal1" />
+									<span class="text-danger">@Errors["Entitlemeal1"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Entitle Meal 2</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal2" />
-                                    <span class="text-danger">@Errors["Entitlemeal2"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Entitle Meal 2</label>
+									<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal2" />
+									<span class="text-danger">@Errors["Entitlemeal2"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Entitle Meal 3</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal3" />
-                                    <span class="text-danger">@Errors["Entitlemeal3"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Entitle Meal 3</label>
+									<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal3" />
+									<span class="text-danger">@Errors["Entitlemeal3"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Entitle Meal 4</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.Entitlemeal4" />
-                                    <span class="text-danger">@Errors["Entitlemeal4"]?[0]</span>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Entitle Meal 4</label>
+									<input class="form-control" type="text" @bind="PackagesDto.Entitlemeal4" />
+									<span class="text-danger">@Errors["Entitlemeal4"]?[0]</span>
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Special Package 1</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage1" />
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Special Package 1</label>
+									<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage1" />
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Special Package 2</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage2" />
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Special Package 2</label>
+									<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage2" />
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Special Package 3</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage3" />
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Special Package 3</label>
+									<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage3" />
+								</div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Special Package 4</label>
-                                    <input class="form-control" type="text" @bind="PackagesDto.SpecialPackage4" />
-                                </div>
-                            </div>
+								<div class="mb-3">
+									<label class="form-label">Special Package 4</label>
+									<input class="form-control" type="text" @bind="PackagesDto.SpecialPackage4" />
+								</div>
+							</div>
 
-                            <!-- Buttons -->
-                            <div class="col-12 d-flex justify-content-center mt-4 gap-3">
-                                <button class="btn btn-success fw-bold" type="button" @onclick="CreatePackage">Add</button>
-                                <button class="btn btn-warning fw-bold" type="reset">Clear</button>
-                                <a class="btn btn-primary fw-bold" href="/Administration/ManagePackages">Back</a>
-                            </div>
-                        </form>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+							<!-- Buttons -->
+							<div class="col-12 d-flex justify-content-center mt-4 gap-3">
+								<button class="btn btn-success fw-bold" type="button" @onclick="CreatePackage">Add</button>
+								<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+								<a class="btn btn-primary fw-bold" href="/Administration/ManagePackages">Back</a>
+							</div>
+						</form>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -172,23 +172,25 @@
 @code {
 	public JsonNode Errors { get; set; } = new JsonObject();
 	public Packages? Packages { get; set; }
-	public PackagesDto PackagesDto{ get; set; } = new();
+	public PackagesDto PackagesDto { get; set; } = new();
 	public List<string> BasisList = new List<string>
 	{
 		"Room Only","B & B", "Half Board", "Full Board"
 	};
 	private async Task CreatePackage(MouseEventArgs args)
 	{
-		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Package", PackagesDto);
-		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManagePackages"); }
-
-		var strResponce = await response.Content.ReadAsStringAsync();
-		Console.WriteLine("Json Response :" + strResponce);
 
 		try
 		{
+			var response = await http.PostAsJsonAsync("https://localhost:4000/api/Package", PackagesDto);
+			if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManagePackages"); }
+
+			var strResponce = await response.Content.ReadAsStringAsync();
+			Console.WriteLine("Json Response :" + strResponce);
 			var jsonResponce = JsonNode.Parse(strResponce);
 			Errors = jsonResponce?["errors"] ?? new JsonObject();
+			StateHasChanged();
+
 		}
 		catch (Exception ex)
 		{

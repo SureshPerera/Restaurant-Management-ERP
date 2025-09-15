@@ -156,8 +156,7 @@
 			AgentModelDto.WebSite = Agents?.WebSite ?? "";
 			AgentModelDto.NIC = Agents?.NIC ?? "";
 			AgentModelDto.VatRegNo = Agents?.VatRegNo ?? "";
-			
-
+            StateHasChanged();
 			Console.WriteLine("Succusfull Loading...");
 		}
 		catch (Exception ex)
@@ -175,6 +174,8 @@
 			if (response.IsSuccessStatusCode)
 			{
 				navManager.NavigateTo("/Administration/ManageAgents");
+                StateHasChanged();
+
 			}
 			else
 			{

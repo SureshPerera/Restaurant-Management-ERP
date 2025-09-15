@@ -58,6 +58,8 @@
 				var responce = await http.DeleteFromJsonAsync<PackagesDto>($"https://localhost:4000/api/ExtraModel/{Id}");
 
 				navManager.NavigateTo("/Administration/ManageExRates");
+				StateHasChanged();
+
 			}
 			catch (Exception ex)
 			{
@@ -76,6 +78,7 @@
 		{
 			// Fetch the customer's info by ID
 			ExchangeRatesDto = await http.GetFromJsonAsync<ExchangeRatesDto>($"https://localhost:4000/api/ExtraModel/{Id}");
+			StateHasChanged();
 
 		}
 		catch (Exception ex)

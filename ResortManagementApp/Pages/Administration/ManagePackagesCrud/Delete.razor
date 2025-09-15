@@ -51,6 +51,7 @@
 		{
 			// Fetch the customer's info by ID
 			PackagesDto = await http.GetFromJsonAsync<PackagesDto>($"https://localhost:4000/api/Package/{Id}");
+			StateHasChanged();
 
 		}
 		catch (Exception ex)
@@ -67,6 +68,8 @@
 				var responce = await http.DeleteFromJsonAsync<PackagesDto>($"https://localhost:4000/api/Package/{Id}");
 
 				navManager.NavigateTo("/Administration/ManagePackages");
+				StateHasChanged();
+
 			}
 			catch (Exception ex)
 			{

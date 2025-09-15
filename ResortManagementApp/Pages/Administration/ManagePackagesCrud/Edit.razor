@@ -235,6 +235,7 @@
 			PackagesDto.SpecialPackage2 = Packages?.SpecialPackage2 ?? "";
 			PackagesDto.SpecialPackage3 = Packages?.SpecialPackage3 ?? "";
 			PackagesDto.SpecialPackage4 = Packages?.SpecialPackage4 ?? "";
+            StateHasChanged();
 
 			Console.WriteLine("Succusfull Loading...");
 		}
@@ -253,6 +254,8 @@
 			if (response.IsSuccessStatusCode)
 			{
 				navManager.NavigateTo("/Administration/ManagePackages");
+                StateHasChanged();
+
 			}
 			else
 			{

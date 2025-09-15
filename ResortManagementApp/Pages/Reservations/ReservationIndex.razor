@@ -229,6 +229,7 @@
 			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
 			OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
 			Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
+			StateHasChanged();
 
 		}
 		catch (Exception ex)

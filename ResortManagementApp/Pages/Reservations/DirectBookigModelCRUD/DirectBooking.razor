@@ -73,5 +73,6 @@
 	protected override async Task OnInitializedAsync()
 	{
 		directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+		StateHasChanged();
 	}
 }

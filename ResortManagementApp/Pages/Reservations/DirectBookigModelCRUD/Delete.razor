@@ -54,7 +54,8 @@
 		{
 			// Fetch the customer's info by ID
 			 directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
-			
+			StateHasChanged();
+
 		}
 		catch (Exception ex)
 		{

@@ -5,96 +5,96 @@
 
 @layout MainLayout
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Card -->
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-center text-white">
-                    <h3>Register Agent</h3>
-                </div>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<!-- Card -->
+			<div class="card shadow-lg">
+				<div class="card-header bg-primary text-center text-white">
+					<h3>Register Agent</h3>
+				</div>
 
-                <div class="card-body" style="background-color: #A3B18A; font-weight: bold; font-size: 15px;">
+				<div class="card-body" style="background-color: #A3B18A; font-weight: bold; font-size: 15px;">
 
-                    <!-- Agent Name -->
-                    <div class="mb-3">
-                        <label class="form-label">Agent Name</label>
-                        <input class="form-control" @bind="Agent.AgentName" />
-                        <span class="text-danger">@Errors["AgentName"]?[0]</span>
-                    </div>
+					<!-- Agent Name -->
+					<div class="mb-3">
+						<label class="form-label">Agent Name</label>
+						<input class="form-control" @bind="Agent.AgentName" />
+						<span class="text-danger">@Errors["AgentName"]?[0]</span>
+					</div>
 
-                    <!-- Address -->
-                    <div class="mb-3">
-                        <label class="form-label">Address</label>
-                        <textarea class="form-control" @bind="Agent.AgentAddress"></textarea>
-                        <span class="text-danger">@Errors["AgentAddress"]?[0]</span>
-                    </div>
+					<!-- Address -->
+					<div class="mb-3">
+						<label class="form-label">Address</label>
+						<textarea class="form-control" @bind="Agent.AgentAddress"></textarea>
+						<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
+					</div>
 
-                    <!-- Contact Person -->
-                    <div class="mb-3">
-                        <label class="form-label">Contact Person</label>
-                        <input class="form-control" @bind="Agent.ContactPerson" />
-                        <span class="text-danger">@Errors["ContactPerson"]?[0]</span>
-                    </div>
+					<!-- Contact Person -->
+					<div class="mb-3">
+						<label class="form-label">Contact Person</label>
+						<input class="form-control" @bind="Agent.ContactPerson" />
+						<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
+					</div>
 
-                    <!-- Phone + Email -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Phone Number</label>
-                            <input type="number" class="form-control" @bind="Agent.Mobile" />
-                            <span class="text-danger">@Errors["Mobile"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" @bind="Agent.Email" />
-                            <span class="text-danger">@Errors["Email"]?[0]</span>
-                        </div>
-                    </div>
+					<!-- Phone + Email -->
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label class="form-label">Phone Number</label>
+							<input type="number" class="form-control" @bind="Agent.Mobile" />
+							<span class="text-danger">@Errors["Mobile"]?[0]</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">Email Address</label>
+							<input type="email" class="form-control" @bind="Agent.Email" />
+							<span class="text-danger">@Errors["Email"]?[0]</span>
+						</div>
+					</div>
 
-                    <!-- Fax + VAT Reg No -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Fax</label>
-                            <input type="number" class="form-control" @bind="Agent.Fax" />
-                            <span class="text-danger">@Errors["Fax"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">VAT Reg No</label>
-                            <input type="text" class="form-control" @bind="Agent.VatRegNo" />
-                            <span class="text-danger">@Errors["VatRegNo"]?[0]</span>
-                        </div>
-                    </div>
+					<!-- Fax + VAT Reg No -->
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label class="form-label">Fax</label>
+							<input type="number" class="form-control" @bind="Agent.Fax" />
+							<span class="text-danger">@Errors["Fax"]?[0]</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">VAT Reg No</label>
+							<input type="text" class="form-control" @bind="Agent.VatRegNo" />
+							<span class="text-danger">@Errors["VatRegNo"]?[0]</span>
+						</div>
+					</div>
 
-                    <!-- Website + NIC -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Website</label>
-                            <input type="text" class="form-control" @bind="Agent.WebSite" />
-                            <span class="text-danger">@Errors["WebSite"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">NIC Number</label>
-                            <input class="form-control" @bind="Agent.NIC" />
-                            <span class="text-danger">@Errors["NIC"]?[0]</span>
-                        </div>
-                    </div>
+					<!-- Website + NIC -->
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label class="form-label">Website</label>
+							<input type="text" class="form-control" @bind="Agent.WebSite" />
+							<span class="text-danger">@Errors["WebSite"]?[0]</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">NIC Number</label>
+							<input class="form-control" @bind="Agent.NIC" />
+							<span class="text-danger">@Errors["NIC"]?[0]</span>
+						</div>
+					</div>
 
-                    <!-- Credit Limit -->
-                    <div class="mb-3">
-                        <label class="form-label">Credit Limit</label>
-                        <input type="number" class="form-control" @bind="Agent.CreditLimit" />
-                    </div>
+					<!-- Credit Limit -->
+					<div class="mb-3">
+						<label class="form-label">Credit Limit</label>
+						<input type="number" class="form-control" @bind="Agent.CreditLimit" />
+					</div>
 
-                    <!-- Buttons -->
-                    <div class="d-grid d-md-flex justify-content-md-end gap-2">
-                        <button class="btn btn-success fw-bold" type="button" @onclick="SaveCustomer">Register Agent</button>
-                        <button class="btn btn-warning fw-bold" type="reset">Clear</button>
-                        <a class="btn btn-primary fw-bold" href="/Reservations/AgentBooking">Back</a>
-                    </div>
+					<!-- Buttons -->
+					<div class="d-grid d-md-flex justify-content-md-end gap-2">
+						<button class="btn btn-success fw-bold" type="button" @onclick="SaveCustomer">Register Agent</button>
+						<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+						<a class="btn btn-primary fw-bold" href="/Reservations/AgentBooking">Back</a>
+					</div>
 
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
@@ -118,16 +118,18 @@
 
 	private async Task SaveCustomer(MouseEventArgs args)
 	{
-		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Agent", Agent);
-		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
-
-		var strResponce = await response.Content.ReadAsStringAsync();
-		Console.WriteLine("Json Response :" + strResponce);
-
 		try
 		{
+			var response = await http.PostAsJsonAsync("https://localhost:4000/api/Agent", Agent);
+			if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
+
+			var strResponce = await response.Content.ReadAsStringAsync();
+			Console.WriteLine("Json Response :" + strResponce);
+
+
 			var jsonResponce = JsonNode.Parse(strResponce);
 			Errors = jsonResponce?["errors"] ?? new JsonObject();
+			StateHasChanged();
 		}
 		catch (Exception ex)
 		{

@@ -162,7 +162,7 @@
 			RoomsDtos.LastCleanedBy = Rooms?.LastCleanedBy ?? "";
 			RoomsDtos.LastCleanedDate = Rooms?.LastCleanedDate ?? DateTime.Today;
 			RoomsDtos.MaintenanceComment = Rooms?.MaintenanceComment ?? "";
-
+            StateHasChanged();
 			Console.WriteLine("Succusfull Loading...");
 		}
 		catch (Exception ex)
@@ -180,6 +180,7 @@
 			if (response.IsSuccessStatusCode)
 			{
 				navManager.NavigateTo("/Administration/ManageRooms");
+                StateHasChanged();
 			}
 			else
 			{

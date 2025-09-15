@@ -152,7 +152,8 @@
 			ExtraChargersDtos.Amount = ExtraChargers?.Amount?? 0;
 			ExtraChargersDtos.Comment = ExtraChargers?.Comment?? "";
 			ExtraChargersDtos.ExtraChargeType = ExtraChargers?.ExtraChargeType ?? "";
-		
+			StateHasChanged();
+
 			Console.WriteLine("Succusfull Loading...");
 		}
 		catch (Exception ex)
@@ -171,6 +172,8 @@
 			if (response.IsSuccessStatusCode)
 			{
 				navManager.NavigateTo("/Administration/ManageExtra");
+				StateHasChanged();
+
 			}
 			else
 			{
