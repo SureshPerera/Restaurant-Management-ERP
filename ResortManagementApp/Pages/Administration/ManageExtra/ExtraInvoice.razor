@@ -27,7 +27,7 @@
 
 					<div class="mb-3">
 						<label class="form-label">Invoice ID</label>
-						<input @bind-value="@Id"   class="form-control" />
+						<input @bind-value="@Id" class="form-control" />
 					</div>
 
 					<div class="mb-3">
@@ -48,7 +48,7 @@
 
 					<div class="mb-3">
 						<label class="form-label">Rate USD</label>
-						<input @bind-value ="ExtraChargersDtos.RateUSD" class="form-control" />
+						<input @bind-value="ExtraChargersDtos.RateUSD" class="form-control" />
 					</div>
 
 					<div class="mb-3">
@@ -69,6 +69,7 @@
 					<div class="d-grid gap-2">
 						<button type="submit" class="btn btn-primary" @onclick="GenerateInvoice">Generate Invoice</button>
 						<button type="button" class="btn btn-success" @onclick="PrintInvoice" disabled="@(!isInvoiceGenerated)">Print Invoice</button>
+						<a class="btn btn-success" href="/Administration/ManageExtra">Back</a>
 					</div>
 
 				</div>
@@ -241,7 +242,7 @@
 @code {
 	[Parameter]
 	public Guid Id { get; set; }
-	public ExtraChanrgers ExtraChargers { get; set; } = new();
+	public ExtraChanrgers? ExtraChargers { get; set; } = new();
 	public ExtraChargersDto ExtraChargersDtos { get; set; } = new();
 
 	private bool isInvoiceGenerated = false;
@@ -266,22 +267,18 @@
 	{
 		try
 		{
-			var response = await http.GetAsync($"https://localhost:4000/api/ExtraCharge/{Id}");
-			var json = await response.Content.ReadAsStringAsync();
-			Console.WriteLine("API Response: " + json);
+			ExtraChargers = await http.GetFromJsonAsync<ExtraChanrgers>($"https://localhost:4000/api/ExtraCharge/{Id}");
+			// var json = await response.Content.ReadAsStringAsync();
+			// Console.WriteLine("API Response: " + json);
 
-			if (response.IsSuccessStatusCode)
-			{
-				// ExtraChargers = JsonSerializer.Deserialize<ExtraChanrgers>(json);
+			ExtraChargersDtos.RateLKR = ExtraChargers?.RateLKR ?? 0;
+			ExtraChargersDtos.RateUSD = ExtraChargers?.RateUSD ?? 0;
+			ExtraChargersDtos.Comment = ExtraChargers?.Comment ?? "";
+			ExtraChargersDtos.ExtraChargeType = ExtraChargers?.ExtraChargeType ?? "";
+			ExtraChargersDtos.Amount = ExtraChargers?.Amount ?? 0;
+			Console.WriteLine("Succusfull Loading...");
 
-					ExtraChargersDtos.RateLKR = ExtraChargers?.RateLKR ?? 0;
-					ExtraChargersDtos.RateUSD = ExtraChargers?.RateUSD ?? 0;
-					ExtraChargersDtos.Comment = ExtraChargers?.Comment ?? "";
-					ExtraChargersDtos.ExtraChargeType = ExtraChargers?.ExtraChargeType ?? "";
-					ExtraChargersDtos.Amount = ExtraChargers?.Amount ?? 0;
-					Console.WriteLine("Succusfull Loading...");
 
-			}
 		}
 		catch (Exception ex)
 		{
@@ -307,6 +304,21 @@
 
 	private string GenerateInvoiceHtml()
 	{
+		decimal amount = ExtraChargersDtos.Amount ?? 0m;
+		decimal total;
+
+		if (ExtraChargersDtos.RateLKR.HasValue)
+		{
+			total = ExtraChargersDtos.RateLKR.Value * amount;
+		}
+		else if (ExtraChargersDtos.RateUSD.HasValue)
+		{
+			total = ExtraChargersDtos.RateUSD.Value * amount;
+		}
+		else
+		{
+			total = amount; // fallback if both are null
+		}
 		return $@"
             <div class='invoice-header'>
                 <div class='company-name'>SOLITARY GREEN RESORT</div>
@@ -335,7 +347,7 @@
             <div class='amounts'>
                 <div class='amount-line'>
                     <span>Amount:</span>
-                    <span>Rs. {ExtraChargersDtos.Amount:N2}</span>
+                    <span>{ExtraChargersDtos.Amount:N2}</span>
                 </div>
                 <div class='amount-line'>
                     <span>Rate USD:</span>
@@ -348,33 +360,34 @@
                 <div class='total'>
                     <div class='amount-line'>
                         <span>TOTAL:</span>
-                        <span>Rs. {ExtraChargersDtos.Amount:N2}</span>
-                    </div>
-                </div>
-            </div>
+					<span> Rs. {total:N2}</span>
+				</div>
+				</div>
+		</div>
 
-            <div class='details-section'>
-                <div class='details-title'>Details:</div>
-                <div class='details-text'>{ExtraChargersDtos.Details}</div>
-            </div>
+		<div class='details-section'>
+			<div class='details-title'>Details:</div>
+			<div class='details-text'>{ExtraChargersDtos.Details}</div>
+		</div>
 
-            <div class='comment-section'>
-                <div class='comment-title'>Comment:</div>
-                <div class='comment-text'>{ExtraChargersDtos.Comment}</div>
-            </div>
+		<div class='comment-section'>
+			<div class='comment-title'>Comment:</div>
+			<div class='comment-text'>{ExtraChargersDtos.Comment}</div>
+		</div>
 
-            <div class='separator'>* * * * * * * * * *</div>
+		<div class='separator'>* * * * * * * * * *</div>
 
-            <div class='invoice-footer'>
-                <div class='thank-you'>THANK YOU FOR USING OUR SERVICES!</div>
-                <div>We appreciate your business</div>
-                <div>Visit us again soon</div>
-                <div style='margin-top: 8px; font-size: 10px;'>
-                    Invoice generated on: {DateTime.Now:dd/MM/yyyy hh:mm:ss tt}
-                </div>
-            </div>
+		<div class='invoice-footer'>
+			<div class='thank-you'>THANK YOU FOR USING OUR SERVICES!</div>
+			<div>We appreciate your business</div>
+			<div>Visit us again soon</div>
+			<div style='margin-top: 8px; font-size: 10px;'>
+				Invoice generated on: {DateTime.Now:dd/MM/yyyy hh:mm:ss tt}
+			</div>
+		</div>
 
-            <div class='separator'>* * * * * * * * * *</div>";
+		<div class='separator'>* * * * * * * * * *</div>
+		";
 	}
 
 
