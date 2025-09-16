@@ -7,12 +7,12 @@ namespace ResortManagementApp.Models.Administration.ManageRooms
         [Key]
         public Guid Id { get; set; }
       
-        public string RoomId { get; set; }
+        public string? RoomId { get; set; }
     
-        public string RoomType { get; set; }
+        public string? RoomType { get; set; }
       
-        public string RoomFloor { get; set; }
-        
+        public string? RoomFloor { get; set; }
+            
         public int MaximumOccupancy{ get; set; }
         
         public string? RoomStatus { get; set; }

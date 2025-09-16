@@ -21,52 +21,54 @@
 	{
 		<p><Searching/></p>
 	}
-	<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-		<thead class="bg-light">
-			<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-				<td>Name</td>
-				<td>Phone Number</td>
-				<td>Address</td>
-				<td>EmailAddress</td>
-				<td>NIC</td>
-				<td>CreditLimit</td>
-				<td>Customer Type</td>
-				<td>OpeningBalanace</td>
-				<td>Nationality</td>
-				<td>Comformation</td>
-				<td>Remark</td>
-				<td>Actions</td>
-
-			</tr>
-		</thead>
-		<tbody class="bg-light">
-			@if (directBookingModels == null)
-			{
-				<p><Searching/></p>
-			}
-			@foreach (var item in directBookingModels)
-			{
-				<tr style="background-color: #DAD7CD">
-					<th>@(item.FirstName + " " + @item.LastName)</th>
-					<th>@item.PhoneNumber</th>
-					<th>@item.Address</th>
-					<th>@item.EmailAddress</th>
-					<th>@item.NIC</th>
-					<th>@item.CreditLimit</th>
-					<th>@item.CustomerType</th>
-					<th>@item.OpeningBalanace</th>
-					<th>@item.Nationality</th>
-					<th>@item.Remark</th>
-					<th style="white-space:nowrap">
-						<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
-					</th>
+	<div class="table-responsive rounded shadow-sm">
+		<table class="table-responsive rounded shadow-sm" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
+			<thead class="bg-light">
+				<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
+					<td>Name</td>
+					<td>Phone Number</td>
+					<td>Address</td>
+					<td>EmailAddress</td>
+					<td>NIC</td>
+					<td>CreditLimit</td>
+					<td>Customer Type</td>
+					<td>Nationality</td>
+					<td>Comformation</td>
+					<td>Remark</td>
+					<td>Actions</td>
 
 				</tr>
-			}
-		</tbody>
+			</thead>
+			<tbody class="bg-light">
+				@if (directBookingModels == null)
+				{
+					<Searching />
+				}
+				@foreach (var item in directBookingModels!)
+				{
+					<tr style="background-color: #DAD7CD">
+						<th>@(item.FirstName + " " + @item.LastName)</th>
+						<th>@item.PhoneNumber</th>
+						<th>@item.Address</th>
+						<th>@item.EmailAddress</th>
+						<th>@item.NIC</th>
+						<th>@item.CreditLimit</th>
+						<th>@item.CustomerType</th>
+						<th>@item.Nationality</th>
+						<th>@item.Conformation</th>
+						<th>@item.Remark</th>
+						<th style="white-space:nowrap">
+							<a class="btn btn-primary btn-sm" href="/Reservations/Edit/@item.Id">Edit</a>
+							<a class="btn btn-danger btn-sm" href="/Reservations/Delete/@item.Id">Delete</a>
+						</th>
 
-	</table>
+					</tr>
+				}
+			</tbody>
+
+		</table>
+	</div>
+	
 </div>
 @code {
 	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();

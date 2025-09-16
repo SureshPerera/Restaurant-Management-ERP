@@ -8,12 +8,12 @@ namespace API.Model.DTO
         public Guid Id { get; set; }
 
         [StringLength(100)]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [StringLength(100)]
         public string? LastName { get; set; }
 
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public DateOnly? DathOfBirth { get; set; }
 
 
@@ -21,14 +21,14 @@ namespace API.Model.DTO
         [EmailAddress]
         public string? EmailAddress { get; set; }
 
-        public string NIC { get; set; }
+        public string? NIC { get; set; }
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
 
 
-        public string Nationality { get; set; }
+        public string? Nationality { get; set; }
         public string? Remark { get; set; }
 
-        public string CustomerType { get; set; }
+        public string? CustomerType { get; set; }
     }
 }

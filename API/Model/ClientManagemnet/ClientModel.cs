@@ -8,12 +8,12 @@ namespace API.Model.ClientManagemnet
         public Guid Id { get; set; }
 
         [StringLength(100)]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [StringLength(100)]
         public string? LastName { get; set; }
 
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public DateOnly? DathOfBirth { get; set; }
 
 
@@ -26,7 +26,7 @@ namespace API.Model.ClientManagemnet
         public double? OpeningBalanace { get; set; }
 
 
-        public string Nationality { get; set; }
+        public string? Nationality { get; set; }
         public string? Remark { get; set; }
 
         public string? CustomerType { get; set; }

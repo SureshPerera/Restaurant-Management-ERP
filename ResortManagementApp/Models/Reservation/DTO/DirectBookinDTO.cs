@@ -5,9 +5,9 @@ namespace ResortManagementApp.Models.Reservation.DTO
 {
     public class DirectBookinDTO
     {
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public DateOnly? DathOfBirth { get; set; }
         public string? Address { get; set; }
         public string? EmailAddress { get; set; }
@@ -22,7 +22,8 @@ namespace ResortManagementApp.Models.Reservation.DTO
 
         public DateOnly CheckOutDate { get; set; }
         public bool? Conformation { get; set; }
-
+        public TimeOnly CheckInTime { get; set; }
+        public TimeOnly CheckOutTime { get; set; }
 
     }
 

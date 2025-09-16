@@ -7,15 +7,15 @@ namespace API.Model.DTO
         
         public Guid Id { get; set; }
         
-        public string PackageName { get; set; }
+        public string? PackageName { get; set; }
         
-        public string PackageDetails { get; set; }
+        public string? PackageDetails { get; set; }
         
-        public string RoomType { get; set; }
+        public string? RoomType { get; set; }
        
-        public string AccomadationType { get; set; }
+        public string? AccomadationType { get; set; }
         
-        public string Basis { get; set; }
+        public string? Basis { get; set; }
         public double? RoomRateSpring { get; set; }
         public double? RoomRateSummer { get; set; }
         public double? RoomRateAutumn { get; set; }

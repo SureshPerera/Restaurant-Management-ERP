@@ -5,210 +5,176 @@
 
 @layout MainLayout
 
-<div class="card mb-3 p-3">
-    <h3 class="text-center">Register User</h3>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-10">
+			<!-- Card -->
+			<div class="card shadow-lg">
+				<div class="card-header bg-primary text-center text-white">
+					<h3>Register User</h3>
+				</div>
+
+				<div class="card-body" style="background-color: #FAF3E0; font-size: 15px;">
+					<form class="row g-3">
+						<!-- Left Column -->
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label class="form-label">First Name</label>
+								<input class="form-control" @bind="UserManagementDto.FirstName" />
+								<span class="text-danger">@Errors["FirstName"]?[0]</span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Last Name</label>
+								<input class="form-control" @bind="UserManagementDto.LastName" />
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Address</label>
+								<textarea class="form-control" @bind="UserManagementDto.Address"></textarea>
+								<span class="text-danger">@Errors["Address"]?[0]</span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Phone Number</label>
+								<input class="form-control" type="number" @bind="UserManagementDto.PhoneNumber" />
+								<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Email Address</label>
+								<input class="form-control" type="email" @bind="UserManagementDto.Email" />
+								<span class="text-danger">@Errors["Email"]?[0]</span>
+							</div>
+						</div>
+
+						<!-- Right Column -->
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label class="form-label">NIC Number</label>
+								<input class="form-control" @bind="UserManagementDto.NIC" />
+								<span class="text-danger">@Errors["NIC"]?[0]</span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Date of Birth</label>
+								<input class="form-control" type="date" @bind="UserManagementDto.DOB" />
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Access Level</label>
+								<select class="form-control" @bind="UserManagementDto.AccessLevel">
+									<option>--Select--</option>
+									@foreach (var item in AcessLevel)
+									{
+										<option>@item</option>
+									}
+								</select>
+								<span class="text-danger">@Errors["AccessLevel"]?[0]</span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Gender</label>
+								<select class="form-control" @bind="UserManagementDto.Gender">
+									<option>--Select--</option>
+									@foreach (var item in Gender)
+									{
+										<option>@item</option>
+									}
+								</select>
+								<span class="text-danger">@Errors["Gender"]?[0]</span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Password</label>
+								<input class="form-control" type="password" @bind="UserManagementDto.PassWord" />
+							</div>
+						</div>
+
+						<!-- Full Width -->
+						<div class="col-12">
+							<div class="mb-3">
+								<label class="form-label">Comments</label>
+								<textarea class="form-control" @bind="UserManagementDto.Comment"></textarea>
+							</div>
+						</div>
+
+						<!-- Action Buttons -->
+						<div class="col-12 d-flex justify-content-center mt-3 gap-3">
+							<button class="btn btn-success fw-bold" type="button" @onclick="AddUsers">Add User</button>
+							<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+							<a class="btn btn-primary fw-bold" href="/UserManagement">Back</a>
+						</div>
+					</form>
+
+					<hr />
+
+					<!-- Permissions Section -->
+					<div class="p-3" style="background-color: #FFEBCD;">
+						<div class="row">
+							<!-- Column 1 -->
+							<div class="col-md-4">
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.DashBoard" />
+									<label class="form-check-label">Dashboard</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.Reservation" />
+									<label class="form-check-label">Reservation</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.CheckInOut" />
+									<label class="form-check-label">Check In/Out</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.Inhouse" />
+									<label class="form-check-label">Inhouse</label>
+								</div>
+							</div>
+
+							<!-- Column 2 -->
+							<div class="col-md-4">
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.HouseKeeping" />
+									<label class="form-check-label">Housekeeping</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.SmartSalling" />
+									<label class="form-check-label">Smart Salling</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.StockInventory" />
+									<label class="form-check-label">Stock Inventory</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.AssetsManagement" />
+									<label class="form-check-label">Assets Management</label>
+								</div>
+							</div>
+
+							<!-- Column 3 -->
+							<div class="col-md-4">
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.Administration" />
+									<label class="form-check-label">Administration</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.UserManagements" />
+									<label class="form-check-label">User Management</label>
+								</div>
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" @bind="UserManagementDto.ClientManagement" />
+									<label class="form-check-label">Client Management</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- End Card Body -->
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="col-lg-8 mb-4">
-    <h1 class="title">New User</h1>
-</div>
-
-<form class="form p-3" style="background-color: antiquewhite;">
-    @* User Info Section *@
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">First Name</label>
-        <div class="col-md-6">
-            <input class="form-control" @bind="UserManagementDto.FirstName" />
-            <span class="text-danger">@Errors["FirstName"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Last Name</label>
-        <div class="col-md-6">
-            <input class="form-control" @bind="UserManagementDto.LastName" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Address</label>
-        <div class="col-md-6">
-            <textarea class="form-control" @bind="UserManagementDto.Address"></textarea>
-            <span class="text-danger">@Errors["FirstName"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Phone Number</label>
-        <div class="col-md-6">
-            <input class="form-control" type="number" @bind="UserManagementDto.PhoneNumber" />
-            <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Email Address</label>
-        <div class="col-md-6">
-            <input class="form-control" type="email" @bind="UserManagementDto.Email" />
-            <span class="text-danger">@Errors["Address"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">NIC Number</label>
-        <div class="col-md-6">
-            <input class="form-control" @bind="UserManagementDto.NIC" />
-            <span class="text-danger">@Errors["NIC"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Date Of Birth</label>
-        <div class="col-md-6">
-            <input class="form-control" type="date" @bind="UserManagementDto.DOB" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Access Level</label>
-        <div class="col-md-6">
-            <select class="form-control" @bind="UserManagementDto.AccessLevel">
-                <option>--Select--</option>
-                @foreach (var item in AcessLevel)
-                {
-                    <option>@item</option>
-                }
-            </select>
-            <span class="text-danger">@Errors["Nationality"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Gender</label>
-        <div class="col-md-6">
-            <select class="form-control" @bind="UserManagementDto.Gender">
-                <option>--Select--</option>
-                @foreach (var item in Gender)
-                {
-                    <option>@item</option>
-                }
-            </select>
-            <span class="text-danger">@Errors["Nationality"]?[0]</span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Password</label>
-        <div class="col-md-6">
-            <input class="form-control" type="password" @bind="UserManagementDto.PassWord" />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-md-3 col-form-label">Comments</label>
-        <div class="col-md-6">
-            <textarea class="form-control" @bind="UserManagementDto.Comment"></textarea>
-        </div>
-    </div>
-
-    @* Action Buttons *@
-    <div class="d-flex mb-3 gap-2">
-        <button class="btn btn-success fw-bold" type="button" @onclick="AddUsers">Add User</button>
-        <button class="btn btn-warning fw-bold" type="reset">Clear</button>
-        <a class="btn btn-primary fw-bold" href="/UserManagement">Back</a>
-    </div>
-
-    <hr />
-
-    @* Permissions Section *@
-    <div class="row p-3" style="background-color: blanchedalmond;">
-        <div class="col-md-4">
-            <div class="row mb-3">
-                <label class="col-md-8 col-form-label">Dash Board</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.DashBoard" />
-                    <span class="text-danger">@Errors["DashBoard"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-8 col-form-label">Reservation</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.Reservation" />
-                    <span class="text-danger">@Errors["Reservation"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-8 col-form-label">CheckInOut</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.CheckInOut" />
-                    <span class="text-danger">@Errors["CheckInOut"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-8 col-form-label">Inhouse</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.Inhouse" />
-                    <span class="text-danger">@Errors["Inhouse"]?[0]</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">HouseKeeping</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.HouseKeeping" />
-                    <span class="text-danger">@Errors["HouseKeeping"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">SmartSalling</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.SmartSalling" />
-                    <span class="text-danger">@Errors["SmartSalling"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">StockInventory</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.StockInventory" />
-                    <span class="text-danger">@Errors["StockInventory"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">AssetsManagement</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.AssetsManagement" />
-                    <span class="text-danger">@Errors["AssetsManagement"]?[0]</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">Administration</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.Administration" />
-                    <span class="text-danger">@Errors["Administration"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">UserManagements</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.UserManagements" />
-                    <span class="text-danger">@Errors["UserManagements"]?[0]</span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-md-9 col-form-label">ClientManagement</label>
-                <div class="col-md-2">
-                    <input class="form-check-input" type="checkbox" @bind="UserManagementDto.ClientManagement" />
-                    <span class="text-danger">@Errors["ClientManagement"]?[0]</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 
 <style>

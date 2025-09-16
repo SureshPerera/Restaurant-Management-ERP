@@ -7,7 +7,7 @@ namespace ResortManagementApp.Models.Administration.DTOS
      
         public Guid Id { get; set; }
 
-        public string CurrencyName { get; set; }
+        public string? CurrencyName { get; set; }
       
         public double SellingRate { get; set; }
         

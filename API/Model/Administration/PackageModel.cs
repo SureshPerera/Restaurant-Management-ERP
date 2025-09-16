@@ -7,15 +7,15 @@ namespace API.Model.Administration
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string PackageName { get; set; }
+        public string? PackageName { get; set; }
         [Required]
-        public string PackageDetails { get; set; }
+        public string? PackageDetails { get; set; }
         [Required]
-        public string RoomType { get; set; }
+        public string? RoomType { get; set; }
         [Required]
-        public string AccomadationType { get; set; }
+        public string? AccomadationType { get; set; }
         [Required]
-        public string Basis { get; set; }
+        public string? Basis { get; set; }
         public double? RoomRateSpring { get; set; }
         public double? RoomRateSummer { get; set; }
         public double? RoomRateAutumn { get; set; }

@@ -1,4 +1,5 @@
-﻿<div style="width:12rem; height: 0.1rem">
+﻿@using MudBlazor
+<div style="width:12rem; height: 0.1rem">
     <MudPaper Class="pa-4" Style="color:black; border:1px solid black; font-weight:bold; background-color:azure; border-radius: 1rem">
         <MudStack Spacing="2">
             <MudButton Class="bi-bag-plus-fill offset-9" OnClick="OnExpandCollapseClick">@(_expanded ? "Check-Out" : "Check-Out")</MudButton>

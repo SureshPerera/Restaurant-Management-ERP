@@ -8,19 +8,19 @@ namespace API.Model.DTO
        
         public Guid Id { get; set; }
         
-        public string NIC { get; set; }
-        public string FirstName { get; set; }
+        public string? NIC { get; set; }
+        public string? FirstName { get; set; }
         public string? LastName { get; set; }
         [PasswordPropertyText]
-        public string PassWord { get; set; }
+        public string? PassWord { get; set; }
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
 
-        public string AccessLevel { get; set; }
+        public string? AccessLevel { get; set; }
         public DateOnly DOB { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public string? Address { get; set; }
         public string? Comment { get; set; }
 

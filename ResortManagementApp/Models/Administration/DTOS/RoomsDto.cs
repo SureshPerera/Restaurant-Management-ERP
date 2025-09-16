@@ -6,11 +6,11 @@ namespace ResortManagementApp.Models.Administration.DTOS
     {
      
         public Guid Id { get; set; }
-        public string RoomId { get; set; }
+        public string? RoomId { get; set; }
         
-        public string RoomType { get; set; }
+        public string? RoomType { get; set; }
 
-        public string RoomFloor { get; set; }
+        public string? RoomFloor { get; set; }
  
         public int MaximumOccupancy { get; set; }
 

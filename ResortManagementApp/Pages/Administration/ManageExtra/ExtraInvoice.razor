@@ -32,9 +32,9 @@
 
 					<div class="mb-3">
 						<label class="form-label">Extra Charge Type</label>
-						<select class="form-control" @bind="ExtraChargersDtos.ExtraChargeType">
+						<select class="form-control" @bind="ExtraChargersDtos!.ExtraChargeType">
 							<option value="">---Select--</option>
-							@foreach (var item in ExtraChargeTypes)
+							@foreach (var item in ExtraChargeTypes!)
 							{
 								<option value="@item">@item</option>
 							}
@@ -236,7 +236,7 @@
 		border: none;
 	}
 
-	}
+	
 </style>
 @inject HttpClient http
 @code {

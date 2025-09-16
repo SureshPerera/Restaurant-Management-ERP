@@ -7,7 +7,7 @@ namespace API.Model.Reservation
         [Key]
         public Guid Id { get; set; }
         [Required(ErrorMessage ="Please Enter Extra Change Type!")]
-        public string ExtraChangeType { get; set; }
+        public string? ExtraChangeType { get; set; }
         [Required(ErrorMessage = "Please Enter Rate USD!")]
         public double RateUSD { get; set; }
         [Required(ErrorMessage = "Please Enter Rate LKR!")]

@@ -37,9 +37,9 @@
 		<tbody class="bg-light">
 			@if (UserManagementDto == null)
 			{
-				<p><Searching/></p>
+				<Searching/>
 			}
-			@foreach (var item in UserManagementDto)
+			@foreach (var item in UserManagementDto!)
 			{
 				<tr>
 					<th>@item.Id</th>
@@ -64,18 +64,18 @@
 	public List<UserManagementDto> UserManagementDto { get; set; } = new List<UserManagementDto>();
 	public string? Search { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		UserManagementDto.Add(new UserManagementDto
-		{
-			Id = Guid.NewGuid(),
-			FirstName = "Gunadasa",
-			LastName = "Perera",
-			NIC = "200008136524",
-			PhoneNumber = "0703914685",
-			AccessLevel ="Staff",
-			Comment = "HouseKeeping Staff"
-		});
-		// directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
-	}
+	// protected override async Task OnInitializedAsync()
+	// {
+	// 	UserManagementDto.Add(new UserManagementDto
+	// 	{
+	// 		Id = Guid.NewGuid(),
+	// 		FirstName = "Gunadasa",
+	// 		LastName = "Perera",
+	// 		NIC = "200008136524",
+	// 		PhoneNumber = "0703914685",
+	// 		AccessLevel ="Staff",
+	// 		Comment = "HouseKeeping Staff"
+	// 	});
+	// 	// directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+	// }
 }

@@ -6,109 +6,102 @@
 
 @layout MainLayout
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <!-- Card -->
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-center text-white">
-                    <h3>Update Agent Details</h3>
-                </div>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<!-- Card -->
+			<div class="card shadow-lg">
+				<div class="card-header bg-primary text-center text-white">
+					<h3>Update Agent Details</h3>
+				</div>
 
-                <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
-                    @if (AgentModelDto == null)
-                    {
-                        <p><Searching /></p>
-                    }
-                    else
-                    {
-                        <form>
-                            <div class="row">
-                                <!-- Left Column -->
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Agent Name</label>
-                                        <input class="form-control" type="text" @bind="AgentModelDto.AgentName" />
-                                        <span class="text-danger">@Errors["AgentName"]?[0]</span>
-                                    </div>
+				<div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+					@if (AgentModelDto == null)
+					{
+						<p><Searching /></p>
+					}
+					else
+					{
+						<form class="row g-3">
+							<!-- Left Column -->
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label">Agent Name</label>
+									<input class="form-control" type="text" @bind="AgentModelDto.AgentName" />
+									<span class="text-danger">@Errors["AgentName"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Agent Address</label>
-                                        <textarea class="form-control" @bind="AgentModelDto.AgentAddress"></textarea>
-                                        <span class="text-danger">@Errors["AgentAddress"]?[0]</span>
-                                    </div>
+								<div class="mb-3">
+									<label class="form-label">Agent Address</label>
+									<textarea class="form-control" @bind="AgentModelDto.AgentAddress"></textarea>
+									<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Contact Person</label>
-                                        <input class="form-control" type="text" @bind="AgentModelDto.ContactPerson" />
-                                        <span class="text-danger">@Errors["ContactPerson"]?[0]</span>
-                                    </div>
+								<div class="mb-3">
+									<label class="form-label">Contact Person</label>
+									<input class="form-control" type="text" @bind="AgentModelDto.ContactPerson" />
+									<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Mobile</label>
-                                        <input class="form-control" type="number" @bind="AgentModelDto.Mobile" />
-                                        <span class="text-danger">@Errors["Mobile"]?[0]</span>
-                                    </div>
+								<div class="mb-3">
+									<label class="form-label">Mobile</label>
+									<input class="form-control" type="number" @bind="AgentModelDto.Mobile" />
+									<span class="text-danger">@Errors["Mobile"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Fax</label>
-                                        <input class="form-control" type="number" @bind="AgentModelDto.Fax" />
-                                        <span class="text-danger">@Errors["Fax"]?[0]</span>
-                                    </div>
-                                </div>
+								<div class="mb-3">
+									<label class="form-label">Fax</label>
+									<input class="form-control" type="number" @bind="AgentModelDto.Fax" />
+									<span class="text-danger">@Errors["Fax"]?[0]</span>
+								</div>
+							</div>
 
-                                <!-- Right Column -->
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">NIC</label>
-                                        <input class="form-control" type="text" @bind="AgentModelDto.NIC" />
-                                        <span class="text-danger">@Errors["NIC"]?[0]</span>
-                                    </div>
+							<!-- Right Column -->
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label">NIC</label>
+									<input class="form-control" type="text" @bind="AgentModelDto.NIC" />
+									<span class="text-danger">@Errors["NIC"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input class="form-control" type="email" @bind="AgentModelDto.Email" />
-                                        <span class="text-danger">@Errors["Email"]?[0]</span>
-                                    </div>
+								<div class="mb-3">
+									<label class="form-label">Email</label>
+									<input class="form-control" type="email" @bind="AgentModelDto.Email" />
+									<span class="text-danger">@Errors["Email"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Website</label>
-                                        <input class="form-control" type="text" @bind="AgentModelDto.WebSite" />
-                                        <span class="text-danger">@Errors["WebSite"]?[0]</span>
-                                    </div>
+								<div class="mb-3">
+									<label class="form-label">Website</label>
+									<input class="form-control" type="text" @bind="AgentModelDto.WebSite" />
+									<span class="text-danger">@Errors["WebSite"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Credit Limit</label>
-                                        <input class="form-control" type="number" @bind="AgentModelDto.CreditLimit" />
-                                        <span class="text-danger">@Errors["CreditLimit"]?[0]</span>
-                                    </div>
+								<div class="mb-3">
+									<label class="form-label">Credit Limit</label>
+									<input class="form-control" type="number" @bind="AgentModelDto.CreditLimit" />
+									<span class="text-danger">@Errors["CreditLimit"]?[0]</span>
+								</div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">VAT Reg No</label>
-                                        <input class="form-control" type="text" @bind="AgentModelDto.VatRegNo" />
-                                        <span class="text-danger">@Errors["VatRegNo"]?[0]</span>
-                                    </div>
-                                </div>
-                            </div>
+								<div class="mb-3">
+									<label class="form-label">VAT Reg No</label>
+									<input class="form-control" type="text" @bind="AgentModelDto.VatRegNo" />
+									<span class="text-danger">@Errors["VatRegNo"]?[0]</span>
+								</div>
+							</div>
 
-                            <!-- Action Buttons -->
-                            <div class="d-grid d-md-flex justify-content-md-center mt-4 gap-2">
-                                <button class="btn btn-success fw-bold" type="button" @onclick="CreatePackage">
-                                    Update
-                                </button>
-                                <button class="btn btn-warning fw-bold" type="reset">
-                                    Clear
-                                </button>
-                                <a class="btn btn-secondary fw-bold" href="/Administration/ManageAgents">
-                                    Back
-                                </a>
-                            </div>
-                        </form>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+							<!-- Action Buttons -->
+							<div class="col-12 d-flex justify-content-center mt-4 gap-3">
+								<button class="btn btn-success fw-bold" type="button" @onclick="CreatePackage">Update</button>
+								<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+								<a class="btn btn-primary fw-bold" href="/Administration/ManageAgents">Back</a>
+							</div>
+						</form>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
 
 
 
@@ -146,7 +139,7 @@
 		{
 
 			Agents = await http.GetFromJsonAsync<Agents>($"https://localhost:4000/api/Agent/{Id}");
-			AgentModelDto.AgentName = Agents?.AgentName?? "";
+			AgentModelDto!.AgentName = Agents?.AgentName?? "";
 			AgentModelDto.AgentAddress = Agents?.AgentAddress ?? "";
 			AgentModelDto.ContactPerson = Agents?.ContactPerson ?? "";
 			AgentModelDto.Email = Agents?.Email?? "";

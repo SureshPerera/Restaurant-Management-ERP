@@ -7,9 +7,9 @@ namespace ResortManagementApp.Models.ClientManagement.Message
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string Type{ get; set; }
+        public string? Type{ get; set; }
         [Required]
-        public string Messages{ get; set; }
+        public string? Messages{ get; set; }
 
     }
 }

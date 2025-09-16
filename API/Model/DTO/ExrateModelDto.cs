@@ -7,7 +7,7 @@ namespace API.Model.DTO
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string CurrencyName { get; set; }
+        public string? CurrencyName { get; set; }
         [Required]
         public double SellingRate { get; set; }
         [Required]

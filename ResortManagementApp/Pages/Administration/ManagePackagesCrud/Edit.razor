@@ -218,7 +218,7 @@
 		{
 
 			Packages = await http.GetFromJsonAsync<Packages>($"https://localhost:4000/api/Package/{Id}");
-			PackagesDto.AccomadationType = Packages?.AccomadationType?? "";
+			PackagesDto!.AccomadationType = Packages?.AccomadationType?? "";
 			PackagesDto.Basis = Packages?.Basis?? "";
 			PackagesDto.Entitlemeal1 = Packages?.Entitlemeal1 ?? "";
 			PackagesDto.Entitlemeal2 = Packages?.Entitlemeal2 ?? "";

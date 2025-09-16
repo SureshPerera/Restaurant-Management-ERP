@@ -11,9 +11,9 @@ namespace API.Model.ClientManagemnet
         [Required]
         public double PayingAmount { get; set; }
         [Required]
-        public string PaymentType { get; set; }
+        public string? PaymentType { get; set; }
 
-        public string OderType { get; set; }
+        public string? OderType { get; set; }
 
         public DateTime OderDate { get; set; }
         public string? Details { get; set; }

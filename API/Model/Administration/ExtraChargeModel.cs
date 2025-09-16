@@ -8,7 +8,7 @@ namespace API.Model.Administration
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string ExtraChargeType { get; set; }
+        public string? ExtraChargeType { get; set; }
 
         public decimal? Amount { get; set; }
         public decimal? RateUSD { get; set; }

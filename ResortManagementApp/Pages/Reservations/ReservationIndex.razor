@@ -23,11 +23,11 @@
             <a href="/Reservations/OnlineBooking" class="btn btn-primary">Online Booking</a>
 
             <div class="d-grid mt-3 gap-2">
-                <button class="btn btn-warning">View All Reservations</button>
-                <button class="btn btn-warning">View All Confirmed Reservations</button>
-                <button class="btn btn-warning">View All Temporary Reservations</button>
-                <button class="btn btn-warning">View All Reservations by Agent</button>
-                <button class="btn btn-warning">View All Cancellations</button>
+                <button class="btn btn-warning" @onclick="clickViewAll">View All Reservations</button>
+                <button class="btn btn-warning" @onclick="clickAllConfirmedReservation">View All Confirmed Reservations</button>
+                <button class="btn btn-warning" @onclick="clickAllTemporary">View All Temporary Reservations</button>
+                <button class="btn btn-warning" @onclick="clickAllReservationByAgent">View All Reservations by Agent</button>
+                <button class="btn btn-warning" @onclick="clickViewCancellations">View All Cancellations</button>
             </div>
         </div>
 
@@ -185,23 +185,62 @@
 
 
 @code {
-	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
-	private List<OnlineBookingModel>? OnlineBookings = new List<OnlineBookingModel>();
-	private List<Agents>? Agents = new List<Agents>();
+    private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
+    private List<OnlineBookingModel>? OnlineBookings = new List<OnlineBookingModel>();
+    private List<Agents>? Agents = new List<Agents>();
 
-	protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+            OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+            Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
+            StateHasChanged();
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error Massage : " + ex.Message);
+        }
+    }
+    private async Task clickViewAll(MouseEventArgs args)
+    {
+        try
+        {
+            directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+            OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+            Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
+            StateHasChanged();
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error Massage : " + ex.Message);
+        }
+
+    }
+    private async Task clickAllConfirmedReservation(MouseEventArgs args)
+    {
+        var online = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+        // Only confirmed bookings
+        OnlineBookings = online?.Where(b => b.Conformation.GetValueOrDefault()).ToList();
+        var direct = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+
+        directBookingModels = direct?.Where(a => a.Conformation.GetValueOrDefault()).ToList();
+        Console.WriteLine("Pass clickAllConfirmedReservation");
+        StateHasChanged();
+	}
+    private  Task clickAllTemporary(MouseEventArgs args)
 	{
-		try
-		{
-			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
-			OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
-			Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
-			StateHasChanged();
-
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine("Error Massage : " + ex.Message);
-		}
+		throw new NotImplementedException();
+	}
+    private  Task clickAllReservationByAgent(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+    private  Task clickViewCancellations(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
 	}
 }

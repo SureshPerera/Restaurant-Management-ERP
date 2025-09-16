@@ -38,7 +38,7 @@
 								<div class="col-md-6">
 									<select class="form-control" @bind="ExtraChargersDtos.ExtraChargeType">
 										<option>---Select--</option>
-										@foreach (var item in ExtraChargeTypes)
+										@foreach (var item in ExtraChargeTypes!)
 										{
 											<option>@item</option>
 										}
@@ -146,7 +146,7 @@
 
 			ExtraChargers = await http.GetFromJsonAsync<ExtraChanrgers>($"https://localhost:4000/api/ExtraCharge/{Id}");
 			
-			ExtraChargersDtos.RateLKR = ExtraChargers?.RateLKR?? 0;
+			ExtraChargersDtos!.RateLKR = ExtraChargers?.RateLKR?? 0;
 			ExtraChargersDtos.RateUSD = ExtraChargers?.RateUSD?? 0;
 			ExtraChargersDtos.Details = ExtraChargers?.Details?? "";
 			ExtraChargersDtos.Amount = ExtraChargers?.Amount?? 0;

@@ -1,4 +1,5 @@
-﻿<MudChart ChartType="ChartType.Donut" Width="250px" Height="250px" InputData="@data" InputLabels="@labels" >
+﻿@using MudBlazor
+<MudChart ChartType="ChartType.Donut" Width="250px" Height="250px" InputData="@data" InputLabels="@labels" >
 	<CustomGraphics>
 		<text class="donut-inner-text" x="50%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="20">Total Customers</text>
 		<text class="donut-inner-text" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="50">@data[1].ToString()</text>

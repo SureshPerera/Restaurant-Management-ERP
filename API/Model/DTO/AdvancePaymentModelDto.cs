@@ -11,12 +11,12 @@ namespace API.Model.DTO
         
         public double PayingAmount { get; set; }
      
-        public string PaymentType { get; set; }
+        public string? PaymentType { get; set; }
 
-        public string OderType { get; set; }
+        public string? OderType { get; set; }
 
         public DateTime OderDate { get; set; }
-        public string Details { get; set; }
+        public string? Details { get; set; }
         public Guid DirectBookingId { get; set; }
        
         public DirectBookingModel? DirectBooking { get; set; }

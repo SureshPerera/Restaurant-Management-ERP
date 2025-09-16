@@ -11,7 +11,7 @@ namespace API.Controllers
     public class GeoController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public CustomerUsePcInfo customerUsePcInfo { get; set; }
+        public CustomerUsePcInfo? customerUsePcInfo { get; set; }
         public GeoController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
@@ -34,7 +34,7 @@ namespace API.Controllers
 
                 var result = await response.Content.ReadAsStringAsync();
                 
-                dynamic data = JsonConvert.DeserializeObject(result);
+                dynamic? data = JsonConvert.DeserializeObject(result);
 
                
                 var customer = new CustomerUsePcInfo

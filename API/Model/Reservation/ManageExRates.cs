@@ -7,7 +7,7 @@ namespace API.Model.Reservation
         [Key]
         public Guid Id { get; set; }
         [Required(ErrorMessage ="Please Enter currancy!")]
-        public string CurrancyName { get; set; }
+        public string? CurrancyName { get; set; }
         [Required(ErrorMessage = "Please Enter Selling rate!")]
         public double SellingRate { get; set; }
         [Required(ErrorMessage = "Please Enter Buying rate!")]

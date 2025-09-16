@@ -8,7 +8,7 @@ namespace ResortManagementApp.Models.Administration.DTOS
   
         public Guid Id { get; set; }
        
-        public string ExtraChargeType { get; set; }
+        public string? ExtraChargeType { get; set; }
         public decimal? Amount { get; set; }
         public decimal? RateUSD { get; set; }
         public decimal? RateLKR { get; set; }

@@ -7,14 +7,14 @@ namespace API.Model.DTO
       
         public Guid Id { get; set; }
        
-        public string AgentName { get; set; }
+        public string? AgentName { get; set; }
        
-        public string AgentAddress { get; set; }
+        public string? AgentAddress { get; set; }
 
         public string? ContactPerson { get; set; }
       
         [Phone]
-        public string Mobile { get; set; }
+        public string? Mobile { get; set; }
         public string? Fax { get; set; }
 
         [EmailAddress]

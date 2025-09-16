@@ -16,55 +16,58 @@
 	{
 		<p><Searching/></p>
 	}
-	<table class="table-active" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-		<thead class="bg-light">
-			<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-				<td>Name</td>
-				<td>Check-In_Date</td>
-				<td>Check-Out-Date</td>
-				<td>Rooms</td>
-				<td>Adults</td>
-				<td>Children</td>
-				<td>Promo code</td>
-				<td>Phone Number</td>
-				<td>Address</td>
-				<td>EmailAddress</td>
-				<td>NIC</td>
-				<td>Nationality</td>
-				<td>Remark</td>
-				<td>Acctions</td>
-			</tr>
-		</thead>
-		<tbody class="bg-light">
-			@if (OnlineBookings == null)
-			{
-				<p><Searching/></p>
-			}
-			@foreach (var item in OnlineBookings)
-			{
-				<tr style="background-color: #DAD7CD">
-					<th>@(item.FirstName + " " + @item.LastName)</th>
-					<th>@item.CheckInDate</th>
-					<th>@item.CheckOutDate</th>
-					<th>@item.NoOfRooms</th>
-					<th>@item.NoOfAdults</th>
-					<th>@item.NoOfChildren</th>
-					<th>@item.PramoCode</th>
-					<th>@item.PhoneNumber</th>
-					<th>@item.Address</th>
-					<th>@item.EmailAddress</th>
-					<th>@item.NIC</th>
-					<th>@item.Nationality</th>
-					<th>@item.Remark</th>
-					<th style="white-space:nowrap">
-						<a class="btn btn-primary btn-sm" href="/Reservations/OnlineBooking/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/Reservations/OnlineBooking/Delete/@item.Id">Delete</a>
-					</th>
+	<div class="table-responsive rounded shadow-sm">
+		<table class="table-active" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
+			<thead class="bg-light">
+				<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
+					<td>Name</td>
+					<td>Check-In_Date</td>
+					<td>Check-Out-Date</td>
+					<td>Rooms</td>
+					<td>Adults</td>
+					<td>Children</td>
+					<td>Promo code</td>
+					<td>Phone Number</td>
+					<td>Address</td>
+					<td>EmailAddress</td>
+					<td>NIC</td>
+					<td>Nationality</td>
+					
+					<td>Acctions</td>
 				</tr>
-			}
-		</tbody>
+			</thead>
+			<tbody class="bg-light">
+				@if (OnlineBookings == null)
+				{
+					<Searching />
+				}
+				@foreach (var item in OnlineBookings!)
+				{
+					<tr style="background-color: #DAD7CD">
+						<th>@(item.FirstName + " " + @item.LastName)</th>
+						<th>@item.CheckInDate</th>
+						<th>@item.CheckOutDate</th>
+						<th>@item.NoOfRooms</th>
+						<th>@item.NoOfAdults</th>
+						<th>@item.NoOfChildren</th>
+						<th>@item.PramoCode</th>
+						<th>@item.PhoneNumber</th>
+						<th>@item.Address</th>
+						<th>@item.EmailAddress</th>
+						<th>@item.NIC</th>
+						<th>@item.Nationality</th>
+						
+						<th style="white-space:nowrap">
+							<a class="btn btn-primary btn-sm" href="/Reservations/OnlineBooking/Edit/@item.Id">Edit</a>
+							<a class="btn btn-danger btn-sm" href="/Reservations/OnlineBooking/Delete/@item.Id">Delete</a>
+						</th>
+					</tr>
+				}
+			</tbody>
 
-	</table>
+		</table>
+	</div>
+	
 </div>
 @inject HttpClient Http
 @code {

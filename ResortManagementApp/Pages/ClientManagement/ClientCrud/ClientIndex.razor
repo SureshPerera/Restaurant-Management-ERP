@@ -3,7 +3,7 @@
 @using ResortManagementApp.Models.ClientManagement.Message
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Models.Reservation.DTO
-@using ResortManagementApp.Models.Reservation
+
 @using ResortManagementApp.Pages.ComponentCss
 @inject HttpClient Http
 @layout MainLayout
@@ -64,10 +64,10 @@
 				<tbody class="bg-light">
 					@if (directBookingModels == null)
 					{
-						<p><Searching /></p>
+						<Searching />
 
 					}
-					@foreach (var item in directBookingModels)
+					@foreach (var item in directBookingModels!)
 					{
 						<tr>
 							<th>@(item.FirstName + " " + @item.LastName)</th>
@@ -118,9 +118,9 @@
 				<tbody class="bg-light">
 					@if (OnlineBookings == null)
 					{
-						<p><Searching /></p>
+						<Searching />
 					}
-					@foreach (var item in OnlineBookings)
+					@foreach (var item in OnlineBookings!)
 					{
 						<tr>
 							<th>@(item.FirstName + " " + @item.LastName)</th>
@@ -169,9 +169,9 @@
 				<tbody class="bg-light">
 					@if (Agents == null)
 					{
-						<p><Searching /></p>
+						<Searching />
 					}
-					@foreach (var item in Agents)
+					@foreach (var item in Agents!)
 					{
 						<tr>
 							<th>@(item.AgentName)</th>
@@ -199,7 +199,7 @@
 	
 	public List<Message>? Messages { get; set; }
 	public MessageDto MessageDtos { get; set; } = new();
-	[Inject] private IJSRuntime JS { get; set; }
+	[Inject] private IJSRuntime? JS { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -218,7 +218,7 @@
 	}
 	private async Task ClickMassage(MouseEventArgs args)
 	{
-		await JS.InvokeVoidAsync("focusElement", "type");
+		await JS!.InvokeVoidAsync("focusElement", "type");
 		throw new NotImplementedException();
 	}
 }

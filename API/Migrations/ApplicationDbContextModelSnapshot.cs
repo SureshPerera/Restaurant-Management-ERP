@@ -219,7 +219,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomStatus")
@@ -250,7 +249,6 @@ namespace API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OderType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("PayingAmount")
@@ -289,7 +287,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -301,14 +298,12 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nationality")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("OpeningBalanace")
                         .HasColumnType("float");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remark")
@@ -332,8 +327,14 @@ namespace API.Migrations
                     b.Property<DateOnly>("CheckInDate")
                         .HasColumnType("date");
 
+                    b.Property<TimeOnly>("CheckInTime")
+                        .HasColumnType("time");
+
                     b.Property<DateOnly>("CheckOutDate")
                         .HasColumnType("date");
+
+                    b.Property<TimeOnly>("CheckOutTime")
+                        .HasColumnType("time");
 
                     b.Property<bool?>("Conformation")
                         .HasColumnType("bit");
@@ -342,7 +343,6 @@ namespace API.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("CustomerType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly?>("DathOfBirth")
@@ -398,8 +398,14 @@ namespace API.Migrations
                     b.Property<DateTime>("CheckInDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<TimeOnly>("CheckInTime")
+                        .HasColumnType("time");
+
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<TimeOnly>("CheckOutTime")
+                        .HasColumnType("time");
 
                     b.Property<bool?>("Conformation")
                         .HasColumnType("bit");
@@ -472,7 +478,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SandryItem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("TotalLKR")
@@ -524,11 +529,9 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("HouseKeeping")
@@ -545,11 +548,9 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PassWord")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Reservation")

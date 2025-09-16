@@ -8,9 +8,9 @@ namespace ResortManagementApp.Models.Administration.DTOS
        
         public Guid Id { get; set; }
         
-        public string AgentName { get; set; }
+        public string? AgentName { get; set; }
        
-        public string AgentAddress { get; set; }
+        public string? AgentAddress { get; set; }
 
         public string? ContactPerson { get; set; }
        

@@ -13,31 +13,30 @@
 					<h3>Register Agent</h3>
 				</div>
 
-				<div class="card-body" style="background-color: #A3B18A; font-weight: bold; font-size: 15px;">
+				<div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+					<form class="row g-3">
+						<!-- Agent Name -->
+						<div class="col-12">
+							<label class="form-label">Agent Name</label>
+							<input class="form-control" @bind="Agent.AgentName" />
+							<span class="text-danger">@Errors["AgentName"]?[0]</span>
+						</div>
 
-					<!-- Agent Name -->
-					<div class="mb-3">
-						<label class="form-label">Agent Name</label>
-						<input class="form-control" @bind="Agent.AgentName" />
-						<span class="text-danger">@Errors["AgentName"]?[0]</span>
-					</div>
+						<!-- Address -->
+						<div class="col-12">
+							<label class="form-label">Address</label>
+							<textarea class="form-control" @bind="Agent.AgentAddress"></textarea>
+							<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
+						</div>
 
-					<!-- Address -->
-					<div class="mb-3">
-						<label class="form-label">Address</label>
-						<textarea class="form-control" @bind="Agent.AgentAddress"></textarea>
-						<span class="text-danger">@Errors["AgentAddress"]?[0]</span>
-					</div>
+						<!-- Contact Person -->
+						<div class="col-12">
+							<label class="form-label">Contact Person</label>
+							<input class="form-control" @bind="Agent.ContactPerson" />
+							<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
+						</div>
 
-					<!-- Contact Person -->
-					<div class="mb-3">
-						<label class="form-label">Contact Person</label>
-						<input class="form-control" @bind="Agent.ContactPerson" />
-						<span class="text-danger">@Errors["ContactPerson"]?[0]</span>
-					</div>
-
-					<!-- Phone + Email -->
-					<div class="row mb-3">
+						<!-- Phone + Email -->
 						<div class="col-md-6">
 							<label class="form-label">Phone Number</label>
 							<input type="number" class="form-control" @bind="Agent.Mobile" />
@@ -48,10 +47,8 @@
 							<input type="email" class="form-control" @bind="Agent.Email" />
 							<span class="text-danger">@Errors["Email"]?[0]</span>
 						</div>
-					</div>
 
-					<!-- Fax + VAT Reg No -->
-					<div class="row mb-3">
+						<!-- Fax + VAT Reg No -->
 						<div class="col-md-6">
 							<label class="form-label">Fax</label>
 							<input type="number" class="form-control" @bind="Agent.Fax" />
@@ -62,10 +59,8 @@
 							<input type="text" class="form-control" @bind="Agent.VatRegNo" />
 							<span class="text-danger">@Errors["VatRegNo"]?[0]</span>
 						</div>
-					</div>
 
-					<!-- Website + NIC -->
-					<div class="row mb-3">
+						<!-- Website + NIC -->
 						<div class="col-md-6">
 							<label class="form-label">Website</label>
 							<input type="text" class="form-control" @bind="Agent.WebSite" />
@@ -76,21 +71,20 @@
 							<input class="form-control" @bind="Agent.NIC" />
 							<span class="text-danger">@Errors["NIC"]?[0]</span>
 						</div>
-					</div>
 
-					<!-- Credit Limit -->
-					<div class="mb-3">
-						<label class="form-label">Credit Limit</label>
-						<input type="number" class="form-control" @bind="Agent.CreditLimit" />
-					</div>
+						<!-- Credit Limit -->
+						<div class="col-12">
+							<label class="form-label">Credit Limit</label>
+							<input type="number" class="form-control" @bind="Agent.CreditLimit" />
+						</div>
 
-					<!-- Buttons -->
-					<div class="d-grid d-md-flex justify-content-md-end gap-2">
-						<button class="btn btn-success fw-bold" type="button" @onclick="SaveCustomer">Register Agent</button>
-						<button class="btn btn-warning fw-bold" type="reset">Clear</button>
-						<a class="btn btn-primary fw-bold" href="/Reservations/AgentBooking">Back</a>
-					</div>
-
+						<!-- Buttons -->
+						<div class="col-12 d-flex justify-content-center mt-3 gap-3">
+							<button class="btn btn-success fw-bold" type="button" @onclick="SaveCustomer">Register</button>
+							<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+							<a class="btn btn-primary fw-bold" href="/Reservations/AgentBooking">Back</a>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

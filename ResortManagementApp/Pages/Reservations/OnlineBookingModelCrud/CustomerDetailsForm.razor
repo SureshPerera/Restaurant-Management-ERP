@@ -1,20 +1,21 @@
 ﻿@page "/Reservations/OnlineBookingModel/CustomerDetailsForm"
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using System.Text.Json.Nodes
+@using ResortManagementApp.Pages.ComponentCss
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <!-- Card -->
             <div class="card shadow-lg">
-                <div class="card-header bg-primary text-center text-white">
+                <div class="text-white" style="background-color:#2E3A33; text-align:center">
                     <h3>Customer Details</h3>
                 </div>
 
                 <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
                     @if (OnlineBookingDto == null)
                     {
-                        <p><em>Loading customer details...</em></p>
+                        <Searching/>
                     }
                     else
                     {
@@ -43,6 +44,16 @@
                                     <input class="form-control" type="number" @bind="OnlineBookingDto.PhoneNumber" />
                                     <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Check-In Time</label>
+                                    <input class="form-control" type="time" />
+                                    <span class="text-danger">@Errors["CheckInTime"]?[0]</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Check-Out Time</label>
+                                    <input class="form-control" type="time"  />
+                                    <span class="text-danger">@Errors["CheckOutTime"]?[0]</span>
+                                </div>
                             </div>
 
                             <!-- Right Column -->
@@ -64,10 +75,7 @@
                                     <input class="form-control" type="date" @bind="OnlineBookingDto.DathOfBirth" />
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Credit Limit</label>
-                                    <input class="form-control" type="number" @bind="OnlineBookingDto.CreditLimit" />
-                                </div>
+                                
 
                                 <div class="mb-3">
                                     <label class="form-label">Remark</label>
@@ -77,7 +85,7 @@
 
                             <!-- Buttons -->
                             <div class="col-12 d-flex justify-content-center mt-4 gap-3">
-                                <button class="btn btn-success fw-bold" type="button" @onclick="ClickSaveCustomer">Edit Customer</button>
+                                <button class="btn btn-success fw-bold" type="button" @onclick="ClickSaveCustomer">Make Booking</button>
                                 <button class="btn btn-warning fw-bold" type="reset">Clear</button>
                                 <a class="btn btn-primary fw-bold" href="/">Back</a>
                             </div>

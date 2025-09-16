@@ -7,9 +7,9 @@ namespace API.Model.Administration
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string AgentName { get; set; }
+        public string? AgentName { get; set; }
         [Required]
-        public string AgentAddress { get; set; }
+        public string? AgentAddress { get; set; }
 
         public string? ContactPerson { get; set; }
         [Required]

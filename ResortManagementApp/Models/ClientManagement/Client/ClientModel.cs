@@ -8,12 +8,12 @@ namespace ResortManagementApp.Models.ClientManagement.Client
         public Guid Id { get; set; }
 
         [StringLength(100)]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [StringLength(100)]
         public string? LastName { get; set; }
 
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public DateOnly? DathOfBirth { get; set; }
 
 

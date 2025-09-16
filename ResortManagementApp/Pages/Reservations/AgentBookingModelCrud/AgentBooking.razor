@@ -18,44 +18,47 @@
 	{
 		<p><Searching/></p>
 	}
-	<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-		<thead class="bg-light">
-			<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-				<td>Name</td>
-				<td>Phone Number</td>
-				<td>Address</td>
-				<td>EmailAddress</td>
-				<td>NIC</td>
-				<td>CreditLimit</td>				
-				<td>Acctions</td>
-
-			</tr>
-		</thead>
-		<tbody class="bg-light">
-			@if (Agents == null)
-			{
-				<p><Searching/></p>
-			}
-			@foreach (var item in Agents)
-			{
-				<tr style="background-color: #DAD7CD">
-					<th>@(item.AgentName)</th>
-
-					<th>@item.Mobile</th>
-					<th>@item.AgentAddress</th>
-					<th>@item.Email</th>
-					<th>@item.NIC</th>
-					<th>@item.CreditLimit</th>
-					<th style="white-space:nowrap">
-						<a class="btn btn-primary btn-sm" href="/Reservations/AgentBooking/Edit/@item.Id">Edit</a>
-						<a class="btn btn-danger btn-sm" href="/Administration/ManageAgent/Delete/@item.Id">Delete</a>
-					</th>
+	<div class="table-responsive rounded shadow-sm">
+		<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
+			<thead class="bg-light">
+				<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
+					<td>Name</td>
+					<td>Phone Number</td>
+					<td>Address</td>
+					<td>EmailAddress</td>
+					<td>NIC</td>
+					<td>CreditLimit</td>
+					<td>Acctions</td>
 
 				</tr>
-			}
-		</tbody>
+			</thead>
+			<tbody class="bg-light">
+				@if (Agents == null)
+				{
+					<Searching />
+				}
+				@foreach (var item in Agents!)
+				{
+					<tr style="background-color: #DAD7CD">
+						<th>@(item.AgentName)</th>
 
-	</table>
+						<th>@item.Mobile</th>
+						<th>@item.AgentAddress</th>
+						<th>@item.Email</th>
+						<th>@item.NIC</th>
+						<th>@item.CreditLimit</th>
+						<th style="white-space:nowrap">
+							<a class="btn btn-primary btn-sm" href="/Reservations/AgentBooking/Edit/@item.Id">Edit</a>
+							<a class="btn btn-danger btn-sm" href="/Administration/ManageAgent/Delete/@item.Id">Delete</a>
+						</th>
+
+					</tr>
+				}
+			</tbody>
+
+		</table>
+	</div>
+	
 </div>
 @inject HttpClient Http
 @code {

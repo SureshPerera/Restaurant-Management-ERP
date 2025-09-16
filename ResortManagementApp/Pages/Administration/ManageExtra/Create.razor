@@ -29,7 +29,7 @@
 							<div class="col-md-6" style="background-color: antiquewhite;">
 								<select class="form-control" @bind="ExtraChargersDtos.ExtraChargeType">
 									<option>---Select--</option>
-									@foreach (var item in ExtraChargeTypes)
+									@foreach (var item in ExtraChargeTypes!)
 									{
 										<option>@item</option>
 									}

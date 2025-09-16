@@ -6,112 +6,112 @@
 
 @layout MainLayout
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Card -->
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-center text-white">
-                    <h3>Edit Customer</h3>
-                </div>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<!-- Card -->
+			<div class="card shadow-lg">
+				<div class="card-header bg-primary text-center text-white">
+					<h3>Edit Customer</h3>
+				</div>
 
-                <div class="card-body" style="background-color: #A3B18A; font-weight: bold; font-size: 14px;">
+				<div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+					@if (directBookingModel == null)
+					{
+						<p><Searching /></p>
+					}
+					else
+					{
+						<form class="row g-3">
+							<!-- First & Last Name -->
+							<div class="col-md-6">
+								<label class="form-label">First Name</label>
+								<input class="form-control" @bind="directBookingDTO.FirstName" />
+								<span class="text-danger">@Errors["FirstName"]?[0]</span>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Last Name</label>
+								<input class="form-control" @bind="directBookingDTO.LastName" />
+							</div>
 
-                    @if (directBookingModel == null)
-                    {
-                        <p><Searching /></p>
-                    }
-                    else
-                    {
-                        <!-- First + Last Name -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">First Name</label>
-                                <input class="form-control" @bind="directBookingDTO.FirstName" />
-                                <span class="text-danger">@Errors["FirstName"]?[0]</span>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Last Name</label>
-                                <input class="form-control" @bind="directBookingDTO.LastName" />
-                            </div>
-                        </div>
+							<!-- Address -->
+							<div class="col-12">
+								<label class="form-label">Address</label>
+								<textarea class="form-control" @bind="directBookingDTO.Address"></textarea>
+								<span class="text-danger">@Errors["Address"]?[0]</span>
+							</div>
 
-                        <!-- Address -->
-                        <div class="mb-3">
-                            <label class="form-label">Address</label>
-                            <textarea class="form-control" @bind="directBookingDTO.Address"></textarea>
-                            <span class="text-danger">@Errors["Address"]?[0]</span>
-                        </div>
+							<!-- Phone & Email -->
+							<div class="col-md-6">
+								<label class="form-label">Phone Number</label>
+								<input type="number" class="form-control" @bind="directBookingDTO.PhoneNumber" />
+								<span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Email Address</label>
+								<input type="email" class="form-control" @bind="directBookingDTO.EmailAddress" />
+								<span class="text-danger">@Errors["EmailAddress"]?[0]</span>
+							</div>
 
-                        <!-- Phone + Email -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Phone Number</label>
-                                <input type="number" class="form-control" @bind="directBookingDTO.PhoneNumber" />
-                                <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" class="form-control" @bind="directBookingDTO.EmailAddress" />
-                                <span class="text-danger">@Errors["EmailAddress"]?[0]</span>
-                            </div>
-                        </div>
+							<!-- Customer Type -->
+							<div class="col-12">
+								<label class="form-label">Customer Type</label>
+								<select class="form-control" @bind="directBookingDTO.CustomerType">
+									<option value="">--Select--</option>
+									@foreach (var item in CustomerType)
+									{
+										<option>@item</option>
+									}
+								</select>
+								<span class="text-danger">@Errors["CustomerType"]?[0]</span>
+							</div>
 
-                        <!-- Customer Type -->
-                        <div class="mb-3">
-                            <label class="form-label">Customer Type</label>
-                            <select class="form-control" @bind="directBookingDTO.CustomerType">
-                                <option value="">--Select--</option>
-                                @foreach (var item in CustomerType)
-                                {
-                                    <option>@item</option>
-                                }
-                            </select>
-                            <span class="text-danger">@Errors["CustomerType"]?[0]</span>
-                        </div>
+							<!-- NIC & DOB -->
+							<div class="col-md-6">
+								<label class="form-label">NIC Number</label>
+								<input class="form-control" @bind="directBookingDTO.NIC" />
+								<span class="text-danger">@Errors["NIC"]?[0]</span>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Date of Birth</label>
+								<input type="date" class="form-control" @bind="directBookingDTO.DathOfBirth" />
+							</div>
 
-                        <!-- NIC + DOB -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">NIC Number</label>
-                                <input class="form-control" @bind="directBookingDTO.NIC" />
-                                <span class="text-danger">@Errors["NIC"]?[0]</span>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Date of Birth</label>
-                                <input type="date" class="form-control" @bind="directBookingDTO.DathOfBirth" />
-                            </div>
-                        </div>
+							<!-- Nationality & Credit Limit -->
+							<div class="col-md-6">
+								<label class="form-label">Nationality</label>
+								<input class="form-control" @bind="directBookingDTO.Nationality" />
+								<span class="text-danger">@Errors["Nationality"]?[0]</span>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Credit Limit</label>
+								<input type="number" class="form-control" @bind="directBookingDTO.CreditLimit" />
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Check-In Time</label>
+								<input type="time" class="form-control" />
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Check-Out Time</label>
+								<input type="time" class="form-control" />
+							</div>
+							<!-- Remark -->
+							<div class="col-12">
+								<label class="form-label">Remark</label>
+								<textarea class="form-control" @bind="directBookingDTO.Remark"></textarea>
+							</div>
 
-                        <!-- Nationality + Credit Limit -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Nationality</label>
-                                <input class="form-control" @bind="directBookingDTO.Nationality" />
-                                <span class="text-danger">@Errors["Nationality"]?[0]</span>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Credit Limit</label>
-                                <input type="number" class="form-control" @bind="directBookingDTO.CreditLimit" />
-                            </div>
-                        </div>
-
-                        <!-- Remark -->
-                        <div class="mb-3">
-                            <label class="form-label">Remark</label>
-                            <textarea class="form-control" @bind="directBookingDTO.Remark"></textarea>
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="d-grid d-md-flex justify-content-md-end gap-2">
-                            <button class="btn btn-success fw-bold" type="button" @onclick="UpdateCustomer">Update Customer</button>
-                            <button class="btn btn-warning fw-bold" type="reset">Clear</button>
-                            <a class="btn btn-primary fw-bold" href="/Reservations/DirectBooking">Back</a>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+							<!-- Buttons -->
+							<div class="col-12 d-flex justify-content-center mt-3 gap-3">
+								<button class="btn btn-success fw-bold" type="button" @onclick="UpdateCustomer">Update</button>
+								<button class="btn btn-warning fw-bold" type="reset">Clear</button>
+								<a class="btn btn-primary fw-bold" href="/Reservations/DirectBooking">Back</a>
+							</div>
+						</form>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>

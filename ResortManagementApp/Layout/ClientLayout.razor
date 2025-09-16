@@ -1,4 +1,5 @@
-﻿@using ResortManagementApp.Layout
+﻿@using MudBlazor
+@using ResortManagementApp.Layout
 
 @inherits LayoutComponentBase
 
@@ -46,33 +47,32 @@
 		</div>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> HOME
+				<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">HOME</span>
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> PACKAGES
+				<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">PACKAGES</span>
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> DINING
+				<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">DINING</span>
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> GALLERY
+				<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">GALLERY</span>
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> SPA
+				<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">SPA</span>
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
-			<input class="btn btn-outline-primary" style="border-radius:1rem 2rem;" type="submit" name="booking" value="Book Now" />
+			<a class="btn btn-outline-primary" style="border-radius:1rem 2rem;"  name="booking" > Book Now</a>
 		</div>
-
 
 	</div>
 
@@ -92,35 +92,38 @@
 
 </div>
 
-<footer style="background-color:#2E3A33; color:#F4F1EE; font-family: 'Segoe UI', sans-serif; padding:4rem 2rem 2rem 2rem;">
+<footer style="background-color:#2E3A33; color:#F4F1EE; font-family:cursive; padding:4rem 2rem 2rem 2rem;">
 
 	<!-- Footer Content -->
 	<div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem;">
 
 		<!-- Contact Card -->
-		<div style="flex:1; min-width:250px; background-color:#3E4C41; padding:2rem; border-radius:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+		<div style="flex:1; min-width:250px; background-color:#3E4C41; padding:2rem; border-radius:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.3); text-align:center">
 			<h3 style="font-size:1.5rem; margin-bottom:1rem; color:#C5E1A5;">Contact Us</h3>
-			<p>Solitary Green Cabins, Odintan Resort, Nuwara Eliya</p>
+			<div style="color:#F4F1EE; text-decoration:none; font-size:1.3rem; line-height:1.8;">
+			<p >Solitary Green Cabins, Odintan Resort, Nuwara Eliya</p>
 			<p>Phone: 0703914685 / 0763914685</p>
 			<p>Email: <a href="mailto:solitarygreencabins@gmail.com" style="color:#C5E1A5; text-decoration:underline;">solitarygreencabins@gmail.com</a></p>
+
+			</div>
 		</div>
 
 		<!-- Quick Links Card -->
-		<div style="flex:1; min-width:250px; background-color:#3E4C41; padding:2rem; border-radius:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+		<div style="flex:1; min-width:250px; background-color:#3E4C41; padding:2rem; border-radius:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.3); text-align:center">
 			<h3 style="font-size:1.5rem; margin-bottom:1rem; color:#C5E1A5;">Quick Links</h3>
-			<ul style="list-style:none; padding:0; font-size:1rem; line-height:1.8;">
-				<li><a href="#" style="color:#F4F1EE; text-decoration:none;">Contact Us</a></li>
-				<li><a href="#" style="color:#F4F1EE; text-decoration:none;">FAQ</a></li>
-				<li><a href="#" style="color:#F4F1EE; text-decoration:none;">Share Your Feedback</a></li>
-				<li><a href="#" style="color:#F4F1EE; text-decoration:none;">About Us</a></li>
-				<li><a href="#" style="color:#F4F1EE; text-decoration:none;">Terms of Use</a></li>
-				<li><a href="#" style="color:#F4F1EE; text-decoration:none;">Cookie Policy</a></li>
+			<ol style="list-style:none; padding:0; font-size:1.3rem; line-height:1.8; ">
+				<li><a href="#" style="color:#F4F1EE;">Contact Us</a></li>
+				<li><a href="#" style="color:#F4F1EE; ">FAQ</a></li>
+				<li><a href="#" style="color:#F4F1EE; ">Share Your Feedback</a></li>
+				<li><a href="#" style="color:#F4F1EE; ">About Us</a></li>
+				<li><a href="#" style="color:#F4F1EE; ">Terms of Use</a></li>
+				<li><a href="#" style="color:#F4F1EE; ">Cookie Policy</a></li>
 				<li>
-					<NavLink class="nav-link" href="Auth/Loging" style="color:#F4F1EE; text-decoration:none;">
-						<span class="bi bi-person-badge-nav-menu"></span> Login
+					<NavLink class="nav-link" href="Auth/Loging" style="color:#F4F1EE;">
+						<span class="bi bi-person-badge-nav-menu">Login</span>
 					</NavLink>
 				</li>
-			</ul>
+			</ol>
 		</div>
 
 		<!-- Social Media Card -->
@@ -171,7 +174,7 @@
 		justify-content: center;
 	}
 
-	}
+	
 </style>
 
 

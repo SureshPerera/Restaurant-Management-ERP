@@ -56,53 +56,48 @@
 		<div class="fixed-div" style="background-color:#344E41">
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> OFFERS
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">OFFERS</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> EXPERIENCES
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">EXPERIENCES</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> EVENT
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">EVENT</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> ESG
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">ESG</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> GIFT CARDS
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">GIFT CARDS</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> ABOUT US
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">ABOUT US</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
 				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> BOOK DIRECT
+					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">BOOK DIRECT</span>
 				</NavLink>
 			</div>
 		</div>
 
 	</section>
 
-	<section style="background-color: #A3B18A; margin-top: 0.4rem; padding: 10px;">
+	<section style="background-color: #A3B18A; margin-top: 0.4rem; padding: 10px; ">
 		<div class="">
-			<form class="con3-quckBooking-section3" action="/frontoffice" method="post" style="">
+			<form class="con3-quckBooking-section3" action="/frontoffice" method="post" style="font-family: cursive;">
 				<div class="position-absolute justify-content-center flex">
-					<div style="width: 250px;">
-						<MudSelect T="DropdownWidth" Label="Resort Width" @bind-Value="@_dropdownWidth">
-							<MudSelectItem Value="@DropdownWidth.Relative" >Solitary Green Resort - Nuwara Eliya</MudSelectItem>
-						</MudSelect>
-					</div>
-					<span style="font-size:50px;margin-top:-1rem;">|</span>
+				
 					<div style="margin-top: 0.5rem">
 						<MudStack AlignItems="AlignItems.Center" Style="width:450px; height:50px; margin:-1rem;">
 							<MudDateRangePicker PickerVariant="@_variant" @bind-DateRange="@_dateRange" Margin="Margin.Dense" Label="Select date range" />
@@ -159,7 +154,7 @@
 					<span style="font-size:50px;margin-top:-1rem;">|</span>
 
 					<div>
-						<button class="btn btn-primary" @onclick="NavigateToCustomerDetails">ClickToBooking</button>
+						<button class="btn btn-primary" @onclick="NavigateToCustomerDetails" style=" color:#C5E1A5; font-family: cursive; ">Booking</button>
 					</div>
 				</div>	
 			</form>
@@ -185,17 +180,17 @@
 
 	</section>
 
-	<section class="services-section" style="padding:2rem; ">
-		<MudPaper Class="pa-4">
+	<section class="services-section" style="padding:2rem; background-color:#2E3A33 ">
+		<MudPaper Class="pa-4" Style="background-color:#3E4C41">
 			<MudStack Spacing="2">
-				<MudButton OnClick="OnExpandCollapseClick" Color="Color.Primary">
+				<MudButton OnClick="OnExpandCollapseClick" Style="color:#C5E1A5; font-size: 1.5rem;font-family: cursive;">
 					@(_expanded ? "Collapse" : "SERVICES & FACILITIES")
 				</MudButton>
 				<MudDivider />
 				<MudCollapse Expanded="_expanded">
 					<div class="services-grid"
 						 style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-                            gap:2rem; justify-items:center; align-items:start; font-family:'Lucida Sans Typewriter';">
+                            gap:1rem; justify-items:center; align-items:start; font-family:'Lucida Sans Typewriter'; ">
 						@foreach (var service in new (string Img, string Title, string Desc)[] {
 												("/imgs/clientpotal/clienthomeimg/marketeq--wifi.png", "WiFi", "Available throughout hotel."),
 												("/imgs/clientpotal/clienthomeimg/equptment.png","Equipment","Bicycles & snorkelling gear for guests’ use."),
@@ -302,7 +297,7 @@
 @code {
 	public CustomerUsePcInfoDto CustomerUsePcInfoDto = new CustomerUsePcInfoDto();
 	public OnlineBookingModel onlineBookingModel = new OnlineBookingModel();
-	public string UserCountry;
+	public string? UserCountry;
 	private DropdownWidth _dropdownWidth ;
 	public OnlineBookingModel onlineBooking = new();
 	private bool arrows = true;
@@ -311,7 +306,7 @@
 	private bool autocycle = true;
 	private Transition transition = Transition.Fade;
 	private PickerVariant _variant = PickerVariant.Dialog;
-	private DateRange _dateRange { get; set; }
+	private DateRange? _dateRange { get; set; }
 	public JsonNode Errors { set; get; } = new JsonObject();
 
 

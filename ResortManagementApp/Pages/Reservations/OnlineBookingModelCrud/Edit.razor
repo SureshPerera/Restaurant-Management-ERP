@@ -2,6 +2,7 @@
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
+@using ResortManagementApp.Pages.ComponentCss
 
 @layout MainLayout
 <div class="container">
@@ -13,88 +14,88 @@
                     <h3>Register Customer</h3>
                 </div>
 
-                <div class="card-body" style="background-color: #A3B18A; font-weight: bold; font-size: 15px;">
+                <div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+                    @if (OnlineBookingDto == null)
+                    {
+                        <p><Searching /></p>
+                    }
+                    else
+                    {
+                        <form class="row g-3">
+                            <!-- Customer ID -->
+                            <div class="col-12">
+                                <label class="form-label">Customer ID</label>
+                                <input class="form-control" type="text" @bind="@Id" readonly style="background-color: antiquewhite;" />
+                                <span class="text-danger">@Errors["CustomerId"]?[0]</span>
+                            </div>
 
-                    <!-- Customer ID -->
-                    <div class="mb-3">
-                        <label class="form-label">Customer ID</label>
-                        <input class="form-control" type="text" @bind="@Id" readonly style="background-color: antiquewhite;" />
-                        <span class="text-danger">@Errors["CustomerId"]?[0]</span>
-                    </div>
+                            <!-- First + Last Name -->
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input class="form-control" @bind="OnlineBookingDto.FirstName" />
+                                <span class="text-danger">@Errors["FirstName"]?[0]</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input class="form-control" @bind="OnlineBookingDto.LastName" />
+                                <span class="text-danger">@Errors["LastName"]?[0]</span>
+                            </div>
 
-                    <!-- First + Last Name -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">First Name</label>
-                            <input class="form-control" @bind="OnlineBookingDto.FirstName" />
-                            <span class="text-danger">@Errors["FirstName"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Last Name</label>
-                            <input class="form-control" @bind="OnlineBookingDto.LastName" />
-                            <span class="text-danger">@Errors["LastName"]?[0]</span>
-                        </div>
-                    </div>
+                            <!-- Address -->
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" @bind="OnlineBookingDto.Address"></textarea>
+                                <span class="text-danger">@Errors["Address"]?[0]</span>
+                            </div>
 
-                    <!-- Address -->
-                    <div class="mb-3">
-                        <label class="form-label">Address</label>
-                        <textarea class="form-control" @bind="OnlineBookingDto.Address"></textarea>
-                        <span class="text-danger">@Errors["Address"]?[0]</span>
-                    </div>
+                            <!-- Phone + Email -->
+                            <div class="col-md-6">
+                                <label class="form-label">Phone Number</label>
+                                <input type="number" class="form-control" @bind="OnlineBookingDto.PhoneNumber" />
+                                <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" @bind="OnlineBookingDto.EmailAddress" />
+                                <span class="text-danger">@Errors["EmailAddress"]?[0]</span>
+                            </div>
 
-                    <!-- Phone + Email -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Phone Number</label>
-                            <input type="number" class="form-control" @bind="OnlineBookingDto.PhoneNumber" />
-                            <span class="text-danger">@Errors["PhoneNumber"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" @bind="OnlineBookingDto.EmailAddress" />
-                            <span class="text-danger">@Errors["EmailAddress"]?[0]</span>
-                        </div>
-                    </div>
+                            <!-- NIC + DOB -->
+                            <div class="col-md-6">
+                                <label class="form-label">NIC Number</label>
+                                <input class="form-control" @bind="OnlineBookingDto.NIC" />
+                                <span class="text-danger">@Errors["NIC"]?[0]</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" @bind="OnlineBookingDto.DathOfBirth" />
+                            </div>
 
-                    <!-- NIC + DOB -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">NIC Number</label>
-                            <input class="form-control" @bind="OnlineBookingDto.NIC" />
-                            <span class="text-danger">@Errors["NIC"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" @bind="OnlineBookingDto.DathOfBirth" />
-                        </div>
-                    </div>
+                            <!-- Nationality + Credit Limit -->
+                            <div class="col-md-6">
+                                <label class="form-label">Nationality</label>
+                                <input class="form-control" @bind="OnlineBookingDto.Nationality" />
+                                <span class="text-danger">@Errors["Nationality"]?[0]</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Credit Limit</label>
+                                <input type="number" class="form-control" @bind="OnlineBookingDto.CreditLimit" />
+                            </div>
 
-                    <!-- Nationality + Credit Limit -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Nationality</label>
-                            <input class="form-control" @bind="OnlineBookingDto.Nationality" />
-                            <span class="text-danger">@Errors["Nationality"]?[0]</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Credit Limit</label>
-                            <input type="number" class="form-control" @bind="OnlineBookingDto.CreditLimit" />
-                        </div>
-                    </div>
+                            <!-- Remark -->
+                            <div class="col-12">
+                                <label class="form-label">Remark</label>
+                                <textarea class="form-control" @bind="OnlineBookingDto.Remark"></textarea>
+                            </div>
 
-                    <!-- Remark -->
-                    <div class="mb-3">
-                        <label class="form-label">Remark</label>
-                        <textarea class="form-control" @bind="OnlineBookingDto.Remark"></textarea>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="d-grid d-md-flex justify-content-md-end gap-2">
-                        <button class="btn btn-success fw-bold" type="button" @onclick="UpdateCustomer">Edit Customer</button>
-                        <button class="btn btn-warning fw-bold" type="reset">Clear</button>
-                        <a class="btn btn-primary fw-bold" href="/Reservations/OnlineBooking">Back</a>
-                    </div>
+                            <!-- Buttons -->
+                            <div class="col-12 d-flex justify-content-center mt-3 gap-3">
+                                <button class="btn btn-success fw-bold" type="button" @onclick="UpdateCustomer">Edit Customer</button>
+                                <button class="btn btn-warning fw-bold" type="reset">Clear</button>
+                                <a class="btn btn-primary fw-bold" href="/Reservations/OnlineBooking">Back</a>
+                            </div>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
@@ -139,7 +140,7 @@
 			country = result?.country_name;
 
 			OnlineBookingModel = await http.GetFromJsonAsync<OnlineBookingModel>($"https://localhost:4000/api/OnlineBooking/{Id}");
-			OnlineBookingDto.FirstName = OnlineBookingModel.FirstName ?? "";
+			OnlineBookingDto.FirstName = OnlineBookingModel!.FirstName ?? "";
 			OnlineBookingDto.LastName = OnlineBookingModel?.LastName ?? "";
 			OnlineBookingDto.Address = OnlineBookingModel?.Address ?? "";
 			OnlineBookingDto.PhoneNumber = OnlineBookingModel?.PhoneNumber ?? "";

@@ -1,6 +1,7 @@
 ﻿@page "/Reservations/CheckInOut"
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Models.Reservation.DTO
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 @inject IJSRuntime JS
@@ -15,7 +16,7 @@
 				<!-- Search -->
 				<div class="col-md-4">
 					<div class="input-group">
-						<input type="text" id="search" class="form-control" placeholder="Search..." />
+						<input type="search" id="search" class="form-control" placeholder="Search..." />
 						<button class="btn btn-primary" type="button">Go</button>
 					</div>
 				</div>
@@ -34,7 +35,7 @@
 
 				<!-- Action Button -->
 				<div class="col-md-4 d-flex align-items-end">
-					<button class="btn btn-warning w-100">View All Reservations</button>
+					<button class="btn btn-warning w-100" @onclick="clickViewAllReservations">View All Reservations</button>
 				</div>
 
 			</div>
@@ -57,7 +58,7 @@
 					{
 						<div class="card rounded-3 border-0 shadow-sm">
 							<div class="card-header bg-primary text-white">
-								<h5 class="mb-0">Direct Bookings</h5>
+								<h5 class="mb-0">All Bookings</h5>
 							</div>
 							<div class="card-body p-0">
 								<div class="table-responsive">
@@ -66,9 +67,10 @@
 											<tr>
 												<th scope="col">Id</th>
 												<th scope="col">Name</th>
-												<th scope="col">Check-In</th>
-												<th scope="col">Check-Out</th>
-												<th scope="col">NIC</th>
+												<th scope="col">Check-In Date</th>
+												<th scope="col">Check-In Time</th>
+												<th scope="col">Check-Out Date</th>
+												<th scope="col">Check-Out Time</th>
 												<th scope="col">Confirmation</th>
 												<th scope="col">Customer Type</th>
 												<th scope="col" class="text-center">Actions</th>
@@ -81,8 +83,11 @@
 													<td>@item.Id</td>
 													<td>@($"{item.FirstName} {item.LastName}")</td>
 													<td>@item.CheckInDate.ToString("yyyy-MM-dd")</td>
+													<td>@item.CheckInTime</td>
+
 													<td>@item.CheckOutDate.ToString("yyyy-MM-dd")</td>
-													<td>@item.NIC</td>
+													<td>@item.CheckInDate</td>
+
 													<td>
 														@if (@Conformation)
 														{
@@ -102,6 +107,37 @@
 													</td>
 												</tr>
 											}
+											@foreach (var item in onlineBookingModels!)
+											{
+												<tr>
+													<td>@item.Id</td>
+													<td>@($"{item.FirstName} {item.LastName}")</td>
+													<td>@item.CheckInDate</td>
+													<td>@item.CheckInTime</td>
+
+													<td>@item.CheckOutDate</td>
+													<td>@item.CheckInDate</td>
+
+													<td>
+														@if (@Conformation)
+														{
+															<span class="badge bg-success">Confirmed</span>
+														}
+														else
+														{
+															<span class="badge bg-warning text-dark">Pending</span>
+														}
+													</td>
+													<td>@item.CustomerType</td>
+													<td class="text-center" style="white-space:nowrap;">
+														<button class="btn btn-sm btn-outline-primary"
+																@onclick="() => ClickConformations(item.Id)">
+															Confirm
+														</button>
+													</td>
+												</tr>
+											}
+
 										</tbody>
 									</table>
 								</div>
@@ -164,7 +200,7 @@
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Status:</label>
-									<input readonly class="form-control form-control-sm" @bind="DirectBookinDTO.NIC" />
+									<input readonly class="form-control form-control-sm" @bind="DirectBookinDTO!.NIC" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Customer Type:</label>
@@ -331,6 +367,8 @@
 @inject HttpClient Http
 @code {
 	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
+	private List<OnlineBookingModel>? onlineBookingModels = new List<OnlineBookingModel>();
+
 	public DirectBookinDTO? DirectBookinDTO = new();
 	public DirectBookinDTO DirectBookinDTOs = new();
 	public Guid Id { get; set; }
@@ -366,6 +404,7 @@
 		try
 		{
 			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+			onlineBookingModels = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
 			Console.WriteLine("Pass");
 			StateHasChanged();
 		}
@@ -387,7 +426,7 @@
 			address = DirectBookinDTO?.Address ?? "";
 			phone = DirectBookinDTO?.PhoneNumber ?? "";
 			email = DirectBookinDTO?.EmailAddress ?? "";
-			from = DirectBookinDTO.CheckInDate;
+			from = DirectBookinDTO!.CheckInDate;
 			to = DirectBookinDTO.CheckOutDate;
 			total = adults + kids;
 
@@ -398,14 +437,14 @@
 			DirectBookinDTOs.Conformation = DirectBookinDTO?.Conformation ;
 			DirectBookinDTOs.OpeningBalanace = DirectBookinDTO?.OpeningBalanace ?? 0;
 			DirectBookinDTOs.Address = DirectBookinDTO?.Address ?? "";
-			DirectBookinDTOs.CheckInDate = (DateOnly)DirectBookinDTO?.CheckInDate;
-			DirectBookinDTOs.CheckOutDate = (DateOnly)DirectBookinDTO?.CheckOutDate;
+			DirectBookinDTOs.CheckInDate = (DateOnly)DirectBookinDTO!.CheckInDate;
+			DirectBookinDTOs.CheckOutDate = (DateOnly)DirectBookinDTO!.CheckOutDate;
 			DirectBookinDTOs.DathOfBirth = DirectBookinDTO?.DathOfBirth ;
 			DirectBookinDTOs.CreditLimit = DirectBookinDTO?.CreditLimit ?? 0;
 			DirectBookinDTOs.EmailAddress = DirectBookinDTO?.EmailAddress ?? "";
 			DirectBookinDTOs.PhoneNumber = DirectBookinDTO?.PhoneNumber ?? "";
 			DirectBookinDTOs.Remark = DirectBookinDTO?.Remark ?? "";
-			
+
 
 			StateHasChanged();
 		}
@@ -413,5 +452,9 @@
 		{
 			Console.WriteLine(ex);
 		}
+	}
+	private Task clickViewAllReservations(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
 	}
 }
