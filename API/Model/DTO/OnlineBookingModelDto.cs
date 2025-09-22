@@ -34,7 +34,7 @@ namespace API.Model.DTO
         public int? NoOfAdults { get; set; } = 0;
         public int? NoOfChildren { get; set; } = 0;
         public string? PramoCode { get; set; }
-        public bool? Conformation { get; set; }
+        public bool Conformation { get; set; }
         public TimeOnly CheckInTime { get; set; }
         public TimeOnly CheckOutTime { get; set; }
 

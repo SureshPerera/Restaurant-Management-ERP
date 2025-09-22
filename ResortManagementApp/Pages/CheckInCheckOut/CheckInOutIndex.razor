@@ -3,6 +3,8 @@
 @using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.ComponentCss
+@using System.Text.Json
+@using System.Text
 @layout MainLayout
 @inject IJSRuntime JS
 
@@ -35,7 +37,7 @@
 
 				<!-- Action Button -->
 				<div class="col-md-4 d-flex align-items-end">
-					<button class="btn btn-warning w-100" @onclick="clickViewAllReservations">View All Reservations</button>
+					<button class="btn btn-warning w-100" @onclick="clickViewAllReservations">View Reservations</button>
 				</div>
 
 			</div>
@@ -43,7 +45,7 @@
 	</div>
 
 	<br />
-	<div >
+	<div>
 		<section class="container-fluid my-4">
 			<div class="row">
 				<div class="col-lg-10 mx-auto">
@@ -84,12 +86,10 @@
 													<td>@($"{item.FirstName} {item.LastName}")</td>
 													<td>@item.CheckInDate.ToString("yyyy-MM-dd")</td>
 													<td>@item.CheckInTime</td>
-
 													<td>@item.CheckOutDate.ToString("yyyy-MM-dd")</td>
-													<td>@item.CheckInDate</td>
-
+													<td>@item.CheckOutTime</td>
 													<td>
-														@if (@Conformation)
+														@if (item.Conformation == true)
 														{
 															<span class="badge bg-success">Confirmed</span>
 														}
@@ -101,8 +101,8 @@
 													<td>@item.CustomerType</td>
 													<td class="text-center" style="white-space:nowrap;">
 														<button class="btn btn-sm btn-outline-primary"
-																@onclick="() => ClickConformations(item.Id)">
-															Confirm
+																@onclick="() => ClickConformationsDirect(item.Id)">
+															Bill View
 														</button>
 													</td>
 												</tr>
@@ -114,12 +114,10 @@
 													<td>@($"{item.FirstName} {item.LastName}")</td>
 													<td>@item.CheckInDate</td>
 													<td>@item.CheckInTime</td>
-
 													<td>@item.CheckOutDate</td>
-													<td>@item.CheckInDate</td>
-
+													<td>@item.CheckOutTime</td>
 													<td>
-														@if (@Conformation)
+														@if (item.Conformation == true)
 														{
 															<span class="badge bg-success">Confirmed</span>
 														}
@@ -131,8 +129,8 @@
 													<td>@item.CustomerType</td>
 													<td class="text-center" style="white-space:nowrap;">
 														<button class="btn btn-sm btn-outline-primary"
-																@onclick="() => ClickConformations(item.Id)">
-															Confirm
+																@onclick="() => ClickConformationsOnline(item.Id)">
+															Bill View
 														</button>
 													</td>
 												</tr>
@@ -156,18 +154,27 @@
 					<div class="card shadow-sm">
 						<div class="card-body d-flex flex-column gap-2">
 							<div class="bg-light rounded p-2">
-								<strong>Booking Status:</strong> <span class="text-danger"></span>
+								<strong>Booking Status:</strong>
+								@if (Conformation == true)
+								{
+									<span class="badge bg-success"> Confirmed </span>
+								}
+								else
+								{
+									<span class="badge bg-warning text-dark"> Pending </span>
+
+								}
 							</div>
 							<div class="bg-light rounded p-2">
-								<strong>Current Balance:</strong> <span class="text-success"></span>
+								<strong>Current Balance:</strong> <span class="text-success"> @totalBalanceLKR</span>
 							</div>
-							<button class="btn btn-success w-100">Confirm</button>
-							<button class="btn btn-primary w-100">Advance Payment</button>
+							<button class="btn btn-success w-100" @onclick="clickConform">Confirm</button>
+							<button class="btn btn-primary w-100" @onclick="clickAdvancePay">Advance Payment</button>
 							<button class="btn btn-warning w-100">Amend Booking</button>
 							<button class="btn btn-info w-100">GRC Print</button>
 							<button class="btn btn-info w-100">RCV Print</button>
-							<button class="btn btn-danger w-100">Cancellation</button>
-							<button class="btn btn-dark w-100">Check-In</button>
+							<button class="btn btn-danger w-100" @onclick="clickCancellation">Cancellation</button>
+							<button class="btn btn-dark w-100" @onclick="ClickCheckIn">Check-In</button>
 						</div>
 					</div>
 				</div>
@@ -181,7 +188,7 @@
 							<div class="d-flex justify-content-between align-items-center mb-4">
 								<div class="text-md-start text-center">
 									<img src="/imgs/maindashboard/logo.png" width="150" class="mb-2" />
-									<h6 class="fw-bold">Master Room Bill : <span class="text-primary">10</span></h6>
+									<h6 class="fw-bold">Master Room Bill : <span class="text-primary">@Id</span></h6>
 								</div>
 								<div class="rounded bg-white p-3 text-end shadow-sm">
 									<h5 class="fw-bold mb-1">Solitory Green Resort</h5>
@@ -196,27 +203,27 @@
 							<div class="row g-3 mb-4">
 								<div class="col-md-6">
 									<label class="form-label">Reserve No:</label>
-									<input readonly class="form-control form-control-sm" @bind="@Id" />
+									<input readonly class="form-control form-control-sm" value="@ReserveNo" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Status:</label>
-									<input readonly class="form-control form-control-sm" @bind="DirectBookinDTO!.NIC" />
+									<input readonly class="form-control form-control-sm" value="@status" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Customer Type:</label>
-									<input readonly class="form-control form-control-sm" @bind="DirectBookinDTO.CustomerType" />
+									<input readonly class="form-control form-control-sm" value="@CustomerType" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Accommodation Type:</label>
-									<input readonly class="form-control form-control-sm" />
+									<input readonly class="form-control form-control-sm" value="@AccomadationType" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Voucher No:</label>
-									<input readonly class="form-control form-control-sm" />
+									<input readonly class="form-control form-control-sm" value="@VoucherNo" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Tour No:</label>
-									<input readonly class="form-control form-control-sm" />
+									<input readonly class="form-control form-control-sm" value="@TourNo" />
 								</div>
 							</div>
 
@@ -232,8 +239,8 @@
 								<div class="col-md-6">
 									<p><strong>Agent:</strong> @agentName</p>
 									<p><strong>Adults:</strong> @adults | <strong>Kids:</strong> @kids</p>
-									<p><strong>USD Exch:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" /></p>
-									<p><strong>Room rate/day:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" /></p>
+									<p><strong>USD Exch:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" />@USDExch</p>
+									<p><strong>Room rate/day:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" /> @RoomRate</p>
 								</div>
 							</div>
 
@@ -243,8 +250,8 @@
 								<table class="table-bordered table-sm table text-center">
 									<thead class="table-light">
 										<tr>
-											<th>From</th>
-											<th>To</th>
+											<th>CHeck-In</th>
+											<th>Check-Out</th>
 											<th>Basis</th>
 											<th>Adults Stay</th>
 											<th>Kids Stay</th>
@@ -253,8 +260,8 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>@from</td>
-											<td>@to</td>
+											<td>@CheckInDate</td>
+											<td>@CheckOutDate</td>
 											<td>@basis</td>
 											<td>@adults</td>
 											<td>@kids</td>
@@ -269,13 +276,13 @@
 							<div class="row mb-4">
 								<div class="col-md-6">
 									<label class="form-label">Check-In Date:</label>
-									<input readonly type="date" class="form-control form-control-sm mb-2" />
+									<input readonly type="date" class="form-control form-control-sm mb-2" value="@CheckInDate" />
 									<label class="form-label">Arrival Time:</label>
 									<input type="time" class="form-control form-control-sm" />
 								</div>
 								<div class="col-md-6">
 									<label class="form-label">Check-Out Date:</label>
-									<input readonly type="date" class="form-control form-control-sm mb-2" />
+									<input readonly type="date" class="form-control form-control-sm mb-2" value="@CheckOutDate" />
 									<label class="form-label">Departure Time:</label>
 									<input type="time" class="form-control form-control-sm" />
 								</div>
@@ -285,19 +292,19 @@
 							<h5 class="fw-bold text-secondary mb-3">Price Breakdown</h5>
 							<table class="table-sm table">
 								<tbody>
-									<tr><td>+ Adults Stay Total (LKR)</td><td class="text-end">500</td></tr>
-									<tr><td>+ Kids Stay Total (LKR)</td><td class="text-end">400</td></tr>
-									<tr><td>Grand Total (LKR incl. tax)</td><td class="text-end">500</td></tr>
-									<tr><td>- Total Advance Payment</td><td class="text-end">100</td></tr>
-									<tr class="table-active fw-bold"><td>Total Balance (LKR)</td><td class="text-end">1000</td></tr>
-									<tr class="table-active fw-bold"><td>Total Balance (USD)</td><td class="text-end">10</td></tr>
+									<tr><td>+ Adults Stay Total (LKR)</td><td class="text-end">@adultsStayTotal</td></tr>
+									<tr><td>+ Kids Stay Total (LKR)</td><td class="text-end">@kidsStayTotal</td></tr>
+									<tr><td>Grand Total (LKR incl. tax)</td><td class="text-end">@grandTotal</td></tr>
+									<tr><td>- Total Advance Payment</td><td class="text-end">@totalAdvancePayment</td></tr>
+									<tr class="table-active fw-bold"><td>Total Balance (LKR)</td><td class="text-end">@totalBalanceLKR</td></tr>
+									<tr class="table-active fw-bold"><td>Total Balance (USD)</td><td class="text-end">@totalBalanceUSD</td></tr>
 								</tbody>
 							</table>
 
 							<!-- Footer -->
 							<div class="border-top mt-4 pt-3 text-center">
 								<p><strong>Remark:</strong> Transparent Management</p>
-								<p class="text-muted small">Powered by SP SOFT PVT</p>
+								<p class="text-muted small">Powered by Liya SOFT PVT</p>
 							</div>
 
 						</div>
@@ -371,6 +378,9 @@
 
 	public DirectBookinDTO? DirectBookinDTO = new();
 	public DirectBookinDTO DirectBookinDTOs = new();
+
+	public OnlineBookingDto? OnlineBookingDto = new();
+	public OnlineBookingDto? OnlineBookingDtos = new();
 	public Guid Id { get; set; }
 
 	public string? name;
@@ -380,14 +390,8 @@
 	public string? agentName = "None";
 	public double adults;
 	public double kids;
-	public DateOnly from;
-	public DateOnly to;
 	public string? basis;
-	public double total ;
-	public DateTime checkInDate;
-	public DateTime checkOutDate;
-	public TimeOnly arrivalTime;
-	public TimeOnly depatureTime;
+	public double total;
 	public double adultsStayTotal;
 	public double kidsStayTotal;
 	public double grandTotal;
@@ -395,8 +399,20 @@
 	public double totalBalanceLKR;
 	public double totalBalanceUSD;
 	public bool Conformation { get; set; }
-
-
+	public string? status;
+	public Guid GuidId;
+	public Guid ReserveNo;
+	public string? CustomerType;
+	public string? AccomadationType;
+	public string? VoucherNo;
+	public string? TourNo;
+	public decimal USDExch;
+	public decimal RoomRate;
+	public string? Basis;
+	public DateTime CheckInDate;
+	public DateTime CheckOutDate;
+	public TimeOnly arrivalTime;
+	public TimeOnly depatureTime;
 
 
 	protected override async Task OnInitializedAsync()
@@ -413,7 +429,7 @@
 			Console.WriteLine("Error Massage : " + ex.Message);
 		}
 	}
-	private async Task ClickConformations(Guid id)
+	private async Task ClickConformationsDirect(Guid id)
 	{
 		try
 		{
@@ -426,35 +442,147 @@
 			address = DirectBookinDTO?.Address ?? "";
 			phone = DirectBookinDTO?.PhoneNumber ?? "";
 			email = DirectBookinDTO?.EmailAddress ?? "";
-			from = DirectBookinDTO!.CheckInDate;
-			to = DirectBookinDTO.CheckOutDate;
 			total = adults + kids;
+			Conformation = DirectBookinDTO!.Conformation;
+
+			address = DirectBookinDTO?.Address ?? "";
+			CheckInDate = DirectBookinDTO!.CheckInDate;
+			CheckOutDate = DirectBookinDTO!.CheckOutDate;
+			email = DirectBookinDTO?.EmailAddress ?? "";
+			phone = DirectBookinDTO?.PhoneNumber ?? "";
+			status = "DirectBooking";
+			var guid = Guid.NewGuid();
+			GuidId = guid;
 
 			await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
 
-			DirectBookinDTOs.NIC = DirectBookinDTO?.NIC ?? "";
-			DirectBookinDTOs.Nationality = DirectBookinDTO?.Nationality ?? "";
-			DirectBookinDTOs.Conformation = DirectBookinDTO?.Conformation ;
-			DirectBookinDTOs.OpeningBalanace = DirectBookinDTO?.OpeningBalanace ?? 0;
-			DirectBookinDTOs.Address = DirectBookinDTO?.Address ?? "";
-			DirectBookinDTOs.CheckInDate = (DateOnly)DirectBookinDTO!.CheckInDate;
-			DirectBookinDTOs.CheckOutDate = (DateOnly)DirectBookinDTO!.CheckOutDate;
-			DirectBookinDTOs.DathOfBirth = DirectBookinDTO?.DathOfBirth ;
-			DirectBookinDTOs.CreditLimit = DirectBookinDTO?.CreditLimit ?? 0;
-			DirectBookinDTOs.EmailAddress = DirectBookinDTO?.EmailAddress ?? "";
-			DirectBookinDTOs.PhoneNumber = DirectBookinDTO?.PhoneNumber ?? "";
-			DirectBookinDTOs.Remark = DirectBookinDTO?.Remark ?? "";
-
-
 			StateHasChanged();
+
+		}
+		catch (HttpRequestException ex)
+		{
+			Console.WriteLine($"Connection error: {ex.Message}");
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine(ex);
+			Console.WriteLine($"General error: {ex.Message}");
+		}
+	}
+
+	private async Task ClickConformationsOnline(Guid id)
+	{
+		try
+		{
+			OnlineBookingDto = await Http.GetFromJsonAsync<OnlineBookingDto>(
+						$"https://localhost:4000/api/OnlineBooking/{id}"
+					);
+
+			this.Id = id;
+			total = kids + adults;
+			name = $"{OnlineBookingDto?.FirstName + " " + OnlineBookingDto?.LastName}";
+			address = OnlineBookingDto?.Address ?? "";
+			phone = OnlineBookingDto?.PhoneNumber ?? "";
+			email = OnlineBookingDto?.EmailAddress ?? "";
+			CheckInDate = OnlineBookingDto!.CheckInDate;
+			CheckOutDate = OnlineBookingDto!.CheckOutDate;
+			total = adults + kids;
+			Conformation = OnlineBookingDto!.Conformation;
+			address = OnlineBookingDto?.Address ?? "";
+			email = OnlineBookingDto?.EmailAddress ?? "";
+			phone = OnlineBookingDto?.PhoneNumber ?? "";
+			status = "OnlineBooking";
+
+			await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
+			StateHasChanged();
+		}
+		catch (HttpRequestException ex)
+		{
+			Console.WriteLine($"Connection error: {ex.Message}");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"General error: {ex.Message}");
 		}
 	}
 	private Task clickViewAllReservations(MouseEventArgs args)
 	{
 		throw new NotImplementedException();
 	}
+	private async Task clickConform(MouseEventArgs args)
+	{
+		try
+		{
+			if (status == "DirectBooking")
+			{
+				try
+				{
+					Console.WriteLine($"Confirming booking ID: {Id}");
+
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+					var response = await Http.PutAsync($"https://localhost:4000/api/DirectBooking/{Id}/confirm", content);
+
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						Console.WriteLine("Booking confirmed successfully");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error confirming booking: {errorContent}");
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+			// else if (status == "OnlineBooking")
+			// {
+			// 	var updateOnlineModel = new OnlineBookingModel
+			// 	{
+			// 		Conformation = true
+			// 	};
+
+			// 	var direct = await Http.PutAsJsonAsync($"https://localhost:4000/api/OnlineBooking/{Id}", updateOnlineModel);
+			// 	StateHasChanged();
+
+			// 	if (direct.IsSuccessStatusCode)
+			// 	{
+			// 		Console.WriteLine("Confirmation updated successfully");
+			// 	}
+			// 	else
+			// 	{
+			// 		Console.WriteLine($"Error: {direct.StatusCode}");
+			// 	}
+			// }
+		}catch(Exception ex)
+		{
+			Console.WriteLine($"Err : {ex.Message}");
+		}
+
+		}
+
+
+
+
+	private Task clickAdvancePay(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+	private Task clickCancellation(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+	private Task ClickCheckIn(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+
 }

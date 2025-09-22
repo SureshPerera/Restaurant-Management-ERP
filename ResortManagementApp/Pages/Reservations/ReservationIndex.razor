@@ -224,10 +224,10 @@
     {
         var online = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
         // Only confirmed bookings
-        OnlineBookings = online?.Where(b => b.Conformation.GetValueOrDefault()).ToList();
+        OnlineBookings = online?.Where(b => b.Conformation).ToList();
         var direct = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
 
-        directBookingModels = direct?.Where(a => a.Conformation.GetValueOrDefault()).ToList();
+        directBookingModels = direct?.Where(a => a.Conformation).ToList();
         Console.WriteLine("Pass clickAllConfirmedReservation");
         StateHasChanged();
 	}

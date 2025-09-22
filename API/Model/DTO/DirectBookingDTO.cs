@@ -28,9 +28,9 @@ namespace API.Model.DTO
         public string? Nationality { get; set; }
         public string? Remark { get; set; }
         public string? CustomerType { get; set; }
-        public DateOnly CheckInDate { get; set; }
-        public bool? Conformation { get; set; }
-        public DateOnly CheckOutDate { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public bool Conformation { get; set; }
+        public DateTime CheckOutDate { get; set; }
         public TimeOnly CheckInTime { get; set; }
         public TimeOnly CheckOutTime { get; set; }
     }
