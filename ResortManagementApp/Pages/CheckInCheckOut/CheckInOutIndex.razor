@@ -1,4 +1,5 @@
 ﻿@page "/Reservations/CheckInOut"
+@using MudBlazor
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
@@ -7,6 +8,8 @@
 @using System.Text
 @layout MainLayout
 @inject IJSRuntime JS
+@inject ISnackbar Snackbar
+
 
 <div style="flex-wrap:wrap;">
 	<div class="container my-4">
@@ -168,7 +171,23 @@
 							<div class="bg-light rounded p-2">
 								<strong>Current Balance:</strong> <span class="text-success"> @totalBalanceLKR</span>
 							</div>
-							<button class="btn btn-success w-100" @onclick="clickConform">Confirm</button>
+							@if (Conformation == true)
+							{
+								<MudButton @onclick="clickUnConform"
+										   Variant="Variant.Filled"
+										   Color="Color.Warning">
+									UnConfirm
+								</MudButton>
+							}
+							else
+							{
+								
+								<MudButton @onclick="clickConform"
+										   Variant="Variant.Filled"
+										   Color="Color.Success">
+									Confirm
+								</MudButton>
+							}
 							<button class="btn btn-primary w-100" @onclick="clickAdvancePay">Advance Payment</button>
 							<button class="btn btn-warning w-100">Amend Booking</button>
 							<button class="btn btn-info w-100">GRC Print</button>
@@ -413,10 +432,16 @@
 	public DateTime CheckOutDate;
 	public TimeOnly arrivalTime;
 	public TimeOnly depatureTime;
-
+	bool showNotification = false;
 
 	protected override async Task OnInitializedAsync()
 	{
+		await LoadData();
+		StateHasChanged();
+	}
+	public async Task LoadData()
+	{
+
 		try
 		{
 			directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
@@ -444,12 +469,16 @@
 			email = DirectBookinDTO?.EmailAddress ?? "";
 			total = adults + kids;
 			Conformation = DirectBookinDTO!.Conformation;
-
+			adults = DirectBookinDTO.Adult;
+			kids = DirectBookinDTO.Kids;
 			address = DirectBookinDTO?.Address ?? "";
 			CheckInDate = DirectBookinDTO!.CheckInDate;
 			CheckOutDate = DirectBookinDTO!.CheckOutDate;
 			email = DirectBookinDTO?.EmailAddress ?? "";
 			phone = DirectBookinDTO?.PhoneNumber ?? "";
+			arrivalTime = DirectBookinDTO!.CheckInTime;
+			depatureTime = DirectBookinDTO!.CheckOutTime;
+
 			status = "DirectBooking";
 			var guid = Guid.NewGuid();
 			GuidId = guid;
@@ -490,6 +519,8 @@
 			address = OnlineBookingDto?.Address ?? "";
 			email = OnlineBookingDto?.EmailAddress ?? "";
 			phone = OnlineBookingDto?.PhoneNumber ?? "";
+			arrivalTime = DirectBookinDTO!.CheckInTime;
+			depatureTime = DirectBookinDTO!.CheckOutTime;
 			status = "OnlineBooking";
 
 			await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
@@ -521,14 +552,14 @@
 					// Create JSON content for the PUT request
 					var jsonContent = JsonSerializer.Serialize(new { });
 					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
 					var response = await Http.PutAsync($"https://localhost:4000/api/DirectBooking/{Id}/confirm", content);
-
 					Console.WriteLine($"Response Status: {response.StatusCode}");
 
 					if (response.IsSuccessStatusCode)
 					{
 						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Confirming.....");
 						Console.WriteLine("Booking confirmed successfully");
 						Console.WriteLine($"Result: {result}");
 					}
@@ -543,33 +574,56 @@
 					Console.WriteLine($"Exception: {ex.Message}");
 				}
 			}
-			// else if (status == "OnlineBooking")
-			// {
-			// 	var updateOnlineModel = new OnlineBookingModel
-			// 	{
-			// 		Conformation = true
-			// 	};
+			else
+			{
+				try
+				{
+					Console.WriteLine($"Confirming booking ID: {Id}");
 
-			// 	var direct = await Http.PutAsJsonAsync($"https://localhost:4000/api/OnlineBooking/{Id}", updateOnlineModel);
-			// 	StateHasChanged();
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/OnlineBooking/{Id}/confirm", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
 
-			// 	if (direct.IsSuccessStatusCode)
-			// 	{
-			// 		Console.WriteLine("Confirmation updated successfully");
-			// 	}
-			// 	else
-			// 	{
-			// 		Console.WriteLine($"Error: {direct.StatusCode}");
-			// 	}
-			// }
-		}catch(Exception ex)
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Confirming.....");
+						Console.WriteLine("Booking confirmed successfully");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error confirming booking: {errorContent}");
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+
+		}
+		catch (Exception ex)
 		{
 			Console.WriteLine($"Err : {ex.Message}");
 		}
 
-		}
+	}
 
-
+	public  void HandleUnConfirmClick(string message)
+	{
+		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+		Snackbar.Add(message, Severity.Normal, config =>
+		{
+			config.ShowCloseIcon = false;
+			config.SnackbarVariant = Variant.Filled;
+		});
+	}
 
 
 	private Task clickAdvancePay(MouseEventArgs args)
@@ -584,5 +638,78 @@
 	{
 		throw new NotImplementedException();
 	}
+	private async Task clickUnConform(MouseEventArgs args)
+	{
+		try
+		{
+			if (status == "DirectBooking")
+			{
+				try
+				{
+					Console.WriteLine($"Confirming booking ID: {Id}");
 
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/DirectBooking/{Id}/unconfirm", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Unconfirming.....");
+						Console.WriteLine("Booking confirmed successfully");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error confirming booking: {errorContent}");
+						
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+			else
+			{
+				try
+				{
+					Console.WriteLine($"Confirming booking ID: {Id}");
+
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/OnlineBooking/{Id}/unconfirm", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Unconfirming.....");
+						Console.WriteLine("Booking confirmed successfully");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error confirming booking: {errorContent}");
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Err : {ex.Message}");
+		}
+	}
 }

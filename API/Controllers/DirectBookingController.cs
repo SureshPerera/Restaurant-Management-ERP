@@ -161,5 +161,31 @@ namespace API.Controllers
                 return StatusCode(500, new { message = $"Error confirming booking: {ex.Message}" });
             }
         }
+        [HttpPut("{id}/unconfirm")]
+        public async Task<IActionResult> UnconfirmDirectBooking(Guid id)
+        {
+            try
+            {
+                var booking = await dbContext.DirectBookingModels.FindAsync(id);
+                if (booking == null)
+                {
+                    return NotFound(new { message = $"Booking with ID {id} not found" });
+                }
+
+                booking.Conformation = false;
+                await dbContext.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = "Booking Unconfirmed successfully",
+                    bookingId = id,
+                    confirmation = false
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error Unconfirmed booking: {ex.Message}" });
+            }
+        }
     }
 }
