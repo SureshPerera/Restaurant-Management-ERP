@@ -4,6 +4,7 @@ using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250924145603_MakeCheckInandCheckOut")]
+    partial class MakeCheckInandCheckOut
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,7 +327,7 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("CheckIn")
+                    b.Property<bool>("CheckIn")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("CheckInDate")
@@ -333,7 +336,7 @@ namespace API.Migrations
                     b.Property<TimeOnly>("CheckInTime")
                         .HasColumnType("time");
 
-                    b.Property<bool?>("CheckOut")
+                    b.Property<bool>("CheckOut")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("CheckOutDate")
@@ -342,7 +345,7 @@ namespace API.Migrations
                     b.Property<TimeOnly>("CheckOutTime")
                         .HasColumnType("time");
 
-                    b.Property<bool?>("Conformation")
+                    b.Property<bool>("Conformation")
                         .HasColumnType("bit");
 
                     b.Property<double?>("CreditLimit")
@@ -401,7 +404,7 @@ namespace API.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("CheckIn")
+                    b.Property<bool>("CheckIn")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("CheckInDate")
@@ -410,7 +413,7 @@ namespace API.Migrations
                     b.Property<TimeOnly>("CheckInTime")
                         .HasColumnType("time");
 
-                    b.Property<bool?>("CheckOut")
+                    b.Property<bool>("CheckOut")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("CheckOutDate")

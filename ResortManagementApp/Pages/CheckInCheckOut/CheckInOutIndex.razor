@@ -181,7 +181,7 @@
 							}
 							else
 							{
-								
+
 								<MudButton @onclick="clickConform"
 										   Variant="Variant.Filled"
 										   Color="Color.Success">
@@ -193,7 +193,14 @@
 							<button class="btn btn-info w-100">GRC Print</button>
 							<button class="btn btn-info w-100">RCV Print</button>
 							<button class="btn btn-danger w-100" @onclick="clickCancellation">Cancellation</button>
-							<button class="btn btn-dark w-100" @onclick="ClickCheckIn">Check-In</button>
+							@if (CheckIn == false)
+							{
+								<button class="btn btn-dark w-100" @onclick="ClickCheckIn">Check-In</button>
+							}
+							else
+							{
+								<button class="btn btn-dark w-100" @onclick="ClickCheckOut">Check-Out</button>
+							}
 						</div>
 					</div>
 				</div>
@@ -432,7 +439,9 @@
 	public DateTime CheckOutDate;
 	public TimeOnly arrivalTime;
 	public TimeOnly depatureTime;
-	bool showNotification = false;
+	public bool showNotification = false;
+	public bool CheckIn;
+	public bool CheckOut;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -478,6 +487,8 @@
 			phone = DirectBookinDTO?.PhoneNumber ?? "";
 			arrivalTime = DirectBookinDTO!.CheckInTime;
 			depatureTime = DirectBookinDTO!.CheckOutTime;
+			CheckIn = DirectBookinDTO.CheckIn;
+			CheckOut = DirectBookinDTO.CheckOut;
 
 			status = "DirectBooking";
 			var guid = Guid.NewGuid();
@@ -519,8 +530,11 @@
 			address = OnlineBookingDto?.Address ?? "";
 			email = OnlineBookingDto?.EmailAddress ?? "";
 			phone = OnlineBookingDto?.PhoneNumber ?? "";
-			arrivalTime = DirectBookinDTO!.CheckInTime;
-			depatureTime = DirectBookinDTO!.CheckOutTime;
+			arrivalTime = OnlineBookingDto!.CheckInTime;
+			depatureTime = OnlineBookingDto!.CheckOutTime;
+			CheckIn = OnlineBookingDto.CheckIn;
+			CheckOut = OnlineBookingDto.CheckOut;
+
 			status = "OnlineBooking";
 
 			await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
@@ -559,7 +573,7 @@
 					{
 						var result = await response.Content.ReadAsStringAsync();
 						StateHasChanged();
-						HandleUnConfirmClick("Sucessfully Confirming.....");
+						HandleUnConfirmClick("Direct Booking Sucessfully Confirming.....");
 						Console.WriteLine("Booking confirmed successfully");
 						Console.WriteLine($"Result: {result}");
 					}
@@ -590,7 +604,7 @@
 					{
 						var result = await response.Content.ReadAsStringAsync();
 						StateHasChanged();
-						HandleUnConfirmClick("Sucessfully Confirming.....");
+						HandleUnConfirmClick("Online Booking Sucessfully Confirming.....");
 						Console.WriteLine("Booking confirmed successfully");
 						Console.WriteLine($"Result: {result}");
 					}
@@ -614,7 +628,7 @@
 
 	}
 
-	public  void HandleUnConfirmClick(string message)
+	public void HandleUnConfirmClick(string message)
 	{
 		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
 		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
@@ -634,9 +648,153 @@
 	{
 		throw new NotImplementedException();
 	}
-	private Task ClickCheckIn(MouseEventArgs args)
+	private async Task ClickCheckIn(MouseEventArgs args)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			if (status == "DirectBooking")
+			{
+				try
+				{
+					Console.WriteLine($"Customer CheckIn ID: {Id}");
+
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/DirectBooking/{Id}/checkin", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Check-In.....");
+						Console.WriteLine("Sucessfully Check-In.....");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error customer Check-In: {errorContent}");
+
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+			else
+			{
+				try
+				{
+					Console.WriteLine($"Customer CheckIn ID: {Id}");
+
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/OnlineBooking/{Id}/checkin", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Check-In.....");
+						Console.WriteLine("Sucessfully Check-In.....");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error checkIn customer: {errorContent}");
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Err : {ex.Message}");
+		}
+	}
+	private async Task ClickCheckOut(MouseEventArgs args)
+	{
+		try
+		{
+			if (status == "DirectBooking")
+			{
+				try
+				{
+					Console.WriteLine($"Customer CheckOut ID: {Id}");
+
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/DirectBooking/{Id}/checkout", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Check-Out.....");
+						Console.WriteLine("Sucessfully Check-Out.....");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error customer Check-Out: {errorContent}");
+
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+			else
+			{
+				try
+				{
+					Console.WriteLine($"Customer CheckIn ID: {Id}");
+
+					// Create JSON content for the PUT request
+					var jsonContent = JsonSerializer.Serialize(new { });
+					var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await Http.PutAsync($"https://localhost:4000/api/OnlineBooking/{Id}/checkout", content);
+					Console.WriteLine($"Response Status: {response.StatusCode}");
+
+					if (response.IsSuccessStatusCode)
+					{
+						var result = await response.Content.ReadAsStringAsync();
+						StateHasChanged();
+						HandleUnConfirmClick("Sucessfully Check-Out.....");
+						Console.WriteLine("Sucessfully Check-Out.....");
+						Console.WriteLine($"Result: {result}");
+					}
+					else
+					{
+						var errorContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine($"Error CheckOut customer: {errorContent}");
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Exception: {ex.Message}");
+				}
+			}
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Err : {ex.Message}");
+		}
 	}
 	private async Task clickUnConform(MouseEventArgs args)
 	{
@@ -658,7 +816,7 @@
 					{
 						var result = await response.Content.ReadAsStringAsync();
 						StateHasChanged();
-						HandleUnConfirmClick("Sucessfully Unconfirming.....");
+						HandleUnConfirmClick("DirectBooking Sucessfully Unconfirming.....");
 						Console.WriteLine("Booking confirmed successfully");
 						Console.WriteLine($"Result: {result}");
 					}
@@ -666,7 +824,7 @@
 					{
 						var errorContent = await response.Content.ReadAsStringAsync();
 						Console.WriteLine($"Error confirming booking: {errorContent}");
-						
+
 					}
 				}
 				catch (Exception ex)
@@ -690,7 +848,7 @@
 					{
 						var result = await response.Content.ReadAsStringAsync();
 						StateHasChanged();
-						HandleUnConfirmClick("Sucessfully Unconfirming.....");
+						HandleUnConfirmClick("Onlien Booking Sucessfully Unconfirming.....");
 						Console.WriteLine("Booking confirmed successfully");
 						Console.WriteLine($"Result: {result}");
 					}

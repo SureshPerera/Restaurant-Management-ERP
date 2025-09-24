@@ -42,6 +42,8 @@ namespace ResortManagementApp.Models.Reservation
         public bool Conformation { get; set; }
         public TimeOnly CheckInTime { get; set; }
         public TimeOnly CheckOutTime { get; set; }
+        public bool CheckIn { get; set; }
+        public bool CheckOut { get; set; }
 
     }
 

@@ -38,11 +38,12 @@ namespace API.Model.Reservation
         public DateTime CheckInDate { get; set; }
         [Required(ErrorMessage = "Please Enter Check Out Date!")]
         public DateTime CheckOutDate { get; set; }
-        public bool Conformation { get; set; }
+        public bool? Conformation { get; set; }
 
         public TimeOnly CheckInTime { get; set; }
         public TimeOnly CheckOutTime { get; set; }
-
+        public bool? CheckIn { get; set; } = false;
+        public bool? CheckOut { get; set; } = false;
     }
 
     

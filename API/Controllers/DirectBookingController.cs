@@ -187,5 +187,57 @@ namespace API.Controllers
                 return StatusCode(500, new { message = $"Error Unconfirmed booking: {ex.Message}" });
             }
         }
+        [HttpPut("{id}/checkin")]
+        public async Task<IActionResult> CheckIn(Guid id)
+        {
+            try
+            {
+                var booking = await dbContext.DirectBookingModels.FindAsync(id);
+                if (booking == null)
+                {
+                    return NotFound(new { message = $"Booking with ID {id} not found" });
+                }
+
+                booking.CheckIn = true;
+                await dbContext.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = "Customer CheckIn Successfully",
+                    bookingId = id,
+                    CheckIn = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error Customer CheckIn: {ex.Message}" });
+            }
+        }
+        [HttpPut("{id}/checkout")]
+        public async Task<IActionResult> CheckOut(Guid id)
+        {
+            try
+            {
+                var booking = await dbContext.DirectBookingModels.FindAsync(id);
+                if (booking == null)
+                {
+                    return NotFound(new { message = $"Booking with ID {id} not found" });
+                }
+
+                booking.CheckIn = true;
+                await dbContext.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = "Customer CheckOut Successfully",
+                    bookingId = id,
+                    CheckIn = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error Customer CheckOut: {ex.Message}" });
+            }
+        }
     }
 }

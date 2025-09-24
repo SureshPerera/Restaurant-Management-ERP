@@ -26,7 +26,8 @@ namespace ResortManagementApp.Models.Reservation.DTO
         public TimeOnly CheckOutTime { get; set; }
         public double Adult { get; set; }
         public double Kids { get; set; }
-
+        public bool CheckIn { get; set; }
+        public bool CheckOut { get; set; }
     }
 
 }
