@@ -30,8 +30,7 @@ namespace ResortManagementApp.Models.Reservation
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
         
-        
-        public string? Nationality { get; set; }
+      
         public string? Remark { get; set; }
 
         public string? CustomerType { get; set; }

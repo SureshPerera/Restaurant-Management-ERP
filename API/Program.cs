@@ -4,31 +4,40 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ApplicationDbContext>(option =>
-{
-    option.UseSqlServer("name = DefaultConnection");
 
+// Configure DbContext properly
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    // Make sure your connection string is correct in appsettings.json
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddCors();
+
+// Configure CORS to allow calls from Blazor WebAssembly
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorClient", policy =>
+    {
+        policy.WithOrigins("https://localhost:5000") // Replace with your Blazor app URL
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// Add HttpClient if needed for DI
 builder.Services.AddHttpClient();
 
-
 var app = builder.Build();
-app.UseCors(policy =>
-    policy.AllowAnyOrigin()
-          .AllowAnyHeader()
-          .AllowAnyMethod());
 
+// Enable CORS before other middleware
+app.UseCors("AllowBlazorClient");
 
-
-// Configure the HTTP request pipeline.
-
+// Use HTTPS
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+// Map controller endpoints
 app.MapControllers();
 
 app.Run();

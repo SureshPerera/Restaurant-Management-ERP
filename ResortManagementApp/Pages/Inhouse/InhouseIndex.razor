@@ -1,93 +1,302 @@
 ﻿@page "/Reservations/Inhouse"
+@using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Pages.Administration.ManageRoomsCrud
 @using ResortManagementApp.Pages.CheckInCheckOut
 @layout MainLayout
 
-<div class="container my-4">
+<div class="container-fluid py-4">
 
     <!-- Header -->
-    <h3 class="mb-4 text-center">Reservation Management</h3>
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold text-dark">Reservation Management</h2>
+        <p class="text-muted">Manage in-house guests, reservations, and billing with ease.</p>
+    </div>
 
-    <!-- Date Navigation Section -->
+    <!-- Date Navigation -->
     <section class="mb-4">
-        <div class="d-flex justify-content-around align-items-center rounded p-3" style="backdrop-filter: blur(100%); background-color: cornsilk;">
-            <button class="btn btn-warning">Previous Day</button>
+        <div class="card rounded-3 border-0 shadow-sm">
+            <div class="card-body d-flex justify-content-center align-items-center flex-wrap gap-3">
+                <button class="btn btn-outline-warning px-3">Previous Day</button>
 
-            <input type="date" class="form-control form-control-sm w-auto" name="calendar" />
+                <input type="date" class="form-control form-control-sm w-auto" />
 
-            <button class="btn btn-warning">Next Day</button>
+                <button class="btn btn-outline-warning px-3">Next Day</button>
 
-            <div class="d-flex flex-column">
-                <label for="pickDate" class="mb-1">Pick Date</label>
-                <input type="date" id="pickDate" class="form-control form-control-sm w-auto" name="pickDate" />
+                <div>
+                    <label for="pickDate" class="form-label small">Pick Date</label>
+                    <input type="date" id="pickDate" class="form-control form-control-sm w-auto" />
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- View Booking and In-House Summary -->
+    <!-- Booking & In-House Summary -->
     <section class="mb-4">
-        <div class="d-flex justify-content-between flex-wrap gap-3">
+        <div class="row g-3">
 
-            <div>
-                <button class="btn btn-success mb-3">View Booking</button>
+            <!-- Booking Grid -->
+            <div class="col-lg-9">
+                <div class="card rounded-3 border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">Current Bookings</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table-hover mb-0 table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Room</th>
+                                    <th>Guest</th>
+                                    <th>Basic</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in RoomsBookingDetails)
+                                {
+                                    <tr>
+                                        <td><strong>@item.Room</strong></td>
+                                        <td>@item.Guest</td>
+                                        <td>@item.Basic</td>
+                                        <td>@item.Type</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-outline-primary me-2" title="Details" href="/UserManagement/Edit">
+                                                <i class="bi bi bi-pencil-square"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <div class="flex-fill">
-                <ViewBookingGrid />
-            </div>
-
-            <div class="bg-azure rounded p-3" style="min-width: 200px;">
-                <label class="fs-5 fw-bold d-block mb-2">In-House List</label>
-                <div>Adults: <strong>19</strong></div>
-                <div>Kids: <strong>0</strong></div>
-                <div>Infants: <strong>0</strong></div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Meal Breakdown Section -->
-    <section class="mb-4">
-        <div class="d-flex justify-content-center">
-            <div class="bg-azure w-100 rounded p-3">
-                <MealBrackDown />
-            </div>
-        </div>
-    </section>
-
-    <!-- Actions and Invoice Section -->
-    <section>
-        <div class="d-flex flex-wrap gap-4">
-
-            <!-- Action Buttons -->
-            <div class="d-flex flex-column flex-shrink-0 gap-3">
-                <div class="bg-azure d-flex flex-column gap-2 rounded p-3">
-                    <label class="fw-bold">Current Room Bill</label>
-                    <input type="text" class="form-control form-control-sm w-75" name="roomBill" readonly />
+            <!-- In-House Summary (Smart Cards) -->
+            <div class="col-lg-3 d-flex flex-column gap-3">
+                <div class="card rounded-3 border-0 py-3 text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill fs-2 text-success"></i>
+                        <h5 class="mb-1 mt-2">Adults</h5>
+                        <p class="fs-5 fw-bold mb-0">19</p>
+                    </div>
                 </div>
 
-                <button class="btn btn-success">Add Extras</button>
-                <button class="btn btn-success">Amend Stay</button>
-                <button class="btn btn-success">Pay</button>
-                <button class="btn btn-success">Check-Out</button>
-                <button class="btn btn-success">Cancellation</button>
+                <div class="card rounded-3 border-0 py-3 text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-child fs-2 text-info"></i>
+                        <h5 class="mb-1 mt-2">Kids</h5>
+                        <p class="fs-5 fw-bold mb-0">0</p>
+                    </div>
+                </div>
+
+                <div class="card rounded-3 border-0 py-3 text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-baby fs-2 text-warning"></i>
+                        <h5 class="mb-1 mt-2">Infants</h5>
+                        <p class="fs-5 fw-bold mb-0">0</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Meal Breakdown (Smart Cards) -->
+    <section class="mb-4">
+        <div class="row g-3 text-center">
+
+            <div class="col-md-4">
+                <div class="card rounded-3 border-0 p-3 shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-cup-straw fs-2 text-primary"></i>
+                        <h6 class="mb-1 mt-2">Breakfast</h6>
+                        <p class="fw-bold mb-0">10 Meals</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card rounded-3 border-0 p-3 shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-egg-fried fs-2 text-warning"></i>
+                        <h6 class="mb-1 mt-2">Lunch</h6>
+                        <p class="fw-bold mb-0">12 Meals</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card rounded-3 border-0 p-3 shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-basket-fill fs-2 text-danger"></i>
+                        <h6 class="mb-1 mt-2">Dinner</h6>
+                        <p class="fw-bold mb-0">8 Meals</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Actions & Invoice -->
+    <section>
+        <div class="row g-4">
+
+            <!-- Action Buttons -->
+            <div class="col-lg-3">
+                <div class="card rounded-3 h-100 border-0 shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0">Actions</h6>
+                    </div>
+                    <div class="card-body d-flex flex-column gap-2">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Current Room Bill</label>
+                            <input type="text" class="form-control form-control-sm" readonly />
+                        </div>
+
+                        <button class="btn btn-success w-100" @onclick="@(() => ClickAddExtra(Id))">Add Extras</button>
+                        <button class="btn btn-primary w-100">Pay</button>
+                        <button class="btn btn-dark w-100">Check-Out</button>
+                        <button class="btn btn-danger w-100">Cancellation</button>
+                    </div>
+                </div>
             </div>
 
             <!-- Invoice Display -->
-            <div class="flex-fill">
-                <CheckInInvoice />
+            <div class="col-lg-9">
+                <div class="card rounded-3 border-0 shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h6 class="mb-0">Invoice</h6>
+                    </div>
+                    <div class="card-body">
+                        <CheckInInvoice />
+                    </div>
+                </div>
             </div>
 
         </div>
     </section>
-
 </div>
 
 
 <style>
-	label {
-		font-weight: bold;
-	}
-</style>
-@code {
+    .card-body i {
+        display: block;
+    }
 
+    .card-body h5, .card-body h6 {
+        font-weight: bold;
+    }
+    h2, h6 {
+        font-weight: bold;
+    }
+
+    .card {
+        transition: 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+</style>
+
+@inject HttpClient http
+@code {
+    public Guid Id;
+    public List<Rooms>? ManageRoomsModel { get; set; } = new List<Rooms>();
+
+    public List<RoomBookingDetails> RoomsBookingDetails = new List<RoomBookingDetails>();
+
+    protected override Task OnInitializedAsync()
+    {
+        RoomsBookingDetails = new List<RoomBookingDetails>
+    {
+        new RoomBookingDetails
+        {
+            Basic = "B&B",
+            Guest = "Suranga",
+            Room = "D005",
+            Type = "Night",
+            CheckIn = "10/08/2025",
+            CheckOut = "11/08/2025"
+        },
+        new RoomBookingDetails
+        {
+            Basic = "Full Board",
+            Guest = "Kumara",
+            Room = "A102",
+            Type = "Day",
+             CheckIn = "15/08/2025",
+            CheckOut = "17/08/2025"
+        },
+        new RoomBookingDetails
+        {
+            Basic = "Half Board",
+            Guest = "Nimal",
+            Room = "B210",
+            Type = "Night",
+             CheckIn = "16/08/2025",
+            CheckOut = "17/08/2025"
+        },
+        new RoomBookingDetails
+        {
+            Basic = "B&B",
+            Guest = "Padmasiri",
+            Room = "D006",
+            Type = "Day",
+            CheckIn = "10/08/2025",
+            CheckOut = "11/08/2025"
+        },
+        new RoomBookingDetails
+        {
+            Basic = "Full Board",
+            Guest = "Ranathunga",
+            Room = "A108",
+            Type = "Day",
+             CheckIn = "15/08/2025",
+            CheckOut = "17/08/2025"
+        },
+        new RoomBookingDetails
+        {
+            Basic = "Half Board",
+            Guest = "Kamalajith",
+            Room = "B211",
+            Type = "Night",
+             CheckIn = "16/08/2025",
+            CheckOut = "17/08/2025"
+        }
+    };
+
+        return base.OnInitializedAsync();
+    }   
+
+
+
+
+
+    public class RoomBookingDetails
+    {
+        public string? Room { get; set; }
+        public string? Guest { get; set; }
+        public string? Basic { get; set; }
+        public string? Type { get; set; }
+        public string? CheckIn { get; set; }
+        public string? CheckOut { get; set; }
+
+    }
+    public async Task RoomSection()
+    {
+        ManageRoomsModel = await http.GetFromJsonAsync<List<Rooms>>($"https://localhost:4000/api/Rooms");
+    }
+
+  
+    private  Task ClickAddExtra(Guid Id)
+    {
+        throw new NotImplementedException();
+    }
 }

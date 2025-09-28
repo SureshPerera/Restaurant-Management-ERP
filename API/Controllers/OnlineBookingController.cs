@@ -223,14 +223,14 @@ namespace API.Controllers
                     return NotFound(new { message = $"Booking with ID {id} not found" });
                 }
 
-                booking.CheckIn = false;
+                booking.CheckIn = true;
                 await dbContext.SaveChangesAsync();
 
                 return Ok(new
                 {
                     message = "Customer CheckOut Successfully",
                     bookingId = id,
-                    CheckIn = false
+                    CheckOut = true
                 });
             }
             catch (Exception ex)

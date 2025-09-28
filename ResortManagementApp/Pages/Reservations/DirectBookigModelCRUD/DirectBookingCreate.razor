@@ -1,4 +1,5 @@
 ﻿@page "/Reservations/DirectBookingCreate"
+@using ResortManagementApp.Models.Administration.ManageRooms
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
 
@@ -70,21 +71,16 @@
 
 						<!-- Nationality & Credit Limit -->
 						<div class="col-md-6">
-							<label class="form-label">Nationality</label>
-							<input class="form-control" @bind="directBookingDTO.Nationality" />
-							<span class="text-danger">@Errors["Nationality"]?[0]</span>
-						</div>
-						<div class="col-md-6">
 							<label class="form-label">Credit Limit</label>
 							<input type="number" class="form-control" @bind="directBookingDTO.CreditLimit" />
 						</div>
 						<div class="col-md-6">
 							<label class="form-label">Check-In Time</label>
-							<input type="time" class="form-control"  />
+							<input type="time" class="form-control" @bind="directBookingDTO.CheckInTime" />
 						</div>
 						<div class="col-md-6">
 							<label class="form-label">Check-Out Time</label>
-							<input type="time" class="form-control"  />
+							<input type="time" class="form-control" @bind="directBookingDTO.CheckOutTime" />
 						</div>
 
 						<!-- Remark -->
@@ -92,6 +88,8 @@
 							<label class="form-label">Remark</label>
 							<textarea class="form-control" @bind="directBookingDTO.Remark"></textarea>
 						</div>
+						<!-- RoomNo -->
+						
 
 						<!-- Buttons -->
 						<div class="col-12 d-flex justify-content-center mt-3 gap-3">
@@ -121,6 +119,7 @@
 @inject HttpClient http
 @inject NavigationManager navManager
 @code {
+	public Guid Id { get; set; }
 	public DirectBookinDTO directBookingDTO { set; get; } = new();
 	public JsonNode Errors { set; get; } = new JsonObject();
 	public List<string> CustomerType = new List<string>
@@ -128,21 +127,33 @@
 		"Local","Foreign"
 	};
 
-    
 	private async Task SaveCustomer(MouseEventArgs args)
 	{
-		
-
 		try
 		{
-            var response = await http.PostAsJsonAsync("https://localhost:4000/api/DirectBooking", directBookingDTO);
-            if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/DirectBooking"); }
+			var response = await http.PostAsJsonAsync("https://localhost:4000/api/DirectBooking", directBookingDTO);
+			if (response.IsSuccessStatusCode) 
+			{
+				var createBooking = await response.Content.ReadFromJsonAsync<DirectBookinDTO>();
+				if (createBooking != null)
+				{
+					Id = createBooking.Id;
+					Console.WriteLine($"Created Booking Id: {Id}");
+					navManager.NavigateTo($"/Administration/ManageRoom/RoomBooking/{Id}");
+					return;
+				}
 
-            var strResponce = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Json Response :" + strResponce);
-			var jsonResponce = JsonNode.Parse(strResponce);
-			Errors = jsonResponce?["errors"] ?? new JsonObject();
-            StateHasChanged();
+			}
+			else
+			{
+				var strResponce = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Json Response :" + strResponce);
+				var jsonResponce = JsonNode.Parse(strResponce);
+				Errors = jsonResponce?["errors"] ?? new JsonObject();
+			}
+			StateHasChanged();
+
+         
 
 		}
 		catch (Exception ex)

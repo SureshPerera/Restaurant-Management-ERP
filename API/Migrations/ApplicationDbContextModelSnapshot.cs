@@ -187,6 +187,30 @@ namespace API.Migrations
                     b.ToTable("PackageModels");
                 });
 
+            modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DirectBookingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("RoomRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DirectBookingId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomBookingsModel");
+                });
+
             modelBuilder.Entity("API.Model.Administration.RoomModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -195,6 +219,9 @@ namespace API.Migrations
 
                     b.Property<string>("AdditionalDetails")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsAvalable")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastCleanedBy")
                         .HasColumnType("nvarchar(max)");
@@ -239,6 +266,18 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AccNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Branch")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CheckNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
@@ -254,8 +293,17 @@ namespace API.Migrations
                     b.Property<double>("PayingAmount")
                         .HasColumnType("float");
 
+                    b.Property<string>("PaymentTime")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PaymentType")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceptNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VoucherNo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -273,6 +321,12 @@ namespace API.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double?>("CreditLimit")
                         .HasColumnType("float");
@@ -369,10 +423,6 @@ namespace API.Migrations
                     b.Property<string>("NIC")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Nationality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("OpeningBalanace")
                         .HasColumnType("float");
@@ -582,6 +632,25 @@ namespace API.Migrations
                     b.ToTable("UserManagementModels");
                 });
 
+            modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>
+                {
+                    b.HasOne("API.Model.Reservation.DirectBookingModel", "DirectBooking")
+                        .WithMany("RoomBookings")
+                        .HasForeignKey("DirectBookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Model.Administration.RoomModel", "Room")
+                        .WithMany("RoomBookings")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DirectBooking");
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
                 {
                     b.HasOne("API.Model.Reservation.DirectBookingModel", "DirectBooking")
@@ -591,6 +660,16 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("DirectBooking");
+                });
+
+            modelBuilder.Entity("API.Model.Administration.RoomModel", b =>
+                {
+                    b.Navigation("RoomBookings");
+                });
+
+            modelBuilder.Entity("API.Model.Reservation.DirectBookingModel", b =>
+                {
+                    b.Navigation("RoomBookings");
                 });
 #pragma warning restore 612, 618
         }

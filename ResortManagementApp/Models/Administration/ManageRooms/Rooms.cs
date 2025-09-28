@@ -26,5 +26,9 @@ namespace ResortManagementApp.Models.Administration.ManageRooms
         public string? MaintenanceComment { get; set; }
         public string? AdditionalDetails { get; set; }
         public string? RoomDisplayTitle { get; set; }
+        public bool? IsAvalable { get; set; }
+
+        public virtual ICollection<RoomsBooking> RoomBookings { get; set; } = new List<RoomsBooking>();
+
     }
 }

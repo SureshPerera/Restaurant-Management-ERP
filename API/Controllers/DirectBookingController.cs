@@ -61,12 +61,14 @@ namespace API.Controllers
                 NIC = directBookingDTO.NIC,
                 CreditLimit = directBookingDTO.CreditLimit,
                 OpeningBalanace = directBookingDTO.OpeningBalanace,
-                Nationality = directBookingDTO.Nationality,
                 Remark = directBookingDTO.Remark,
                 CustomerType = directBookingDTO.CustomerType,
                 CheckOutDate = directBookingDTO.CheckOutDate,
                 CheckInDate = directBookingDTO.CheckInDate,
-                Conformation = directBookingDTO.Conformation
+                Conformation = directBookingDTO.Conformation,
+                CheckInTime = directBookingDTO.CheckInTime,
+                CheckOutTime = directBookingDTO.CheckOutTime
+                
             };
             var Dtos = new ClientModel
             {
@@ -80,7 +82,6 @@ namespace API.Controllers
                 NIC = Dto.NIC,
                 CreditLimit = Dto.CreditLimit,
                 OpeningBalanace = Dto.OpeningBalanace,
-                Nationality = Dto.Nationality,
                 Remark = Dto.Remark,
                 CustomerType = Dto.CustomerType,
             };
@@ -114,11 +115,12 @@ namespace API.Controllers
             exsistingModel.NIC = directBookingDTO.NIC;
             exsistingModel.CreditLimit = directBookingDTO.CreditLimit;
             exsistingModel.OpeningBalanace = directBookingDTO.OpeningBalanace;
-            exsistingModel.Nationality = directBookingDTO.Nationality;
             exsistingModel.Remark = directBookingDTO.Remark;
             exsistingModel.CheckOutDate = directBookingDTO.CheckOutDate;
             exsistingModel.Conformation = directBookingDTO.Conformation;
             exsistingModel.CheckInDate = directBookingDTO.CheckInDate;
+            exsistingModel.CheckInTime = directBookingDTO.CheckInTime;
+            exsistingModel.CheckOutTime = directBookingDTO.CheckOutTime;
           
 
             await dbContext.SaveChangesAsync();
@@ -224,14 +226,14 @@ namespace API.Controllers
                     return NotFound(new { message = $"Booking with ID {id} not found" });
                 }
 
-                booking.CheckIn = true;
+                booking.CheckOut = true;
                 await dbContext.SaveChangesAsync();
 
                 return Ok(new
                 {
                     message = "Customer CheckOut Successfully",
                     bookingId = id,
-                    CheckIn = true
+                    CheckOut = true
                 });
             }
             catch (Exception ex)

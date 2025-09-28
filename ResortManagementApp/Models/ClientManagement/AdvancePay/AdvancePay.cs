@@ -20,5 +20,12 @@ namespace ResortManagementApp.Models.ClientManagement.AdvancePay
         public Guid DirectBookingId { get; set; }
         [ForeignKey(nameof(DirectBookingId))]
         public DirectBooking? DirectBooking { get; set; }
+        public string? BankName { get; set; }
+        public string? ReceptNo { get; set; }
+        public string? PaymentTime { get; set; }
+        public string? Branch { get; set; }
+        public string? AccNo { get; set; }
+        public string? CheckNo { get; set; }
+        public string? VoucherNo { get; set; }
     }
 }

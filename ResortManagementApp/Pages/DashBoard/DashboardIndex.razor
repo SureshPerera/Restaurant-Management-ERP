@@ -1,45 +1,596 @@
 ﻿@page "/Reservations/Dashboard"
+@using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.CheckInCheckOut
 @using ResortManagementApp.Pages.DashBoard.Chart
 @layout MainLayout
 
-<div style="background-color:#DAD7CD; padding:2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius:1rem;">
+<style>
+    .dashboard-container {
+        background: linear-gradient(135deg, #588157 0%, #3a5a40 100%);
+        min-height: 100vh;
+        padding: 2rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-    <!-- Dashboard Header -->
-    <h3 class="mb-4 text-center" style="color:black; font-weight:bold; font-size:2rem;">Dashboard</h3>
+    .dashboard-header {
+        background: white;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(52, 78, 65, 0.2);
+        border: 1px solid rgba(163, 177, 138, 0.3);
+    }
 
-    <!-- Top Metrics Cards -->
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8rem; margin-bottom:2rem;">
-        <div><NewBooking /></div>
-        <div><CheckIn /></div>
-        <div><CheckOut /></div>
-        <div><TotalRevenue /></div>
-        <div><TotalBalance /></div>
-        <div><TotalIncome /></div>
-        <div><TotalExpenses /></div>
-    </div>
+    .dashboard-title {
+        color: #344e41;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin: 0;
+        background: linear-gradient(135deg, #588157 0%, #344e41 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+    }
 
-    <!-- Pie Chart Section -->
-    <div style="display:flex; justify-content:center; margin-bottom:2rem;">
-        <div style="width:350px; height:350px; background-color:white; border-radius:1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding:1rem;">
-            <Piechart />
+    .dashboard-subtitle {
+        color: #3a5a40;
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 0.5rem;
+        font-weight: 400;
+    }
+
+    .quick-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .quick-action-btn {
+        background: linear-gradient(135deg, #588157 0%, #3a5a40 100%);
+        color: #dad7cd;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(88, 129, 87, 0.3);
+    }
+
+        .quick-action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(88, 129, 87, 0.5);
+            background: linear-gradient(135deg, #3a5a40 0%, #344e41 100%);
+            color: #dad7cd;
+            text-decoration: none;
+        }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .metric-card {
+        background: rgba(218, 215, 205, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(52, 78, 65, 0.15);
+        border: 1px solid rgba(163, 177, 138, 0.3);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+        min-height: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(52, 78, 65, 0.25);
+            background: rgba(163, 177, 138, 0.2);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #588157, #3a5a40);
+            border-radius: 20px 20px 0 0;
+        }
+
+    .metric-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .metric-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: linear-gradient(135deg, rgba(88, 129, 87, 0.15) 0%, rgba(58, 90, 64, 0.15) 100%);
+        border: 2px solid rgba(88, 129, 87, 0.3);
+        color: #344e41;
+    }
+
+    .metric-content h6 {
+        color: #3a5a40;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .metric-value {
+        color: #344e41;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0.5rem 0;
+        background: linear-gradient(135deg, #588157 0%, #344e41 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .metric-change {
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+    }
+
+        .metric-change.positive {
+            color: #588157;
+        }
+
+        .metric-change.negative {
+            color: #344e41;
+        }
+
+        .metric-change.neutral {
+            color: #3a5a40;
+        }
+
+    .analytics-section {
+        background: white;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(52, 78, 65, 0.15);
+        border: 1px solid rgba(163, 177, 138, 0.3);
+    }
+
+    .section-title {
+        color: #344e41;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-icon {
+        width: 24px;
+        height: 24px;
+        background: linear-gradient(135deg, #588157 0%, #3a5a40 100%);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #dad7cd;
+        font-size: 0.8rem;
+    }
+
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .chart-container {
+        background: rgba(218, 215, 205, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px rgba(52, 78, 65, 0.15);
+        border: 1px solid rgba(163, 177, 138, 0.3);
+        transition: all 0.3s ease;
+    }
+
+        .chart-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(52, 78, 65, 0.2);
+        }
+
+    .secondary-charts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+
+    .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        background: rgba(88, 129, 87, 0.15);
+        color: #344e41;
+        border: 1px solid rgba(88, 129, 87, 0.3);
+    }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #588157;
+        animation: pulse 2s infinite;
+    }
+/* 
+    keyframes pulse {
+        0%, 100%
+
+    {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    } */
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-card {
+        background: rgba(218, 215, 205, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 6px 25px rgba(52, 78, 65, 0.12);
+        border: 1px solid rgba(163, 177, 138, 0.3);
+        transition: all 0.3s ease;
+    }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(52, 78, 65, 0.18);
+            background: rgba(163, 177, 138, 0.2);
+        }
+
+        .info-card h6 {
+            color: #3a5a40;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-card .value {
+            color: #344e41;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+    /* media (max-width: 768px) {
+        .charts-grid
+
+    {
+        grid-template-columns: 1fr;
+    } */
+
+    .dashboard-title {
+        font-size: 2rem;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    
+</style>
+
+<div class="dashboard-container">
+    <!-- Enhanced Header -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Resort Management Dashboard</h1>
+        <p class="dashboard-subtitle">Welcome back! Here's what's happening at your resort today.</p>
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            System Online - All Services Running
+        </div>
+        <div class="quick-actions">
+            <a href="/reservations/new" class="quick-action-btn">📅 New Booking</a>
+            <a href="/rooms/availability" class="quick-action-btn">🏨 Room Status</a>
+            <a href="/guests/checkin" class="quick-action-btn">✅ Check-In</a>
+            <a href="/reports" class="quick-action-btn">📊 Reports</a>
         </div>
     </div>
 
-    <!-- Other Charts -->
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;">
-        <div style="background-color:white; padding:1rem; border-radius:1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-            <Barchart />
-        </div>
-        <div style="background-color:white; padding:1rem; border-radius:1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-            <RevenueLineChart />
+    <!-- Key Performance Metrics -->
+    <div class="analytics-section">
+        <h4 class="section-title">
+            <div class="section-icon">📈</div>
+            Key Performance Indicators
+        </h4>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">📋</div>
+                </div>
+                <div class="metric-content">
+                    <h6>New Bookings Online</h6>
+                    <div class="metric-value">@newOnlienBooking</div>
+                    <div class="metric-change positive">
+                        ↗️ +10% from yesterday
+                    </div>
+                </div>
+               
+            </div>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">📋</div>
+                </div>
+                <div class="metric-content">
+                    <h6>New Bookings Direct</h6>
+                    <div class="metric-value">@newDirectBooking</div>
+                    <div class="metric-change positive">
+                        ↗️ +12% from yesterday
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">✅</div>
+                </div>
+                <div class="metric-content">
+                    <h6>Check-Ins</h6>
+                    <div class="metric-value">@checkIn</div>
+                    <div class="metric-change positive">
+                        ↗️ +5% from yesterday
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">🚪</div>
+                </div>
+                <div class="metric-content">
+                    <h6>Check-Outs</h6>
+                    <div class="metric-value">@checkOut</div>
+                    <div class="metric-change neutral">
+                        ➡️ Same as yesterday
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">💰</div>
+                </div>
+                <div class="metric-content">
+                    <h6>Total Revenue</h6>
+                    <div class="metric-value">Rs 45,6800</div>
+                    <div class="metric-change positive">
+                        ↗️ +8.3% from last month
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">⚖️</div>
+                </div>
+                <div class="metric-content">
+                    <h6>Total Balance</h6>
+                    <div class="metric-value">Rs 12,3400</div>
+                    <div class="metric-change positive">
+                        ↗️ +15.2% from last week
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">📈</div>
+                </div>
+                <div class="metric-content">
+                    <h6>Total Income</h6>
+                    <div class="metric-value">Rs 38,9250</div>
+                    <div class="metric-change positive">
+                        ↗️ +22.1% from last month
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon">📉</div>
+                </div>
+                <div class="metric-content">
+                    <h6>Total Expenses</h6>
+                    <div class="metric-value">Rs 18,7600</div>
+                    <div class="metric-change negative">
+                        ↗️ +5.4% from last month
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </div>
 
+    <!-- Real-time Information -->
+    <div class="analytics-section">
+        <h4 class="section-title">
+            <div class="section-icon">⚡</div>
+            Real-time Information
+        </h4>
+        <div class="info-grid">
+            <div class="info-card">
+                <h6>Current Occupancy</h6>
+                <div class="value">@currentOccupancy%</div>
+            </div>
+            <div class="info-card">
+                <h6>Available Rooms</h6>
+                <div class="value">@availableRooms</div>
+            </div>
+            <div class="info-card">
+                <h6>Maintenance Rooms</h6>
+                <div class="value">@maintenanceRooms</div>
+            </div>
+            <div class="info-card">
+                <h6>Pending Checkouts</h6>
+                <div class="value">@pendingCheckouts</div>
+            </div>
+            <div class="info-card">
+                <h6>Today's Arrivals</h6>
+                <div class="value">@todayArrivals</div>
+            </div>
+            <div class="info-card">
+                <h6>Guest Satisfaction</h6>
+                <div class="value">@guestSatisfaction/5 ⭐</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Primary Analytics -->
+    <div class="analytics-section">
+        <h4 class="section-title">
+            <div class="section-icon">📊</div>
+            Primary Analytics
+        </h4>
+        <div class="charts-grid">
+            <div class="chart-container">
+                <Piechart />
+            </div>
+            <div class="chart-container">
+                <RevenueLineChart />
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Analytics -->
+    <div class="analytics-section">
+        <h4 class="section-title">
+            <div class="section-icon">📋</div>
+            Detailed Analytics
+        </h4>
+        <div class="secondary-charts">
+            <div class="chart-container">
+                <Barchart />
+            </div>
+            <div class="chart-container">
+                <!-- Add additional charts here -->
+                <div style="text-align: center; padding: 2rem; color: #3a5a40;">
+                    <h6>Monthly Trends</h6>
+                    <p>Seasonal booking patterns and revenue analysis</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
+@inject HttpClient http
 @code {
+    // Sample data - replace with actual data from your services
+    private int currentOccupancy = 78;
+    private int availableRooms = 12;
+    private int maintenanceRooms = 3;
+    private int pendingCheckouts = 8;
+    private int todayArrivals = 15;
+    private decimal guestSatisfaction = 4.6m;
 
+    public int newOnlienBooking { get; set; }
+    public int newDirectBooking { get; set; }
+    public int checkIn { get; set; }
+    public int checkOut { get; set; }
+    public double TotalRevenue { get; set; }
+    public double TotalBalance { get; set; }
+    public double TotalIncome { get; set; }
+    public double TotalExpence { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load real-time data here
+        await LoadDashboardData();
+        StateHasChanged();
+
+    }
+
+    private async Task LoadDashboardData()
+    {
+        try
+        {
+            var OnlineBooking = await http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+            if(OnlineBooking != null)
+            {
+                newOnlienBooking = OnlineBooking.Count(a=>a.Conformation == true);
+                checkIn += OnlineBooking.Count(a => a.CheckIn);
+                checkOut += OnlineBooking.Count(a => a.CheckOut);
+            }
+            else
+            {
+                Console.WriteLine("Err : OnlineBooking not loaded");
+            }
+            var DirectBooking = await http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+            if(DirectBooking != null)
+            {
+                newDirectBooking = DirectBooking.Count(a => a.Conformation == true);
+                checkIn += DirectBooking.Count(a => a.CheckIn);
+                checkOut += DirectBooking.Count(a => a.CheckOut);
+
+            }
+            else
+            {
+                Console.WriteLine("Err : DirectBooking not loaded");
+            }
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading dashboard data: {ex.Message}");
+        }
+    }
 }

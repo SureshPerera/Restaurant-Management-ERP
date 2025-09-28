@@ -25,6 +25,6 @@ namespace API.Services
         public DbSet<UserManagementModel> UserManagementModels { get; set; }
         public DbSet<ClientModel> ClientModels { get; set; }
        
-     
+        public DbSet<RoomBookingModel> RoomBookingsModel { get; set; }
     }
 }

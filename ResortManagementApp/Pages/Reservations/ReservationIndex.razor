@@ -12,22 +12,26 @@
 <div class="container my-4">
 
     <!-- Header -->
-    <h3 class="mb-4 text-center">Reservation Management</h3>
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold rounded py-3 text-white" style="background-color:#344e41;">Reservation Management</h2>
+    </div>
 
     <div class="row g-4">
 
         <!-- Booking Type Buttons -->
-        <div class="col-md-3 d-flex flex-column gap-3">
-            <a href="/Reservations/DirectBooking" class="btn btn-primary">Direct Booking</a>
-            <a href="/Reservations/AgentBooking" class="btn btn-primary">Agent Booking</a>
-            <a href="/Reservations/OnlineBooking" class="btn btn-primary">Online Booking</a>
+        <div class="col-md-3">
+            <div class="d-grid gap-3">
+                <a href="/Reservations/DirectBooking" class="btn btn-custom">Direct Booking</a>
+                <a href="/Reservations/AgentBooking" class="btn btn-custom">Agent Booking</a>
+                <a href="/Reservations/OnlineBooking" class="btn btn-custom">Online Booking</a>
+            </div>
 
-            <div class="d-grid mt-3 gap-2">
-                <button class="btn btn-warning" @onclick="clickViewAll">View All Reservations</button>
-                <button class="btn btn-warning" @onclick="clickAllConfirmedReservation">View All Confirmed Reservations</button>
-                <button class="btn btn-warning" @onclick="clickAllTemporary">View All Temporary Reservations</button>
-                <button class="btn btn-warning" @onclick="clickAllReservationByAgent">View All Reservations by Agent</button>
-                <button class="btn btn-warning" @onclick="clickViewCancellations">View All Cancellations</button>
+            <div class="d-grid mt-4 gap-2">
+                <button class="btn btn-action" @onclick="clickViewAll">View All Reservations</button>
+                <button class="btn btn-action" @onclick="clickAllConfirmedReservation">Confirmed Reservations</button>
+                <button class="btn btn-action" @onclick="clickAllTemporary">Temporary Reservations</button>
+                <button class="btn btn-action" @onclick="clickAllReservationByAgent">Reservations by Agent</button>
+                <button class="btn btn-action" @onclick="clickViewCancellations">Cancellations</button>
             </div>
         </div>
 
@@ -35,136 +39,141 @@
         <div class="col-md-9">
 
             <!-- Direct Booking Table -->
-            <div class="mb-5">
-                <h5>Direct Booking List</h5>
-                @if (directBookingModels == null)
-                {
-                    <div class="d-flex justify-content-center"><Searching /></div>
-                }
-                else
-                {
-                    <div class="table-responsive rounded shadow-sm">
-                        <table class="table-hover table">
-                            <thead class="table-light text-center">
-                                <tr style="background-color: #A3B18A; font-weight:bold;">
-                                    <th>Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Address</th>
-                                    <th>Email Address</th>
-                                    <th>NIC</th>
-                                    <th>Customer Type</th>
-                                    <th>Credit Limit</th>
-                                    <th>Opening Balance</th>
-                                    <th>Nationality</th>
-                                    <th>Remark</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in directBookingModels)
-                                {
-                                    <tr class="table-light text-center" style="background-color: #DAD7CD;">
-                                        <td>@($"{item.FirstName} {item.LastName}")</td>
-                                        <td>@item.PhoneNumber</td>
-                                        <td>@item.Address</td>
-                                        <td>@item.EmailAddress</td>
-                                        <td>@item.NIC</td>
-                                        <td>@item.CustomerType</td>
-                                        <td>@item.CreditLimit</td>
-                                        <td>@item.OpeningBalanace</td>
-                                        <td>@item.Nationality</td>
-                                        <td>@item.Remark</td>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header table-header">Direct Booking List</div>
+                <div class="card-body p-0">
+                    @if (directBookingModels == null)
+                    {
+                        <div class="d-flex justify-content-center p-4"><Searching /></div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table-hover mb-0 table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Email</th>
+                                        <th>NIC</th>
+                                        <th>Type</th>
+                                        <th>Credit Limit</th>
+                                        <th>Balance</th>
+                                        <th>Nationality</th>
+                                        <th>Remark</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in directBookingModels)
+                                    {
+                                        <tr>
+                                            <td>@($"{item.FirstName} {item.LastName}")</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>@item.Address</td>
+                                            <td>@item.EmailAddress</td>
+                                            <td>@item.NIC</td>
+                                            <td>@item.CustomerType</td>
+                                            <td>@item.CreditLimit</td>
+                                            <td>@item.OpeningBalanace</td>
+                                            <td>@item.Remark</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
             </div>
 
             <!-- Online Booking Table -->
-            <div class="mb-5">
-                <h5>Online Booking List</h5>
-                @if (OnlineBookings == null)
-                {
-                    <div class="d-flex justify-content-center"><Searching /></div>
-                }
-                else
-                {
-                    <div class="table-responsive rounded shadow-sm">
-                        <table class="table-hover table">
-                            <thead class="table-light text-center">
-                                <tr style="background-color: #A3B18A; font-weight:bold;">
-                                    <th>Name</th>
-                                    <th>Check-In Date</th>
-                                    <th>Check-Out Date</th>
-                                    <th>Rooms</th>
-                                    <th>Adults</th>
-                                    <th>Children</th>
-                                    <th>Phone Number</th>
-                                    <th>Email Address</th>
-                                    <th>NIC</th>
-                                    <th>Nationality</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in OnlineBookings)
-                                {
-                                    <tr class="table-light text-center" style="background-color: #DAD7CD;">
-                                        <td>@($"{item.FirstName} {item.LastName}")</td>
-                                        <td>@item.CheckInDate</td>
-                                        <td>@item.CheckOutDate</td>
-                                        <td>@item.NoOfRooms</td>
-                                        <td>@item.NoOfAdults</td>
-                                        <td>@item.NoOfChildren</td>
-                                        <td>@item.PhoneNumber</td>
-                                        <td>@item.EmailAddress</td>
-                                        <td>@item.NIC</td>
-                                        <td>@item.Nationality</td>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header table-header">Online Booking List</div>
+                <div class="card-body p-0">
+                    @if (OnlineBookings == null)
+                    {
+                        <div class="d-flex justify-content-center p-4"><Searching /></div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table-hover mb-0 table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Rooms</th>
+                                        <th>Adults</th>
+                                        <th>Children</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>NIC</th>
+                                        <th>Nationality</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in OnlineBookings)
+                                    {
+                                        <tr>
+                                            <td>@($"{item.FirstName} {item.LastName}")</td>
+                                            <td>@item.CheckInDate.ToString()</td>
+                                            <td>@item.CheckOutDate.ToString()</td>
+                                            <td>@item.NoOfRooms</td>
+                                            <td>@item.NoOfAdults</td>
+                                            <td>@item.NoOfChildren</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>@item.EmailAddress</td>
+                                            <td>@item.NIC</td>
+                                            <td>@item.Nationality</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
             </div>
 
             <!-- Agent Booking Table -->
-            <div class="mb-5">
-                <h5>Agent Booking List</h5>
-                @if (Agents == null)
-                {
-                    <div class="d-flex justify-content-center"><Searching /></div>
-                }
-                else
-                {
-                    <div class="table-responsive rounded shadow-sm">
-                        <table class="table-hover table">
-                            <thead class="table-light text-center">
-                                <tr style="background-color: #A3B18A; font-weight:bold;">
-                                    <th>Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Address</th>
-                                    <th>Email Address</th>
-                                    <th>NIC</th>
-                                    <th>Credit Limit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Agents)
-                                {
-                                    <tr class="table-light text-center" style="background-color: #DAD7CD;">
-                                        <td>@item.AgentName</td>
-                                        <td>@item.Mobile</td>
-                                        <td>@item.AgentAddress</td>
-                                        <td>@item.Email</td>
-                                        <td>@item.NIC</td>
-                                        <td>@item.CreditLimit</td>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header table-header">Agent Booking List</div>
+                <div class="card-body p-0">
+                    @if (Agents == null)
+                    {
+                        <div class="d-flex justify-content-center p-4"><Searching /></div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table-hover mb-0 table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Email</th>
+                                        <th>NIC</th>
+                                        <th>Credit Limit</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Agents)
+                                    {
+                                        <tr>
+                                            <td>@item.AgentName</td>
+                                            <td>@item.Mobile</td>
+                                            <td>@item.AgentAddress</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.NIC</td>
+                                            <td>@item.CreditLimit</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
             </div>
 
         </div>
@@ -172,22 +181,66 @@
     </div>
 </div>
 
-
 <style>
-	label {
-		color: white;
-		background-color: black;
-		font-size: 16px;
-		font-weight: bold;
-	}
+    body {
+        background-color: #dad7cd;
+    }
+
+    .btn-custom {
+        background-color: #3a5a40;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+
+        .btn-custom:hover {
+            background-color: #588157;
+            color: white;
+        }
+
+    .btn-action {
+        background-color: #a3b18a;
+        color: #344e41;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+        .btn-action:hover {
+            background-color: #588157;
+            color: white;
+        }
+
+    .card {
+        background-color: #ffffff;
+        border: none;
+        border-radius: 10px;
+    }
+
+    .table-header {
+        background-color: #588157;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    table thead {
+        background-color: #a3b18a;
+        color: #344e41;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9f5ec;
+    }
 </style>
 
-
-
 @code {
-    private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
-    private List<OnlineBookingModel>? OnlineBookings = new List<OnlineBookingModel>();
-    private List<Agents>? Agents = new List<Agents>();
+    private List<DirectBookingModel>? directBookingModels = new();
+    private List<OnlineBookingModel>? OnlineBookings = new();
+    private List<Agents>? Agents = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -196,14 +249,13 @@
             directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
             OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
             Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
-            StateHasChanged();
-
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error Massage : " + ex.Message);
+            Console.WriteLine("Error: " + ex.Message);
         }
     }
+
     private async Task clickViewAll(MouseEventArgs args)
     {
         try
@@ -211,36 +263,34 @@
             directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
             OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
             Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
-            StateHasChanged();
-
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error Massage : " + ex.Message);
+            Console.WriteLine("Error: " + ex.Message);
         }
-
     }
+
     private async Task clickAllConfirmedReservation(MouseEventArgs args)
     {
         var online = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
-        // Only confirmed bookings
         OnlineBookings = online?.Where(b => b.Conformation).ToList();
-        var direct = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
 
+        var direct = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
         directBookingModels = direct?.Where(a => a.Conformation).ToList();
-        Console.WriteLine("Pass clickAllConfirmedReservation");
-        StateHasChanged();
-	}
-    private  Task clickAllTemporary(MouseEventArgs args)
-	{
-		throw new NotImplementedException();
-	}
-    private  Task clickAllReservationByAgent(MouseEventArgs args)
-	{
-		throw new NotImplementedException();
-	}
-    private  Task clickViewCancellations(MouseEventArgs args)
-	{
-		throw new NotImplementedException();
-	}
+    }
+
+    private Task clickAllTemporary(MouseEventArgs args)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Task clickAllReservationByAgent(MouseEventArgs args)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Task clickViewCancellations(MouseEventArgs args)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -23,9 +23,6 @@ namespace API.Model.DTO
         public string? NIC { get; set; }
         public double? CreditLimit { get; set; }
         public double? OpeningBalanace { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Nationality!")]
-        public string? Nationality { get; set; }
         public string? Remark { get; set; }
         public string? CustomerType { get; set; }
         public DateTime CheckInDate { get; set; }

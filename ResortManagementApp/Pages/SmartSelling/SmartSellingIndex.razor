@@ -1,48 +1,136 @@
 ﻿@page "/SmartSalesBilling"
 @using ResortManagementApp.Models.Administration.DTOS
-@using ResortManagementApp.Models.Administration.ManageAgents
-@using ResortManagementApp.Models.Administration.ManageExRates
-@using ResortManagementApp.Models.Administration.ManageExtra
-@using ResortManagementApp.Models.Administration.ManageRooms
-@using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3 text-center">Smart Sales Manager (Expenses)</h3>
-</div>
-<div>
-	<div>
-		<div>
-			<div>
-				<a href="/SmartSelling/Create" class="btn btn-primary mb-3">Make Sale</a>
-			</div>
-		</div>
-		<div>
-			
-			<table class="table">
-				<thead class="bg-light">
-					<tr class="table">
-						<td>Sandry Item</td>
-						<td>Unit Price</td>
-						<td>Stock</td>
-						<td>Actions</td>
+<div class="container-fluid p-4">
 
-					</tr>
-				</thead>
-				<tbody class="bg-light">
-					
-				</tbody>
+    <!-- Page Header -->
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold">Smart Sales Manager (Expenses)</h2>
+        <a href="/SmartSelling/Create" class="btn btn-primary mt-2">Make Sale</a>
+    </div>
 
-			</table>
-		</div>
-	</div>
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card summary-card daily p-3 shadow-sm">
+                <h5>Today's Sale</h5>
+                <h3 class="fw-bold text-success">Rs 25,000</h3>
+                <p class="text-muted">Total sale today</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card summary-card monthly p-3 shadow-sm">
+                <h5>This Month</h5>
+                <h3 class="fw-bold text-info">Rs 750,000</h3>
+                <p class="text-muted">Total sale this month</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card summary-card yearly p-3 shadow-sm">
+                <h5>This Year</h5>
+                <h3 class="fw-bold text-warning">Rs 9,500,000</h3>
+                <p class="text-muted">Total sale this year</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Table -->
+    <div class="card p-3 shadow-sm">
+        <h5 class="fw-bold mb-3">Expense Details</h5>
+        <div class="table-responsive">
+            <table class="table-hover table align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Sandry Item</th>
+                        <th>Unit Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Item A</td>
+                        <td>Rs 1,500</td>
+                        <td>12</td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Item B</td>
+                        <td>Rs 2,200</td>
+                        <td>8</td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- Repeat rows dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Optional Chart Section -->
+    <div class="card mt-4 p-3 shadow-sm">
+        <h5 class="fw-bold mb-3">Sales Trend</h5>
+        <div>
+            @* You can add a chart here using a Blazor chart library (e.g., ChartJs.Blazor, MudBlazor charts) *@
+            <p class="text-muted">[Sales chart will be here]</p>
+        </div>
+    </div>
+
 </div>
+
+<style>
+    /* Summary Cards */
+    .summary-card {
+        border-radius: 1rem;
+        color: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .summary-card.daily {
+            background: linear-gradient(135deg, #588157, #344E41);
+        }
+
+        .summary-card.monthly {
+            background: linear-gradient(135deg, #0dcaf0, #198754);
+        }
+
+        .summary-card.yearly {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+        }
+
+    /* Table */
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+</style>
 
 @code {
-	
-	protected override void OnInitialized()
-	{
-		
-	}
-
+    // Placeholder properties, replace with dynamic data from API or DB
+    private decimal todaySale = 25000;
+    private decimal monthSale = 750000;
+    private decimal yearSale = 9500000;
 }

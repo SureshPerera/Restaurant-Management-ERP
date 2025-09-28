@@ -78,11 +78,6 @@
 
 							<!-- Nationality & Credit Limit -->
 							<div class="col-md-6">
-								<label class="form-label">Nationality</label>
-								<input class="form-control" @bind="directBookingDTO.Nationality" />
-								<span class="text-danger">@Errors["Nationality"]?[0]</span>
-							</div>
-							<div class="col-md-6">
 								<label class="form-label">Credit Limit</label>
 								<input type="number" class="form-control" @bind="directBookingDTO.CreditLimit" />
 							</div>
@@ -154,7 +149,6 @@
 			directBookingDTO.NIC = directBookingModel?.NIC ?? "";
 			directBookingDTO.CreditLimit = directBookingModel?.CreditLimit;
 			directBookingDTO.OpeningBalanace = directBookingModel?.OpeningBalanace;
-			directBookingDTO.Nationality = directBookingModel?.Nationality ?? "";
 			directBookingDTO.Remark = directBookingModel?.Remark ?? "";
 			directBookingDTO.EmailAddress = directBookingModel?.EmailAddress ?? "";
 			Console.WriteLine("Succusfull");

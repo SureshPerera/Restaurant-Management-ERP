@@ -1,112 +1,189 @@
 ﻿@using MudBlazor
+@inject NavigationManager Nav
 
-<div class="top-row navbar navbar-dark ps-3">
-    <div class="container-fluid">
-		
-        <a class="navbar-brand" href="">Solitary Green Resorts</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
+<div class="dashboard-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar @(_collapsed ? "collapsed" : "")"
+           @onmouseover="() => _hovered = true" @onmouseout="() => _hovered = false">
+        <div class="sidebar-header">
+            <h3 class="@(_collapsed && !_hovered ? "collapsed-text" : "")">Solitary Green Resort</h3>
+            <button class="toggle-btn" @onclick="ToggleSidebar">
+                <span class="bi bi-list"></span>
+            </button>
+        </div>
+
+        <nav class="nav-menu">
+            @foreach (var item in navItems)
+            {
+                <a class="nav-item @(item.Href == activePage ? "active" : "")"
+                   href="@item.Href"
+                   @onclick="@(() => SetActive(item.Href))">
+                    <div class="icon-circle">
+                        <i class="@item.Icon"></i>
+                    </div>
+                    <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
+                        @item.Text
+                    </span>
+                </a>
+            }
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+   @*  <main class="main-content">
+        @Body
+    </main> *@
+
 </div>
+
 <style>
-    .navbar1{
-        backdrop-filter:blur(100px);
-        box-shadow:0px 0px 30px blue;
-        border:2px solid black;
-        
+    .dashboard-layout {
+        display: flex;
+        height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fefae0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 250px;
+        background-color: #344E41;
+        color: #fefae0;
+        display: flex;
+        flex-direction: column;
+        transition: width 0.3s ease;
+        box-shadow: 5px 0 20px rgba(0,0,0,0.2);
+        position: relative;
+    }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        /* Hover effect overrides collapsed */
+        .sidebar:hover {
+            width: 250px;
+        }
+
+    /* Sidebar Header */
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .toggle-btn {
+        background: none;
+        border: none;
+        color: #fefae0;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .collapsed-text {
+        display: none;
+    }
+
+    /* Navigation Menu */
+    .nav-menu {
+        flex-grow: 1;
+        padding: 1rem 0;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 0.7rem 1rem;
+        margin: 0.3rem 0.5rem;
+        border-radius: 12px;
+        text-decoration: none;
+        color: #fefae0;
+        transition: all 0.3s ease;
+    }
+
+    .icon-circle {
+        background-color: #588157;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .nav-item:hover {
+        background: linear-gradient(90deg, #588157, #344E41);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+        .nav-item:hover .icon-circle {
+            background-color: #fefae0;
+            color: #344E41;
+        }
+
+    .nav-item.active {
+        background: linear-gradient(90deg, #fefae0, #588157);
+        color: #344E41;
+        font-weight: bold;
+    }
+
+        .nav-item.active .icon-circle {
+            background-color: #344E41;
+            color: #fefae0;
+        }
+
+    /* Hide text on collapsed */
+    .sidebar.collapsed .nav-text {
+        display: none;
+    }
+
+    /* Main content */
+    .main-content {
+        flex-grow: 1;
+        padding: 2rem;
+        overflow-y: auto;
+        background-color: #fefae0;
     }
 </style>
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu" >
-    <nav class="flex-column navbar1" style="background-color: #344E41">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations/Dashboard" Match="NavLinkMatch.All">
-                <span class="bi bi-speedometer2 fs-4" aria-hidden="true"></span> Dashboard
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations">
-                <span class="bi bi-bag-plus-fill fs-4" aria-hidden="true"></span> Reservation
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations/CheckInOut">
-                <span class="bi bi-building-fill-check fs-4" aria-hidden="true"></span> Check-In & Check-Out
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations/Inhouse">
-                <span class="bi bi-house-exclamation-fill fs-4" aria-hidden="true"></span> Inhouse
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations/HouseKeeping">
-                <span class="bi bi-house-heart fs-4" aria-hidden="true"></span> House-keeping
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/SmartSalesBilling">
-                <span class="bi bi-receipt-cutoff fs-4" aria-hidden="true"></span> Smart sales & Billing
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations/StockManagement">
-                <span class="bi bi-bag-check-fill fs-4" aria-hidden="true"></span> Stock & Inventory
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Reservations/AssetsManagement">
-                <span class="bi bi-wrench-adjustable-circle fs-4" aria-hidden="true"></span> Assets Management
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Administration">
-                <span class="bi bi-file-earmark-person-fill fs-4" aria-hidden="true"></span> Administration
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/ClientManagement">
-                <span class="bi bi-person-vcard fs-4" aria-hidden="true"></span> Client Management
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/UserManagement">
-                <span class="bi bi-shield-lock fs-4" aria-hidden="true"></span> User Management
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@* <MudPaper Height="200px" Style="overflow:hidden; position:relative;">
-    <MudDrawerContainer Class="mud-height-full">
-        <MudDrawer @bind-Open="@_open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
-            <MudNavMenu>
-                <MudNavLink Match="NavLinkMatch.All" Href="" Icon="@Icons.Material.Filled.DashboardCustomize">Dashboard</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Href="/Reservations" Icon="@Icons.Material.Filled.MapsHomeWork">Reservation</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Check-In & Check-Out</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Inhouse</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">House-keeping</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Smart sales & Billing</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Stock & Inventory</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Assets Management</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">Client Management</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MapsUgc">User Management</MudNavLink>
-               
-            </MudNavMenu>
-        </MudDrawer>
-        <div class="d-flex align-center mud-height-full justify-center">
-            <MudButton OnClick="@ToggleDrawer" Color="Color.Primary">Toggle</MudButton>
-        </div>
-    </MudDrawerContainer>
-</MudPaper> *@
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool _collapsed = false;
+    private bool _hovered = false;
+    private string activePage = "/Reservations/Dashboard";
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private void ToggleSidebar() => _collapsed = !_collapsed;
 
-    private void ToggleNavMenu()
+    private void SetActive(string href)
     {
-        collapseNavMenu = !collapseNavMenu;
+        activePage = href;
+        Nav.NavigateTo(href);
+    }
+
+    private List<NavItem> navItems = new()
+    {
+        new NavItem{ Text="Dashboard", Href="/Reservations/Dashboard", Icon="bi bi-speedometer2" },
+        new NavItem{ Text="Reservation", Href="/Reservations", Icon="bi bi-bag-plus-fill" },
+        new NavItem{ Text="Check-In & Check-Out", Href="/Reservations/CheckInOut", Icon="bi bi-building-fill-check" },
+        new NavItem{ Text="Inhouse", Href="/Reservations/Inhouse", Icon="bi bi-house-exclamation-fill" },
+        new NavItem{ Text="House-Keeping", Href="/Reservations/HouseKeeping", Icon="bi bi-house-heart" },
+        new NavItem{ Text="Smart Sales & Billing", Href="/SmartSalesBilling", Icon="bi bi-receipt-cutoff" },
+        new NavItem{ Text="Administration", Href="/Administration", Icon="bi bi-file-earmark-person-fill" },
+        new NavItem{ Text="Client Management", Href="/ClientManagement", Icon="bi bi-person-vcard" },
+        new NavItem{ Text="User Management", Href="/UserManagement", Icon="bi bi-shield-lock" }
+    };
+
+    public class NavItem
+    {
+        public string Text { get; set; } = string.Empty;
+        public string Href { get; set; } = string.Empty;
+        public string Icon { get; set; } = string.Empty;
     }
 }

@@ -25,5 +25,7 @@ namespace ResortManagementApp.Models.Administration.DTOS
         public string? MaintenanceComment { get; set; }
         public string? AdditionalDetails { get; set; }
         public string? RoomDisplayTitle { get; set; }
+        public bool? IsAvalable { get; set; }
+
     }
 }

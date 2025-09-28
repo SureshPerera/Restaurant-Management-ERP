@@ -9,395 +9,286 @@
 @layout MainLayout
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
+@inject HttpClient Http
+@inject NavigationManager Nav
 
+<div class="container-fluid my-4">
+	<!-- Header -->
+	<div class="mb-5 text-center">
+		<h2 class="fw-bold" style="color:#2f3e46;">Check-In / Check-Out</h2>
+		<p class="text-muted">Easily manage guest arrivals, departures, and reservations</p>
+	</div>
 
-<div style="flex-wrap:wrap;">
-	<div class="container my-4">
-		<h3 class="mb-4 text-center">Check In - Out Management</h3>
-
-		<div class="card p-3 shadow-sm" style="background-color: cornsilk;">
-			<div class="row g-3 align-items-center">
+	<!-- Search & Filters -->
+	<div class="card rounded-4 mb-5 border-0 shadow-lg" style="background: linear-gradient(135deg, #fefae0, #e9edc9);">
+		<div class="card-body py-4">
+			<div class="row g-4 align-items-end">
 
 				<!-- Search -->
 				<div class="col-md-4">
-					<div class="input-group">
-						<input type="search" id="search" class="form-control" placeholder="Search..." />
-						<button class="btn btn-primary" type="button">Go</button>
+					<label class="form-label fw-semibold">Search Guests</label>
+					<div class="input-group input-group-lg">
+						<span class="input-group-text border-end-0 bg-white">
+							<i class="bi bi-search text-muted"></i>
+						</span>
+						<input type="search" id="search" class="form-control border-start-0" placeholder="Enter name, NIC, or phone..." />
 					</div>
 				</div>
 
 				<!-- Date Range -->
-				<div class="col-md-4 d-flex gap-2">
-					<div class="d-flex flex-column">
-						<label for="fromDate" class="form-label mb-1">From:</label>
-						<input type="date" id="fromDate" class="form-control" />
-					</div>
-					<div class="d-flex flex-column">
-						<label for="toDate" class="form-label mb-1">To:</label>
-						<input type="date" id="toDate" class="form-control" />
+				<div class="col-md-4">
+					<label class="form-label fw-semibold">Date Range</label>
+					<div class="d-flex gap-2">
+						<div class="flex-fill">
+							<div class="input-group">
+								<span class="input-group-text bg-white">
+									<i class="bi bi-calendar-event text-muted"></i>
+								</span>
+								<input type="date" id="fromDate" class="form-control" />
+							</div>
+						</div>
+						<div class="flex-fill">
+							<div class="input-group">
+								<span class="input-group-text bg-white">
+									<i class="bi bi-calendar-check text-muted"></i>
+								</span>
+								<input type="date" id="toDate" class="form-control" />
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<!-- Action Button -->
-				<div class="col-md-4 d-flex align-items-end">
-					<button class="btn btn-warning w-100" @onclick="clickViewAllReservations">View Reservations</button>
+				<!-- Action -->
+				<div class="col-md-4">
+					<label class="form-label fw-semibold invisible">Action</label>
+					<button class="btn btn-lg w-100 shadow-sm"
+							style="background-color:#588157; color:white;"
+							@onclick="clickViewAllReservations">
+						<i class="bi bi-eye me-2"></i> View Reservations
+					</button>
 				</div>
-
 			</div>
 		</div>
 	</div>
-
-	<br />
-	<div>
-		<section class="container-fluid my-4">
-			<div class="row">
-				<div class="col-lg-10 mx-auto">
-
-					@if (directBookingModels == null)
-					{
-						<div class="d-flex justify-content-center py-5">
-							<Searching />
-						</div>
-					}
-					else
-					{
-						<div class="card rounded-3 border-0 shadow-sm">
-							<div class="card-header bg-primary text-white">
-								<h5 class="mb-0">All Bookings</h5>
-							</div>
-							<div class="card-body p-0">
-								<div class="table-responsive">
-									<table class="table-hover mb-0 table align-middle">
-										<thead class="table-light">
-											<tr>
-												<th scope="col">Id</th>
-												<th scope="col">Name</th>
-												<th scope="col">Check-In Date</th>
-												<th scope="col">Check-In Time</th>
-												<th scope="col">Check-Out Date</th>
-												<th scope="col">Check-Out Time</th>
-												<th scope="col">Confirmation</th>
-												<th scope="col">Customer Type</th>
-												<th scope="col" class="text-center">Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach (var item in directBookingModels)
-											{
-												<tr>
-													<td>@item.Id</td>
-													<td>@($"{item.FirstName} {item.LastName}")</td>
-													<td>@item.CheckInDate.ToString("yyyy-MM-dd")</td>
-													<td>@item.CheckInTime</td>
-													<td>@item.CheckOutDate.ToString("yyyy-MM-dd")</td>
-													<td>@item.CheckOutTime</td>
-													<td>
-														@if (item.Conformation == true)
-														{
-															<span class="badge bg-success">Confirmed</span>
-														}
-														else
-														{
-															<span class="badge bg-warning text-dark">Pending</span>
-														}
-													</td>
-													<td>@item.CustomerType</td>
-													<td class="text-center" style="white-space:nowrap;">
-														<button class="btn btn-sm btn-outline-primary"
-																@onclick="() => ClickConformationsDirect(item.Id)">
-															Bill View
-														</button>
-													</td>
-												</tr>
-											}
-											@foreach (var item in onlineBookingModels!)
-											{
-												<tr>
-													<td>@item.Id</td>
-													<td>@($"{item.FirstName} {item.LastName}")</td>
-													<td>@item.CheckInDate</td>
-													<td>@item.CheckInTime</td>
-													<td>@item.CheckOutDate</td>
-													<td>@item.CheckOutTime</td>
-													<td>
-														@if (item.Conformation == true)
-														{
-															<span class="badge bg-success">Confirmed</span>
-														}
-														else
-														{
-															<span class="badge bg-warning text-dark">Pending</span>
-														}
-													</td>
-													<td>@item.CustomerType</td>
-													<td class="text-center" style="white-space:nowrap;">
-														<button class="btn btn-sm btn-outline-primary"
-																@onclick="() => ClickConformationsOnline(item.Id)">
-															Bill View
-														</button>
-													</td>
-												</tr>
-											}
-
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					}
+</div>
+<div>
+	<!-- Reservation Table -->
+	<div class="row">
+		<div class="col-lg-10 mx-auto">
+			@if (directBookingModels == null)
+			{
+				<div class="d-flex justify-content-center py-5">
+					<Searching />
 				</div>
-			</div>
-		</section>
+			}
+			else
+			{
+				<div class="card rounded-3 border-0 shadow-sm">
+					<div class="card-header" style="background-color:#588157; color:white;">
+						<h5 class="mb-0">All Reservations</h5>
+					</div>
+					<div class="card-body p-0">
+						<div class="table-responsive">
+							<table class="table-hover mb-0 table align-middle">
+								<thead style="background-color:#dad7cd;" class="text-center">
+									<tr>
+										<th>Id</th>
+										<th>Name</th>
+										<th>Check-In</th>
+										<th>Time</th>
+										<th>Check-Out</th>
+										<th>Time</th>
+										<th>Status</th>
+										<th>Type</th>
+										<th class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in directBookingModels)
+									{
+										<tr class="text-center">
+											<td>@item.Id</td>
+											<td>@($"{item.FirstName} {item.LastName}")</td>
+											<td>@item.CheckInDate.ToString("yyyy-MM-dd")</td>
+											<td>@item.CheckInTime</td>
+											<td>@item.CheckOutDate.ToString("yyyy-MM-dd")</td>
+											<td>@item.CheckOutTime</td>
+											<td>
+												@if (item.Conformation)
+												{
+													<span class="badge bg-success">Confirmed</span>
+												}
+												else
+												{
 
-		<br />
-		<section id="invoice-section" class="container-fluid my-3">
-			<div class="row">
-				<!-- Left Sidebar: Booking actions -->
-				<div class="col-md-3 mb-3">
-					<div class="card shadow-sm">
+													<span class="badge bg-warning text-dark">Pending</span>
+												}
+											</td>
+											<td>@item.CustomerType</td>
+											<td>
+												<button class="btn btn-sm btn-outline-primary"
+														@onclick="() => ClickConformationsDirect(item.Id)">
+													Bill View
+												</button>
+											</td>
+										</tr>
+									}
+
+									@foreach (var item in onlineBookingModels!)
+									{
+										<tr class="text-center">
+											<td>@item.Id</td>
+											<td>@($"{item.FirstName} {item.LastName}")</td>
+											<td>@item.CheckInDate</td>
+											<td>@item.CheckInTime</td>
+											<td>@item.CheckOutDate</td>
+											<td>@item.CheckOutTime</td>
+											<td>
+												@if (item.Conformation)
+												{
+													<span class="badge bg-success">Confirmed</span>
+												}
+												else
+												{
+
+													<span class="badge bg-warning text-dark">Pending</span>
+												}
+											</td>
+											<td>@item.CustomerType</td>
+											<td>
+												<button class="btn btn-sm btn-outline-primary"
+														@onclick="() => ClickConformationsOnline(item.Id)">
+													Bill View
+												</button>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+	<!-- Invoice Section -->
+	@if (PagedateLoad)
+	{
+		<section id="invoice-section" class="my-5">
+			<div class="row g-4">
+				<!-- Sidebar Actions -->
+				<div class="col-md-3">
+					<div class="card rounded-3 border-0 shadow-sm">
 						<div class="card-body d-flex flex-column gap-2">
-							<div class="bg-light rounded p-2">
-								<strong>Booking Status:</strong>
-								@if (Conformation == true)
+							<div class="rounded p-2" style="background-color:#fefae0;">
+								<strong>Status:</strong>
+								@if (Conformation)
 								{
-									<span class="badge bg-success"> Confirmed </span>
+									<span class="badge bg-success">Confirmed</span>
 								}
 								else
 								{
-									<span class="badge bg-warning text-dark"> Pending </span>
-
+									<span class="badge bg-warning text-dark">Pending</span>
 								}
 							</div>
-							<div class="bg-light rounded p-2">
-								<strong>Current Balance:</strong> <span class="text-success"> @totalBalanceLKR</span>
+							<div class="rounded p-2" style="background-color:#fefae0;">
+								<strong>Balance:</strong>
+								<span class="text-success">@totalBalanceLKR</span>
 							</div>
-							@if (Conformation == true)
+
+							@if (Conformation)
 							{
-								<MudButton @onclick="clickUnConform"
-										   Variant="Variant.Filled"
-										   Color="Color.Warning">
-									UnConfirm
-								</MudButton>
+								if (!CheckIn)
+								{
+									<MudButton @onclick="clickUnConform" Variant="Variant.Filled" Color="Color.Warning">
+										UnConfirm
+									</MudButton>
+								}
 							}
 							else
 							{
-
-								<MudButton @onclick="clickConform"
-										   Variant="Variant.Filled"
-										   Color="Color.Success">
+								<MudButton @onclick="clickConform" Variant="Variant.Filled" Color="Color.Success">
 									Confirm
 								</MudButton>
 							}
-							<button class="btn btn-primary w-100" @onclick="clickAdvancePay">Advance Payment</button>
-							<button class="btn btn-warning w-100">Amend Booking</button>
+
+							@if (!CheckIn)
+							{
+								<button class="btn btn-primary w-100" @onclick="@(() => clickAdvancePay(Id))">
+									Advance Payment
+								</button>
+							}
+
 							<button class="btn btn-info w-100">GRC Print</button>
 							<button class="btn btn-info w-100">RCV Print</button>
-							<button class="btn btn-danger w-100" @onclick="clickCancellation">Cancellation</button>
-							@if (CheckIn == false)
+
+							<button class="btn btn-danger w-100" @onclick="clickCancellation">
+								Cancellation
+							</button>
+
+							@if (!CheckIn)
 							{
-								<button class="btn btn-dark w-100" @onclick="ClickCheckIn">Check-In</button>
+								<button class="btn btn-dark w-100" @onclick="ClickCheckIn">
+									Check-In
+								</button>
 							}
-							else
+
+							@if (CheckIn && !CheckOut)
 							{
-								<button class="btn btn-dark w-100" @onclick="ClickCheckOut">Check-Out</button>
+								<button class="btn btn-success w-100" @onclick="ClickCheckOut">
+									Check-Out
+								</button>
 							}
 						</div>
 					</div>
 				</div>
 
-				<!-- Main Invoice Content -->
+				<!-- Main Invoice Area -->
 				<div class="col-md-9">
-					<div class="card rounded-3 border-0 shadow-lg">
-						<div class="card-body bg-light">
-
-							<!-- Header -->
-							<div class="d-flex justify-content-between align-items-center mb-4">
-								<div class="text-md-start text-center">
-									<img src="/imgs/maindashboard/logo.png" width="150" class="mb-2" />
-									<h6 class="fw-bold">Master Room Bill : <span class="text-primary">@Id</span></h6>
-								</div>
-								<div class="rounded bg-white p-3 text-end shadow-sm">
-									<h5 class="fw-bold mb-1">Solitory Green Resort</h5>
-									<small>Oddington Estate, Lindula,<br />Nuwara Eliya, Sri Lanka.</small><br />
-									<small>📞 0761733573</small><br />
-									<small>✉️ sgncabins6@gmail.com</small>
-								</div>
-							</div>
-
-							<!-- Invoice Info -->
-							<h5 class="fw-bold text-secondary mb-3">Proforma Invoice</h5>
-							<div class="row g-3 mb-4">
-								<div class="col-md-6">
-									<label class="form-label">Reserve No:</label>
-									<input readonly class="form-control form-control-sm" value="@ReserveNo" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">Status:</label>
-									<input readonly class="form-control form-control-sm" value="@status" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">Customer Type:</label>
-									<input readonly class="form-control form-control-sm" value="@CustomerType" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">Accommodation Type:</label>
-									<input readonly class="form-control form-control-sm" value="@AccomadationType" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">Voucher No:</label>
-									<input readonly class="form-control form-control-sm" value="@VoucherNo" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">Tour No:</label>
-									<input readonly class="form-control form-control-sm" value="@TourNo" />
-								</div>
-							</div>
-
-							<!-- Customer Info -->
-							<h5 class="fw-bold text-secondary mb-3">Customer Information</h5>
-							<div class="row mb-4">
-								<div class="col-md-6">
-									<p><strong>Name:</strong> @name</p>
-									<p><strong>Address:</strong> @address</p>
-									<p><strong>Phone:</strong> @phone</p>
-									<p><strong>Email:</strong> @email</p>
-								</div>
-								<div class="col-md-6">
-									<p><strong>Agent:</strong> @agentName</p>
-									<p><strong>Adults:</strong> @adults | <strong>Kids:</strong> @kids</p>
-									<p><strong>USD Exch:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" />@USDExch</p>
-									<p><strong>Room rate/day:</strong> <input readonly class="form-control form-control-sm w-25 d-inline-block" /> @RoomRate</p>
-								</div>
-							</div>
-
-							<!-- Stay Summary -->
-							<h5 class="fw-bold text-secondary mb-3">Total Stay (USD)</h5>
-							<div class="table-responsive mb-4">
-								<table class="table-bordered table-sm table text-center">
-									<thead class="table-light">
-										<tr>
-											<th>CHeck-In</th>
-											<th>Check-Out</th>
-											<th>Basis</th>
-											<th>Adults Stay</th>
-											<th>Kids Stay</th>
-											<th>Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>@CheckInDate</td>
-											<td>@CheckOutDate</td>
-											<td>@basis</td>
-											<td>@adults</td>
-											<td>@kids</td>
-											<td>@total</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-							<!-- Check In/Out -->
-							<h5 class="fw-bold text-secondary mb-3">Check-In / Check-Out</h5>
-							<div class="row mb-4">
-								<div class="col-md-6">
-									<label class="form-label">Check-In Date:</label>
-									<input readonly type="date" class="form-control form-control-sm mb-2" value="@CheckInDate" />
-									<label class="form-label">Arrival Time:</label>
-									<input type="time" class="form-control form-control-sm" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">Check-Out Date:</label>
-									<input readonly type="date" class="form-control form-control-sm mb-2" value="@CheckOutDate" />
-									<label class="form-label">Departure Time:</label>
-									<input type="time" class="form-control form-control-sm" />
-								</div>
-							</div>
-
-							<!-- Price Breakdown -->
-							<h5 class="fw-bold text-secondary mb-3">Price Breakdown</h5>
-							<table class="table-sm table">
-								<tbody>
-									<tr><td>+ Adults Stay Total (LKR)</td><td class="text-end">@adultsStayTotal</td></tr>
-									<tr><td>+ Kids Stay Total (LKR)</td><td class="text-end">@kidsStayTotal</td></tr>
-									<tr><td>Grand Total (LKR incl. tax)</td><td class="text-end">@grandTotal</td></tr>
-									<tr><td>- Total Advance Payment</td><td class="text-end">@totalAdvancePayment</td></tr>
-									<tr class="table-active fw-bold"><td>Total Balance (LKR)</td><td class="text-end">@totalBalanceLKR</td></tr>
-									<tr class="table-active fw-bold"><td>Total Balance (USD)</td><td class="text-end">@totalBalanceUSD</td></tr>
-								</tbody>
-							</table>
-
-							<!-- Footer -->
-							<div class="border-top mt-4 pt-3 text-center">
-								<p><strong>Remark:</strong> Transparent Management</p>
-								<p class="text-muted small">Powered by Liya SOFT PVT</p>
-							</div>
-
-						</div>
-					</div>
+					<CheckInInvoice />
 				</div>
 			</div>
 		</section>
-
-
-
-	</div>
+	}
 </div>
 
 <style>
-	#inputs {
-		border: 2px solid black;
-		height: 1.5rem;
-		width: 5rem;
-		/* margin-left: 3.5rem; */
+	/* Smooth hover effect */
+	.btn:hover {
+		transform: translateY(-2px);
+		transition: all 0.2s ease-in-out;
 	}
 
-	label {
-		font-weight: bold;
+	.card {
+		backdrop-filter: blur(10px);
+	}
+	.btn-custom {
+		background-color: #344e41;
+		color: white;
+		border: none;
+		border-radius: 8px;
+		transition: 0.3s;
 	}
 
-	.lables {
-		background-color: white;
-	}
-</style>
-
-<style>
-	/* From Uiverse.io by Bodyhc */
-	.search {
-		display: inline-block;
-		position: relative;
-	}
-
-		.search input[type="text"] {
-			width: 200px;
-			padding: 10px;
-			border: none;
-			border-radius: 20px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		.btn-custom:hover {
+			background-color: #3a5a40;
 		}
 
-		.search button[type="submit"] {
-			background-color: #4e99e9;
-			border: none;
-			color: #fff;
-			cursor: pointer;
-			padding: 10px 20px;
-			border-radius: 20px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			position: absolute;
-			top: 0;
-			right: 0;
-			transition: .9s ease;
+	.btn-action {
+		background-color: #588157;
+		color: white;
+		border: none;
+		border-radius: 8px;
+		transition: 0.3s;
+	}
+
+		.btn-action:hover {
+			background-color: #3a5a40;
 		}
-
-			.search button[type="submit"]:hover {
-				transform: scale(1.1);
-				color: rgb(255, 255, 255);
-				background-color: blue;
-			}
-
 </style>
 @inject HttpClient Http
+@inject NavigationManager Nav
 @code {
 	private List<DirectBookingModel>? directBookingModels = new List<DirectBookingModel>();
 	private List<OnlineBookingModel>? onlineBookingModels = new List<OnlineBookingModel>();
@@ -409,6 +300,7 @@
 	public OnlineBookingDto? OnlineBookingDtos = new();
 	public Guid Id { get; set; }
 
+	public bool PagedateLoad;
 	public string? name;
 	public string? address;
 	public string? phone;
@@ -489,7 +381,7 @@
 			depatureTime = DirectBookinDTO!.CheckOutTime;
 			CheckIn = DirectBookinDTO.CheckIn;
 			CheckOut = DirectBookinDTO.CheckOut;
-
+			PagedateLoad = true;
 			status = "DirectBooking";
 			var guid = Guid.NewGuid();
 			GuidId = guid;
@@ -534,6 +426,7 @@
 			depatureTime = OnlineBookingDto!.CheckOutTime;
 			CheckIn = OnlineBookingDto.CheckIn;
 			CheckOut = OnlineBookingDto.CheckOut;
+			PagedateLoad = true;
 
 			status = "OnlineBooking";
 
@@ -640,9 +533,47 @@
 	}
 
 
-	private Task clickAdvancePay(MouseEventArgs args)
+	private async Task clickAdvancePay(Guid Id)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			if (status == "DirectBooking")
+			{
+				var Direct = await Http.GetFromJsonAsync<DirectBookinDTO>($"https://localhost:4000/api/DirectBooking/{Id}");
+				if (Direct != null)
+				{
+					Nav.NavigateTo($"/ClientManagement/AdvancePay/{Id}");
+					HandleUnConfirmClick("Success");
+
+				}
+				else
+				{
+					Console.WriteLine("Err : There is no any record");
+					HandleUnConfirmClick("There is no any record");
+
+				}
+			}
+			else
+			{
+				var Online = await Http.GetFromJsonAsync<DirectBookinDTO>($"https://localhost:4000/api/OnlineBooking/{Id}");
+				if (Online != null)
+				{
+					Nav.NavigateTo($"/ClientManagement/AdvancePay/{Id}");
+					HandleUnConfirmClick("Success");
+
+				}
+				else
+				{
+					Console.WriteLine("Err : There is no any record");
+					HandleUnConfirmClick("There is no any record");
+
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
 	}
 	private Task clickCancellation(MouseEventArgs args)
 	{

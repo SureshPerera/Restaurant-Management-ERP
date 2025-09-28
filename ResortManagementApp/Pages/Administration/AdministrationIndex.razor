@@ -1,43 +1,124 @@
 ﻿@page "/Administration"
 @layout MainLayout
 
-
 <div class="container my-5">
 
-    <!-- Header -->
-    <h3 class="mb-4 text-center">Administration</h3>
+    <!-- Page Header -->
+    <div class="mb-5 text-center">
+        <h2 class="fw-bold">Administration Dashboard</h2>
+        <p class="text-muted">Quick access to administration modules</p>
+    </div>
 
-    <section class="d-flex justify-content-center flex-wrap gap-4">
+    <!-- Admin Cards -->
+    <div class="row g-4 justify-content-center">
 
-        <!-- Administration Cards / Buttons -->
-        <a href="/Administration/ManageRooms" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
-            Manage Rooms
-        </a>
+        <div class="col-md-4 col-lg-3">
+            <a href="/Administration/ManageRooms" class="admin-card">
+                <div class="card-content">
+                    <i class="bi bi-house-door-fill card-icon"></i>
+                    <span>Manage Rooms</span>
+                </div>
+            </a>
+        </div>
 
-        <a href="/Administration/ManagePackages" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
-            Manage Packages
-        </a>
+        <div class="col-md-4 col-lg-3">
+            <a href="/Administration/ManagePackages" class="admin-card">
+                <div class="card-content">
+                    <i class="bi bi-gift-fill card-icon"></i>
+                    <span>Manage Packages</span>
+                </div>
+            </a>
+        </div>
 
-        <a href="/Administration/ManageAgents" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
-            Manage Agents
-        </a>
+        <div class="col-md-4 col-lg-3">
+            <a href="/Administration/ManageAgents" class="admin-card">
+                <div class="card-content">
+                    <i class="bi bi-people-fill card-icon"></i>
+                    <span>Manage Agents</span>
+                </div>
+            </a>
+        </div>
 
-        <a href="/Administration/ManageExRates" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
-            Manage Ex.Rates
-        </a>
+        <div class="col-md-4 col-lg-3">
+            <a href="/Administration/ManageExRates" class="admin-card">
+                <div class="card-content">
+                    <i class="bi bi-currency-exchange card-icon"></i>
+                    <span>Manage Ex.Rates</span>
+                </div>
+            </a>
+        </div>
 
-        <a href="/Administration/ManageExtra" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
-            Manage Extra
-        </a>
+        <div class="col-md-4 col-lg-3">
+            <a href="/Administration/ManageExtra" class="admin-card">
+                <div class="card-content">
+                    <i class="bi bi-bag-plus-fill card-icon"></i>
+                    <span>Manage Extra</span>
+                </div>
+            </a>
+        </div>
 
-        <a href="/Administration/ReportAnalysis" class="btn btn-primary btn-lg flex-fill p-4 text-center shadow-sm" style="min-width: 200px;">
-            Report & Analysis
-        </a>
+        <div class="col-md-4 col-lg-3">
+            <a href="/Administration/ReportAnalysis" class="admin-card">
+                <div class="card-content">
+                    <i class="bi bi-bar-chart-fill card-icon"></i>
+                    <span>Report & Analysis</span>
+                </div>
+            </a>
+        </div>
 
-    </section>
+    </div>
 
 </div>
 
-@code {
+<style>
+    /* Admin Cards */
+    .admin-card {
+        display: block;
+        background: linear-gradient(135deg, #588157, #344E41);
+        color: #fff;
+        border-radius: 1rem;
+        text-decoration: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        padding: 2rem 1rem;
+        text-align: center;
+    }
 
+        .admin-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #7ca97c, #588157);
+        }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+    }
+
+    .admin-card span {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+   /*  media (max-width: 768px) {
+        .admin-card
+
+    {
+        padding: 1.5rem 1rem;
+    } */
+
+    .card-icon {
+        font-size: 2rem;
+    }
+
+    }
+</style>
+
+@code {
+    // Add code-behind if needed
 }
