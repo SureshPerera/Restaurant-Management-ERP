@@ -30,5 +30,7 @@ namespace API.Model.DTO
         public TimeOnly CheckOutTime { get; set; }
         public bool? CheckIn { get; set; }
         public bool? CheckOut { get; set; }
+        public bool Cancellations { get; set; }
+
     }
 }

@@ -47,11 +47,14 @@ namespace API.Model.Reservation
         [Required(ErrorMessage = "Please Enter Check Out Date!")]
         public DateTime CheckOutDate { get; set; }
 
-        public bool? Conformation { get; set; }
+        public bool? Conformation { get; set; } = false;
         public TimeOnly CheckInTime { get; set; }
         public TimeOnly CheckOutTime { get; set; }
         public bool? CheckIn { get; set; } = false;
         public bool? CheckOut { get; set; } = false;
+        public int Adult { get; set; }
+        public int Kids { get; set; }
+        public bool? Cancellations { get; set; } = false;
 
         // ✅ Navigation
         public virtual ICollection<RoomBookingModel> RoomBookings { get; set; } = new List<RoomBookingModel>();

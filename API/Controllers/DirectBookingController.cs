@@ -26,7 +26,12 @@ namespace API.Controllers
         {
             //Domain model to Dto
             var DomainModel =await dbContext.DirectBookingModels.ToListAsync();
-
+            foreach (var booking in DomainModel)
+            {
+                booking.CheckIn ??= false;
+                booking.CheckOut ??= false;
+                booking.Conformation ??= false;
+            }
             return Ok(DomainModel);
         }
         [HttpGet]
@@ -67,8 +72,9 @@ namespace API.Controllers
                 CheckInDate = directBookingDTO.CheckInDate,
                 Conformation = directBookingDTO.Conformation,
                 CheckInTime = directBookingDTO.CheckInTime,
-                CheckOutTime = directBookingDTO.CheckOutTime
-                
+                CheckOutTime = directBookingDTO.CheckOutTime,
+                CheckIn = false,
+                CheckOut = false,
             };
             var Dtos = new ClientModel
             {

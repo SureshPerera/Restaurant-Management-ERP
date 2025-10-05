@@ -324,23 +324,24 @@
 </style>
 
 <div class="dashboard-container">
-    <!-- Enhanced Header -->
+   
     <div class="dashboard-header">
         <h1 class="dashboard-title">Resort Management Dashboard</h1>
         <p class="dashboard-subtitle">Welcome back! Here's what's happening at your resort today.</p>
+        <p class="dashboard-subtitle">@TodayDate</p>
         <div class="status-indicator">
             <span class="status-dot"></span>
             System Online - All Services Running
         </div>
         <div class="quick-actions">
-            <a href="/reservations/new" class="quick-action-btn">📅 New Booking</a>
-            <a href="/rooms/availability" class="quick-action-btn">🏨 Room Status</a>
-            <a href="/guests/checkin" class="quick-action-btn">✅ Check-In</a>
-            <a href="/reports" class="quick-action-btn">📊 Reports</a>
+            <a href="/Reservations" class="quick-action-btn">📅 New Booking</a>
+            <a href="/Reservations/HouseKeeping" class="quick-action-btn">🏨 Room Status</a>
+            <a href="/Reservations/CheckInOut" class="quick-action-btn">✅ Check-In</a>
+            <a href="/Administration/ReportAnalysis" class="quick-action-btn">📊 Reports</a>
         </div>
     </div>
 
-    <!-- Key Performance Metrics -->
+   
     <div class="analytics-section">
         <h4 class="section-title">
             <div class="section-icon">📈</div>
@@ -532,7 +533,7 @@
 </div>
 @inject HttpClient http
 @code {
-    // Sample data - replace with actual data from your services
+    
     private int currentOccupancy = 78;
     private int availableRooms = 12;
     private int maintenanceRooms = 3;
@@ -548,16 +549,29 @@
     public double TotalBalance { get; set; }
     public double TotalIncome { get; set; }
     public double TotalExpence { get; set; }
-
+    public DateTime TodayDate ;
+    private System.Threading.Timer? timer;
 
     protected override async Task OnInitializedAsync()
     {
-        // Load real-time data here
+       
         await LoadDashboardData();
+        timer = new System.Threading.Timer(async _ =>
+    {
+        await InvokeAsync(() =>
+        {
+            TodayDate = DateTime.Now;
+            StateHasChanged();
+        });
+    }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
         StateHasChanged();
 
     }
 
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
     private async Task LoadDashboardData()
     {
         try

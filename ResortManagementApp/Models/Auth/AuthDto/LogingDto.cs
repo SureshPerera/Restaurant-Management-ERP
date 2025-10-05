@@ -1,4 +1,4 @@
-﻿namespace ResortManagementApp.Pages.Auth.AuthDto
+﻿namespace ResortManagementApp.Models.Auth.AuthDto
 {
     public class LogingDto
     {

@@ -1,8 +1,14 @@
 ﻿@page "/Reservations/Inhouse"
+@using MudBlazor
 @using ResortManagementApp.Models.Administration.ManageRooms
+@using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Pages.Administration.ManageRoomsCrud
 @using ResortManagementApp.Pages.CheckInCheckOut
 @layout MainLayout
+@inject IJSRuntime JS
+@inject ISnackbar Snackbar
+@inject HttpClient Http
+@inject NavigationManager Nav
 
 <div class="container-fluid py-4">
 
@@ -44,30 +50,63 @@
                         <table class="table-hover mb-0 table align-middle">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Room</th>
-                                    <th>Guest</th>
-                                    <th>Basic</th>
-                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Check In Date</th>
+                                    <th>Check In Time</th>
+                                    <th>Check Out Date</th>
+                                    <th>Check Out Time</th>
+                                    <th>Adult</th>
+                                    <th>Kids</th>
+                                    <th>Remark</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in RoomsBookingDetails)
+                                @foreach (var item in DirectBookinDTO!)
                                 {
-                                    <tr>
-                                        <td><strong>@item.Room</strong></td>
-                                        <td>@item.Guest</td>
-                                        <td>@item.Basic</td>
-                                        <td>@item.Type</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-sm btn-outline-primary me-2" title="Details" href="/UserManagement/Edit">
-                                                <i class="bi bi bi-pencil-square"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @if (item.CheckIn == true)
+                                    {
+                                        <tr>
+                                            <td><strong>@item.FirstName</strong></td>
+                                            <td>@item.CheckInDate</td>
+                                            <td>@item.CheckInTime</td>
+                                            <td>@item.CheckOutDate</td>
+                                            <td>@item.CheckOutTime</td>
+                                            <td>@item.Adult</td>
+                                            <td>@item.Kids</td>
+                                            <td>@item.Remark</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        @onclick="() => ClickViewDirectBill(item.Id)">
+                                                    Bill View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    
+                                }
+                                @foreach (var item in OnlineBookingDto!)
+                                {
+                                    @if (item.CheckIn == true)
+                                    {
+                                        <tr>
+                                            <td><strong>@item.FirstName</strong></td>
+                                            <td>@item.CheckInDate</td>
+                                            <td>@item.CheckInTime</td>
+                                            <td>@item.CheckOutDate</td>
+                                            <td>@item.CheckOutTime</td>
+                                            <td>@item.Adult</td>
+                                            <td>@item.Kids</td>
+                                            <td>@item.Remark</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        @onclick="() => ClickViewOnlineBill(item.Id)">
+                                                    Bill View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+
                                 }
                                
                             </tbody>
@@ -82,7 +121,7 @@
                     <div class="card-body">
                         <i class="bi bi-people-fill fs-2 text-success"></i>
                         <h5 class="mb-1 mt-2">Adults</h5>
-                        <p class="fs-5 fw-bold mb-0">19</p>
+                        <p class="fs-5 fw-bold mb-0">@TotalAdults</p>
                     </div>
                 </div>
 
@@ -90,7 +129,7 @@
                     <div class="card-body">
                         <i class="bi bi-child fs-2 text-info"></i>
                         <h5 class="mb-1 mt-2">Kids</h5>
-                        <p class="fs-5 fw-bold mb-0">0</p>
+                        <p class="fs-5 fw-bold mb-0">@TotalKids</p>
                     </div>
                 </div>
 
@@ -98,7 +137,7 @@
                     <div class="card-body">
                         <i class="bi bi-baby fs-2 text-warning"></i>
                         <h5 class="mb-1 mt-2">Infants</h5>
-                        <p class="fs-5 fw-bold mb-0">0</p>
+                        <p class="fs-5 fw-bold mb-0">-+-</p>
                     </div>
                 </div>
             </div>
@@ -159,9 +198,12 @@
                         </div>
 
                         <button class="btn btn-success w-100" @onclick="@(() => ClickAddExtra(Id))">Add Extras</button>
-                        <button class="btn btn-primary w-100">Pay</button>
-                        <button class="btn btn-dark w-100">Check-Out</button>
                         <button class="btn btn-danger w-100">Cancellation</button>
+                        @if (PaymentDone == true)
+                        {
+                            <button class="btn btn-dark w-100">Check-Out</button>
+                        }
+                        <button class="btn btn-primary w-100" @onclick="@(()=> ClickToPay(Id))">Make Payment</button>
                     </div>
                 </div>
             </div>
@@ -173,7 +215,151 @@
                         <h6 class="mb-0">Invoice</h6>
                     </div>
                     <div class="card-body">
-                        <CheckInInvoice />
+                        <!-- Main Invoice Area -->
+                        <div class="container-fluid bg-light p-4" style="font-size: 15px;">
+                            <!-- Header -->
+                            <section class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap rounded bg-white p-3 shadow-sm">
+                                    <!-- Logo + Bill Info -->
+                                    <div class="text-center">
+                                        <img src="/imgs/maindashboard/logo.png" width="150" height="150" class="mb-2" />
+                                        <div>
+                                            <label class="fw-bold">Master Room Bill : <span class="text-primary">10</span></label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Resort Info -->
+                                    <div class="bg-light rounded-3 p-3 shadow-sm">
+                                        <h5 class="fw-bold">Solitory Green Resort</h5>
+                                        <p class="mb-0">Oddington Estate,<br />Lindula,<br />Nuwara Eliya, Sri Lanka.</p>
+                                        <p class="mb-0">📞 0761733573</p>
+                                        <p class="mb-0">✉️ sgncabins6@gmail.com</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Invoice Info -->
+                            <section class="mb-3 rounded bg-white p-3 shadow-sm">
+                                <h6 class="bg-success rounded p-2 text-white">Proforma Invoice</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Reserve Num :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="@Id" />
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Status :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="@Conformation" />
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Check In Type :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="" />
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Customer Type :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="@CustomerType" />
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Accommodation Type :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="@AccomadationType" />
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Voucher No :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="" />
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <label>Tour No :</label>
+                                            <input readonly class="form-control form-control-sm w-50" value="" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer Info -->
+                                    <div class="col-md-6">
+                                        <h6 class="bg-success rounded p-2 text-white">Customer Details</h6>
+                                        <p><strong>Name:</strong> @name</p>
+                                        <p><strong>Address:</strong> @address</p>
+                                        <p><strong>Phone:</strong> @phone</p>
+                                        <p><strong>Email:</strong> @email</p>
+                                        <p><strong>Agent Name:</strong> @agentName</p>
+                                        <div class="d-flex gap-4">
+                                            <p><strong>Adults:</strong> @adults</p>
+                                            <p><strong>Kids:</strong> @kids</p>
+                                        </div>
+                                        <div class="d-flex gap-4">
+                                            <p><strong>USD Exch.:</strong> <input readonly class="form-control form-control-sm w-25" value="Rs 300" /></p>
+                                            <p><strong>Room rate/day:</strong> <input readonly class="form-control form-control-sm w-25" value="@RoomRate" /></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Stay Info -->
+                            <section class="mb-3 rounded bg-white p-3 shadow-sm">
+                                <h6 class="bg-success rounded p-2 text-white">Total Stay (USD)</h6>
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <label>From</label><br />
+                                        <span>@CheckInDate</span>
+                                    </div>
+                                    <div class="col">
+                                        <label>To</label><br />
+                                        <span>@CheckOutDate</span>
+                                    </div>
+                                    <div class="col">
+                                        <label>Basis</label><br />
+                                        <span>Full Board</span>
+                                    </div>
+                                    <div class="col">
+                                        <label>Adults Stay</label><br />
+                                        <span>@adults</span>
+                                    </div>
+                                    <div class="col">
+                                        <label>Kid Stay</label><br />
+                                        <span>@kids</span>
+                                    </div>
+                                    <div class="col">
+                                        <label>Total</label><br />
+                                        <span>@total</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Dates -->
+                            <section class="mb-3 rounded bg-white p-3 shadow-sm">
+                                <h6 class="bg-success rounded p-2 text-white">Check-In / Check-Out</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Check-In Date:</label>
+                                        <input readonly type="date" class="form-control form-control-sm" />
+                                        <label>Arrival Time:</label>
+                                        <input type="time" class="form-control form-control-sm" value="@arrivalTime" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Check-Out Date:</label>
+                                        <input readonly type="date" class="form-control form-control-sm" />
+                                        <label>Departure Time:</label>
+                                        <input type="time" class="form-control form-control-sm" value="@depatureTime" />
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Description -->
+                            <section class="mb-3 rounded bg-white p-3 shadow-sm">
+                                <h6 class="bg-success rounded p-2 text-white">Description</h6>
+                                <div class="d-flex justify-content-between"><span>+ Adults Stay Total (LKR)</span><span>@adultsStayTotal</span></div>
+                                <div class="d-flex justify-content-between"><span>+ Kids Stay Total (LKR)</span><span>@kidsStayTotal</span></div>
+                                <div class="d-flex justify-content-between"><span>Grand Total (LKR) incl. tax</span><span>@grandTotal</span></div>
+                                <div class="d-flex justify-content-between"><span>- Total Advance Payment</span><span>@totalAdvancePayment</span></div>
+                                <div class="d-flex justify-content-between"><span>Total Balance (LKR)</span><span>@totalBalanceLKR</span></div>
+                                <div class="d-flex justify-content-between"><span>Total Balance (USD)</span><span>@totalBalanceUSD</span></div>
+                            </section>
+
+                            <!-- Footer -->
+                            <section class="mt-3 text-center">
+                                <p class="mb-1"><strong>Remark:</strong> Transparent Management</p>
+                                <p class="text-muted small mb-0">Powered by Liya SOFT PVT</p>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -209,70 +395,63 @@
 @code {
     public Guid Id;
     public List<Rooms>? ManageRoomsModel { get; set; } = new List<Rooms>();
-
     public List<RoomBookingDetails> RoomsBookingDetails = new List<RoomBookingDetails>();
+    public List<DirectBookinDTO>? DirectBookinDTO = new List<DirectBookinDTO>();
+    public List<OnlineBookingDto>? OnlineBookingDto = new List<OnlineBookingDto>();
+    public int TotalAdults { get; set; }
+    public int TotalKids { get; set; }
 
-    protected override Task OnInitializedAsync()
+    public bool PagedateLoad;
+    public string? name;
+    public string? address;
+    public string? phone;
+    public string? email;
+    public string? agentName = "None";
+    public double adults;
+    public double kids;
+    public string? basis;
+    public double total;
+    public double adultsStayTotal;
+    public double kidsStayTotal;
+    public double grandTotal;
+    public double totalAdvancePayment;
+    public double totalBalanceLKR;
+    public double totalBalanceUSD;
+    public bool Conformation { get; set; }
+    public string? status;
+    public Guid GuidId;
+    public Guid ReserveNo;
+    public string? CustomerType;
+    public string? AccomadationType;
+    public string? VoucherNo;
+    public string? TourNo;
+    public decimal USDExch;
+    public decimal RoomRate;
+    public string? Basis;
+    public DateTime CheckInDate;
+    public DateTime CheckOutDate;
+    public TimeOnly arrivalTime;
+    public TimeOnly depatureTime;
+    public bool showNotification = false;
+    public bool CheckIn;
+    public bool CheckOut;
+    public bool PaymentDone = false;
+
+    protected override async Task OnInitializedAsync()
     {
-        RoomsBookingDetails = new List<RoomBookingDetails>
-    {
-        new RoomBookingDetails
+        try
         {
-            Basic = "B&B",
-            Guest = "Suranga",
-            Room = "D005",
-            Type = "Night",
-            CheckIn = "10/08/2025",
-            CheckOut = "11/08/2025"
-        },
-        new RoomBookingDetails
-        {
-            Basic = "Full Board",
-            Guest = "Kumara",
-            Room = "A102",
-            Type = "Day",
-             CheckIn = "15/08/2025",
-            CheckOut = "17/08/2025"
-        },
-        new RoomBookingDetails
-        {
-            Basic = "Half Board",
-            Guest = "Nimal",
-            Room = "B210",
-            Type = "Night",
-             CheckIn = "16/08/2025",
-            CheckOut = "17/08/2025"
-        },
-        new RoomBookingDetails
-        {
-            Basic = "B&B",
-            Guest = "Padmasiri",
-            Room = "D006",
-            Type = "Day",
-            CheckIn = "10/08/2025",
-            CheckOut = "11/08/2025"
-        },
-        new RoomBookingDetails
-        {
-            Basic = "Full Board",
-            Guest = "Ranathunga",
-            Room = "A108",
-            Type = "Day",
-             CheckIn = "15/08/2025",
-            CheckOut = "17/08/2025"
-        },
-        new RoomBookingDetails
-        {
-            Basic = "Half Board",
-            Guest = "Kamalajith",
-            Room = "B211",
-            Type = "Night",
-             CheckIn = "16/08/2025",
-            CheckOut = "17/08/2025"
+            DirectBookinDTO = await http.GetFromJsonAsync<List<DirectBookinDTO>>("https://localhost:4000/api/DirectBooking");
+            OnlineBookingDto = await http.GetFromJsonAsync<List<OnlineBookingDto>>("https://localhost:4000/api/OnlineBooking");
+
+            TotalAdults = DirectBookinDTO!.Sum(a=>a.Adult) + OnlineBookingDto!.Sum(a=>a.Adult);
+            TotalKids = DirectBookinDTO!.Sum(a => a.Kids) + OnlineBookingDto!.Sum(a => a.Kids);
         }
-    };
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Inhouse Err : {ex.Message}");    
+        }
 
-        return base.OnInitializedAsync();
     }   
 
 
@@ -288,6 +467,95 @@
         public string? CheckIn { get; set; }
         public string? CheckOut { get; set; }
 
+    }
+    public async Task ClickViewDirectBill(Guid id)
+    {
+        try
+        {
+            var Direct = await http.GetFromJsonAsync<DirectBookinDTO>(
+                $"https://localhost:4000/api/DirectBooking/{id}"
+            );
+            this.Id = id;
+            total = kids + adults;
+            name = $"{Direct?.FirstName + "" + Direct?.LastName}";
+            address = Direct?.Address ?? "";
+            phone = Direct?.PhoneNumber ?? "";
+            email = Direct?.EmailAddress ?? "";
+            total = adults + kids;
+            Conformation = Direct!.Conformation;
+            adults = Direct.Adult;
+            kids = Direct.Kids;
+            CheckInDate = Direct!.CheckInDate;
+            CheckOutDate = Direct!.CheckOutDate;
+            email = Direct?.EmailAddress ?? "";
+            phone = Direct?.PhoneNumber ?? "";
+            arrivalTime = Direct!.CheckInTime;
+            depatureTime = Direct!.CheckOutTime;
+            CheckIn = Direct.CheckIn;
+            CheckOut = Direct.CheckOut;
+            PagedateLoad = true;
+            status = "DirectBooking";
+            var guid = Guid.NewGuid();
+            GuidId = guid;
+
+            await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DirectBillView Err : {ex.Message}");
+        }
+    }
+    public async Task ClickViewOnlineBill(Guid id)
+    {
+        try
+        {
+            var Online = await Http.GetFromJsonAsync<OnlineBookingDto>(
+                        $"https://localhost:4000/api/OnlineBooking/{id}"
+                    );
+
+            this.Id = id;
+            total = kids + adults;
+            name = $"{Online?.FirstName + " " + Online?.LastName}";
+            address = Online?.Address ?? "";
+            phone = Online?.PhoneNumber ?? "";
+            email = Online?.EmailAddress ?? "";
+            CheckInDate = Online!.CheckInDate;
+            CheckOutDate = Online!.CheckOutDate;
+            total = adults + kids;
+            Conformation = Online!.Conformation;
+            address = Online?.Address ?? "";
+            email = Online?.EmailAddress ?? "";
+            phone = Online?.PhoneNumber ?? "";
+            arrivalTime = Online!.CheckInTime;
+            depatureTime = Online!.CheckOutTime;
+            CheckIn = Online.CheckIn;
+            CheckOut = Online.CheckOut;
+            PagedateLoad = true;
+
+            status = "OnlineBooking";
+
+            await JS.InvokeVoidAsync("scrollToSection", "invoice-section");
+            StateHasChanged();
+        }catch(Exception ex)
+        {
+            Console.WriteLine($"OnlineBillView Err : {ex.Message}");
+
+        }
+    }
+
+    public async Task ClickToPay(Guid id)
+    {
+        try
+        {
+            Nav.NavigateTo($"/Payments/Checkout/{id}");
+            return;
+
+        }catch(Exception ex)
+        {
+            Console.WriteLine($"Payment Err : {ex.Message}");
+        }
     }
     public async Task RoomSection()
     {

@@ -41,6 +41,8 @@ namespace API.Model.Reservation.OnlineBooking
         public TimeOnly CheckInTime { get; set; }
         public bool? CheckIn { get; set; } = false;
         public bool? CheckOut { get; set; } = false;
+        public bool Cancellations { get; set; }
+
 
     }
 }

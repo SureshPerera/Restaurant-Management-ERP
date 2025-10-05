@@ -1,4 +1,5 @@
-﻿using API.Model.Reservation;
+﻿using API.Model.Payment;
+using API.Model.Reservation;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Model.Administration
@@ -17,6 +18,8 @@ namespace API.Model.Administration
         // ✅ Navigation
         public virtual DirectBookingModel? DirectBooking { get; set; }
         public virtual RoomModel? Room { get; set; }
+        public ICollection<PaymentModel> Payments { get; set; } = new List<PaymentModel>();
     }
-
 }
+
+

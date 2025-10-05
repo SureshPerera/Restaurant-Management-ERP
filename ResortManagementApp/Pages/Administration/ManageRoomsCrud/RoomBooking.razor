@@ -1,131 +1,159 @@
-﻿
-@page "/Administration/ManageRoom/RoomBooking/{Id:guid}"
+﻿@page "/Administration/ManageRoom/RoomBooking/{Id:guid}"
 @using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
 @inject HttpClient http
 @inject NavigationManager nav
 @layout MainLayout
 
 <div class="container my-5">
 
-    <!-- Header -->
-    <h2 class="fw-bold mb-4 text-center" style="color:#344e41;">
-        Room Booking
-    </h2>
+	<!-- Header -->
+	<h2 class="fw-bold mb-4 text-center" style="color:#344e41;">
+		Room Booking
+	</h2>
 
-    <!-- Customer Reference -->
-    <div class="alert alert-info text-center shadow-sm">
-        Booking Reference ID: <strong>@Id</strong>
-    </div>
+	<!-- Customer Reference -->
+	<div class="alert alert-info text-center shadow-sm">
+		Booking Reference ID: <strong>@Id</strong>
+	</div>
 
-    <!-- Available Rooms -->
-    <section class="row g-4">
-        @if (RoomsDto == null)
-        {
-            <div class="text-center">
-                <div class="spinner-border text-success" role="status"></div>
-                <p class="mt-2">Loading available rooms...</p>
-            </div>
-        }
-        else if (!RoomsDto.Any())
-        {
-            <div class="col-12 text-center">
-                <div class="alert alert-warning">No rooms available for this booking period.</div>
-            </div>
-        }
-        else
-        {
-            @foreach (var room in RoomsDto)
-            {
-                <div class="col-md-4">
-                    <div class="card rounded-4 h-100 shadow-sm">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fw-bold">@room.RoomDisplayTitle</h5>
-                            <p class="text-muted mb-2">Type: @room.RoomType</p>
-                            <p class="text-muted mb-2">Floor: @room.RoomFloor</p>
-                            <p class="mb-3">
-                                <span class="badge bg-success">Max @room.MaximumOccupancy Guests</span>
-                            </p>
+	<div class="card-body" style="background-color: #F8F9FA; font-size: 15px;">
+		<form class="row g-3">
+			<!-- First & Last Name -->
+			<div class="col-md-6">
+				<label class="form-label">Check-In Date</label>
+				<input class="form-control" type="date" />
+				@* <span class="text-danger">@Errors["FirstName"]?[0]</span> *@
+			</div>
+			<div class="col-md-6">
+				<label class="form-label">Check-Out Date</label>
+				<input class="form-control"  type="date" />
+			</div>
+		</form>
+	</div>
+	<br/>
+	<!-- Available Rooms -->
+	<section class="row g-4">
+		@if (RoomsDto == null)
+		{
+			<div class="text-center">
+				<div class="spinner-border text-success" role="status"></div>
+				<p class="mt-2">Loading available rooms...</p>
+			</div>
+		}
+		else if (!RoomsDto.Any())
+		{
+			<div class="col-12 text-center">
+				<div class="alert alert-warning">No rooms available for this booking period.</div>
+			</div>
+		}
+		else
+		{
+			@foreach (var room in RoomsDto)
+			{
+				<div class="col-md-4">
+					<div class="card rounded-4 h-100 shadow-sm">
+						<div class="card-body d-flex flex-column">
+							<h5 class="card-title fw-bold">@room.RoomDisplayTitle</h5>
+							<p class="text-muted mb-2">Type: @room.RoomType</p>
+							<p class="text-muted mb-2">Floor: @room.RoomFloor</p>
+							<p class="mb-3">
+								<span class="badge bg-success">Max @room.MaximumOccupancy Guests</span>
+							</p>
 
-                            @if (room.IsAvalable != false )
-                            {
-                                <button class="btn btn-success w-100 mt-auto"
-                                        @onclick="() => AssignRoom(room.Id)">
-                                    Select Room
-                                </button>
-                            }
-                            else
-                            {
-                                <button class="btn btn-secondary w-100 mt-auto" disabled>
-                                    Not Available
-                                </button>
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    </section>
+							@if (room.IsAvalable != false)
+							{
+								<button class="btn btn-success w-100 mt-auto"
+										@onclick="() => AssignRoom(room.Id)">
+									Select Room
+								</button>
+							}
+							else
+							{
+								<button class="btn btn-secondary w-100 mt-auto" disabled>
+									Not Available
+								</button>
+							}
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</section>
 </div>
 
 @code {
-    [Parameter]
-    public Guid Id { get; set; }
-    public decimal RoomRate { get; set; } = 25000;
-    private List<RoomModel>? Rooms = new List<RoomModel>();
-    private List<RoomsDto>? RoomsDto = new List<RoomsDto>();
+	[Parameter]
+	public Guid Id { get; set; }
+	public decimal RoomRate { get; set; } = 25000;
+	
+	private List<RoomsDto>? RoomsDto = new List<RoomsDto>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            // Example API endpoint to get available rooms
-            RoomsDto = await http.GetFromJsonAsync<List<RoomsDto>>(
-                $"https://localhost:4000/api/RoomBooking/Available/{Id}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading rooms: {ex.Message}");
-        }
-    }
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			// Example API endpoint to get available rooms
+			RoomsDto = await http.GetFromJsonAsync<List<RoomsDto>>(
+				$"https://localhost:4000/api/RoomBooking/Available/{Id}");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Error loading rooms: {ex.Message}");
+		}
+	}
 
-    private async Task AssignRoom(Guid roomId)
-    {
-        try
-        {
-            var Dto = new AssignRoomDto
-            {
-                DirectBookingId = Id,
-                RoomId = roomId,
-                RoomRate = RoomRate
+	private async Task AssignRoom(Guid roomId)
+	{
+		try
+		{
+			var Dto = new AssignRoomDto
+			{
+				DirectBookingId = Id,
+				RoomId = roomId,
+				RoomRate = RoomRate
 
-            };
-            var response = await http.PostAsJsonAsync(
-                $"https://localhost:4000/api/RoomBooking/Assign",Dto);
+			};
+			var avalabilityUpdate = new Rooms
+				{
+					IsAvalable = false
+				};
+			var response = await http.PutAsJsonAsync(
+				$"https://localhost:4000/api/RoomBooking/Assign/{roomId}", Dto);
 
-            if (response.IsSuccessStatusCode)
-            {
-                nav.NavigateTo("/Administration/ManageRooms", true);
-            }
-            else
-            {
-                Console.WriteLine("Error assigning room.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error assigning room: {ex.Message}");
-        }
-    }
+			if (response.IsSuccessStatusCode)
+			{
+				// var direct = await http.PutAsJsonAsync($"https://localhost:4000/api/Rooms/{roomId}", avalabilityUpdate);
+				// if (direct.IsSuccessStatusCode)
+				// {
+					
+				// }
+				nav.NavigateTo("/Reservations/DirectBooking");
+				
+				return;
+				
+			}
+			else
+			{
+				Console.WriteLine("Error assigning room.");
+			}
+			StateHasChanged();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Error assigning room: {ex.Message}");
+		}
+	}
 
-    // DTO for UI binding
-    public class RoomModel
-    {
-        public Guid Id { get; set; }
-        public string? RoomType { get; set; }
-        public string? RoomFloor { get; set; }
-        public int MaximumOccupancy { get; set; }
-        public string? RoomStatus { get; set; }
-        public string? RoomDisplayTitle { get; set; }
-    }
+	// DTO for UI binding
+	public class RoomModel
+	{
+		public Guid Id { get; set; }
+		public string? RoomType { get; set; }
+		public string? RoomFloor { get; set; }
+		public int MaximumOccupancy { get; set; }
+		public string? RoomStatus { get; set; }
+		public string? RoomDisplayTitle { get; set; }
+	}
 }
 ```

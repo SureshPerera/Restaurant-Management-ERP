@@ -1,10 +1,12 @@
 ﻿using API.Model.Administration;
 using API.Model.ClientManagemnet;
+using API.Model.Payment;
 using API.Model.Reservation;
 using API.Model.Reservation.OnlineBooking;
 using API.Model.SmartSale_Billing;
 using API.Model.UserManagement;
 using Microsoft.EntityFrameworkCore;
+using ResortManagementApp.Models.Auth;
 
 namespace API.Services
 {
@@ -24,7 +26,21 @@ namespace API.Services
         public DbSet<SmartSaleModel> SmartSaleModels { get; set; }
         public DbSet<UserManagementModel> UserManagementModels { get; set; }
         public DbSet<ClientModel> ClientModels { get; set; }
-       
         public DbSet<RoomBookingModel> RoomBookingsModel { get; set; }
+        public DbSet<PaymentModel> PaymentModel { get; set; }
+        public DbSet<RegistationModel> RegistationModel{ get; set; }
+       
+       
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PaymentModel>()
+                .HasOne(p => p.Booking)
+                .WithMany(b => b.Payments)
+                .HasForeignKey(p => p.BookingId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

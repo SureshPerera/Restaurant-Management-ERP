@@ -246,9 +246,9 @@
     {
         try
         {
-            directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
-            OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
-            Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
+            LoadDirectModel();
+            LoadAgentModel();
+            LoadOnlineModel();
         }
         catch (Exception ex)
         {
@@ -256,17 +256,50 @@
         }
     }
 
-    private async Task clickViewAll(MouseEventArgs args)
+    public async void LoadDirectModel()
     {
         try
         {
             directBookingModels = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+        }catch(Exception ex)
+        {
+            Console.WriteLine($"Loaded Err : {ex.Message}");
+        }
+    }
+    public async void LoadOnlineModel()
+    {
+        try
+        {
             OnlineBookings = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+
+        }catch(Exception ex)
+        {
+            Console.WriteLine($"LoadOnline Err : {ex.Message}");
+        }
+    }
+    public async void LoadAgentModel()
+    {
+        try
+        {
             Agents = await Http.GetFromJsonAsync<List<Agents>>("https://localhost:4000/api/Agent");
+
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error: " + ex.Message);
+            Console.WriteLine($"LoadAgent Err : {ex.Message}");
+        }
+    }
+    private async Task clickViewAll(MouseEventArgs args)
+    {
+        try
+        {
+            LoadDirectModel();
+            LoadAgentModel();
+            LoadOnlineModel();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Clieck View All Error: " + ex.Message);
         }
     }
 
@@ -289,8 +322,21 @@
         throw new NotImplementedException();
     }
 
-    private Task clickViewCancellations(MouseEventArgs args)
+    private async Task clickViewCancellations(MouseEventArgs args)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var cancellationsOnline = await Http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+            OnlineBookings = cancellationsOnline?.Where(b => b.Cancellations).ToList();
+
+            var cancellationsDirect = await Http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+            directBookingModels = cancellationsDirect?.Where(b => b.Cancellations).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Cancellations err : {ex.Message}"); 
+        }
+        
+
     }
 }

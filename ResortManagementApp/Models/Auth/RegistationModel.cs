@@ -1,6 +1,6 @@
-﻿namespace ResortManagementApp.Pages.Auth.AuthDto
+﻿namespace ResortManagementApp.Models.Auth
 {
-    public class RegistationDto
+    public class RegistationModel
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
@@ -12,7 +12,7 @@
         public string? Gender { get; set; }
         public string? Address { get; set; }
         public string? Comments { get; set; }
-       
+
         public bool? Reservations_checkBox { get; set; }
         public bool? CheckIn_checkBox { get; set; }
         public bool? Inhouse_checkBox { get; set; }
@@ -22,6 +22,5 @@
         public bool? UserManagement_checkBox { get; set; }
         public bool? ClientManagement_checkBox { get; set; }
         public bool? DashBoard_checkBox { get; set; }
-
     }
 }

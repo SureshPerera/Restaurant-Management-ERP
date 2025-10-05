@@ -4,6 +4,7 @@ using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250928132045_MakePaymentModel")]
+    partial class MakePaymentModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -420,9 +423,6 @@ namespace API.Migrations
                     b.Property<int>("Adult")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Cancellations")
-                        .HasColumnType("bit");
-
                     b.Property<bool?>("CheckIn")
                         .HasColumnType("bit");
 
@@ -498,9 +498,6 @@ namespace API.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Cancellations")
-                        .HasColumnType("bit");
 
                     b.Property<bool?>("CheckIn")
                         .HasColumnType("bit");
@@ -681,74 +678,6 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserManagementModels");
-                });
-
-            modelBuilder.Entity("ResortManagementApp.Models.Auth.RegistationModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AccessLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Administration_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("CheckIn_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ClientManagement_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("DashBoard_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HouseKeeping_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Inhouse_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Reservations_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("SmartSales_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("UserManagement_checkBox")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RegistationModel");
                 });
 
             modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>

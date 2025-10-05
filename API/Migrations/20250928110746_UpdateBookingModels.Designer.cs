@@ -4,6 +4,7 @@ using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250928110746_UpdateBookingModels")]
+    partial class UpdateBookingModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -368,45 +371,6 @@ namespace API.Migrations
                     b.ToTable("ClientModels");
                 });
 
-            modelBuilder.Entity("API.Model.Payment.PaymentModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("BookingId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.ToTable("PaymentModel");
-                });
-
             modelBuilder.Entity("API.Model.Reservation.DirectBookingModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -419,9 +383,6 @@ namespace API.Migrations
 
                     b.Property<int>("Adult")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Cancellations")
-                        .HasColumnType("bit");
 
                     b.Property<bool?>("CheckIn")
                         .HasColumnType("bit");
@@ -498,9 +459,6 @@ namespace API.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Cancellations")
-                        .HasColumnType("bit");
 
                     b.Property<bool?>("CheckIn")
                         .HasColumnType("bit");
@@ -683,74 +641,6 @@ namespace API.Migrations
                     b.ToTable("UserManagementModels");
                 });
 
-            modelBuilder.Entity("ResortManagementApp.Models.Auth.RegistationModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AccessLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Administration_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("CheckIn_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ClientManagement_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("DashBoard_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HouseKeeping_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Inhouse_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Reservations_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("SmartSales_checkBox")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("UserManagement_checkBox")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RegistationModel");
-                });
-
             modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>
                 {
                     b.HasOne("API.Model.Reservation.DirectBookingModel", "DirectBooking")
@@ -779,22 +669,6 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("DirectBooking");
-                });
-
-            modelBuilder.Entity("API.Model.Payment.PaymentModel", b =>
-                {
-                    b.HasOne("API.Model.Administration.RoomBookingModel", "Booking")
-                        .WithMany("Payments")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-                });
-
-            modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>
-                {
-                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("API.Model.Administration.RoomModel", b =>

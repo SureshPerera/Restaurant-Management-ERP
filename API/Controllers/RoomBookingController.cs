@@ -21,24 +21,15 @@ namespace API.Controllers
         [HttpGet("Available/{directBookingId:guid}")]
         public async Task<IActionResult> GetAllAvalableRoom(Guid directBookingId)
         {
-            var DomainModel = await dbContext.DirectBookingModels.FindAsync(directBookingId);
+            var DomainModel =  dbContext.RoomModels.Where(a=>a.IsAvalable == true);
+            
             if (DomainModel == null)
             {
                 return NotFound($"Direct booking with Id {directBookingId} not found.");
             }
-            var checkIn = DomainModel.CheckInDate;
-            var checkOut = DomainModel.CheckOutDate;
-
-
-            var availableRooms = await dbContext.RoomModels
-            .Where(r => !r.RoomBookings.Any(rb =>
-              rb.DirectBooking != null &&
-              (checkIn < rb.DirectBooking.CheckOutDate &&
-               checkOut > rb.DirectBooking.CheckInDate)))
-            .ToListAsync();
 
             
-            return Ok(availableRooms);
+            return Ok(DomainModel);
         }
         [HttpPut("Assign")]
         public async Task<IActionResult> AssingRoom([FromBody] AssignRoomDto assignRoomDto)
