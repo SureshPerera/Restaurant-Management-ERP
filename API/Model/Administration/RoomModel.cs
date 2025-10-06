@@ -9,13 +9,13 @@ namespace API.Model.Administration
 
         public string? RoomId { get; set; }
 
-        [Required]
+        
         public string? RoomType { get; set; }
 
-        [Required]
+        
         public string? RoomFloor { get; set; }
 
-        [Required]
+       
         public int MaximumOccupancy { get; set; }
 
         public string? RoomStatus { get; set; }

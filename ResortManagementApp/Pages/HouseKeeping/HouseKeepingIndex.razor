@@ -1,4 +1,9 @@
 ﻿@page "/Reservations/HouseKeeping"
+@inject IJSRuntime JS
+@inject ISnackbar Snackbar
+@using MudBlazor
+@using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.Administration.ManageRooms
 @layout MainLayout
 
 <div class="container my-5">
@@ -26,24 +31,45 @@
                                 <th>Room Floor</th>
                                 <th>Room Status</th>
                                 <th>Maintenance</th>
+                                <th>Avalability</th>
+                                <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="5" class="text-muted text-center">No data available</td>
-                            </tr>
-                            @* Dynamic loop example:
-                            @foreach (var room in Rooms)
+                            @if (RoomsDtos == null)
                             {
                                 <tr>
-                                    <td>@room.Id</td>
-                                    <td>@room.Type</td>
-                                    <td>@room.Floor</td>
-                                    <td>@room.Status</td>
-                                    <td>@room.MaintenanceStatus</td>
+                                    <td colspan="5" class="text-muted text-center">No data available</td>
                                 </tr>
                             }
-                            *@
+                           
+                             
+                            @foreach (var room in RoomsDtos!)
+                            {
+                                <tr>
+                                    <td>@room.RoomId</td>
+                                    <td>@room.RoomType</td>
+                                    <td>@room.RoomFloor</td>
+                                    <td>@room.RoomStatus</td>
+                                    <td>@room.MaintainStatus</td>
+                                    @if (room.IsAvalable == true)
+                                    {
+                                        <td>Avalable</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Not Avalable</td>
+                                    }
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary"
+                                                @onclick="() => LoadUpdateData(room.Id)">
+                                            Load
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                            
                         </tbody>
                     </table>
                 </div>
@@ -60,7 +86,7 @@
 
                     <div>
                         <label class="form-label fw-bold">Room Status</label>
-                        <select class="form-select">
+                        <select class="form-select" @bind="RoomsDtoss!.RoomStatus">
                             <option selected>------Select------</option>
                             @foreach (var item in RoomStatus!)
                             {
@@ -70,27 +96,27 @@
                     </div>
 
                     <div>
-                        <label class="form-label fw-bold">Last Cleaned By</label>
-                        <input type="text" class="form-control" placeholder="Staff Name" />
+                        <label class="form-label fw-bold" >Last Cleaned By</label>
+                        <input type="text" class="form-control" placeholder="Staff Name" @bind="RoomsDtoss.LastCleanedBy" />
                     </div>
 
                     <div>
                         <label class="form-label fw-bold">Maintenance Status</label>
-                        <input type="text" class="form-control" placeholder="Status" />
+                        <input type="text" class="form-control" placeholder="Status" @bind="RoomsDtoss.MaintainStatus" />
                     </div>
 
                     <div>
                         <label class="form-label fw-bold">Maintenance Comment</label>
-                        <textarea class="form-control" rows="2" placeholder="Comments"></textarea>
+                        <textarea class="form-control" rows="2" placeholder="Comments" @bind="RoomsDtoss.MaintenanceComment"/>
                     </div>
 
                     <div>
                         <label class="form-label fw-bold">Additional Details</label>
-                        <textarea class="form-control" rows="2" placeholder="Any extra details"></textarea>
+                        <textarea class="form-control" rows="2" placeholder="Any extra details" @bind="RoomsDtoss.AdditionalDetails"></textarea>
                     </div>
 
                     <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn-success w-75 fw-bold">Update</button>
+                        <button class="btn btn-success w-75 fw-bold" @onclick="clickToUpdate">Update</button>
                     </div>
                 </div>
             </div>
@@ -136,10 +162,63 @@
         resize: none;
     }
 </style>
-
+@inject HttpClient http
 @code {
     public List<string>? RoomStatus = new()
     {
         "Occupied", "Ready", "Reserved", "Not Available", "Closed for Maintenance", "Under Construction"
     };
+
+    public Rooms? Roomss { get; set;} 
+    public List<RoomsDto>? RoomsDtos = new List<RoomsDto>();
+    public RoomsDto? RoomsDtoss = new();
+    public Guid LoadRoomid { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        RoomsDtos = await http.GetFromJsonAsync<List<RoomsDto>>($"https://localhost:4000/api/Rooms");
+        if(Roomss != null)
+        {
+            Console.WriteLine("Update room details succusfully");
+            HandleUnConfirmClick("Update room details Succussfully.");
+
+        }
+    }
+    private async Task LoadUpdateData(Guid id)
+    {
+        LoadRoomid = id;
+        var responce = await http.GetFromJsonAsync<Rooms>($"https://localhost:4000/api/Rooms/{id}");
+        if (responce != null)
+        {
+            RoomsDtoss!.AdditionalDetails = responce.AdditionalDetails ?? "";
+            RoomsDtoss.RoomStatus = responce.RoomStatus ?? "";
+            RoomsDtoss.MaintainStatus = responce.MaintainStatus ?? "";
+            RoomsDtoss.MaintenanceComment = responce.MaintenanceComment ?? "";
+            RoomsDtoss.AdditionalDetails = responce.AdditionalDetails ?? "";
+            HandleUnConfirmClick("Succussfully Loading..");
+        }
+        else
+        {
+
+            Console.WriteLine("loadingDate Err : ");
+        }
+    }
+    private async Task clickToUpdate()
+    {
+        var responce = await http.PutAsJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{LoadRoomid}", RoomsDtoss!);
+        if (responce.IsSuccessStatusCode)
+        {
+            
+        }
+    }
+    public void HandleUnConfirmClick(string message)
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add(message, Severity.Normal, config =>
+        {
+            config.ShowCloseIcon = false;
+            config.SnackbarVariant = Variant.Filled;
+        });
+    }
 }

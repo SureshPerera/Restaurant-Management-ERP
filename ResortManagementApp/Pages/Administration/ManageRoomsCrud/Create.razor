@@ -112,7 +112,7 @@
 
 
 <style>
-		.form {
+	.form {
 	  display: flex;
 	  flex-direction: column;
 	  background-color:transparent;
@@ -135,22 +135,29 @@
 
 	private async Task CreateRoom(MouseEventArgs args)
 	{
-		var response = await http.PostAsJsonAsync("https://localhost:4000/api/Rooms", RoomsDtos);
-        
-        if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManageRooms"); StateHasChanged(); }
-
-		var strResponce = await response.Content.ReadAsStringAsync();
-		Console.WriteLine("Json Response :" + strResponce);
-
 		try
 		{
-			var jsonResponce = JsonNode.Parse(strResponce);
-			Errors = jsonResponce?["errors"] ?? new JsonObject();
-		}
-		catch (Exception ex)
+			var response = await http.PostAsJsonAsync("https://localhost:4000/api/Rooms", RoomsDtos);
+
+			if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Administration/ManageRooms"); StateHasChanged(); }
+
+			var strResponce = await response.Content.ReadAsStringAsync();
+			Console.WriteLine("Json Response :" + strResponce);
+
+			try
+			{
+				var jsonResponce = JsonNode.Parse(strResponce);
+				Errors = jsonResponce?["errors"] ?? new JsonObject();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}catch(Exception ex)
 		{
 			Console.WriteLine(ex.Message);
 		}
+		
 	}
 }
 
