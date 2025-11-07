@@ -8,217 +8,233 @@
 
 <div class="container my-5">
 
-    <!-- Header -->
-    <div class="mb-5 text-center">
-        <h2 class="fw-bold">House-Keeping Management</h2>
-        <p class="text-muted">Manage room cleanliness and maintenance efficiently</p>
-    </div>
+	<!-- Header -->
+	<div class="mb-5 text-center">
+		<h2 class="fw-bold">House-Keeping Management</h2>
+		<p class="text-muted">Manage room cleanliness and maintenance efficiently</p>
+	</div>
 
-    <div class="row g-4">
+	<div class="row g-4">
 
-        <!-- Room Details Table Card -->
-        <div class="col-lg-8">
-            <div class="card room-table-card shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Room Details</h5>
-                </div>
-                <div class="card-body p-0">
-                    <table class="table-hover table-bordered mb-0 table">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Room Id</th>
-                                <th>Room Type</th>
-                                <th>Room Floor</th>
-                                <th>Room Status</th>
-                                <th>Maintenance</th>
-                                <th>Avalability</th>
-                                <th>Actions</th>
+		<!-- Room Details Table Card -->
+		<div class="col-lg-8">
+			<div class="card room-table-card shadow-sm">
+				<div class="card-header bg-success text-white">
+					<h5 class="mb-0">Room Details</h5>
+				</div>
+				<div class="card-body p-0">
+					<table class="table-hover table-bordered mb-0 table">
+						<thead class="table-light">
+							<tr>
+								<th>Room Id</th>
+								<th>Room Type</th>
+								<th>Room Floor</th>
+								<th>Room Status</th>
+								<th>Maintenance</th>
+								<th>Avalability</th>
+								<th>Actions</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (RoomsDtos == null)
-                            {
-                                <tr>
-                                    <td colspan="5" class="text-muted text-center">No data available</td>
-                                </tr>
-                            }
-                           
-                             
-                            @foreach (var room in RoomsDtos!)
-                            {
-                                <tr>
-                                    <td>@room.RoomId</td>
-                                    <td>@room.RoomType</td>
-                                    <td>@room.RoomFloor</td>
-                                    <td>@room.RoomStatus</td>
-                                    <td>@room.MaintainStatus</td>
-                                    @if (room.IsAvalable == true)
-                                    {
-                                        <td>Avalable</td>
-                                    }
-                                    else
-                                    {
-                                        <td>Not Avalable</td>
-                                    }
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary"
-                                                @onclick="() => LoadUpdateData(room.Id)">
-                                            Load
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+							</tr>
+						</thead>
+						<tbody>
+							@if (RoomsDtos == null)
+							{
+								<tr>
+									<td colspan="5" class="text-muted text-center">No data available</td>
+								</tr>
+							}
 
-        <!-- Room Update Form Card -->
-        <div class="col-lg-4">
-            <div class="card room-form-card shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Update Room</h5>
-                </div>
-                <div class="card-body d-flex flex-column gap-3">
 
-                    <div>
-                        <label class="form-label fw-bold">Room Status</label>
-                        <select class="form-select" @bind="RoomsDtoss!.RoomStatus">
-                            <option selected>------Select------</option>
-                            @foreach (var item in RoomStatus!)
-                            {
-                                <option>@item</option>
-                            }
-                        </select>
-                    </div>
+							@foreach (var room in RoomsDtos!)
+							{
+								<tr>
+									<td>@room.RoomId</td>
+									<td>@room.RoomType</td>
+									<td>@room.RoomFloor</td>
+									<td>@room.RoomStatus</td>
+									<td>@room.MaintainStatus</td>
+									@if (room.IsAvalable == true)
+									{
+										<td>Avalable</td>
+									}
+									else
+									{
+										<td>Not Avalable</td>
+									}
+									<td>
+										<button class="btn btn-sm btn-outline-primary"
+												@onclick="() => LoadUpdateData(room.Id)">
+											Load
+										</button>
+									</td>
+								</tr>
+							}
 
-                    <div>
-                        <label class="form-label fw-bold" >Last Cleaned By</label>
-                        <input type="text" class="form-control" placeholder="Staff Name" @bind="RoomsDtoss.LastCleanedBy" />
-                    </div>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
-                    <div>
-                        <label class="form-label fw-bold">Maintenance Status</label>
-                        <input type="text" class="form-control" placeholder="Status" @bind="RoomsDtoss.MaintainStatus" />
-                    </div>
+		<!-- Room Update Form Card -->
+		<div class="col-lg-4">
+			<div class="card room-form-card shadow-sm">
+				<div class="card-header bg-success text-white">
+					<h5 class="mb-0">Update Room</h5>
+				</div>
+				<div class="card-body d-flex flex-column gap-3">
 
-                    <div>
-                        <label class="form-label fw-bold">Maintenance Comment</label>
-                        <textarea class="form-control" rows="2" placeholder="Comments" @bind="RoomsDtoss.MaintenanceComment"/>
-                    </div>
+					<div>
+						<label class="form-label fw-bold">Room Status</label>
+						<select class="form-select" @bind="RoomsDtoss!.RoomStatus">
+							<option selected>------Select------</option>
+							@foreach (var item in RoomStatus!)
+							{
+								<option>@item</option>
+							}
+						</select>
+					</div>
 
-                    <div>
-                        <label class="form-label fw-bold">Additional Details</label>
-                        <textarea class="form-control" rows="2" placeholder="Any extra details" @bind="RoomsDtoss.AdditionalDetails"></textarea>
-                    </div>
+					<div>
+						<label class="form-label fw-bold">Last Cleaned By</label>
+						<input type="text" class="form-control" placeholder="Staff Name" @bind="RoomsDtoss.LastCleanedBy" />
+					</div>
 
-                    <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn-success w-75 fw-bold" @onclick="clickToUpdate">Update</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+					<div>
+						<label class="form-label fw-bold">Maintenance Status</label>
+						<input type="text" class="form-control" placeholder="Status" @bind="RoomsDtoss.MaintainStatus" />
+					</div>
 
-    </div>
+					<div>
+						<label class="form-label fw-bold">Maintenance Comment</label>
+						<textarea class="form-control" rows="2" placeholder="Comments" @bind="RoomsDtoss.MaintenanceComment" />
+					</div>
+
+					<div>
+						<label class="form-label fw-bold">Additional Details</label>
+						<textarea class="form-control" rows="2" placeholder="Any extra details" @bind="RoomsDtoss.AdditionalDetails"></textarea>
+					</div>
+					<div>
+						<label class="form-label fw-bold">Avalability</label>
+
+						<input class="form-control" rows="2" placeholder="1 or 0" @bind="RoomsDtoss.IsAvalable"></input>
+
+
+					</div>
+
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-success w-75 fw-bold" @onclick="clickToUpdate">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </div>
 
 <style>
-    /* General */
-    label {
-        font-weight: bold;
-    }
+	/* General */
+	label {
+		font-weight: bold;
+	}
 
-    /* Cards */
-    .room-table-card, .room-form-card {
-        border-radius: 1rem;
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+	/* Cards */
+	.room-table-card, .room-form-card {
+		border-radius: 1rem;
+		overflow: hidden;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
 
-        .room-table-card:hover, .room-form-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-        }
+		.room-table-card:hover, .room-form-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+		}
 
-    /* Table */
-    .table-hover tbody tr:hover {
-        background-color: #e6f2ea;
-    }
+	/* Table */
+	.table-hover tbody tr:hover {
+		background-color: #e6f2ea;
+	}
 
-    .table-bordered th, .table-bordered td {
-        vertical-align: middle;
-        text-align: center;
-    }
+	.table-bordered th, .table-bordered td {
+		vertical-align: middle;
+		text-align: center;
+	}
 
-    /* Inputs and textarea */
-    input.form-control, select.form-select, textarea.form-control {
-        border-radius: 0.5rem;
-    }
+	/* Inputs and textarea */
+	input.form-control, select.form-select, textarea.form-control {
+		border-radius: 0.5rem;
+	}
 
-    textarea.form-control {
-        resize: none;
-    }
+	textarea.form-control {
+		resize: none;
+	}
 </style>
 @inject HttpClient http
 @code {
-    public List<string>? RoomStatus = new()
-    {
-        "Occupied", "Ready", "Reserved", "Not Available", "Closed for Maintenance", "Under Construction"
-    };
+	public List<string>? RoomStatus = new()
+	{
+		"Occupied", "Ready", "Reserved", "Not Available", "Closed for Maintenance", "Under Construction"
+	};
 
-    public Rooms? Roomss { get; set;} 
-    public List<RoomsDto>? RoomsDtos = new List<RoomsDto>();
-    public RoomsDto? RoomsDtoss = new();
-    public Guid LoadRoomid { get; set; }
+	public Rooms? Roomss { get; set; }
+	public List<RoomsDto>? RoomsDtos = new List<RoomsDto>();
+	public RoomsDto? RoomsDtoss = new();
+	public Guid LoadRoomid { get; set; }
+	public bool? IsAvalable;
+	protected override async Task OnInitializedAsync()
+	{
+		RoomsDtos = await http.GetFromJsonAsync<List<RoomsDto>>($"https://localhost:4000/api/Rooms");
+		if (Roomss != null)
+		{
+			Console.WriteLine("Update room details succusfully");
+			HandleUnConfirmClick("Update room details Succussfully.");
 
-    protected override async Task OnInitializedAsync()
-    {
-        RoomsDtos = await http.GetFromJsonAsync<List<RoomsDto>>($"https://localhost:4000/api/Rooms");
-        if(Roomss != null)
-        {
-            Console.WriteLine("Update room details succusfully");
-            HandleUnConfirmClick("Update room details Succussfully.");
+		}
+	}
+	private async Task LoadUpdateData(Guid id)
+	{
+		LoadRoomid = id;
+		var responce = await http.GetFromJsonAsync<Rooms>($"https://localhost:4000/api/Rooms/{id}");
+		if (responce != null)
+		{
+			RoomsDtoss!.AdditionalDetails = responce.AdditionalDetails ?? "";
+			RoomsDtoss.RoomStatus = responce.RoomStatus ?? "";
+			RoomsDtoss.MaintainStatus = responce.MaintainStatus ?? "";
+			RoomsDtoss.MaintenanceComment = responce.MaintenanceComment ?? "";
+			RoomsDtoss.AdditionalDetails = responce.AdditionalDetails ?? "";
+			RoomsDtoss.MaximumOccupancy = responce.MaximumOccupancy;
+			RoomsDtoss.RoomId = responce.RoomId;
+			RoomsDtoss.IsAvalable = responce.IsAvalable;
+			RoomsDtoss.LastCleanedBy = responce.LastCleanedBy;
+			RoomsDtoss.LastCleanedDate = responce.LastCleanedDate;
+			RoomsDtoss.RoomDisplayTitle = responce.RoomDisplayTitle;
+			RoomsDtoss.RoomFloor = responce.RoomFloor;
+			RoomsDtoss.RoomType = responce.RoomType;
+			IsAvalable = responce.IsAvalable;
+			HandleUnConfirmClick("Succussfully Loading..");
+		}
+		else
+		{
 
-        }
-    }
-    private async Task LoadUpdateData(Guid id)
-    {
-        LoadRoomid = id;
-        var responce = await http.GetFromJsonAsync<Rooms>($"https://localhost:4000/api/Rooms/{id}");
-        if (responce != null)
-        {
-            RoomsDtoss!.AdditionalDetails = responce.AdditionalDetails ?? "";
-            RoomsDtoss.RoomStatus = responce.RoomStatus ?? "";
-            RoomsDtoss.MaintainStatus = responce.MaintainStatus ?? "";
-            RoomsDtoss.MaintenanceComment = responce.MaintenanceComment ?? "";
-            RoomsDtoss.AdditionalDetails = responce.AdditionalDetails ?? "";
-            HandleUnConfirmClick("Succussfully Loading..");
-        }
-        else
-        {
-
-            Console.WriteLine("loadingDate Err : ");
-        }
-    }
-    private async Task clickToUpdate()
-    {
-        var responce = await http.PutAsJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{LoadRoomid}", RoomsDtoss!);
-        if (responce.IsSuccessStatusCode)
-        {
-            
-        }
-    }
-    public void HandleUnConfirmClick(string message)
-    {
-        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
-        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
-        Snackbar.Add(message, Severity.Normal, config =>
-        {
-            config.ShowCloseIcon = false;
-            config.SnackbarVariant = Variant.Filled;
-        });
-    }
+			Console.WriteLine("loadingDate Err : ");
+		}
+	}
+	private async Task clickToUpdate()
+	{
+		var responce = await http.PutAsJsonAsync<RoomsDto>($"https://localhost:4000/api/Rooms/{LoadRoomid}", RoomsDtoss!);
+		if (responce.IsSuccessStatusCode)
+		{
+			HandleUnConfirmClick("Succussfully Update..");
+		}
+	}
+	public void HandleUnConfirmClick(string message)
+	{
+		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+		Snackbar.Add(message, Severity.Normal, config =>
+		{
+			config.ShowCloseIcon = false;
+			config.SnackbarVariant = Variant.Filled;
+		});
+	}
 }

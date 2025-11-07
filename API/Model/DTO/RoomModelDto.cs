@@ -13,7 +13,7 @@ namespace API.Model.DTO
         
         public string? RoomFloor { get; set; }
         
-        public int? MaximumOccupancy { get; set; }
+        public int MaximumOccupancy { get; set; }
 
         public string? RoomStatus { get; set; }
 

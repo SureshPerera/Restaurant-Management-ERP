@@ -116,34 +116,46 @@
         padding: 0;
     }
 </style>
-
+@inject HttpClient Http
 @code {
-    public List<UserManagementDto> UserManagementDto { get; set; } = new();
+    public List<UserManagementDto>? UserManagementDto { get; set; } = new();
     public string? Search { get; set; }
 
     // Example mock data
-    protected override void OnInitialized()
+    protected async override void OnInitialized()
     {
-        UserManagementDto.Add(new UserManagementDto
-        {
-            Id = Guid.NewGuid(),
-            FirstName = "Gunadasa",
-            LastName = "Perera",
-            NIC = "200008136524",
-            PhoneNumber = "0703914685",
-            AccessLevel = "Staff",
-            Comment = "Housekeeping Staff"
-        });
+        // UserManagementDto.Add(new UserManagementDto
+        // {
+        //     Id = Guid.NewGuid(),
+        //     FirstName = "Gunadasa",
+        //     LastName = "Perera",
+        //     NIC = "200008136524",
+        //     PhoneNumber = "0703914685",
+        //     AccessLevel = "Staff",
+        //     Comment = "Housekeeping Staff"
+        // });
 
-        UserManagementDto.Add(new UserManagementDto
+        // UserManagementDto.Add(new UserManagementDto
+        // {
+        //     Id = Guid.NewGuid(),
+        //     FirstName = "Nimal",
+        //     LastName = "Fernando",
+        //     NIC = "199502534221",
+        //     PhoneNumber = "0712345678",
+        //     AccessLevel = "Admin",
+        //     Comment = "System Administrator"
+        // });
+        try
         {
-            Id = Guid.NewGuid(),
-            FirstName = "Nimal",
-            LastName = "Fernando",
-            NIC = "199502534221",
-            PhoneNumber = "0712345678",
-            AccessLevel = "Admin",
-            Comment = "System Administrator"
-        });
+            UserManagementDto = await Http.GetFromJsonAsync<List<UserManagementDto>>("https://localhost:4000/api/UserManagement");
+            Console.WriteLine("Pass");
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error Massage : " + ex.Message);
+        }
     }
+
+
 }

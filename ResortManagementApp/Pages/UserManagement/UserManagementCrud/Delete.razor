@@ -36,38 +36,35 @@
 	[Parameter]
 	public Guid Id { get; set; }
 	public List<UserManagement>? UserManagements { get; set; }
-	public UserManagementDto UserManagementDto { get; set; } = new();
+	public UserManagementDto? UserManagementDto { get; set; } = new();
 
-	// protected override async Task OnInitializedAsync()
-	// {
-	// 	try
-	// 	{
-	// 		// Fetch the customer's info by ID
-	// 		directBookingModel = await http.GetFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
-
-	// 	}
-	// 	catch (Exception ex)
-	// 	{
-	// 		Console.WriteLine("Error loading customer: " + ex.Message);
-	// 	}
-	// }
-
-
-	// public async Task DeleteCustomer()
-	// {
-	// 	try
-	// 	{
-	// 		var responce = await http.DeleteFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
-
-	// 		navManager.NavigateTo("/Reservations");
-	// 	}
-	// 	catch (Exception ex)
-	// 	{
-	// 		Console.WriteLine("Erro : " + ex.Message);
-	// 	}
-	// }
-	private Task DeleteUser(MouseEventArgs args)
+	protected override async Task OnInitializedAsync()
 	{
-		throw new NotImplementedException();
+		try
+		{
+			// Fetch the customer's info by ID
+			UserManagementDto = await http.GetFromJsonAsync<UserManagementDto>($"https://localhost:4000/api/UserManagements/{Id}");
+
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error loading customer: " + ex.Message);
+		}
 	}
+
+
+	private async Task DeleteUser(MouseEventArgs args)
+	{
+		try
+		{
+			var responce = await http.DeleteFromJsonAsync<UserManagement>($"https://localhost:4000/api/UserManagement/{Id}");
+
+			navManager.NavigateTo("/UserManagement");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Erro : " + ex.Message);
+		}
+	}
+	
 }

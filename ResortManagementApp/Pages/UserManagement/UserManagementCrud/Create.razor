@@ -222,8 +222,24 @@
 	// 		Console.WriteLine(ex.Message);
 	// 	}
 	// }
-	private Task AddUsers(MouseEventArgs args)
+	private async Task AddUsers(MouseEventArgs args)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			var response = await http.PostAsJsonAsync("https://localhost:4000/api/UserManagement", UserManagementDto);
+			if (response.IsSuccessStatusCode) { navManager.NavigateTo("/UserManagement"); }
+
+			var strResponce = await response.Content.ReadAsStringAsync();
+			Console.WriteLine("Json Response :" + strResponce);
+
+			var jsonResponce = JsonNode.Parse(strResponce);
+			Errors = jsonResponce?["errors"] ?? new JsonObject();
+
+			StateHasChanged();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
 	}
 }
