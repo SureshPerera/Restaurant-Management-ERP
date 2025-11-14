@@ -9,10 +9,10 @@ namespace API.Model.Payment
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid BookingId { get; set; }
-
-        public decimal Amount { get; set; }
-        public string Currency { get; set; } = "LKR";
-        public string PaymentMethod { get; set; } = "Cash";
+        [Precision(18, 2)]
+        public decimal? Amount { get; set; }
+        public string? Currency { get; set; } = "LKR";
+        public string? PaymentMethod { get; set; } = "Cash";
         public string? TransactionId { get; set; }
         public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
         public string? Status { get; set; } = "Completed";

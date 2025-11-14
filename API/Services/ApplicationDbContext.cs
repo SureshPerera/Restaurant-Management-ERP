@@ -1,4 +1,5 @@
 ﻿using API.Model.Administration;
+using API.Model.Auth;
 using API.Model.ClientManagemnet;
 using API.Model.Payment;
 using API.Model.Reservation;
@@ -28,9 +29,10 @@ namespace API.Services
         public DbSet<ClientModel> ClientModels { get; set; }
         public DbSet<RoomBookingModel> RoomBookingsModel { get; set; }
         public DbSet<PaymentModel> PaymentModel { get; set; }
+        public DbSet<UserLoginDetails> UserLoginDetails { get; set; }
         public DbSet<RegistationModel> RegistationModel{ get; set; }
-       
-       
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

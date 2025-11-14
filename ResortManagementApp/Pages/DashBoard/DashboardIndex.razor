@@ -3,6 +3,7 @@
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.CheckInCheckOut
 @using ResortManagementApp.Pages.DashBoard.Chart
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @layout MainLayout
 
 <style>
@@ -531,9 +532,11 @@
         </div>
     </div>
 </div>
+@inject NavigationManager navManager
 @inject HttpClient http
 @code {
-    
+   
+    public Guid? UserloginId;
     private int currentOccupancy = 78;
     private int availableRooms = 12;
     private int maintenanceRooms = 3;
@@ -554,7 +557,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-       
+        UserloginId = await localStorage.GetItemAsync<Guid?>("Id");
+        if (UserloginId == null || UserloginId == Guid.Empty)
+        {
+            navManager.NavigateTo("/Auth/Loging");
+            return;
+        }
+        Console.WriteLine("UserLoginId = " + UserloginId);
+
         await LoadDashboardData();
         timer = new System.Threading.Timer(async _ =>
     {
@@ -564,6 +574,7 @@
             StateHasChanged();
         });
     }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+        
         StateHasChanged();
 
     }

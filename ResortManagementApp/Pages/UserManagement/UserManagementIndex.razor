@@ -1,4 +1,6 @@
 ﻿@page "/UserManagement"
+@using ResortManagementApp.Models.Auth
+@using ResortManagementApp.Models.Auth.AuthDto
 @using ResortManagementApp.Models.UserManagement
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
@@ -41,10 +43,9 @@
                     <table class="table-hover mb-0 table align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Staff Id</th>
+                                <th>UserName</th>
                                 <th>Name</th>
-                                <th>NIC</th>
-                                <th>Phone</th>
+                                <th>Phone No</th>
                                 <th>Access Level</th>
                                 <th>Comments</th>
                                 <th class="text-center">Actions</th>
@@ -54,14 +55,14 @@
                             @foreach (var item in UserManagementDto)
                             {
                                 <tr>
-                                    <td>@item.Id</td>
+                                    <td>@item.Email</td>
                                     <td>@(item.FirstName + " " + item.LastName)</td>
-                                    <td>@item.NIC</td>
                                     <td>@item.PhoneNumber</td>
+                                    <td>@item.AccessLevel</td>
                                     <td>
                                         <span class="badge bg-primary">@item.AccessLevel</span>
                                     </td>
-                                    <td>@item.Comment</td>
+                                    <td>@item.Comments</td>
                                     <td class="text-center">
                                         <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit/@item.Id">
                                             <i class="bi bi-pencil-square"></i>
@@ -118,7 +119,7 @@
 </style>
 @inject HttpClient Http
 @code {
-    public List<UserManagementDto>? UserManagementDto { get; set; } = new();
+    public List<RegistationRequstDto>? UserManagementDto { get; set; } = new();
     public string? Search { get; set; }
 
     // Example mock data
@@ -147,7 +148,7 @@
         // });
         try
         {
-            UserManagementDto = await Http.GetFromJsonAsync<List<UserManagementDto>>("https://localhost:4000/api/UserManagement");
+            UserManagementDto = await Http.GetFromJsonAsync<List<RegistationRequstDto>>("https://localhost:4000/api/Registation");
             Console.WriteLine("Pass");
             StateHasChanged();
         }

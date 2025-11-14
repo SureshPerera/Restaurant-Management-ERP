@@ -1,4 +1,5 @@
 
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
@@ -30,4 +31,6 @@ builder.Services.Configure<JsonSerializerOptions>(options =>
     options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     options.Converters.Add(new JsonStringEnumConverter());
 });
+builder.Services.AddBlazoredLocalStorage();
+
 await builder.Build().RunAsync();

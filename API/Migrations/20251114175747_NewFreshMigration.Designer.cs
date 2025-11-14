@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250928090647_UpdateDirectBooking")]
-    partial class UpdateDirectBooking
+    [Migration("20251114175747_NewFreshMigration")]
+    partial class NewFreshMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,6 +97,7 @@ namespace API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Comment")
@@ -113,9 +114,11 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("RateLKR")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("RateUSD")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -203,6 +206,7 @@ namespace API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("RoomRate")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -245,7 +249,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomFloor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomId")
@@ -255,12 +258,37 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("RoomModels");
+                });
+
+            modelBuilder.Entity("API.Model.Auth.UserLoginDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsLoging")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LogingTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NIC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLoginDetails");
                 });
 
             modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
@@ -371,6 +399,44 @@ namespace API.Migrations
                     b.ToTable("ClientModels");
                 });
 
+            modelBuilder.Entity("API.Model.Payment.PaymentModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("BookingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("PaymentModel");
+                });
+
             modelBuilder.Entity("API.Model.Reservation.DirectBookingModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -380,6 +446,12 @@ namespace API.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Adult")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Cancellations")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("CheckIn")
                         .HasColumnType("bit");
@@ -419,6 +491,9 @@ namespace API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("Kids")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -453,6 +528,9 @@ namespace API.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Cancellations")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("CheckIn")
                         .HasColumnType("bit");
@@ -635,6 +713,74 @@ namespace API.Migrations
                     b.ToTable("UserManagementModels");
                 });
 
+            modelBuilder.Entity("ResortManagementApp.Models.Auth.RegistationModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccessLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Administration_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("CheckIn_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("ClientManagement_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("DashBoard_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("HouseKeeping_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Inhouse_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Reservations_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("SmartSales_checkBox")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("UserManagement_checkBox")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RegistationModel");
+                });
+
             modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>
                 {
                     b.HasOne("API.Model.Reservation.DirectBookingModel", "DirectBooking")
@@ -663,6 +809,22 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("DirectBooking");
+                });
+
+            modelBuilder.Entity("API.Model.Payment.PaymentModel", b =>
+                {
+                    b.HasOne("API.Model.Administration.RoomBookingModel", "Booking")
+                        .WithMany("Payments")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("API.Model.Administration.RoomBookingModel", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("API.Model.Administration.RoomModel", b =>

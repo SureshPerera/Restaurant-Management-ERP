@@ -1,5 +1,6 @@
 ﻿using API.Model.Payment;
 using API.Model.Reservation;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Model.Administration
@@ -12,7 +13,7 @@ namespace API.Model.Administration
         // ✅ Foreign Keys
         public Guid DirectBookingId { get; set; }
         public Guid RoomId { get; set; }
-
+        [Precision(18, 2)]
         public decimal? RoomRate { get; set; }
 
         // ✅ Navigation

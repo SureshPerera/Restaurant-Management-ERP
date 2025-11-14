@@ -94,6 +94,7 @@ namespace API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Comment")
@@ -110,9 +111,11 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("RateLKR")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("RateUSD")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -200,6 +203,7 @@ namespace API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("RoomRate")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -256,6 +260,32 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoomModels");
+                });
+
+            modelBuilder.Entity("API.Model.Auth.UserLoginDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsLoging")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LogingTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NIC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLoginDetails");
                 });
 
             modelBuilder.Entity("API.Model.ClientManagemnet.AdvancePaymentModel", b =>
@@ -372,14 +402,14 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
+                    b.Property<decimal?>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("BookingId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Currency")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
@@ -389,7 +419,6 @@ namespace API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

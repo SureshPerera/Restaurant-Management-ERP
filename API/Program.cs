@@ -1,4 +1,5 @@
 using API.Services;
+using Blazored.LocalStorage;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
 
 // Add HttpClient if needed for DI
 builder.Services.AddHttpClient();

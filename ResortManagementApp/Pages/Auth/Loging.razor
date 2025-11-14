@@ -1,6 +1,10 @@
 ﻿@page "/Auth/Loging"
 @using ResortManagementApp.Models.Auth
 @using ResortManagementApp.Models.Auth.AuthDto
+@using ResortManagementApp.Models.UserManagement
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+
 @layout LoginDisplay
 
 <div style="">
@@ -34,7 +38,7 @@
                     <input type="text"
                            id="username"
                            class="form-input"
-                           @bind="UserName"
+                           @bind="NIC"
                            placeholder="Enter your username"
                            required
                            autocomplete="username" />
@@ -402,44 +406,82 @@
 @inject NavigationManager navManager
 @inject HttpClient http
 @code {
-	public List<RegistationDto> RegistationDto { get; set; } = new List<RegistationDto>();
-	private string? PassWord { get; set; } = string.Empty;
-	private string? UserName { get; set; } = string.Empty;
-	private string errorMessage { get; set; } = string.Empty;
-	private bool isLoading { get; set; } = false;
-	
-	public async Task AsncyLoging()
-	{
-		errorMessage = string.Empty;
-		isLoading = true;
+    public UserManagement? UserManagement { get; set; } = new();
+    public UserLoginDetailsModel? UserLoginDetails { get; set; } = new();
 
-		StateHasChanged();
-		Console.WriteLine($"password : {PassWord} , userName : {UserName}");
-		await Task.Delay(1500);
-		await GetRegistation();
+    [Parameter]
+    public string? PassWord { get; set; }
+    [Parameter]
+    public string? NIC { get; set; }
+    private string errorMessage { get; set; } = string.Empty;
+    private bool isLoading { get; set; } = false;
+
+    public async Task AsncyLoging()
+    {
+        errorMessage = string.Empty;
+        isLoading = true;
+
+        StateHasChanged();
+        Console.WriteLine($"password : {PassWord} , userName : {NIC}");
+        await Task.Delay(1500);
+        await GetRegistation();
+
+    }
+
+    public async Task GetRegistation()
+    {
+        var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/Registation/{NIC}");
+        if (regDate != null)
+        {
+            Console.WriteLine($"Registaion data loaded...");
+            if (regDate.Password == PassWord)
+            {
+                navManager.NavigateTo($"/Reservations/Dashboard");
+                Console.WriteLine("User name : " + NIC + " " + " Password : " + PassWord);
+
+                UserLoginDetails = new UserLoginDetailsModel
+                {
+                    Id = Guid.NewGuid(),
+                    IpAddress = "",
+                    IsLoging = true,
+                    LogingTime = DateTime.Now,
+                    NIC = this.NIC
+                };
+                await localStorage.SetItemAsync("Id", regDate.Id);
+
+                // CreateExchangeRate();
+               
+            }
+            else
+            {
+                errorMessage = "Invalid username or password.";
+                Console.WriteLine("Fail to loging....");
+            }
+            isLoading = false;
+            StateHasChanged();
+
+        }
+
+    }
+   
+    // public async void CreateExchangeRate()
+    // {
+
+    //     try
+    //     {
+    //         var response = await http.PostAsJsonAsync("https://localhost:4000/api/UserLoginDetails", UserLoginDetails);
+    //         if (response.IsSuccessStatusCode)
+    //         {
+    //             Console.WriteLine("Succusfully Added Loging Details in to DB ");
+    //             StateHasChanged();
+    //         }
+    //         Console.WriteLine("Succusfully fail to Added Loging Details in to DB ");
 
 
-	}
-	public async Task GetRegistation()
-	{
-		var regDate = await http.GetFromJsonAsync<RegistationDto>($"https://localhost:4000/api/Registation/{UserName}");
-		if (regDate != null)
-		{
-			Console.WriteLine($"Registaion data loaded...");
-			if (regDate.Password == PassWord)
-			{
-				navManager.NavigateTo("/Reservations/Dashboard");
-				Console.WriteLine("User name : " + UserName + " " + " Password : " + PassWord);
-			}
-			else
-			{
-				errorMessage = "Invalid username or password.";
-				Console.WriteLine("Fail to loging....");
-			}
-			isLoading = false;
-			StateHasChanged();
-
-		}
-
-	}
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine(ex.Message);
+    //     }
+    // }
 }

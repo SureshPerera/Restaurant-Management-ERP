@@ -34,6 +34,15 @@ namespace API.Controllers
             if (DomainModel == null) { return NotFound(); }
             return Ok(DomainModel);
         }
+        
+        [HttpGet("by-nic/{NIC}")]
+        public async Task<IActionResult> GetBookingByNIC(string NIC)
+        {
+            //check Is avalable in db
+            var DomainModel = await  dbContext.UserManagementModels.Where(a => a.NIC == NIC).FirstOrDefaultAsync();
+            if (DomainModel == null) { return NotFound(); }
+            return Ok(DomainModel);
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserManagementModelDto userManagementModelDto)
         {

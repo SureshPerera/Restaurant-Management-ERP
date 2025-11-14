@@ -1,5 +1,6 @@
 ﻿
 @inherits LayoutComponentBase
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 
 
@@ -12,6 +13,10 @@
         
         <div class="top-row auth px-4">
             <LoginDisplay />
+            <div>
+                <button class="submit" @onclick="clickToLogout">LogOut</button>
+
+            </div>
             <img style="width:80px; height:80px" src="/imgs/maindashboard/logo.png" />
             
         </div>
@@ -42,3 +47,16 @@
         z-index: 0;
     }
 </style>
+@inject NavigationManager navManager
+@inject HttpClient http
+@code {
+    private void clickToLogout(MouseEventArgs args)
+    {
+         localStorage.ClearAsync();
+
+        navManager.NavigateTo("/");
+
+        Console.WriteLine("Logout succedfully..");
+
+    }
+}
