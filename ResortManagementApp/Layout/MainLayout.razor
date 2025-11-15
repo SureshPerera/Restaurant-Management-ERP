@@ -50,13 +50,13 @@
 @inject NavigationManager navManager
 @inject HttpClient http
 @code {
-    private void clickToLogout(MouseEventArgs args)
+    private async Task clickToLogout(MouseEventArgs args)
     {
-         localStorage.ClearAsync();
-
-        navManager.NavigateTo("/");
-
+        await localStorage.ClearAsync();
+        
         Console.WriteLine("Logout succedfully..");
+        navManager.NavigateTo("/Auth/Loging");
+
 
     }
 }

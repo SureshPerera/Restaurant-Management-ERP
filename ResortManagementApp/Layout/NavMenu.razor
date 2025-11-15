@@ -13,7 +13,7 @@
                 <span class="bi bi-list"></span>
             </button>
         </div>
-        @if (RegistationRequistDto.AccessLevel == "Administation")
+        @if (RegistationRequistDto!.AccessLevel == "Administrator")
         {
             <nav class="nav-menu">
 
@@ -37,7 +37,7 @@
         {
             <nav class="nav-menu">
 
-                @foreach (var item in SuperUsernavItems)
+                @foreach (var item in ReceiptionnavItems)
                 {
                     <a class="nav-item @(item.Href == activePage ? "active" : "")"
                        href="@item.Href"
@@ -79,7 +79,7 @@
         {
             <nav class="nav-menu">
 
-                @foreach (var item in SuperUsernavItems)
+                @foreach (var item in HouseKeepingnavItems)
                 {
                     <a class="nav-item @(item.Href == activePage ? "active" : "")"
                        href="@item.Href"
@@ -100,7 +100,7 @@
         {
             <nav class="nav-menu">
 
-                @foreach (var item in SuperUsernavItems)
+                @foreach (var item in SmartSellingnavItems)
                 {
                     <a class="nav-item @(item.Href == activePage ? "active" : "")"
                        href="@item.Href"
@@ -258,7 +258,7 @@
     protected override async Task OnInitializedAsync()
     {
         UserloginId = await localStorage.GetItemAsync<Guid?>("Id");
-        RegistationRequistDto = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/Registation/{UserloginId}");
+        RegistationRequistDto = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/UserManagement/{UserloginId}");
         Console.WriteLine($"userloginId = {UserloginId}");
     }
 

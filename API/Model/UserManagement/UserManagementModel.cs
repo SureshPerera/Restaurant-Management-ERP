@@ -12,6 +12,8 @@ namespace API.Model.UserManagement
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         [PasswordPropertyText]
+        
+        public string? UserName { get; set; }
         public string? PassWord { get; set; }
         [Phone]
         public string? PhoneNumber { get; set; }
@@ -35,5 +37,6 @@ namespace API.Model.UserManagement
         public bool? Administration { get; set; }
         public bool? UserManagements { get; set; }
         public bool? ClientManagement { get; set; }
+        public DateTime ActionDate { get; set; } = DateTime.Now;
     }
 }

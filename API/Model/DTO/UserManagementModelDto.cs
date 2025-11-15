@@ -11,6 +11,8 @@ namespace API.Model.DTO
         public string? NIC { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? UserName { get; set; }
+
         [PasswordPropertyText]
         public string? PassWord { get; set; }
         [Phone]

@@ -33,12 +33,12 @@
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        Username
+                        User Name
                     </label>
                     <input type="text"
                            id="username"
                            class="form-input"
-                           @bind="NIC"
+                           @bind="UserName"
                            placeholder="Enter your username"
                            required
                            autocomplete="username" />
@@ -408,36 +408,36 @@
 @code {
     public UserManagement? UserManagement { get; set; } = new();
     public UserLoginDetailsModel? UserLoginDetails { get; set; } = new();
-
-    [Parameter]
     public string? PassWord { get; set; }
-    [Parameter]
-    public string? NIC { get; set; }
+    public string? UserName { get; set; }
     private string errorMessage { get; set; } = string.Empty;
     private bool isLoading { get; set; } = false;
+
+  
 
     public async Task AsncyLoging()
     {
         errorMessage = string.Empty;
         isLoading = true;
 
-        StateHasChanged();
-        Console.WriteLine($"password : {PassWord} , userName : {NIC}");
+        Console.WriteLine($"password : {PassWord} , userName : {UserName}");
         await Task.Delay(1500);
         await GetRegistation();
+        StateHasChanged();
 
     }
 
     public async Task GetRegistation()
     {
-        var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/UserManagement/{NIC}");
+        var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/UserManagement/{UserName}");
         if (regDate != null)
         {
             Console.WriteLine($"Registaion data loaded...");
-            if (regDate.Password == PassWord)
+            if (regDate.Password == this.PassWord)
             {
-                navManager.NavigateTo($"/Reservations/Dashboard");
-                Console.WriteLine("User name : " + NIC + " " + " Password : " + PassWord);
+                await localStorage.SetItemAsync("Id", regDate.Id);
+                navManager.NavigateTo("/Reservations/Dashboard", true);
+                Console.WriteLine("User name : " + UserName + " " + " Password : " + PassWord);
 
                 UserLoginDetails = new UserLoginDetailsModel
                 {
@@ -445,7 +445,7 @@
                     IpAddress = "",
                     IsLoging = true,
                     LogingTime = DateTime.Now,
-                    NIC = this.NIC
+                    NIC = this.UserName
                 };
                 await localStorage.SetItemAsync("Id", regDate.Id);
 

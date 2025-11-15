@@ -35,11 +35,11 @@ namespace API.Controllers
             return Ok(DomainModel);
         }
         
-        [HttpGet("by-nic/{NIC}")]
-        public async Task<IActionResult> GetBookingByNIC(string NIC)
+        [HttpGet("{UserName}")]
+        public async Task<IActionResult> GetBookingByEmail(string UserName)
         {
             //check Is avalable in db
-            var DomainModel = await  dbContext.UserManagementModels.Where(a => a.Email == NIC).FirstOrDefaultAsync();
+            var DomainModel = await  dbContext.UserManagementModels.Where(a => a.UserName == UserName).FirstOrDefaultAsync();
             if (DomainModel == null) { return NotFound(); }
             return Ok(DomainModel);
         }
@@ -77,8 +77,10 @@ namespace API.Controllers
                 StockInventory = userManagementModelDto.StockInventory,
                 Inhouse = userManagementModelDto.Inhouse,
                 UserManagements = userManagementModelDto.UserManagements,
-                SmartSalling = userManagementModelDto.SmartSalling
-
+                SmartSalling = userManagementModelDto.SmartSalling,
+                UserName = userManagementModelDto.UserName,
+                     
+                
             };
             await dbContext.UserManagementModels.AddAsync(Dto);
             await dbContext.SaveChangesAsync();
