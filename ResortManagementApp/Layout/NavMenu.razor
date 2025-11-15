@@ -1,4 +1,5 @@
 ﻿@using MudBlazor
+@using ResortManagementApp.Models.Auth.AuthDto
 @inject NavigationManager Nav
 
 <div class="dashboard-layout">
@@ -12,22 +13,111 @@
                 <span class="bi bi-list"></span>
             </button>
         </div>
+        @if (RegistationRequistDto.AccessLevel == "Administation")
+        {
+            <nav class="nav-menu">
 
-        <nav class="nav-menu">
-            @foreach (var item in navItems)
-            {
-                <a class="nav-item @(item.Href == activePage ? "active" : "")"
-                   href="@item.Href"
-                   @onclick="@(() => SetActive(item.Href))">
-                    <div class="icon-circle">
-                        <i class="@item.Icon"></i>
-                    </div>
-                    <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
-                        @item.Text
-                    </span>
-                </a>
-            }
-        </nav>
+                @foreach (var item in AdminnavItems)
+                {
+                    <a class="nav-item @(item.Href == activePage ? "active" : "")"
+                       href="@item.Href"
+                       @onclick="@(() => SetActive(item.Href))">
+                        <div class="icon-circle">
+                            <i class="@item.Icon"></i>
+                        </div>
+                        <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
+                            @item.Text
+                        </span>
+                    </a>
+                }
+
+
+            </nav>
+        }else if (RegistationRequistDto.AccessLevel == "Receiption")
+        {
+            <nav class="nav-menu">
+
+                @foreach (var item in SuperUsernavItems)
+                {
+                    <a class="nav-item @(item.Href == activePage ? "active" : "")"
+                       href="@item.Href"
+                       @onclick="@(() => SetActive(item.Href))">
+                        <div class="icon-circle">
+                            <i class="@item.Icon"></i>
+                        </div>
+                        <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
+                            @item.Text
+                        </span>
+                    </a>
+                }
+
+
+            </nav>
+        }
+        else if (RegistationRequistDto.AccessLevel == "SuperUser")
+        {
+            <nav class="nav-menu">
+
+                @foreach (var item in SuperUsernavItems)
+                {
+                    <a class="nav-item @(item.Href == activePage ? "active" : "")"
+                       href="@item.Href"
+                       @onclick="@(() => SetActive(item.Href))">
+                        <div class="icon-circle">
+                            <i class="@item.Icon"></i>
+                        </div>
+                        <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
+                            @item.Text
+                        </span>
+                    </a>
+                }
+
+
+            </nav>
+        }
+        else if (RegistationRequistDto.AccessLevel == "HouseKeeping")
+        {
+            <nav class="nav-menu">
+
+                @foreach (var item in SuperUsernavItems)
+                {
+                    <a class="nav-item @(item.Href == activePage ? "active" : "")"
+                       href="@item.Href"
+                       @onclick="@(() => SetActive(item.Href))">
+                        <div class="icon-circle">
+                            <i class="@item.Icon"></i>
+                        </div>
+                        <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
+                            @item.Text
+                        </span>
+                    </a>
+                }
+
+
+            </nav>
+        }
+        else if (RegistationRequistDto.AccessLevel == "SmartSelling")
+        {
+            <nav class="nav-menu">
+
+                @foreach (var item in SuperUsernavItems)
+                {
+                    <a class="nav-item @(item.Href == activePage ? "active" : "")"
+                       href="@item.Href"
+                       @onclick="@(() => SetActive(item.Href))">
+                        <div class="icon-circle">
+                            <i class="@item.Icon"></i>
+                        </div>
+                        <span class="nav-text" style="display:@((_collapsed && !_hovered) ? "none" : "inline")">
+                            @item.Text
+                        </span>
+                    </a>
+                }
+
+
+            </nav>
+        }
+
     </aside>
 
     <!-- Main content -->
@@ -153,13 +243,24 @@
         background-color: #fefae0;
     }
 </style>
-
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager navManager
+@inject HttpClient http
 @code {
+    public Guid? UserloginId;
+    public RegistationRequstDto? RegistationRequistDto = new();
     private bool _collapsed = false;
     private bool _hovered = false;
     private string activePage = "/Reservations/Dashboard";
 
     private void ToggleSidebar() => _collapsed = !_collapsed;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserloginId = await localStorage.GetItemAsync<Guid?>("Id");
+        RegistationRequistDto = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/Registation/{UserloginId}");
+        Console.WriteLine($"userloginId = {UserloginId}");
+    }
 
     private void SetActive(string href)
     {
@@ -167,8 +268,40 @@
         Nav.NavigateTo(href);
     }
 
-    private List<NavItem> navItems = new()
+    private List<NavItem> AdminnavItems = new()
     {
+
+        new NavItem{ Text="Dashboard", Href="/Reservations/Dashboard", Icon="bi bi-speedometer2" },
+        new NavItem{ Text="Reservation", Href="/Reservations", Icon="bi bi-bag-plus-fill" },
+        new NavItem{ Text="Check-In & Check-Out", Href="/Reservations/CheckInOut", Icon="bi bi-building-fill-check" },
+        new NavItem{ Text="Inhouse", Href="/Reservations/Inhouse", Icon="bi bi-house-exclamation-fill" },
+        new NavItem{ Text="House-Keeping", Href="/Reservations/HouseKeeping", Icon="bi bi-house-heart" },
+        new NavItem{ Text="Smart Sales & Billing", Href="/SmartSalesBilling", Icon="bi bi-receipt-cutoff" },
+        new NavItem{ Text="Administration", Href="/Administration", Icon="bi bi-file-earmark-person-fill" },
+        new NavItem{ Text="Client Management", Href="/ClientManagement", Icon="bi bi-person-vcard" },
+        new NavItem{ Text="User Management", Href="/UserManagement", Icon="bi bi-shield-lock" }
+    };
+    private List<NavItem> ReceiptionnavItems = new()
+    {
+        new NavItem{ Text="Reservation", Href="/Reservations", Icon="bi bi-bag-plus-fill" },
+        new NavItem{ Text="Check-In & Check-Out", Href="/Reservations/CheckInOut", Icon="bi bi-building-fill-check" },
+        new NavItem{ Text="Inhouse", Href="/Reservations/Inhouse", Icon="bi bi-house-exclamation-fill" },
+    };
+    private List<NavItem> HouseKeepingnavItems = new()
+    {
+
+
+        new NavItem{ Text="Inhouse", Href="/Reservations/Inhouse", Icon="bi bi-house-exclamation-fill" },
+        new NavItem{ Text="House-Keeping", Href="/Reservations/HouseKeeping", Icon="bi bi-house-heart" },
+ 
+    };
+    private List<NavItem> SmartSellingnavItems = new()
+    {
+        new NavItem{ Text="Smart Sales & Billing", Href="/SmartSalesBilling", Icon="bi bi-receipt-cutoff" },
+    };
+    private List<NavItem> SuperUsernavItems = new()
+    {
+
         new NavItem{ Text="Dashboard", Href="/Reservations/Dashboard", Icon="bi bi-speedometer2" },
         new NavItem{ Text="Reservation", Href="/Reservations", Icon="bi bi-bag-plus-fill" },
         new NavItem{ Text="Check-In & Check-Out", Href="/Reservations/CheckInOut", Icon="bi bi-building-fill-check" },

@@ -430,7 +430,7 @@
 
     public async Task GetRegistation()
     {
-        var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/Registation/{NIC}");
+        var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/UserManagement/{NIC}");
         if (regDate != null)
         {
             Console.WriteLine($"Registaion data loaded...");

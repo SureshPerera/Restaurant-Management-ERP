@@ -39,7 +39,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetBookingByNIC(string NIC)
         {
             //check Is avalable in db
-            var DomainModel = await  dbContext.UserManagementModels.Where(a => a.NIC == NIC).FirstOrDefaultAsync();
+            var DomainModel = await  dbContext.UserManagementModels.Where(a => a.Email == NIC).FirstOrDefaultAsync();
             if (DomainModel == null) { return NotFound(); }
             return Ok(DomainModel);
         }

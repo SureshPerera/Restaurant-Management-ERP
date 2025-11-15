@@ -148,7 +148,7 @@
         // });
         try
         {
-            UserManagementDto = await Http.GetFromJsonAsync<List<RegistationRequstDto>>("https://localhost:4000/api/Registation");
+            UserManagementDto = await Http.GetFromJsonAsync<List<RegistationRequstDto>>("https://localhost:4000/api/UserManagement");
             Console.WriteLine("Pass");
             StateHasChanged();
         }
