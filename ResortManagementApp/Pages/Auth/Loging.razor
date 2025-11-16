@@ -1,9 +1,10 @@
 ﻿@page "/Auth/Loging"
+@using MudBlazor
 @using ResortManagementApp.Models.Auth
 @using ResortManagementApp.Models.Auth.AuthDto
 @using ResortManagementApp.Models.UserManagement
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
-
+@inject ISnackbar Snackbar
 
 @layout LoginDisplay
 
@@ -406,6 +407,8 @@
 @inject NavigationManager navManager
 @inject HttpClient http
 @code {
+
+
     public UserManagement? UserManagement { get; set; } = new();
     public UserLoginDetailsModel? UserLoginDetails { get; set; } = new();
     public string? PassWord { get; set; }
@@ -413,14 +416,22 @@
     private string errorMessage { get; set; } = string.Empty;
     private bool isLoading { get; set; } = false;
 
-  
-
+    public void HandleUnConfirmClick(string message)
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add(message, Severity.Normal, config =>
+        {
+            config.ShowCloseIcon = false;
+            config.SnackbarVariant = Variant.Filled;
+        });
+    }
     public async Task AsncyLoging()
     {
         errorMessage = string.Empty;
         isLoading = true;
-
         Console.WriteLine($"password : {PassWord} , userName : {UserName}");
+        HandleUnConfirmClick("Login.........");
         await Task.Delay(1500);
         await GetRegistation();
         StateHasChanged();
@@ -438,7 +449,6 @@
                 await localStorage.SetItemAsync("Id", regDate.Id);
                 navManager.NavigateTo("/Reservations/Dashboard", true);
                 Console.WriteLine("User name : " + UserName + " " + " Password : " + PassWord);
-
                 UserLoginDetails = new UserLoginDetailsModel
                 {
                     Id = Guid.NewGuid(),

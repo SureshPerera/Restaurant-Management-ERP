@@ -15,6 +15,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Use API base URL
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:4000/") });
 
+
 builder.Services.AddMudServices(config =>
 {
     config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;

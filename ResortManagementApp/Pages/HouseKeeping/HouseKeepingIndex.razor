@@ -181,6 +181,7 @@
 	public RoomsDto? RoomsDtoss = new();
 	public Guid LoadRoomid { get; set; }
 	public bool? IsAvalable;
+
 	protected override async Task OnInitializedAsync()
 	{
 		RoomsDtos = await http.GetFromJsonAsync<List<RoomsDto>>($"https://localhost:4000/api/Rooms");

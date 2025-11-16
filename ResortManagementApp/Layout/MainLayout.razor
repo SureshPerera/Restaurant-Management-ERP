@@ -1,4 +1,5 @@
-﻿
+﻿@using ResortManagementApp.Models.Auth.AuthDto
+
 @inherits LayoutComponentBase
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 
@@ -14,6 +15,10 @@
         <div class="top-row auth px-4">
             <LoginDisplay />
             <div>
+                <h3>Welcome </h3> <label> @logerFName @logerLName</label>
+               
+            </div>
+            <div>
                 <button class="submit" @onclick="clickToLogout">LogOut</button>
 
             </div>
@@ -24,7 +29,10 @@
 
         <div class="position-relative min-vh-100 bg-container">
             <div class="bg-overlay"></div>
+            <BlazoredToasts />
             <div class="position-relative z-1 container py-5">
+               
+
                 @Body
             </div>
         </div>
@@ -49,11 +57,26 @@
 </style>
 @inject NavigationManager navManager
 @inject HttpClient http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @code {
+    public string? logerFName;
+    public string? logerLName;
+    public RegistationRequstDto RegistrationRequistDto { get; set; } = new();
+    protected async override Task OnInitializedAsync()
+    {
+        var UserloginId = await localStorage.GetItemAsync<Guid?>("Id");
+        var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/UserManagement/{UserloginId}");
+        if(regDate != null)
+        {
+            logerFName = regDate.FirstName; 
+            logerLName = regDate.LastName; 
+        }
+        Console.WriteLine("Err : not updated user name in main layout");
+
+    }
     private async Task clickToLogout(MouseEventArgs args)
     {
         await localStorage.ClearAsync();
-        
         Console.WriteLine("Logout succedfully..");
         navManager.NavigateTo("/Auth/Loging");
 

@@ -1,7 +1,9 @@
 ﻿@page "/Reservations/OnlineBookingModel/CustomerDetailsForm"
+@using MudBlazor
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using System.Text.Json.Nodes
 @using ResortManagementApp.Pages.ComponentCss
+@inject ISnackbar Snackbar
 
 <div class="container">
     <div class="row justify-content-center">
@@ -112,7 +114,16 @@
 	[SupplyParameterFromQuery] public int? Adults { get; set; }
 	[SupplyParameterFromQuery] public int? Children { get; set; }
 	[SupplyParameterFromQuery] public string? PramoCode { get; set; }
-
+    public void HandleUnConfirmClick(string message)
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add(message, Severity.Normal, config =>
+        {
+            config.ShowCloseIcon = false;
+            config.SnackbarVariant = Variant.Filled;
+        });
+    }
 	protected override void OnInitialized()
 	{
 		OnlineBookingDto.Nationality = Country;
@@ -129,11 +140,11 @@
 	private async Task ClickSaveCustomer(MouseEventArgs args)
 	{
 		var response = await http.PostAsJsonAsync("https://localhost:4000/api/OnlineBooking", OnlineBookingDto);
-		if (response.IsSuccessStatusCode) { navManager.NavigateTo("/"); }
+        if (response.IsSuccessStatusCode) { navManager.NavigateTo("/"); HandleUnConfirmClick("Succussfuly Create New Booking..."); }
 
 		var strResponce = await response.Content.ReadAsStringAsync();
 		Console.WriteLine("Json Response :" + strResponce);
-
+        HandleUnConfirmClick("Fail To Create New Booking...");
 		try
 		{
 			var jsonResponce = JsonNode.Parse(strResponce);

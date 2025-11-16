@@ -170,7 +170,7 @@
 		try
 		{
 			var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/DirectBooking/{Id}", directBookingDTO);
-			if (responce.IsSuccessStatusCode) { HandleUnConfirmClick("Successfully Updated.."); navManager.NavigateTo("/Reservations/DirectBooking") ; }
+			if (responce.IsSuccessStatusCode) { HandleUnConfirmClick("Successfully Updated..."); navManager.NavigateTo("/Reservations/DirectBooking") ; }
 			
             var strResponce = await responce.Content.ReadAsStringAsync();
 			var jsonResponce = JsonNode.Parse(strResponce);

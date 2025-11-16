@@ -1,5 +1,7 @@
 ﻿@page "/SmartSelling/Create"
+@inject ISnackbar Snackbar
 
+@using MudBlazor
 @using ResortManagementApp.Models.SmartSales
 @using ResortManagementApp.Models.SmartSales.Dtos
 @using System.Text.Json.Nodes
@@ -126,6 +128,16 @@
     public JsonNode Errors { get; set; } = new JsonObject();
     public SmartSaleDto SmartSaleDto { get; set; } = new();
 
+    public void HandleUnConfirmClick(string message)
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add(message, Severity.Normal, config =>
+        {
+            config.ShowCloseIcon = false;
+            config.SnackbarVariant = Variant.Filled;
+        });
+    }
     private Task CreateExpence(MouseEventArgs args)
     {
         throw new NotImplementedException();

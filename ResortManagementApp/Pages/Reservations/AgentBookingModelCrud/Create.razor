@@ -1,7 +1,9 @@
 ﻿@page "/Reservations/AgentBooking/Create"
+@using MudBlazor
 @using ResortManagementApp.Models.Administration.ManageAgents
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
+@inject ISnackbar Snackbar
 
 @layout MainLayout
 <div class="container">
@@ -109,15 +111,32 @@
 	public Agents Agent { get; set; } = new();
 
 	public JsonNode Errors { set; get; } = new JsonObject();
-
+	public void HandleUnConfirmClick(string message)
+	{
+		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+		Snackbar.Add(message, Severity.Normal, config =>
+		{
+			config.ShowCloseIcon = false;
+			config.SnackbarVariant = Variant.Filled;
+		});
+	}
 	private async Task SaveCustomer(MouseEventArgs args)
 	{
 		try
 		{
 			var response = await http.PostAsJsonAsync("https://localhost:4000/api/Agent", Agent);
-			if (response.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
+			if (response.IsSuccessStatusCode) { 
+				navManager.NavigateTo("/Reservations/AgentBooking");
+				HandleUnConfirmClick("Succussfuly Create Agent Booking...");
+
+			}
 
 			var strResponce = await response.Content.ReadAsStringAsync();
+
+			HandleUnConfirmClick("Fail to add Agent Booking...");
+
+
 			Console.WriteLine("Json Response :" + strResponce);
 
 

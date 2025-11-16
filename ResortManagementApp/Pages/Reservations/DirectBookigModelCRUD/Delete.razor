@@ -1,8 +1,10 @@
 ﻿@page "/Reservations/Delete/{Id:guid}"
+@using MudBlazor
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
+@inject ISnackbar Snackbar
 
 <div class="container">
 	<div class="row justify-content-center">
@@ -48,6 +50,16 @@
 	public DirectBookingModel? directBookingModel;
 	public DirectBookinDTO directBookingDTO = new();
 
+	public void HandleUnConfirmClick(string message)
+	{
+		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+		Snackbar.Add(message, Severity.Normal, config =>
+		{
+			config.ShowCloseIcon = false;
+			config.SnackbarVariant = Variant.Filled;
+		});
+	}
 	protected override async Task OnInitializedAsync()
 	{
 		try
@@ -69,7 +81,8 @@
 		try
 		{
 			var responce = await http.DeleteFromJsonAsync<DirectBookingModel>($"https://localhost:4000/api/DirectBooking/{Id}");
-			
+			HandleUnConfirmClick("Succussfuly Delete...");
+
 			navManager.NavigateTo("/Reservations");
 		}
 		catch (Exception ex)

@@ -1,7 +1,9 @@
 ﻿@page "/Reservations/DirectBookingCreate"
+@using MudBlazor
 @using ResortManagementApp.Models.Administration.ManageRooms
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
+@inject ISnackbar Snackbar
 
 @layout MainLayout
 <div class="container">
@@ -128,6 +130,16 @@
 		"Local","Foreign"
 	};
 
+	public void HandleUnConfirmClick(string message)
+	{
+		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+		Snackbar.Add(message, Severity.Normal, config =>
+		{
+			config.ShowCloseIcon = false;
+			config.SnackbarVariant = Variant.Filled;
+		});
+	}
 	private async Task SaveCustomer(MouseEventArgs args)
 	{
 		try
@@ -140,6 +152,8 @@
 				{
 					Id = createBooking.Id;
 					Console.WriteLine($"Created Booking Id: {Id}");
+					HandleUnConfirmClick("Succussfuly Create Direct Booking...");
+
 					navManager.NavigateTo($"/Administration/ManageRoom/RoomBooking/{Id}");
 					return;
 				}
@@ -147,6 +161,7 @@
 			}
 			else
 			{
+				HandleUnConfirmClick("Fail to add Direct Booking...");
 				var strResponce = await response.Content.ReadAsStringAsync();
 				Console.WriteLine("Json Response :" + strResponce);
 				var jsonResponce = JsonNode.Parse(strResponce);

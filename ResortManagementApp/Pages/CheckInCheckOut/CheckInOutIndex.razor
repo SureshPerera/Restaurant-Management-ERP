@@ -490,7 +490,7 @@
 	public bool showNotification = false;
 	public bool CheckIn;
 	public bool CheckOut;
-
+	
 	protected override async Task OnInitializedAsync()
 	{
 		await LoadData();
@@ -621,7 +621,7 @@
 					{
 						var result = await response.Content.ReadAsStringAsync();
 						StateHasChanged();
-						HandleUnConfirmClick("Direct Booking Sucessfully Confirming.....");
+						HandleUnConfirmClick("Direct Booking Sucessfully Confirming...");
 						Console.WriteLine("Booking confirmed successfully");
 						Console.WriteLine($"Result: {result}");
 					}

@@ -1,8 +1,10 @@
 ﻿@page "/Reservations/OnlineBooking/Edit/{Id:guid}"
+@using MudBlazor
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.ComponentCss
+@inject ISnackbar Snackbar
 
 @layout MainLayout
 <div class="container">
@@ -125,7 +127,16 @@
 	{
 		"Local","Foreign"
 	};
-
+    public void HandleUnConfirmClick(string message)
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add(message, Severity.Normal, config =>
+        {
+            config.ShowCloseIcon = false;
+            config.SnackbarVariant = Variant.Filled;
+        });
+    }
 	public class GeoResult
 	{
 		public string? country_name { get; set; }
@@ -162,7 +173,7 @@
 	protected async Task UpdateCustomer()
 	{
 		var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/DirectBooking/{Id}", OnlineBookingDto);
-		if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/OnlineBooking"); }
+        if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/OnlineBooking"); HandleUnConfirmClick("Succussfuly Update..."); }
 
 		var strResponce = await responce.Content.ReadAsStringAsync();
 		try

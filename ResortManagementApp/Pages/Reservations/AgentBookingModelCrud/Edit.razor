@@ -1,10 +1,12 @@
 ﻿@page "/Reservations/AgentBooking/Edit/{Id:guid}"
 
+@using MudBlazor
 @using ResortManagementApp.Models.Administration.DTOS
 @using ResortManagementApp.Models.Administration.ManageAgents
 @using ResortManagementApp.Models.Reservation.DTO
 @using System.Text.Json.Nodes
 @using ResortManagementApp.Pages.ComponentCss
+@inject ISnackbar Snackbar
 
 @layout MainLayout
 <div class="container">
@@ -129,6 +131,17 @@
 	public Agents? Agent = new Agents();
 	public JsonNode Errors { set; get; } = new JsonObject();
 	public AgentModelDto agentModelDto = new();
+
+	public void HandleUnConfirmClick(string message)
+	{
+		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+		Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+		Snackbar.Add(message, Severity.Normal, config =>
+		{
+			config.ShowCloseIcon = false;
+			config.SnackbarVariant = Variant.Filled;
+		});
+	}
 	protected override async Task OnInitializedAsync()
 	{
 		try
@@ -159,7 +172,7 @@
 		try
 		{
 			var responce = await http.PutAsJsonAsync($"https://localhost:4000/api/Agent/{Id}", agentModelDto);
-			if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); }
+			if (responce.IsSuccessStatusCode) { navManager.NavigateTo("/Reservations/AgentBooking"); HandleUnConfirmClick("Succussfuly Update..."); }
 
 			var strResponce = await responce.Content.ReadAsStringAsync();
 
