@@ -13,10 +13,12 @@ namespace API.Controllers
     public class UserLoginDetailsController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
+      
 
         public UserLoginDetailsController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
+          
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -43,13 +45,14 @@ namespace API.Controllers
             {
                 Console.Write("Null");
             }
+
             var Dto = new UserLoginDetails
             {
                 Id = Guid.NewGuid(),
                 IpAddress = agentModelDto.IpAddress,
                 IsLoging = true,
-                 LogingTime = DateTime.Now,
-                 NIC = agentModelDto.NIC,
+                LogingTime = DateTime.Now,
+                UserName = agentModelDto.UserName,
             };
 
             await dbContext.UserLoginDetails.AddAsync(Dto);

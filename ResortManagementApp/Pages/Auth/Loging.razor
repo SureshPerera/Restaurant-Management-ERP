@@ -2,6 +2,7 @@
 @using MudBlazor
 @using ResortManagementApp.Models.Auth
 @using ResortManagementApp.Models.Auth.AuthDto
+@using ResortManagementApp.Models.Reservation.DTO
 @using ResortManagementApp.Models.UserManagement
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject ISnackbar Snackbar
@@ -411,10 +412,30 @@
 
     public UserManagement? UserManagement { get; set; } = new();
     public UserLoginDetailsModel? UserLoginDetails { get; set; } = new();
+    public CustomerUsePcInfoDto customerUsePcInfoDto { get; set; } = new();
     public string? PassWord { get; set; }
     public string? UserName { get; set; }
     private string errorMessage { get; set; } = string.Empty;
     private bool isLoading { get; set; } = false;
+    private string? LogerIp { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await http.GetFromJsonAsync<CustomerUsePcInfoDto>(
+                "https://localhost:4000/api/Geo/country"
+            );
+
+        if (result != null)
+        {
+            LogerIp = result.Ip;
+
+        }
+        else
+        {
+            LogerIp = "Unknown";
+        }
+        Console.WriteLine("Loger Ip address : " + LogerIp);
+
+    }
 
     public void HandleUnConfirmClick(string message)
     {
@@ -440,6 +461,7 @@
 
     public async Task GetRegistation()
     {
+
         var regDate = await http.GetFromJsonAsync<RegistationRequstDto>($"https://localhost:4000/api/UserManagement/{UserName}");
         if (regDate != null)
         {
@@ -447,16 +469,14 @@
             if (regDate.Password == this.PassWord)
             {
                 await localStorage.SetItemAsync("Id", regDate.Id);
-                navManager.NavigateTo("/Reservations/Dashboard", true);
                 Console.WriteLine("User name : " + UserName + " " + " Password : " + PassWord);
                 UserLoginDetails = new UserLoginDetailsModel
                 {
-                    Id = Guid.NewGuid(),
-                    IpAddress = "",
-                    IsLoging = true,
-                    LogingTime = DateTime.Now,
-                    NIC = this.UserName
+                    UserName = regDate.UserName,
+                    IpAddress = LogerIp
                 };
+                var LogingDate = await http.PostAsJsonAsync("https://localhost:4000/api/UserLoginDetails", UserLoginDetails);
+                navManager.NavigateTo("/Reservations/Dashboard", true);
                 await localStorage.SetItemAsync("Id", regDate.Id);
 
                 // CreateExchangeRate();

@@ -6,9 +6,9 @@ namespace ResortManagementApp.Models.Auth
     {
         [Key]
         public Guid Id { get; set; }
-        public string? NIC { get; set; }
         public bool IsLoging { get; set; } = false;
-        public DateTime LogingTime { get; set; } = DateTime.Now;
-        public string IpAddress { get; set; }
+        public DateTime? LogingTime { get; set; } = DateTime.Now;
+        public string? IpAddress { get; set; }
+        public string? UserName { get; set; }
     }
 }
