@@ -23,5 +23,6 @@ namespace API.Model.Administration
         public string? WebSite { get; set; }
         public double? CreditLimit { get; set; }
         public string? VatRegNo { get; set; }
+        public DateTime? CreateDate { get; set; }
     }
 }

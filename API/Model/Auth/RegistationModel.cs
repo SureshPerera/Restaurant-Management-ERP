@@ -25,5 +25,7 @@
         public bool? UserManagement_checkBox { get; set; }
         public bool? ClientManagement_checkBox { get; set; }
         public bool? DashBoard_checkBox { get; set; }
+        public DateTime? CreateDate { get; set; }
+
     }
 }

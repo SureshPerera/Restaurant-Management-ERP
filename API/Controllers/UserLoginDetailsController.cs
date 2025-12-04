@@ -53,6 +53,7 @@ namespace API.Controllers
                 IsLoging = true,
                 LogingTime = DateTime.Now,
                 UserName = agentModelDto.UserName,
+               
             };
 
             await dbContext.UserLoginDetails.AddAsync(Dto);

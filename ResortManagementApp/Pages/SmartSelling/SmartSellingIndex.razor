@@ -1,5 +1,7 @@
 ﻿@page "/SmartSalesBilling"
 @using ResortManagementApp.Models.Administration.DTOS
+@using ResortManagementApp.Models.SmartSales
+@using ResortManagementApp.Models.SmartSales.Dtos
 @layout MainLayout
 
 <div class="container-fluid p-4">
@@ -15,21 +17,21 @@
         <div class="col-md-4">
             <div class="card summary-card daily p-3 shadow-sm">
                 <h5>Today's Sale</h5>
-                <h3 class="fw-bold text-success">Rs 25,000</h3>
+                <h3 class="fw-bold text-success">Rs @TodaySaleSum</h3>
                 <p class="text-muted">Total sale today</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card summary-card monthly p-3 shadow-sm">
                 <h5>This Month</h5>
-                <h3 class="fw-bold text-info">Rs 750,000</h3>
+                <h3 class="fw-bold text-info">Rs @MonthSaleSum</h3>
                 <p class="text-muted">Total sale this month</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card summary-card yearly p-3 shadow-sm">
                 <h5>This Year</h5>
-                <h3 class="fw-bold text-warning">Rs 9,500,000</h3>
+                <h3 class="fw-bold text-warning">Rs @YearSaleSum</h3>
                 <p class="text-muted">Total sale this year</p>
             </div>
         </div>
@@ -44,38 +46,36 @@
                     <tr>
                         <th>Sandry Item</th>
                         <th>Unit Price</th>
-                        <th>Stock</th>
+                        <th>Discouunt</th>
+                        <th>Quantity</th>
+                        <th>Total (LKR)</th>
+                        <th>Remark</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Item A</td>
-                        <td>Rs 1,500</td>
-                        <td>12</td>
-                        <td class="text-center">
-                            <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
-                                <i class="bi bi-trash-fill"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Item B</td>
-                        <td>Rs 2,200</td>
-                        <td>8</td>
-                        <td class="text-center">
-                            <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
-                                <i class="bi bi-trash-fill"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <!-- Repeat rows dynamically -->
+                    @if(SmartSale != null)
+                    {
+                        @foreach (var item in SmartSale!)
+                        {
+                            <tr>
+                                <td>@item.SandryItem</td>
+                                <td>@item.UnitPrice</td>
+                                <td>@item.Discuount</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.TotalLKR</td>
+                                <td>@item.Remark</td>
+                                <td class="text-center">
+                                    <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }      
                 </tbody>
             </table>
         </div>
@@ -127,10 +127,43 @@
         overflow-x: auto;
     }
 </style>
-
+@inject HttpClient Http
 @code {
     // Placeholder properties, replace with dynamic data from API or DB
     private decimal todaySale = 25000;
     private decimal monthSale = 750000;
     private decimal yearSale = 9500000;
+    public List<SmartSale>? SmartSale { get; set; } = new();
+    public List<SmartSale>? SmartSales { get; set; } = new();
+    public SmartSaleDto SmartSaleDto { get; set; } = new();
+    public double TodaySaleSum;
+    public double MonthSaleSum;
+    public double YearSaleSum;
+
+    protected override async Task OnInitializedAsync()
+    {
+        SmartSale = await Http.GetFromJsonAsync<List<SmartSale>>("https://localhost:4000/api/SmartSale");
+        var today = DateTime.Today;
+        var tomorrow = today.AddDays(1);
+        TodaySaleSum = SmartSale
+                        .Where(x => x.CreateDate >= today && x.CreateDate < tomorrow)
+                        .Sum(x => x.TotalLKR);
+
+        var monthStart = new DateTime(today.Year, today.Month, 1);
+        Console.WriteLine("Month Start :"+ monthStart);
+        var monthEnd = monthStart.AddMonths(1);
+        Console.WriteLine("Month Start :"+ monthEnd);
+        MonthSaleSum = SmartSale
+                        .Where(x => x.CreateDate >= monthStart && x.CreateDate < monthEnd)
+                        .Sum(x => x.TotalLKR);
+        
+        var yearStart = new DateTime(today.Year, 1, 1);
+        Console.WriteLine("Year Start :"+ yearStart);
+        var yearEnd = new DateTime(today.Year + 1, 1, 1);
+        Console.WriteLine("Year End :"+ yearEnd);
+        YearSaleSum = SmartSale
+                        .Where(x => x.CreateDate >= yearStart && x.CreateDate < yearEnd)
+                        .Sum(x => x.TotalLKR);
+    }
+    
 }

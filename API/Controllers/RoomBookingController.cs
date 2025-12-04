@@ -62,6 +62,7 @@ namespace API.Controllers
                 DirectBookingId = assignRoomDto.DirectBookingId,
                 RoomId = assignRoomDto.RoomId,
                 RoomRate = assignRoomDto.RoomRate,
+                CreateDate = DateTime.Now,
             };
 
             dbContext.RoomBookingsModel.Add(roomBookingDto);
@@ -75,5 +76,7 @@ namespace API.Controllers
         public Guid DirectBookingId { get; set; } 
         public Guid RoomId { get; set; }
         public decimal RoomRate { get; set; }
+        public DateTime? CreateDate { get; set; }
+
     }
 }

@@ -68,8 +68,8 @@ namespace API.Controllers
                 NoOfAdults = onlineBookingModelDto.NoOfAdults,
                 NoOfChildren = onlineBookingModelDto.NoOfChildren,
                 NoOfRooms = onlineBookingModelDto.NoOfRooms,
-                PramoCode = onlineBookingModelDto.PramoCode
-                
+                PramoCode = onlineBookingModelDto.PramoCode,
+                CreateDate = DateTime.Now,
                 
             };
             var Dtos = new ClientModel
@@ -85,6 +85,7 @@ namespace API.Controllers
                 OpeningBalanace = onlineBookingModelDto.OpeningBalanace,
                 Nationality = onlineBookingModelDto.Nationality,
                 Remark = onlineBookingModelDto.Remark,
+                CreateDate = DateTime.Now,
             };
             await dbContext.OnlineBookingModels.AddAsync(Dto);
             await dbContext.ClientModels.AddAsync(Dtos);

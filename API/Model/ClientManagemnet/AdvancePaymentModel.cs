@@ -28,5 +28,6 @@ namespace API.Model.ClientManagemnet
         public string? AccNo { get; set; }
         public string? CheckNo { get; set; }
         public string? VoucherNo { get; set; }
+        public DateTime? CreateDate { get; set; }
     }
 }

@@ -79,7 +79,7 @@ namespace API.Controllers
                 UserManagements = userManagementModelDto.UserManagements,
                 SmartSalling = userManagementModelDto.SmartSalling,
                 UserName = userManagementModelDto.UserName,
-                     
+                CreateDate = DateTime.Now,     
                 
             };
             await dbContext.UserManagementModels.AddAsync(Dto);

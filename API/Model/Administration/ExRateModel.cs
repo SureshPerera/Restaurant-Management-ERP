@@ -12,5 +12,7 @@ namespace API.Model.Administration
         public double SellingRate { get; set; }
         [Required]
         public double BuyingRate { get; set; }
+        public DateTime? CreateDate { get; set; }
+
     }
 }

@@ -14,6 +14,6 @@ namespace ResortManagementApp.Models.SmartSales
         public string? Remark{ get; set; }
         public string? Discuount{ get; set; }
         
-        
+        public DateTime? CreateDate { get; set; }
     }
 }

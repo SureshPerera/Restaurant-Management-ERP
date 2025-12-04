@@ -75,6 +75,7 @@ namespace API.Controllers
                 CheckOutTime = directBookingDTO.CheckOutTime,
                 CheckIn = false,
                 CheckOut = false,
+                CreateDate = DateTime.Now
             };
             var Dtos = new ClientModel
             {
@@ -90,6 +91,7 @@ namespace API.Controllers
                 OpeningBalanace = Dto.OpeningBalanace,
                 Remark = Dto.Remark,
                 CustomerType = Dto.CustomerType,
+                CreateDate = DateTime.Now
             };
             await dbContext.DirectBookingModels.AddAsync(Dto);
             await dbContext.ClientModels.AddAsync(Dtos);

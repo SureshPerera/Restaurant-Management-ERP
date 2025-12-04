@@ -57,6 +57,7 @@ namespace API.Controllers
                 RoomStatus = roomModelDto.RoomStatus,
                 RoomFloor = roomModelDto.RoomFloor,
                 RoomType = roomModelDto.RoomType,
+                CreateDate = DateTime.Now,
             };
             await dbContext.RoomModels.AddAsync(Dto);
             await dbContext.SaveChangesAsync();

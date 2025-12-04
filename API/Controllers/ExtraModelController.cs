@@ -49,8 +49,8 @@ namespace API.Controllers
                 Id = Guid.NewGuid(),
                 BuyingRate = exrateModelDto.BuyingRate,
                 CurrencyName = exrateModelDto.CurrencyName,
-                SellingRate = exrateModelDto.SellingRate
-
+                SellingRate = exrateModelDto.SellingRate,
+                CreateDate = DateTime.Now,
             };
             await dbContext.ExRateModel.AddAsync(Dto);
             await dbContext.SaveChangesAsync();

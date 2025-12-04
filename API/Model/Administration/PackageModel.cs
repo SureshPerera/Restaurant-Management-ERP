@@ -28,5 +28,7 @@ namespace API.Model.Administration
         public string? SpecialPackage2 { get; set; }
         public string? SpecialPackage3 { get; set; }
         public string? SpecialPackage4 { get; set; }
+        public DateTime? CreateDate { get; set; }
+
     }
 }

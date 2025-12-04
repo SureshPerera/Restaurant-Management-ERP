@@ -123,11 +123,12 @@
         border: none;
     }
 </style>
-
+@inject HttpClient http;
+@inject NavigationManager navManager;
 @code {
     public JsonNode Errors { get; set; } = new JsonObject();
     public SmartSaleDto SmartSaleDto { get; set; } = new();
-
+   
     public void HandleUnConfirmClick(string message)
     {
         Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
@@ -138,8 +139,25 @@
             config.SnackbarVariant = Variant.Filled;
         });
     }
-    private Task CreateExpence(MouseEventArgs args)
+    private async Task CreateExpence(MouseEventArgs args)
     {
-        throw new NotImplementedException();
+       
+        try
+        {
+            var response = await http.PostAsJsonAsync("https://localhost:4000/api/SmartSale", SmartSaleDto);
+            if (response.IsSuccessStatusCode) { navManager.NavigateTo("/SmartSalesBilling"); }
+
+            var strResponce = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Json Response :" + strResponce);
+
+            var jsonResponce = JsonNode.Parse(strResponce);
+            Errors = jsonResponce?["errors"] ?? new JsonObject();
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

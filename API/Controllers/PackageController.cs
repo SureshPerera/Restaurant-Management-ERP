@@ -64,7 +64,7 @@ namespace API.Controllers
                 SpecialPackage2 = packageModelDto.SpecialPackage2,
                 SpecialPackage3 = packageModelDto.SpecialPackage3,
                 SpecialPackage4 = packageModelDto.SpecialPackage4,
-                
+                CreateDate = DateTime.Now,
 
 
             };

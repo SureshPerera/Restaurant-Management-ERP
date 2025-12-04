@@ -32,5 +32,6 @@ namespace API.Model.ClientManagemnet
         public string? CustomerType { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

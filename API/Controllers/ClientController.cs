@@ -54,8 +54,9 @@ namespace API.Controllers
                 NIC = clientModelDto.NIC,
                 OpeningBalanace = clientModelDto.OpeningBalanace,
                 PhoneNumber = clientModelDto.PhoneNumber,
-                Remark = clientModelDto.Remark
-
+                Remark = clientModelDto.Remark,
+                CreateDate = DateTime.Now
+                
             };
             await dbContext.ClientModels.AddAsync(Dto);
             await dbContext.SaveChangesAsync();

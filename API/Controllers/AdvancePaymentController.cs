@@ -54,8 +54,9 @@ namespace API.Controllers
                 OderType = advancePaymentModel.OderType,
                 PayingAmount = advancePaymentModel.PayingAmount,
                 PaymentType = advancePaymentModel.PaymentType,
-                DirectBookingId = advancePaymentModel.DirectBookingId
-
+                DirectBookingId = advancePaymentModel.DirectBookingId,
+                CreateDate = DateTime.Now
+                
             };
             await dbContext.AdvancePaymentModels.AddAsync(Dto);
             await dbContext.SaveChangesAsync();

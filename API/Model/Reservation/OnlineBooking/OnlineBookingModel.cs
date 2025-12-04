@@ -43,6 +43,7 @@ namespace API.Model.Reservation.OnlineBooking
         public bool? CheckOut { get; set; } = false;
         public bool Cancellations { get; set; }
 
+        public DateTime? CreateDate { get; set; }
 
     }
 }

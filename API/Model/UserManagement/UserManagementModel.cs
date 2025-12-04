@@ -38,5 +38,7 @@ namespace API.Model.UserManagement
         public bool? UserManagements { get; set; }
         public bool? ClientManagement { get; set; }
         public DateTime ActionDate { get; set; } = DateTime.Now;
+        public DateTime? CreateDate { get; set; }
+
     }
 }

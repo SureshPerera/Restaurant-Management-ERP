@@ -36,7 +36,8 @@ namespace API.Controllers
                 TransactionId = req.TransactionId,
                 Status = "Completed",
                 Notes = req.Notes,
-                PaymentDate = DateTime.UtcNow
+                PaymentDate = DateTime.UtcNow,
+                CreateDate = DateTime.Now,
             };
 
             dbContext.PaymentModel.Add(payment);

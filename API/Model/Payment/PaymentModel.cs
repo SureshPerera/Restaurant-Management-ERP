@@ -20,6 +20,7 @@ namespace API.Model.Payment
 
         // Navigation
         public RoomBookingModel Booking { get; set; } = null!;
+        public DateTime? CreateDate { get; set; }
 
     }
 }

@@ -59,7 +59,7 @@ namespace API.Controllers
                 VatRegNo = agentModelDto.VatRegNo,
                 WebSite = agentModelDto.WebSite,
                 NIC = agentModelDto.NIC,
-
+                CreateDate = DateTime.Now
             };
             var dtos = new ClientModel
             {
@@ -69,6 +69,7 @@ namespace API.Controllers
                 EmailAddress = agentModelDto.Email,
                 NIC = agentModelDto.NIC,
                 CreditLimit = agentModelDto.CreditLimit,
+                CreateDate = DateTime.Now
             };
 
             await dbContext.AgentModels.AddAsync(Dto);

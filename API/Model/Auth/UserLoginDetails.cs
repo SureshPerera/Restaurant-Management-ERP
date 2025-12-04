@@ -7,8 +7,10 @@ namespace API.Model.Auth
         [Key]
         public Guid Id { get; set; }
         public bool IsLoging { get; set; } = false;
-        public DateTime? LogingTime { get; set; } = DateTime.Now;
+        public DateTime? LogingTime { get; set; }
         public string? IpAddress { get; set; }
         public string? UserName { get; set; }
+      
+
     }
 }

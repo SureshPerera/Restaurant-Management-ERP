@@ -12,5 +12,6 @@ namespace API.Model.SmartSale_Billing
         public double? TotalLKR { get; set; }
         public string? Remark { get; set; }
         public double? Discouunt { get; set; }
+        public DateTime? CreateDate { get; set; }
     }
 }

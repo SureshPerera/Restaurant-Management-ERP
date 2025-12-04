@@ -12,5 +12,7 @@ namespace ResortManagementApp.Models.SmartSales.Dtos
         public double TotalLKR { get; set; }
         public string? Remark { get; set; }
         public double Discouunt { get; set; }
+        public DateTime? CreateDate { get; set; }
+
     }
 }

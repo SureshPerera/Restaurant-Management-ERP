@@ -77,7 +77,8 @@ namespace API.Controllers
                 PhoneNumber = RegDto.PhoneNumber,
                 Reservations_checkBox = RegDto.Reservations_checkBox,
                 SmartSales_checkBox = RegDto.SmartSales_checkBox,
-                UserManagement_checkBox = RegDto.UserManagement_checkBox
+                UserManagement_checkBox = RegDto.UserManagement_checkBox,
+                CreateDate = DateTime.Now,
             };
             await dbContext.RegistationModel.AddAsync(Dto);
             await dbContext.SaveChangesAsync();

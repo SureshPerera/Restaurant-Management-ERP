@@ -19,6 +19,8 @@ namespace API.Model.Administration
         public string? Comment { get; set; }
         public string? Details { get; set; }
         public DateTime? DateTime { get; set; }
-        
+        public DateTime? CreateDate { get; set; }
+
+
     }
 }

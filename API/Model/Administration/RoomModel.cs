@@ -26,6 +26,8 @@ namespace API.Model.Administration
         public string? AdditionalDetails { get; set; }
         public string? RoomDisplayTitle { get; set; }
         public bool? IsAvalable { get; set; }
+        public DateTime? CreateDate { get; set; }
+
 
         // ✅ Navigation
         public virtual ICollection<RoomBookingModel> RoomBookings { get; set; } = new List<RoomBookingModel>();

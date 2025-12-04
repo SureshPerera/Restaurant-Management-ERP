@@ -33,6 +33,15 @@ namespace API.Controllers
             if (DomainModel == null) { return NotFound(); }
             return Ok(DomainModel);
         }
+        [HttpGet("today")]
+        public async Task<IActionResult> TodaySale()
+        {
+            var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
+            var DomainModel = await dbContext.SmartSaleModels
+                .FirstOrDefaultAsync(x => x.CreateDate >= today && x.CreateDate < tomorrow);
+            return Ok(DomainModel);
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SmartSaleModelDto smartSaleModelDto)
         {
@@ -52,7 +61,7 @@ namespace API.Controllers
                 SandryItem = smartSaleModelDto.SandryItem,
                 TotalLKR = smartSaleModelDto.UnitPrice * smartSaleModelDto.Quantity - smartSaleModelDto.Discouunt,
                 UnitPrice = smartSaleModelDto.UnitPrice,
-                
+                CreateDate = DateTime.Now
             };
             await dbContext.SmartSaleModels.AddAsync(Dto);
             await dbContext.SaveChangesAsync();

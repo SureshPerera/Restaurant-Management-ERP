@@ -19,6 +19,8 @@ namespace API.Model.Administration
         // ✅ Navigation
         public virtual DirectBookingModel? DirectBooking { get; set; }
         public virtual RoomModel? Room { get; set; }
+        public DateTime? CreateDate { get; set; }
+
         public ICollection<PaymentModel> Payments { get; set; } = new List<PaymentModel>();
     }
 }

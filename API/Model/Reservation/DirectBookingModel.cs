@@ -58,6 +58,7 @@ namespace API.Model.Reservation
 
         // ✅ Navigation
         public virtual ICollection<RoomBookingModel> RoomBookings { get; set; } = new List<RoomBookingModel>();
+        public DateTime? CreateDate { get; set; }
     }
 
 

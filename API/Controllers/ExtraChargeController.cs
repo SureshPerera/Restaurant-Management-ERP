@@ -53,7 +53,8 @@ namespace API.Controllers
                 ExtraChargeType = extraChargeModelDto.ExtraChargeType,
                 RateLKR = extraChargeModelDto.RateLKR,
                 RateUSD = extraChargeModelDto.RateUSD,
-                DateTime = DateTime.Now
+                CreateDate = DateTime.Now
+
             };
 
             await dbContext.ExtraChargeModels.AddAsync(Dto);
