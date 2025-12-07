@@ -1,0 +1,100 @@
+﻿@page "/packages"
+@using ResortManagementApp.Models.Administration.ManagePackages
+<link href="css/packages.css" rel="stylesheet" />
+<div class="packages-container fade-in">
+
+    <h2 class="title-text">Explore Our Packages</h2>
+
+    <div class="package-grid">
+
+        @foreach (var p in Packages)
+        {
+            <div class="package-card slide-up">
+
+                <img src="@p.ImgUrl" class="package-img" />
+
+                <div class="package-content">
+
+                    <h3 class="package-title">@p.PackageName</h3>
+                    <p class="package-desc">@p.PackageDetails</p>
+
+                    <hr />
+
+                    <p class="package-price">Rs. @p.RoomRateSummer</p>
+
+                    <button class="book-btn"
+                            @onclick="() => NavigateToBooking(p.Id)">
+                        Book Now
+                    </button>
+				
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+@inject NavigationManager Navigation
+@code {
+
+    void NavigateToBooking(int id)
+    {
+        Navigation.NavigateTo($"/booking/{id}");
+    }
+    public List<Packages> Packages = new()
+    {
+       new Packages()
+       {
+           Id = 1,
+           PackageName = "Honeymoon Luxury Package",
+           PackageDetails = "2 Nights | Candle Light Dinner | Spa Access | Luxury Suite",
+           AccomadationType = "Luxury Suite",
+           RoomRateAutumn = 15000,
+           RoomRateSpring = 15000,
+           RoomRateSummer = 20000,
+           RoomRateWinter = 12000,
+           ImgUrl = "/imgs/packagesimg/honeymoonluxurypackage.jpg",
+       },
+
+       new Packages()
+       {
+           Id = 2,
+           PackageName = "Family Adventure Pack",
+           PackageDetails = "3 Nights | Outdoor Games | BBQ Night | Family Room",
+           AccomadationType = "Family Room",
+           RoomRateAutumn = 25000,
+           RoomRateSpring = 25000,
+           RoomRateSummer = 30000,
+           RoomRateWinter = 22000,
+           ImgUrl = "/imgs/packagesimg/familyadventurepack.jpg",
+
+       },
+       new Packages()
+       {
+           Id = 3,
+           PackageName = "Weekend Escape",
+           PackageDetails = "2 Nights | Breakfast Included | Pool Access | Standard Room",
+           AccomadationType = "Standard Room",
+           RoomRateAutumn = 15000,
+           RoomRateSpring = 15000,
+           RoomRateSummer = 10000,
+           RoomRateWinter = 12000,
+           ImgUrl  = "/imgs/packagesimg/weekendescape.jpg",
+       },
+       new Packages()
+       {
+           Id = 4,
+           PackageName = "Corporate Team Retreat",
+           PackageDetails = "1 Night | Conference Hall | Meals Included | 20+ People",
+           AccomadationType = "Standard Room",
+           RoomRateAutumn = 150000,
+           RoomRateSpring = 150000,
+           RoomRateSummer = 150000,
+           RoomRateWinter = 150000,
+           ImgUrl = "/imgs/packagesimg/corporateteamretreat.jpg",
+
+       },
+    };
+
+}

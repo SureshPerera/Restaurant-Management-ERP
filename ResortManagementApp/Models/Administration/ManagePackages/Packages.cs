@@ -5,16 +5,16 @@ namespace ResortManagementApp.Models.Administration.ManagePackages
     public class Packages
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string? PackageName{ get; set; }
         [Required]
         public string? PackageDetails { get; set; }
-        [Required]
+        
         public string? RoomType{ get; set; }
-        [Required]
+       
         public string? AccomadationType { get; set; }
-        [Required]
+        
         public string? Basis { get; set; }
         public double RoomRateSpring { get; set; }
         public double RoomRateSummer { get; set; }
@@ -28,5 +28,6 @@ namespace ResortManagementApp.Models.Administration.ManagePackages
         public string? SpecialPackage2 { get; set; }
         public string? SpecialPackage3 { get; set; }
         public string? SpecialPackage4 { get; set; }
+        public string? ImgUrl { get; set; }
     }
 }
