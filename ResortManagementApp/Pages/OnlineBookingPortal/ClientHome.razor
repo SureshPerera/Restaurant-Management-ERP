@@ -70,17 +70,17 @@
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
-				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<NavLink class="nav-link" href="/esg" Match="NavLinkMatch.All">
 					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">ESG</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
-				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<NavLink class="nav-link" href="/giftcards" Match="NavLinkMatch.All">
 					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">GIFT CARDS</span>
 				</NavLink>
 			</div>
 			<div class="nav-item px-3">
-				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<NavLink class="nav-link" href="/about-us" Match="NavLinkMatch.All">
 					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">ABOUT US</span>
 				</NavLink>
 			</div>
@@ -180,40 +180,28 @@
 
 	</section>
 
-	<section class="services-section" style="padding:2rem; background-color:#2E3A33 ">
-		<MudPaper Class="pa-4" Style="background-color:#3E4C41">
-			<MudStack Spacing="2">
-				<MudButton OnClick="OnExpandCollapseClick" Style="color:#C5E1A5; font-size: 1.5rem;font-family: cursive;">
-					@(_expanded ? "Collapse" : "SERVICES & FACILITIES")
-				</MudButton>
-				<MudDivider />
-				<MudCollapse Expanded="_expanded">
-					<div class="services-grid"
-						 style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-                            gap:1rem; justify-items:center; align-items:start; font-family:'Lucida Sans Typewriter'; ">
-						@foreach (var service in new (string Img, string Title, string Desc)[] {
-												("/imgs/clientpotal/clienthomeimg/marketeq--wifi.png", "WiFi", "Available throughout hotel."),
-												("/imgs/clientpotal/clienthomeimg/equptment.png","Equipment","Bicycles & snorkelling gear for guests’ use."),
-												("/imgs/clientpotal/clienthomeimg/sweming.png","Swimming Pools","Two gorgeous pools with views."),
-												("/imgs/clientpotal/clienthomeimg/parking.png","Secure Parking","Available outside."),
-												("/imgs/clientpotal/clienthomeimg/spa.png","La Parenthèse","Spa."),
-												("/imgs/clientpotal/clienthomeimg/laudary.png","Laundry Services","Available on request."),
-												("/imgs/clientpotal/clienthomeimg/houseKeping.png","Housekeeping","Offered daily."),
-												("/imgs/clientpotal/clienthomeimg/Lounging.png","Lounging","Sunbeds, hammocks and loungers.")
-												})
-						{
-							<div class="service-card" style="background-color:@(service.Title.GetHashCode() % 2 == 0 ? "#C5E1A5" : "antiquewhite");
-	                                                         width:150px; border-radius:1.5rem; padding:1rem; text-align:center;
-	                                                         box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s;">
-								<img src="@service.Img" alt="@service.Title" style="width:50px; height:50px; margin-bottom:0.5rem;" />
-								<div style="font-size:16px; font-weight:bold; margin-bottom:0.25rem;">@service.Title</div>
-								<div style="font-size:14px; color:#333;">@service.Desc</div>
-							</div>
-						}
-					</div>
-				</MudCollapse>
-			</MudStack>
-		</MudPaper>
+	<section class="services-section">
+		<div class="services-container">
+
+			<button class="services-toggle" @onclick="ToggleExpand">
+				@(expanded ? "Collapse" : "SERVICES & FACILITIES")
+			</button>
+
+			<div class="services-wrapper @(expanded ? "open" : "closed")">
+
+				<div class="services-grid">
+					@foreach (var service in servicesList)
+					{
+						<div class="service-card">
+							<img src="@service.Img" alt="@service.Title" />
+							<h3>@service.Title</h3>
+							<p>@service.Desc</p>
+						</div>
+					}
+				</div>
+
+			</div>
+		</div>
 	</section>
 
 	<style>
@@ -288,6 +276,100 @@
 		color: black;
 	}
 
+	.services-section {
+		background-color: #2E3A33;
+		padding: 2rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.services-container {
+		width: 100%;
+		max-width: 1000px;
+		background-color: #3E4C41;
+		padding: 1.5rem;
+		border-radius: 15px;
+		box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+	}
+
+	.services-toggle {
+		width: 100%;
+		padding: 1rem;
+		background-color: transparent;
+		border: 2px solid #C5E1A5;
+		color: #C5E1A5;
+		font-size: 1.5rem;
+		font-family: cursive;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: 0.3s ease;
+	}
+
+		.services-toggle:hover {
+			background-color: #C5E1A5;
+			color: #2E3A33;
+		}
+
+	.services-wrapper {
+		overflow: hidden;
+		transition: max-height 0.6s ease, opacity 0.4s ease;
+		margin-top: 1rem;
+	}
+
+		.services-wrapper.closed {
+			max-height: 0;
+			opacity: 0;
+		}
+
+		.services-wrapper.open {
+			max-height: 2000px;
+			opacity: 1;
+		}
+
+	.services-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 1.5rem;
+		padding-top: 1rem;
+	}
+
+	.service-card {
+		background-color: #C5E1A5;
+		border-radius: 1.5rem;
+		padding: 1rem;
+		text-align: center;
+		box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+		transition: transform 0.3s, box-shadow 0.3s;
+	}
+
+		.service-card:nth-child(even) {
+			background-color: antiquewhite;
+		}
+
+		.service-card:hover {
+			transform: translateY(-6px) scale(1.03);
+			box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+		}
+
+		.service-card img {
+			width: 50px;
+			height: 50px;
+			margin-bottom: 0.5rem;
+		}
+
+		.service-card h3 {
+			font-size: 16px;
+			font-weight: bold;
+			margin-bottom: 0.3rem;
+			color: #2E3A33;
+		}
+
+		.service-card p {
+			font-size: 14px;
+			color: #333;
+		}
+
+
 </style>
 
 @inject IJSRuntime JS
@@ -309,6 +391,23 @@
 	private DateRange? _dateRange { get; set; }
 	public JsonNode Errors { set; get; } = new JsonObject();
 
+	private bool expanded = false;
+
+	private void ToggleExpand()
+	{
+		expanded = !expanded;
+	}
+	private (string Img, string Title, string Desc)[] servicesList =
+	{
+		("/imgs/clientpotal/clienthomeimg/marketeq--wifi.png", "WiFi", "Available throughout hotel."),
+		("/imgs/clientpotal/clienthomeimg/equptment.png","Equipment","Bicycles & snorkelling gear for guests’ use."),
+		("/imgs/clientpotal/clienthomeimg/sweming.png","Swimming Pools","Two gorgeous pools with views."),
+		("/imgs/clientpotal/clienthomeimg/parking.png","Secure Parking","Available outside."),
+		("/imgs/clientpotal/clienthomeimg/spa.png","La Parenthèse","Spa services for full relaxation."),
+		("/imgs/clientpotal/clienthomeimg/laudary.png","Laundry Services","Available on request."),
+		("/imgs/clientpotal/clienthomeimg/houseKeping.png","Housekeeping","Offered daily."),
+		("/imgs/clientpotal/clienthomeimg/Lounging.png","Lounging","Sunbeds, hammocks and loungers.")
+	};
 
 	protected async override Task OnInitializedAsync()
 	{

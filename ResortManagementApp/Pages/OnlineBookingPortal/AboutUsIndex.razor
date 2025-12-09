@@ -1,0 +1,200 @@
+﻿@page "/about-us"
+<link href="css/aboutus.css" rel="stylesheet" />
+<link href="css/about-esg.css" rel="stylesheet" />
+<div style="background-color: #A3B18A;margin-top: -4rem;  height: 210rem">
+    <div class="about-container">
+
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="hero-overlay">
+                <h1 class="hero-title">About Solitary Green Resort</h1>
+                <p class="hero-subtitle">
+                    A luxury sanctuary where nature, comfort, and modern hospitality meet.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- Story Section -->
+        <section class="about-section">
+            <h2 style="color:black" class="section-title">Our Story</h2>
+            <p class="section-text" style="color:black">
+                Solitary Green Resort was established with a vision to create a tranquil escape that blends
+                sustainable living with world-class hospitality. Built in the heart of nature, the resort is
+                designed to offer guests an immersive experience surrounded by greenery, comfort, and cultural
+                richness. Whether it's a weekend retreat, family vacation, honeymoon, corporate event, or
+                wellness getaway, Solitary Green Resort provides a perfect escape from the fast-paced modern world.
+            </p>
+            <p class="section-text" style="color:black">
+                As part of our digital transformation, we have implemented a fully automated Resort Management
+                System — developed using ASP.NET Core, Blazor, SQL Server, and modern front-end engineering —
+                enabling a seamless experience across reservations, housekeeping, dining, experiences, billing,
+                and smart sales management. Every guest touchpoint is designed to be simple, transparent, and efficient.
+            </p>
+        </section>
+
+
+        <!-- Mission & Vision -->
+        <section class="about-section mission-vision">
+            <div class="mv-box">
+                <h3>Our Mission</h3>
+                <p style="color:black">
+                    To deliver exceptional hospitality rooted in sustainability, comfort, and modern innovation —
+                    ensuring every guest enjoys a refreshing, peaceful, and unforgettable stay.
+                </p>
+            </div>
+
+            <div class="mv-box">
+                <h3>Our Vision</h3>
+                <p style="color:black">
+                    To grow as a leading eco-friendly resort that embraces digital excellence, cultural harmony,
+                    and meaningful experiences while preserving the natural beauty that surrounds us.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- Ownership & Management -->
+        <section class="about-section">
+            <h2 style="color:black" class="section-title">Management & Ownership</h2>
+
+            <div class="owner-grid">
+
+                <div class="owner-card">
+                    <img src="/imgs/ManagementImg/owner.jpg" />
+                    <h3 class="owner-name">Mr. Sisira Kumara</h3>
+                    <p class="owner-role">Founder & Managing Director</p>
+                    <p style="color:black" class="owner-desc">
+                        With a clear passion for hospitality, Mr. Kumara established Solitary Green Resort
+                        to deliver a premium, nature-inspired experience for all types of travelers.
+                        His leadership drives the resort’s continuous improvement, digital innovation,
+                        and customer-centric approach.
+                    </p>
+                </div>
+
+                <div class="owner-card">
+                    <img src="/imgs/ManagementImg/owner2.jpg" />
+                    <h3 class="owner-name">Mis. Nadeeka Karunajeewa</h3>
+                    <p class="owner-role">Co-Owner & Operations Head</p>
+                    <p style="color:black" class="owner-desc">
+                        Overseeing day-to-day operations, guest relations, and quality management,
+                        Mrs. Karunajeewa ensures that every guest receives warm hospitality
+                        and a refined resort experience rooted in care, culture, and professionalism.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <!-- Our Experiences -->
+        <section class="about-section">
+            <h2 style="color:black" class="section-title">Resort Experiences</h2>
+
+            <p style="color:black" class="section-text">
+                Solitary Green Resort offers a diverse set of curated experiences designed to reconnect
+                guests with relaxation, adventure, and local culture.
+            </p>
+
+            <div class="experience-grid">
+                <div class="exp-card">Nature Walks & Hiking Trails</div>
+                <div class="exp-card">Spa & Wellness Retreats</div>
+                <div class="exp-card">Fine Dining & Culinary Journeys</div>
+                <div class="exp-card">Outdoor Activities & Adventure Packages</div>
+                <div class="exp-card">Romantic Experiences & Private Dining</div>
+                <div class="exp-card">Corporate Events & Occasions</div>
+            </div>
+        </section>
+
+
+        <div class="esg-container fade-in">
+
+            <!-- ESG Section -->
+            <section class="esg-section card-box">
+                <h2 class="section-title">Our ESG Commitment</h2>
+
+                <p style="color:black" class="section-text">
+                    Solitary Green Resort is committed to responsible tourism through environmental sustainability,
+                    community development, and ethical business management. Our ESG (Environmental, Social, Governance)
+                    initiatives shape our long-term vision for a greener future.
+                </p>
+
+                <div class="esg-grid">
+                    @foreach (var item in esgItems)
+                    {
+                        <div class="esg-card">
+                            <img src="@item.Icon" alt="@item.Title" class="esg-icon" />
+                            <h3>@item.Title</h3>
+                            <p style="color:black">@item.Desc</p>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <!-- Technology / Digital Transformation Section -->
+            <section class="tech-section card-box fade-in-delay">
+                <h2 class="section-title">Digital Transformation</h2>
+
+                <p style="color:black" class="section-text">
+                    Our integrated Resort Management System ensures a smooth, modern, and fully automated workflow
+                    across every department. This reduces manual operations, enhances accuracy, and elevates the
+                    overall guest experience.
+                </p>
+
+                <div class="tech-grid">
+                    @foreach (var feature in techItems)
+                    {
+                        <div class="tech-card">
+                            <span class="dot"></span>
+                            @feature
+                        </div>
+                    }
+                </div>
+
+                <p style="color:black" class="section-text end-note">
+                    This digital ecosystem minimizes human error, optimizes service flow, and empowers management
+                    with real-time data for informed decision-making.
+                </p>
+            </section>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<style>
+    
+</style>
+@code {
+    private (string Icon, string Title, string Desc)[] esgItems =
+    {
+        ("/imgs/EgsImg/Zero-WasteProgram.jpg", "Eco-Friendly Waste Management",
+        "We follow strict recycling and waste reduction practices."),
+
+        ("/imgs/EgsImg/WaterConservationInitiatives.jpg", "Sustainable Water & Energy Use",
+        "Advanced systems reduce water waste and energy consumption."),
+
+        ("/imgs/EgsImg/CommunityEmpowerment.jpg", "Community Support",
+        "We employ local staff and support nearby businesses."),
+
+        ("/imgs/EgsImg/EnvironmentalSustainability.jpg", "Nature Protection",
+        "We preserve surrounding greenery and natural habitats."),
+
+        ("/imgs/EgsImg/GovernanceEthicalStandards.jpg", "Responsible Governance",
+        "Transparent operations and fair staff management policies.")
+    };
+
+    private string[] techItems =
+    {
+        "Smart Sales Management Module",
+        "Reservation & Booking Management",
+        "Dining & Menu Digital Control",
+        "Housekeeping Automation",
+        "Event & Experience Scheduling",
+        "Billing & Payment Integration"
+    };
+}

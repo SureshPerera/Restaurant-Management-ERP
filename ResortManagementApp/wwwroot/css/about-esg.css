@@ -1,0 +1,127 @@
+﻿/* page container */
+.esg-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 3rem 1rem;
+}
+
+/* soft fade animations */
+.fade-in {
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+}
+
+.fade-in-delay {
+    animation: fadeIn 1.4s ease forwards;
+    opacity: 0;
+}
+
+/* card section wrapper */
+.card-box {
+    background: #f7f7f2;
+    padding: 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    margin-bottom: 2.5rem;
+}
+
+/* titles */
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 700;
+    color: #2e3a33;
+    margin-bottom: 1.5rem;
+}
+
+/* paragraphs */
+.section-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #444;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* ESG grid layout */
+.esg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 1.5rem;
+}
+
+/* ESG card */
+.esg-card {
+    background: #e8f5e9;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #cde8d0;
+}
+
+    .esg-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    }
+
+.esg-icon {
+    width: 55px;
+    margin-bottom: 1rem;
+}
+
+/* tech grid */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* tech list item */
+.tech-card {
+    background: white;
+    padding: 1.1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid #e0e0e0;
+    transition: background 0.3s, transform 0.3s;
+}
+
+    .tech-card:hover {
+        background: #e8efe7;
+        transform: translateX(4px);
+    }
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: #4CAF50;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* end note */
+.end-note {
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+    color: #2e3a33;
+}
+
+/* fade in animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

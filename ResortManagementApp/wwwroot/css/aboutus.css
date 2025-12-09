@@ -1,0 +1,181 @@
+﻿.about-container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ---------- HERO SECTION ---------- */
+.about-hero {
+    position: relative;
+    height: 380px;
+    background: url('../images/resort/resort-hero.jpg') center/cover no-repeat;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    animation: fadeIn 1.5s ease;
+}
+
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.45);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    max-width: 700px;
+    text-align: center;
+}
+
+/* ---------- CONTENT SECTIONS ---------- */
+.about-section {
+    margin-bottom: 55px;
+    animation: fadeUp 1.0s ease;
+}
+
+.section-title {
+    font-size: 34px;
+    font-weight: 700;
+    color: #1d3557;
+    margin-bottom: 18px;
+}
+
+.section-text {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+/* ---------- MISSION & VISION ---------- */
+.mission-vision {
+    display: flex;
+    gap: 25px;
+}
+
+.mv-box {
+    flex: 1;
+    background: #f1f8f7;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+/* ---------- OWNERS ---------- */
+.owner-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.owner-card {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+    .owner-card img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 14px;
+        margin-bottom: 15px;
+    }
+
+.owner-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1d3557;
+}
+
+.owner-role {
+    font-size: 16px;
+    color: #2a9d8f;
+    margin-bottom: 10px;
+}
+
+.owner-desc {
+    font-size: 16px;
+    color: #555;
+}
+
+/* ---------- EXPERIENCES ---------- */
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.exp-card {
+    background: #e8f6f3;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 18px;
+    color: #1d3557;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ---------- ESG LISTS ---------- */
+.esg-list, .tech-list {
+    margin-top: 15px;
+}
+
+    .esg-list li,
+    .tech-list li {
+        font-size: 17px;
+        margin-bottom: 8px;
+        color: #444;
+        line-height: 1.6;
+    }
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media(max-width: 768px) {
+    .hero-title {
+        font-size: 34px;
+    }
+
+    .mission-vision {
+        flex-direction: column;
+    }
+
+    .owner-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

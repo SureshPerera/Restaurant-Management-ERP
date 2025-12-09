@@ -1,40 +1,43 @@
 ﻿@page "/packages"
 @using ResortManagementApp.Models.Administration.ManagePackages
 <link href="css/packages.css" rel="stylesheet" />
-<div class="packages-container fade-in">
+<div style="background-color: #A3B18A;margin-top: -6.5rem;  height: 600px">
+    <div class="packages-container fade-in" style="">
 
-    <h2 class="title-text">Explore Our Packages</h2>
+        <h2 class="title-text" style="color:black">Explore Our Packages</h2>
 
-    <div class="package-grid">
+        <div class="package-grid">
 
-        @foreach (var p in Packages)
-        {
-            <div class="package-card slide-up">
+            @foreach (var p in Packages)
+            {
+                <div class="package-card slide-up">
 
-                <img src="@p.ImgUrl" class="package-img" />
+                    <img src="@p.ImgUrl" class="package-img" />
 
-                <div class="package-content">
+                    <div class="package-content">
 
-                    <h3 class="package-title">@p.PackageName</h3>
-                    <p class="package-desc">@p.PackageDetails</p>
+                        <h3 class="package-title">@p.PackageName</h3>
+                        <p class="package-desc">@p.PackageDetails</p>
 
-                    <hr />
+                        <hr />
 
-                    <p class="package-price">Rs. @p.RoomRateSummer</p>
+                        <p class="package-price">Rs. @p.RoomRateSummer</p>
 
-                    <button class="book-btn"
-                            @onclick="() => NavigateToBooking(p.Id)">
-                        Book Now
-                    </button>
-				
+                        <button class="book-btn"
+                                @onclick="() => NavigateToBooking(p.Id)">
+                            Book Now
+                        </button>
+
+                    </div>
+
                 </div>
+            }
 
-            </div>
-        }
+        </div>
 
     </div>
-
 </div>
+
 @inject NavigationManager Navigation
 @code {
 
