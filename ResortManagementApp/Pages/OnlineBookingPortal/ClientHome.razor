@@ -84,11 +84,7 @@
 					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">ABOUT US</span>
 				</NavLink>
 			</div>
-			<div class="nav-item px-3">
-				<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-					<span class="bi bi-house-door-fill-nav-menu" style="color:#C5E1A5;" aria-hidden="true">BOOK DIRECT</span>
-				</NavLink>
-			</div>
+			
 		</div>
 
 	</section>
@@ -153,9 +149,10 @@
 					</div>
 					<span style="font-size:50px;margin-top:-1rem;">|</span>
 
-					<div>
-						<button class="btn btn-primary" @onclick="NavigateToCustomerDetails" style=" color:#C5E1A5; font-family: cursive; ">Booking</button>
-					</div>
+					<button class="booking-btn" @onclick="NavigateToCustomerDetails">
+						<span class="icon">🛎️</span>
+						Booking
+					</button>
 				</div>	
 			</form>
 		</div>
@@ -238,6 +235,38 @@
 
 
 <style type="text/css">
+	.booking-btn {
+		background: linear-gradient(135deg, #344E41, #2E7D32);
+		color: white;
+		padding: 14px 32px;
+		border: none;
+		border-radius: 1rem;
+		font-size: 1.3rem;
+		font-weight: 600;
+		font-family: 'Poppins', cursive;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		cursor: pointer;
+		transition: all 0.35s ease;
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+		
+		height: 3rem;
+	}
+
+		.booking-btn:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 10px 22px rgba(0, 0, 0, 0.30);
+			background: linear-gradient(135deg, #66BB6A, #388E3C);
+		}
+
+		.booking-btn:active {
+			transform: scale(0.98);
+		}
+
+		.booking-btn .icon {
+			font-size: 1.5rem;
+		}
 	.con1-welcom-section1 {
 		font-family: cursive;
 		text-align: center;

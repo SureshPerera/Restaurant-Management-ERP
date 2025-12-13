@@ -1,5 +1,7 @@
 ﻿@page "/Administration/ReportAnalysis"
 
+@using ResortManagementApp.Models.Reservation
+@using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
@@ -8,7 +10,10 @@
 </div>
 <div>
 	<div>
-		<div>
+		<div class="" style="display:flex; flex-direction: revert">
+
+
+			<div style="flex-grow: 1">
 			<div>
 				<a href="/Administration/ReportAnalysis/Create" class="btn btn-primary mb-3">New Exchara Charge</a>
 			</div>
@@ -16,34 +21,277 @@
 				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
 			</div>
 		</div>
+			<div >
+			<div class="date-box">
+
+				<label>From :</label><input type="date" class="form-control mb-2" placeholder="From"
+					   @bind="FromDate" />
+
+					<label>To :</label><input type="date" class="form-control mb-3" placeholder="To"
+					   @bind="ToDate" />
+				<div>
+					@erroMassage
+				</div>
+			</div>
+		</div>
+		</div>
 		<div>
 			<div class="flex flex-wrap">
 				<div>
-					<a href="" class="btn btn-secondary mb-3">Agent Statistics Report</a>
+					<button @onclick="clickAgentRport" class="btn btn-secondary mb-3">Agent Statistics Report</button>
 				</div>
 				<div>
-					<a href="" class="btn btn-secondary mb-3">Local Client Statistics Report</a>
+					<button @onclick="clickLocalClientRport" class="btn btn-secondary mb-3">Local Client Statistics Report</button>
 				</div>
 				<div>
-					<a href="" class="btn btn-secondary mb-3">Foreign Client Statistics Report</a>
+					<button @onclick="clickForeignClientRport" class="btn btn-secondary mb-3">Foreign Client Statistics Report</button>
 				</div>
 				<div>
-					<a href="" class="btn btn-secondary mb-3">All Booking By Another Master Id</a>
+					<button @onclick="clickAllBookingClientRport" class="btn btn-secondary mb-3">All Booking By Another Master Id</button>
 				</div>
 				<div>
-					<a href="" class="btn btn-secondary mb-3">All Transaction by Pay Id</a>
+					<button @onclick="clickAllTransactionClientRport" class="btn btn-secondary mb-3">All Transaction by Pay Id</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+@if (showDatePopup)
+{
+	
+}
 
+@switch (SelectBtn)
+{
+	case 2:
+		<div>
+			@if (DirectBookingModel != null)
+			{
+				<div>
+					@if (DirectBookingModel == null)
+					{
+						<p>Loading...</p>
+					}
+					else if (!DirectBookingModel.Any())
+					{
+						<p>No local clients found.</p>
+					}
+					else
+					{
+						<table class="table table-bordered table-striped">
+							<thead class="table-dark">
+								<tr>
+									<th>No</th>
+									<th>Name</th>
+									<th>Phone Number</th>
+									<th>BirthDay</th>
+									<th>Address</th>
+									<th>Email</th>
+									<th>NIC</th>
+									<th>Opening Balace</th>
+									<th>Remark</th>
+									<th>Check In Date</th>
+									<th>Check Out Date</th>
+									<th>Check In Time</th>
+									<th>Check Out Time</th>
+
+								</tr>
+							</thead>
+
+							<tbody>
+								@foreach (var item in localClientsDirect!)
+								{
+									<tr>
+										<th></th>
+										<th>@item.FirstName @item.LastName</th>
+										<th>@item.PhoneNumber </th>
+										<th>@item.DathOfBirth</th>
+										<th>@item.Address</th>
+										<th>@item.EmailAddress</th>
+										<th>@item.NIC</th>
+										<th>@item.OpeningBalanace </th>
+										<th>@item.Remark</th>
+										<th>@item.CheckInDate.Date </th>
+										<th>@item.CheckOutDate.Date </th>
+										<th>@item.CheckInTime  </th>
+										<th>@item.CheckOutTime  </th>
+
+									</tr>
+								}
+								@foreach (var item in LocalClientsOnline!)
+								{
+									<tr>
+										<th></th>
+										<th>@item.FirstName @item.LastName</th>
+										<th>@item.PhoneNumber </th>
+										<th>@item.DathOfBirth</th>
+										<th>@item.Address</th>
+										<th>@item.EmailAddress</th>
+										<th>@item.NIC</th>
+										<th>@item.OpeningBalanace </th>
+										<th>@item.Remark</th>
+										<th>@item.CheckInDate </th>
+										<th>@item.CheckOutDate </th>
+										<th>@item.CheckInTime  </th>
+										<th>@item.CheckOutTime  </th>
+
+									</tr>
+								}
+							</tbody>
+						</table>
+					}
+				</div>
+			}
+
+		</div>
+		break;
+		case 3 :
+		<div>
+			<div>
+					@if (DirectBookingModel == null)
+					{
+						<p>Loading...</p>
+					}
+					else if (!DirectBookingModel.Any())
+					{
+						<p>No local clients found.</p>
+					}
+					else
+					{
+						<table class="table table-bordered table-striped">
+							<thead class="table-dark">
+								<tr>
+									<th>No</th>
+									<th>Name</th>
+									<th>Phone Number</th>
+									<th>BirthDay</th>
+									<th>Address</th>
+									<th>Email</th>
+									<th>NIC</th>
+									<th>Opening Balace</th>
+									<th>Remark</th>
+									<th>Check In Date</th>
+									<th>Check Out Date</th>
+									<th>Check In Time</th>
+									<th>Check Out Time</th>
+
+								</tr>
+							</thead>
+
+							<tbody>
+							@foreach (var item in ForgnClientsDirect!)
+								{
+									<tr>
+										<th></th>
+										<th>@item.FirstName @item.LastName</th>
+										<th>@item.PhoneNumber </th>
+										<th>@item.DathOfBirth</th>
+										<th>@item.Address</th>
+										<th>@item.EmailAddress</th>
+										<th>@item.NIC</th>
+										<th>@item.OpeningBalanace </th>
+										<th>@item.Remark</th>
+										<th>@item.CheckInDate.Date </th>
+										<th>@item.CheckOutDate.Date </th>
+										<th>@item.CheckInTime  </th>
+										<th>@item.CheckOutTime  </th>
+
+									</tr>
+								}
+							@foreach (var item in ForgnClientsOnline!)
+								{
+									<tr>
+										<th></th>
+										<th>@item.FirstName @item.LastName</th>
+										<th>@item.PhoneNumber </th>
+										<th>@item.DathOfBirth</th>
+										<th>@item.Address</th>
+										<th>@item.EmailAddress</th>
+										<th>@item.NIC</th>
+										<th>@item.OpeningBalanace </th>
+										<th>@item.Remark</th>
+										<th>@item.CheckInDate </th>
+										<th>@item.CheckOutDate </th>
+										<th>@item.CheckInTime  </th>
+										<th>@item.CheckOutTime  </th>
+
+									</tr>
+								}
+							</tbody>
+						</table>
+					}
+				</div>
+			
+
+		</div>
+		break;
+}
+
+
+@inject HttpClient http
 @code {
-	
-	
+	public List<DirectBookingModel>? DirectBookingModel { get; set; } = new();
+	public List<OnlineBookingModel>? OnlineBookingModel { get; set; } = new();
+	public List<DirectBookingModel>? localClientsDirect { get; set; } = new();
+	public List<DirectBookingModel>? ForgnClientsDirect { get; set; } = new();
+	public List<OnlineBookingModel>? LocalClientsOnline { get; set; } = new();
+	public List<OnlineBookingModel>? ForgnClientsOnline { get; set; } = new();
+	public int SelectBtn = 0;
+	public bool showDatePopup;
+	public bool Load;
+	public DateTime FromDate;
+	public DateTime ToDate;
+	public string? erroMassage = "";
+
 	protected override void OnInitialized()
 	{
-		
+
 	}
 
+
+
+	private Task clickAgentRport(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+	private async Task clickLocalClientRport(MouseEventArgs args)
+	{
+		showDatePopup = true;
+		
+			SelectBtn = 2;
+			Console.WriteLine(SelectBtn);
+			DirectBookingModel = await http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+			localClientsDirect = DirectBookingModel!
+											.Where(x => x.CustomerType == "Local" )
+												.ToList();
+			OnlineBookingModel = await http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+			LocalClientsOnline = OnlineBookingModel!
+											.Where(x => x.CustomerType == "Local")
+												.ToList();
+		
+												 
+	}
+	private async Task clickForeignClientRport(MouseEventArgs args)
+	{
+		SelectBtn = 3;
+		Console.WriteLine(SelectBtn);
+
+		DirectBookingModel = await http.GetFromJsonAsync<List<DirectBookingModel>>("https://localhost:4000/api/DirectBooking");
+		ForgnClientsDirect = DirectBookingModel!
+											.Where(x => x.CustomerType == "Foreign")
+											.ToList();
+		OnlineBookingModel = await http.GetFromJsonAsync<List<OnlineBookingModel>>("https://localhost:4000/api/OnlineBooking");
+		ForgnClientsOnline = OnlineBookingModel!
+											.Where(x => x.CustomerType == "Foreign")
+											.ToList();
+	}
+	private Task clickAllBookingClientRport(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+	private Task clickAllTransactionClientRport(MouseEventArgs args)
+	{
+		throw new NotImplementedException();
+	}
+	
 }
