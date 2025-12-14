@@ -43,6 +43,7 @@ namespace ResortManagementApp.Models.Reservation.OnlineBookingModel
         public bool CheckIn { get; set; }
         public bool CheckOut { get; set; }
         public bool Cancellations { get; set; }
+        public DateTime? CreateDate { get; set; }
 
     }
 }

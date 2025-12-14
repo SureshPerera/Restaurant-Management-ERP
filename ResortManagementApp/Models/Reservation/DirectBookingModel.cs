@@ -45,6 +45,7 @@ namespace ResortManagementApp.Models.Reservation
         public bool CheckOut { get; set; }
         public bool Cancellations { get; set; }
 
+        public DateTime? CreateDate { get; set; }
 
     }
 

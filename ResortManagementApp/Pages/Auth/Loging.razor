@@ -7,9 +7,7 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject ISnackbar Snackbar
 
-@layout LoginDisplay
-
-<div style="">
+<div style="margin-top:-5rem;">
     <div class="login-wrapper">
         <div class="login-container">
             <!-- Header -->
@@ -104,12 +102,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        background: linear-gradient(135deg,#344e41 0%, #764ba2 50%, #344e41 100%);
         padding: 1rem;
         position: relative;
         overflow: hidden;
+        height: 100%;
     }
-
+    
         /* Animated Background Circles */
         .login-wrapper::before,
         .login-wrapper::after {
@@ -162,7 +161,7 @@
         left: 0;
         right: 0;
         height: 5px;
-        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #ffd89b);
+            background: linear-gradient(90deg, #344e41, #764ba2, #f093fb, #344e41);
         border-radius: 25px 25px 0 0;
         background-size: 200% 100%;
         animation: gradientSlide 3s ease infinite;
@@ -177,7 +176,7 @@
     .logo-icon {
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #344e41, #764ba2);
         border-radius: 18px;
         display: flex;
         align-items: center;
@@ -199,7 +198,7 @@
         font-size: 1.8rem;
         font-weight: 800;
         margin: 0 0 0.3rem;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #344e41, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -278,7 +277,7 @@
 
     /* Buttons */
     .btn-login {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #344e41, #764ba2);
         color: white;
         border: none;
         padding: 0.9rem;
@@ -338,7 +337,7 @@
     }
 
         .btn-back:hover {
-            background: #667eea;
+            background: #344e41;
             color: white;
             transform: translateY(-2px);
             text-decoration: none;
@@ -390,7 +389,7 @@
    
     /* Error Message */
     .error-message {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+        background: linear-gradient(135deg, #344e41, #ee5a6f);
         color: white;
         padding: 0.8rem;
         border-radius: 10px;

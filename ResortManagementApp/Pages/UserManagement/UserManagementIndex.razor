@@ -7,32 +7,37 @@
 
 <div class="container my-5">
 
-    <!-- Header -->
+    <!-- Page Header -->
     <div class="mb-4 text-center">
-        <h2 class="fw-bold">User Management</h2>
-        <p class="text-muted">Manage staff, roles, and access levels</p>
+        <h2 class="fw-bold rounded py-3 text-white"
+            style="background-color:#344e41;">
+            User Management
+        </h2>
+        <p style="color:whitesmoke" class="text-muted mt-2">Manage staff, roles, and access levels</p>
     </div>
 
-    <!-- Top Controls -->
+    <!-- Top Action Bar -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-        <a href="/UserManagement/Create" class="btn btn-success shadow-sm">
+        <a href="/UserManagement/Create" class="btn btn-custom shadow-sm">
             <i class="bi bi-person-plus-fill me-2"></i> Register User
         </a>
 
-        <div class="search-box">
-            <input @bind="Search" type="search" class="form-control shadow-sm" placeholder="🔍 Search by name, phone, NIC..." />
-        </div>
+        <input @bind="Search"
+               type="search"
+               class="form-control search-input shadow-sm"
+               placeholder="🔍 Search by name, phone, NIC..." />
     </div>
 
     <!-- User Table Card -->
-    <div class="card user-table-card shadow-sm">
-        <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Staff List</h5>
+    <div class="card shadow-sm border-0">
+        <div class="card-header table-header">
+            Staff List
         </div>
+
         <div class="card-body p-0">
             @if (UserManagementDto == null || !UserManagementDto.Any())
             {
-                <div class="text-muted p-4 text-center">
+                <div class="text-center p-4 text-muted">
                     <Searching />
                     <p class="mt-2">No users found...</p>
                 </div>
@@ -40,34 +45,40 @@
             else
             {
                 <div class="table-responsive">
-                    <table class="table-hover mb-0 table align-middle">
-                        <thead class="table-light">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
                             <tr>
-                                <th>UserName</th>
-                                <th>Name</th>
-                                <th>Phone No</th>
+                                <th style="width:60px;">No</th>
+                                <th>User Name</th>
+                                <th>Full Name</th>
+                                <th>Phone</th>
                                 <th>Access Level</th>
                                 <th>Comments</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            @foreach (var item in UserManagementDto)
+                            @foreach (var (item, index) in UserManagementDto.Select((value, i) => (value, i)))
                             {
                                 <tr>
-                                    <td>@item.Email</td>
-                                    <td>@(item.FirstName + " " + item.LastName)</td>
+                                    <td class="fw-bold text-muted">@(index + 1)</td>
+                                    <td>@item.UserName</td>
+                                    <td>@($"{item.FirstName} {item.LastName}")</td>
                                     <td>@item.PhoneNumber</td>
-                                    <td>@item.AccessLevel</td>
                                     <td>
-                                        <span class="badge bg-primary">@item.AccessLevel</span>
+                                        <span class="badge bg-success">@item.AccessLevel</span>
                                     </td>
                                     <td>@item.Comments</td>
                                     <td class="text-center">
-                                        <a class="btn btn-sm btn-outline-primary me-2" title="Edit" href="/UserManagement/Edit/@item.Id">
+                                        <a class="btn btn-sm btn-edit"
+                                           href="/UserManagement/Edit/@item.Id"
+                                           title="Edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a class="btn btn-sm btn-outline-danger" title="Delete" href="/UserManagement/Delete/@item.Id">
+                                        <a class="btn btn-sm btn-delete"
+                                           href="/UserManagement/Delete/@item.Id"
+                                           title="Delete">
                                             <i class="bi bi-trash-fill"></i>
                                         </a>
                                     </td>
@@ -79,43 +90,91 @@
             }
         </div>
     </div>
+
 </div>
 
 <style>
-    /* Card Hover */
-    .user-table-card {
-        border-radius: 1rem;
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    body {
+        background-color: #dad7cd;
     }
 
-        .user-table-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    /* Buttons */
+    .btn-custom {
+        background-color: #3a5a40;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+
+        .btn-custom:hover {
+            background-color: #588157;
+            color: white;
         }
 
-    /* Search box */
-    .search-box input {
-        border-radius: 2rem;
-        padding: 0.6rem 1rem;
+    /* Search */
+    .search-input {
         max-width: 300px;
+        border-radius: 20px;
+        padding: 0.6rem 1rem;
     }
 
-    /* Table hover */
-    .table-hover tbody tr:hover {
-        background-color: #f1f9f4;
+    /* Card */
+    .card {
+        border-radius: 12px;
     }
 
-    /* Action buttons */
-    .btn-sm {
+    /* Table Header */
+    .table-header {
+        background-color: #588157;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    table thead {
+        background-color: #a3b18a;
+        color: #344e41;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9f5ec;
+    }
+
+    /* Action Buttons */
+    .btn-edit {
+        background-color: #3a5a40;
+        color: white;
+        margin-right: 6px;
         border-radius: 50%;
         width: 36px;
         height: 36px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 0;
     }
+
+        .btn-edit:hover {
+            background-color: #588157;
+        }
+
+    .btn-delete {
+        background-color: #c0392b;
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn-delete:hover {
+            background-color: #e74c3c;
+        }
 </style>
 @inject HttpClient Http
 @code {

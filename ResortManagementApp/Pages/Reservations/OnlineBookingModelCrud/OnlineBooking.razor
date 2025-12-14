@@ -4,71 +4,180 @@
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
+<div class="container my-4">
 
-<div>
-	<h3 class="mb-3 text-center">Online Booking</h3>
-</div>
-<div>
-	<a href="/Reservations" class="btn btn-primary mb-3">Back</a>
-</div>
-<div>
-	@if (OnlineBookings == null)
-	{
-		<p><Searching/></p>
-	}
-	<div class="table-responsive rounded shadow-sm">
-		<table class="table-active" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-			<thead class="bg-light">
-				<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-					<td>Name</td>
-					<td>Check-In_Date</td>
-					<td>Check-Out-Date</td>
-					<td>Rooms</td>
-					<td>Adults</td>
-					<td>Children</td>
-					<td>Promo code</td>
-					<td>Phone Number</td>
-					<td>Address</td>
-					<td>EmailAddress</td>
-					<td>NIC</td>
-					<td>Nationality</td>
-					
-					<td>Acctions</td>
-				</tr>
-			</thead>
-			<tbody class="bg-light">
-				@if (OnlineBookings == null)
-				{
-					<Searching />
-				}
-				@foreach (var item in OnlineBookings!)
-				{
-					<tr style="background-color: #DAD7CD">
-						<th>@(item.FirstName + " " + @item.LastName)</th>
-						<th>@item.CheckInDate</th>
-						<th>@item.CheckOutDate</th>
-						<th>@item.NoOfRooms</th>
-						<th>@item.NoOfAdults</th>
-						<th>@item.NoOfChildren</th>
-						<th>@item.PramoCode</th>
-						<th>@item.PhoneNumber</th>
-						<th>@item.Address</th>
-						<th>@item.EmailAddress</th>
-						<th>@item.NIC</th>
-						<th>@item.Nationality</th>
-						
-						<th style="white-space:nowrap">
-							<a class="btn btn-primary btn-sm" href="/Reservations/OnlineBooking/Edit/@item.Id">Edit</a>
-							<a class="btn btn-danger btn-sm" href="/Reservations/OnlineBooking/Delete/@item.Id">Delete</a>
-						</th>
-					</tr>
-				}
-			</tbody>
+    <!-- Page Header -->
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold rounded py-3 text-white"
+            style="background-color:#344e41;">
+            Online Booking Management
+        </h2>
+    </div>
 
-		</table>
-	</div>
-	
+    <div class="row g-4">
+
+        <!-- Action Panel -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+           
+                <div class="d-grid gap-3">
+                    <a href="/Reservations"
+                       class="btn btn-action">
+                        ← Back to Reservations
+                    </a>
+                </div>
+          
+        </div>
+
+        <!-- Booking Table -->
+        <div class="">
+            <div class="card shadow-sm">
+                <div class="card-header table-header">
+                    Online Booking List
+                </div>
+
+                <div class="card-body p-0">
+                    @if (OnlineBookings == null)
+                    {
+                        <div class="d-flex justify-content-center p-4">
+                            <Searching />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+
+                                        <th>NIC</th>
+
+                                        <th>Type</th>
+                                        <th>Confirmation</th>
+
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in OnlineBookings)
+                                    {
+                                        <tr>
+                                            <td>@($"{item.FirstName} {item.LastName}")</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>@item.Address</td>
+                                            <td>@item.NIC</td>
+                                            <td>@item.CustomerType</td>
+                                            <td>@item.Conformation</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-edit"
+                                                   href="/Reservations/OnlineBooking/Edit/@item.Id">
+                                                    Edit
+                                                </a>
+                                                <a class="btn btn-sm btn-delete"
+                                                   href="/Reservations/OnlineBooking/Delete/@item.Id">
+                                                    Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+<style>
+    body {
+        background-color: #dad7cd;
+    }
+
+    /* Buttons */
+    .btn-custom {
+        background-color: #3a5a40;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+
+        .btn-custom:hover {
+            background-color: #588157;
+        }
+
+    .btn-action {
+        background-color: #a3b18a;
+        color: #344e41;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+        .btn-action:hover {
+            background-color: #588157;
+            color: white;
+        }
+
+    /* Panels */
+    .action-panel {
+        background-color: #ffffff;
+        border-radius: 10px;
+    }
+
+    /* Cards */
+    .card {
+        background-color: #ffffff;
+        border: none;
+        border-radius: 10px;
+    }
+
+    /* Table Header */
+    .table-header {
+        background-color: #588157;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Table */
+    table thead {
+        background-color: #a3b18a;
+        color: #344e41;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9f5ec;
+    }
+
+    /* Action Buttons */
+    .btn-edit {
+        background-color: #3a5a40;
+        color: white;
+        margin-right: 4px;
+    }
+
+        .btn-edit:hover {
+            background-color: #588157;
+        }
+
+    .btn-delete {
+        background-color: #c0392b;
+        color: white;
+    }
+
+        .btn-delete:hover {
+            background-color: #e74c3c;
+        }
+
+</style>
 @inject HttpClient Http
 @code {
 	

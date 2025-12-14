@@ -1,0 +1,164 @@
+﻿.page-title {
+    font-weight: 800;
+    color: #344e41;
+}
+
+.page-subtitle {
+    color: #6c757d;
+}
+
+.filter-card {
+    background: linear-gradient(135deg, #fefae0, #e9edc9);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.btn-primary-custom {
+    background-color: #3a5a40;
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+    .btn-primary-custom:hover {
+        background-color: #588157;
+    }
+
+.table-card {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.table-header {
+    background-color: #588157;
+    color: white;
+    font-weight: 600;
+}
+
+.reservation-table thead {
+    background-color: #a3b18a;
+}
+
+.reservation-table tbody tr:hover {
+    background-color: #edf6f0;
+}
+
+.badge-confirmed {
+    background-color: #2d6a4f;
+}
+
+.badge-pending {
+    background-color: #f4a261;
+    color: black;
+}
+
+.action-panel {
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.invoice-card {
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.invoice-header {
+    background-color: #344e41;
+    color: white;
+    font-weight: 600;
+}
+
+.invoice-section {
+    margin-bottom: 1rem;
+}
+
+.invoice-total {
+    font-size: 1.2rem;
+    color: #2d6a4f;
+}
+.invoice-wrapper {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.invoice-action-card {
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.status-box,
+.balance-box {
+    background: #fefae0;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.invoice-card {
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.1);
+}
+
+.invoice-header {
+    background: linear-gradient(135deg, #344e41, #3a5a40);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .invoice-header img {
+        width: 80px;
+    }
+
+.info-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.info-grid h6 {
+    color: #344e41;
+    font-weight: 600;
+}
+
+.stay-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    background: #edf6f0;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.bill-summary div {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.bill-summary .total {
+    font-weight: 700;
+}
+
+.bill-summary .balance {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d6a4f;
+}
+
+.invoice-footer {
+    color: #6c757d;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

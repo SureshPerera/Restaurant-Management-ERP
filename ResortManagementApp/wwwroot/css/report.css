@@ -1,0 +1,66 @@
+﻿body {
+    background-color: #dad7cd;
+}
+
+/* Buttons */
+.btn-custom {
+    background-color: #3a5a40;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+    .btn-custom:hover {
+        background-color: #588157;
+        color: white;
+    }
+
+.btn-action {
+    background-color: #a3b18a;
+    color: #344e41;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+    .btn-action:hover {
+        background-color: #588157;
+        color: white;
+    }
+
+.btn-secondary {
+    background-color: #588157;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+    .btn-secondary:hover {
+        background-color: #3a5a40;
+    }
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Date Box */
+.date-box label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.date-box input {
+    width: 150px;
+}
+
+@media (max-width: 768px) {
+    .date-box input {
+        width: 100%;
+    }
+}

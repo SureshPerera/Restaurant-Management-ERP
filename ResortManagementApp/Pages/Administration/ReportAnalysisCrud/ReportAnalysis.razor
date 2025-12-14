@@ -4,61 +4,63 @@
 @using ResortManagementApp.Models.Reservation.OnlineBookingModel
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
+<link href="css/report.css" rel="stylesheet" />
 
-<div>
-	<h3 class="mb-3 text-center">Manage Report & Analysis</h3>
-</div>
-<div>
-	<div>
-		<div class="" style="display:flex; flex-direction: revert">
+<div class="container my-4">
 
+	<!-- Page Header -->
+	<div class="mb-4 text-center">
+		<h2 class="fw-bold rounded py-3 text-white" style="background-color:#344e41;">
+			Manage Report & Analysis
+		</h2>
+	</div>
 
-			<div style="flex-grow: 1">
-			<div>
-				<a href="/Administration/ReportAnalysis/Create" class="btn btn-primary mb-3">New Exchara Charge</a>
-			</div>
-			<div>
-				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
-			</div>
-		</div>
-			<div >
-			<div class="date-box">
+	<div class="row g-4">
 
-				<label>From :</label><input type="date" class="form-control mb-2" placeholder="From"
-					   @bind="FromDate" />
+		<!-- Action Panel and Date Filters -->
+		<div class="card shadow-sm p-3 mb-4">
+			<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
 
-					<label>To :</label><input type="date" class="form-control mb-3" placeholder="To"
-					   @bind="ToDate" />
-				<div>
-					@erroMassage
+				<!-- Action Buttons -->
+				<div class="d-flex flex-wrap gap-2">
+					<a href="/Administration/ReportAnalysis/Create" class="btn btn-custom">
+						+ New Report
+					</a>
+					<a href="/Administration" class="btn btn-action">
+						← Back
+					</a>
 				</div>
-			</div>
-		</div>
-		</div>
-		<div>
-			<div class="flex flex-wrap">
-				<div>
-					<button @onclick="clickAgentRport" class="btn btn-secondary mb-3">Agent Statistics Report</button>
-				</div>
-				<div>
-					<button @onclick="clickLocalClientRport" class="btn btn-secondary mb-3">Local Client Statistics Report</button>
-				</div>
-				<div>
-					<button @onclick="clickForeignClientRport" class="btn btn-secondary mb-3">Foreign Client Statistics Report</button>
-				</div>
-				<div>
-					<button @onclick="clickAllBookingClientRport" class="btn btn-secondary mb-3">All Booking By Another Master Id</button>
-				</div>
-				<div>
-					<button @onclick="clickAllTransactionClientRport" class="btn btn-secondary mb-3">All Transaction by Pay Id</button>
+
+				<!-- Date Filters -->
+				<div class="d-flex flex-wrap gap-2 align-items-center">
+					<div class="date-box">
+						<label>From:</label>
+						<input type="date" class="form-control mb-2" placeholder="From" @bind="FromDate" />
+					</div>
+					<div class="date-box">
+						<label>To:</label>
+						<input type="date" class="form-control mb-2" placeholder="To" @bind="ToDate" />
+					</div>
+					<div class="text-danger">
+						@erroMassage
+					</div>
 				</div>
 			</div>
+
+			<!-- Report Buttons -->
+			<div class="d-flex flex-wrap gap-2">
+				<button @onclick="clickAgentRport" class="btn btn-secondary">Agent Statistics Report</button>
+				<button @onclick="clickLocalClientRport" class="btn btn-secondary">Local Client Statistics Report</button>
+				<button @onclick="clickForeignClientRport" class="btn btn-secondary">Foreign Client Statistics Report</button>
+				<button @onclick="clickAllBookingClientRport" class="btn btn-secondary">All Booking By Another Master Id</button>
+				<button @onclick="clickAllTransactionClientRport" class="btn btn-secondary">All Transaction by Pay Id</button>
+			</div>
 		</div>
+
 	</div>
 </div>
-@if (showDatePopup)
-{
-	
+@{
+	int counter = 1;
 }
 
 @switch (SelectBtn)
@@ -78,7 +80,7 @@
 					}
 					else
 					{
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered table-striped" style=" color:whitesmoke ">
 							<thead class="table-dark">
 								<tr>
 									<th>No</th>
@@ -98,11 +100,16 @@
 								</tr>
 							</thead>
 
-							<tbody>
+							<tbody style="background-image: url('/imgs/maindashboard/logo.png');
+							background-color:seagreen;
+				            background-size: cover;
+				            background-repeat: no-repeat;
+				            padding: 20px;
+				            border-radius: 10px;">
 								@foreach (var item in localClientsDirect!)
 								{
-									<tr>
-										<th></th>
+									<tr style=" color:whitesmoke ">
+										<th>@counter</th>
 										<th>@item.FirstName @item.LastName</th>
 										<th>@item.PhoneNumber </th>
 										<th>@item.DathOfBirth</th>
@@ -115,13 +122,13 @@
 										<th>@item.CheckOutDate.Date </th>
 										<th>@item.CheckInTime  </th>
 										<th>@item.CheckOutTime  </th>
-
+										
 									</tr>
 								}
 								@foreach (var item in LocalClientsOnline!)
 								{
-									<tr>
-										<th></th>
+									<tr style=" color:whitesmoke ">
+										<th>@counter</th>
 										<th>@item.FirstName @item.LastName</th>
 										<th>@item.PhoneNumber </th>
 										<th>@item.DathOfBirth</th>
@@ -178,11 +185,16 @@
 								</tr>
 							</thead>
 
-							<tbody>
+						<tbody tyle="background-image: url('/imgs/maindashboard/logo.png');
+										background-color:seagreen;
+							            background-size: cover;
+							            background-repeat: no-repeat;
+							            padding: 20px;
+							            border-radius: 10px;">
 							@foreach (var item in ForgnClientsDirect!)
 								{
-									<tr>
-										<th></th>
+								<tr style=" color:whitesmoke ">
+									<th>@counter</th>
 										<th>@item.FirstName @item.LastName</th>
 										<th>@item.PhoneNumber </th>
 										<th>@item.DathOfBirth</th>
@@ -200,8 +212,8 @@
 								}
 							@foreach (var item in ForgnClientsOnline!)
 								{
-									<tr>
-										<th></th>
+								<tr style=" color:whitesmoke ">
+									<th>@counter</th>
 										<th>@item.FirstName @item.LastName</th>
 										<th>@item.PhoneNumber </th>
 										<th>@item.DathOfBirth</th>
@@ -239,10 +251,10 @@
 	public int SelectBtn = 0;
 	public bool showDatePopup;
 	public bool Load;
-	public DateTime FromDate;
-	public DateTime ToDate;
+	public DateTime FromDate = DateTime.Today;
+	public DateTime ToDate = DateTime.Today;
 	public string? erroMassage = "";
-
+	public int No = 0;
 	protected override void OnInitialized()
 	{
 

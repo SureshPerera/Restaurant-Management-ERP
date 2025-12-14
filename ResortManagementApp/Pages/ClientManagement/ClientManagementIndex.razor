@@ -4,236 +4,317 @@
 @using ResortManagementApp.Models.ClientManagement.Message
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
+<script src="js/AuthenticationService.js"></script>
 
-<div class="container my-5">
+<div class="container my-4">
 
-	<!-- Header -->
-	<div class="mb-4 text-center">
-		<h2 class="fw-bold">Client Management</h2>
-		<p class="text-muted">Manage customers, send messages, and track engagement</p>
-	</div>
+    <!-- Page Header -->
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold rounded py-3 text-white"
+            style="background-color:#344e41;">
+            Client Management
+        </h2>
+        <p class="text-muted mt-2">
+            Manage customers, send messages, and track engagement
+        </p>
+    </div>
 
-	<!-- Summary Cards -->
-	<section class="row g-4 mb-5">
-		<div class="col-md-3">
-			<div class="card kpi-card border-0 shadow-sm">
-				<div class="card-body text-center">
-					<h6 class="text-muted">Total Clients</h6>
-					<h3 class="fw-bold">@TotalClient</h3>
-					<small class="text-success"><i class="bi bi-graph-up"></i> +12% vs last month</small>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="card kpi-card border-0 shadow-sm">
-				<div class="card-body text-center">
-					<h6 class="text-muted">New Clients (Year)</h6>
-					<h3 class="fw-bold">@NewClientsThisYear</h3>
-					<small class="text-info"><i class="bi bi-calendar"></i> Past 12 months</small>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="card kpi-card border-0 shadow-sm">
-				<div class="card-body text-center">
-					<h6 class="text-muted">Retention Rate</h6>
-					<h3 class="fw-bold">@AvgClientsPerMonth</h3>
-					<small class="text-warning"><i class="bi bi-people"></i> Avg engagement</small>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="card kpi-card border-0 shadow-sm">
-				<div class="card-body text-center">
-					<h6 class="text-muted">Active Clients</h6>
-					<h3 class="fw-bold">@ClientCountThisMonth</h3>
-					<small class="text-primary"><i class="bi bi-lightning-charge"></i> Current month</small>
-				</div>
-			</div>
-		</div>
-	</section>
+    <!-- KPI Cards -->
+    <section class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card kpi-card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Clients</h6>
+                    <h3 class="fw-bold">@TotalClient</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card kpi-card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">New Clients (Year)</h6>
+                    <h3 class="fw-bold">@NewClientsThisYear</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card kpi-card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Retention Rate</h6>
+                    <h3 class="fw-bold">@AvgClientsPerMonth</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card kpi-card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Active Clients</h6>
+                    <h3 class="fw-bold">@ClientCountThisMonth</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
-	<!-- Messaging Panel -->
-	<div class="card mb-5 border-0 shadow-sm">
-		<div class="card-header bg-dark text-white">
-			<h5 class="mb-0">Send Message</h5>
-		</div>
-		<div class="card-body d-flex align-items-end flex-wrap gap-3">
-			<div>
-				<label class="form-label fw-bold">Message Type</label>
-				<select id="type" class="form-select shadow-sm" @bind="MessageDtos.Type">
-					<option>SMS</option>
-					<option>Email</option>
-				</select>
-			</div>
-			<div class="flex-grow-1">
-				<label class="form-label fw-bold">Message</label>
-				<textarea @bind="MessageDtos.Messages" class="form-control shadow-sm" rows="2" placeholder="Enter your message..."></textarea>
-			</div>
-			<div class="d-flex gap-2">
-				<button class="btn btn-success shadow-sm" type="button" @onclick="SentSMS">
-					<i class="bi bi-chat-dots me-1"></i> Send SMS
-				</button>
-				<button class="btn btn-primary shadow-sm" type="button" @onclick="SentEmail">
-					<i class="bi bi-envelope me-1"></i> Send Email
-				</button>
-			</div>
-		</div>
-	</div>
+    <!-- Messaging Panel -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header table-header">
+            Send Message
+        </div>
+        <div class="card-body d-flex flex-wrap gap-3 align-items-end">
+            <div>
+                @if (Load == true)
+                {
+                    foreach (var a in SelectedClientInfo!)
+                    {
+                        <div class="alert alert-success py-2">
+                            <strong>Selected Customer:</strong>
+                            @a.FirstName @a.LastName
+                            <br />
+                            <small>
+                                Phone: @a.PhoneNumber |
+                                Email: @a.EmailAddress
+                            </small>
+                        </div>
+                    }
+                   
+                }
+                <label class="fw-bold">Message Type</label>
+                <select class="form-select" @bind="MessageDtos.Type">
+                    <option>SMS</option>
+                    <option>Email</option>
+                </select>
+            </div>
 
-	<!-- Customers Table -->
-	<div class="card border-0 shadow-sm">
-		<div class="card-header d-flex justify-content-between align-items-center bg-light">
-			<h5 class="mb-0">All Booking Customers</h5>
-			<a href="/ClientManagement/Create" class="btn btn-outline-success shadow-sm">
-				<i class="bi bi-person-plus-fill me-1"></i> Add Customer
-			</a>
-		</div>
-		<div class="card-body p-0">
-			@if (ClientDto == null || !ClientDto.Any())
-			{
-				<div class="text-muted p-4 text-center">
-					<Searching />
-					<p class="mt-2">No customers found...</p>
-				</div>
-			}
-			else
-			{
-				<div class="table-responsive">
-					<table class="table-hover mb-0 table align-middle">
-						<thead class="table-light">
-							<tr>
-								<th>Name</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th>Email</th>
-								<th>NIC</th>
-								<th>Nationality</th>
+            <div class="flex-grow-1">
+                <label class="fw-bold">Message</label>
+                <textarea class="form-control" rows="2"
+                          placeholder="Enter your message..."
+                          @bind="MessageDtos.Messages"></textarea>
+            </div>
 
-								<th class="text-center">Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in ClientDto)
-							{
-								<tr>
-									<td>@(item.FirstName + " " + item.LastName)</td>
-									<td>@item.PhoneNumber</td>
-									<td>@item.Address</td>
-									<td>@item.EmailAddress</td>
-									<td>@item.NIC</td>
-									<td>@item.Nationality</td>
+            <div class="d-flex gap-2">
+                <button class="btn btn-edit" @onclick="SentSMS">
+                    Send SMS
+                </button>
+                <button class="btn btn-custom" @onclick="SentEmail">
+                    Send Email
+                </button>
+            </div>
+        </div>
+    </div>
 
-									<td class="text-center">
-										<button class="btn btn-sm btn-outline-info me-1" title="Send Message" @onclick="ClickMassage">
-											<i class="bi bi-send"></i>
-										</button>
-										<a class="btn btn-sm btn-outline-warning me-1" href="/ClientManagement/AdvancePay/@item.Id" title="Advance Pay">
-											<i class="bi bi-cash-coin"></i>
-										</a>
-										<a class="btn btn-sm btn-outline-primary me-1" href="/ClientManagement/DirectEdit/@item.Id" title="Edit">
-											<i class="bi bi-pencil-square"></i>
-										</a>
-										<a class="btn btn-sm btn-outline-danger" href="/ClientManagement/DirectDelete/@item.Id" title="Delete">
-											<i class="bi bi-trash-fill"></i>
-										</a>
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-			}
-		</div>
-	</div>
+    <!-- Clients Table -->
+    <div class="card shadow-sm">
+        <div class="card-header table-header d-flex justify-content-between align-items-center">
+            <span>All Booking Customers</span>
+            <a href="/ClientManagement/Create" class="btn btn-custom btn-sm">
+                + Add Customer
+            </a>
+        </div>
+        @{
+            int no = 1;
+        }
+        <div class="card-body p-0">
+            @if (ClientDto == null || !ClientDto.Any())
+            {
+                <div class="text-center p-4">
+                    <Searching />
+                    <p class="text-muted mt-2">No customers found</p>
+                </div>
+            }
+            else
+            {
+                
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>NIC</th>
+                                <th>Nationality</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ClientDto)
+                            {
+                                <tr>
+                                    <td>@no</td>
+                                    <td>@item.FirstName @item.LastName</td>
+                                    <td>@item.PhoneNumber</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.EmailAddress</td>
+                                    <td>@item.NIC</td>
+                                    <td>@item.Nationality</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-edit me-1"
+                                                title="Send Message"
+                                                @onclick="()=>ClickMassage(item.Id)">
+                                            <i class="bi bi-send"></i>
+                                        </button>
+                                        <a class="btn btn-sm btn-custom me-1"
+                                           href="/ClientManagement/AdvancePay/@item.Id">
+                                            <i class="bi bi-cash-coin"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-action me-1"
+                                           href="/ClientManagement/DirectEdit/@item.Id">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-delete"
+                                           href="/ClientManagement/DirectDelete/@item.Id">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                no++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
 </div>
-
 <style>
-	.kpi-card {
-		border-radius: 1rem;
-		transition: transform 0.3s ease, box-shadow 0.3s ease;
-	}
+    .kpi-card {
+        border-radius: 1rem;
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
 
-		.kpi-card:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-		}
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0,0,0,.15);
+        }
 
-	.btn-sm {
-		border-radius: 50%;
-		width: 36px;
-		height: 36px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0;
-	}
+    /* Buttons */
+    .btn-custom {
+        background-color: #3a5a40;
+        color: white;
+        font-weight: 600;
+    }
 
-	.table-hover tbody tr:hover {
-		background-color: #f6faf7;
-	}
+        .btn-custom:hover {
+            background-color: #588157;
+        }
+
+    .btn-action {
+        background-color: #a3b18a;
+        color: #344e41;
+        font-weight: 600;
+    }
+
+        .btn-action:hover {
+            background-color: #588157;
+            color: white;
+        }
+
+    .btn-edit {
+        background-color: #3a5a40;
+        color: white;
+    }
+
+        .btn-edit:hover {
+            background-color: #588157;
+        }
+
+    .btn-delete {
+        background-color: #c0392b;
+        color: white;
+    }
+
+        .btn-delete:hover {
+            background-color: #e74c3c;
+        }
+
+    /* Table */
+    .table-header {
+        background-color: #588157;
+        color: white;
+        font-weight: bold;
+    }
+
+    table thead {
+        background-color: #a3b18a;
+        color: #344e41;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9f5ec;
+    }
+
 </style>
 
 @inject HttpClient http
 @inject IJSRuntime JS
 
 @code {
-	public List<ClientModelDto>? ClientDto { get; set; } = new List<ClientModelDto>();
-	public MessageDto MessageDtos { get; set; } = new();
-	public int? TotalClient { get; set; }
-	public int? ClientCountThisMonth { get; set; }
-	public int NewClientsThisYear { get; set; }
-	public double AvgClientsPerMonth { get; set; }
+    public List<ClientModelDto>? ClientDto { get; set; } = new List<ClientModelDto>();
+    public MessageDto MessageDtos { get; set; } = new();
+    public int? TotalClient { get; set; }
+    public int? ClientCountThisMonth { get; set; }
+    public int NewClientsThisYear { get; set; }
+    public double AvgClientsPerMonth { get; set; }
+    public List<ClientModelDto>? SelectedClientInfo { get; set; } = new List<ClientModelDto>();
+    public bool Load = false;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ClientDto = await http.GetFromJsonAsync<List<ClientModelDto>>("https://localhost:4000/api/Client");
+            if (ClientDto != null)
+            {
+                TotalClient = ClientDto?.Count ?? 0;
 
-	protected override async Task OnInitializedAsync()
-	{
-		try
-		{
-			ClientDto = await http.GetFromJsonAsync<List<ClientModelDto>>("https://localhost:4000/api/Client");
-			if (ClientDto != null)
-			{
-				TotalClient = ClientDto?.Count ?? 0;
+                var today = DateTime.Today;
+                var fromDate = today.AddDays(-30);
+                ClientCountThisMonth = ClientDto?.Count(a => a.CheckInDate >= fromDate) ?? 0;
 
-				var today = DateTime.Today;
-				var fromDate = today.AddDays(-30);
-				ClientCountThisMonth = ClientDto?.Count(a => a.CheckInDate >= fromDate) ?? 0;
+                var yearStart = new DateTime(DateTime.Today.Year, 1, 1);
+                var clientsThisYear = ClientDto?
+                .Where(c => c.CheckInDate >= yearStart && c.CheckInDate <= today)
+                .ToList();
+                NewClientsThisYear = clientsThisYear?.Count ?? 0;
 
-				var yearStart = new DateTime(DateTime.Today.Year, 1, 1);
-				var clientsThisYear = ClientDto?
-				.Where(c => c.CheckInDate >= yearStart && c.CheckInDate <= today)
-				.ToList();
-				NewClientsThisYear = clientsThisYear?.Count ?? 0;
+                var monthsPassed = ((today.Year - yearStart.Year) * 12) + today.Month - yearStart.Month + 1;
+                AvgClientsPerMonth = monthsPassed > 0
+                    ? (double)NewClientsThisYear / monthsPassed
+                    : 0;
+                StateHasChanged();
+            }
+            Console.WriteLine("ClientDto is Empty");
 
-				var monthsPassed = ((today.Year - yearStart.Year) * 12) + today.Month - yearStart.Month + 1;
-				AvgClientsPerMonth = monthsPassed > 0
-					? (double)NewClientsThisYear / monthsPassed
-					: 0;
-				StateHasChanged();
-			}
-			Console.WriteLine("ClientDto is Empty");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Err : " + ex.Message);
+        }
 
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine("Err : " + ex.Message);
-		}
-		
-	}
+    }
 
-	private Task SentSMS(MouseEventArgs args)
-	{
-		// Implement SMS sending
-		return Task.CompletedTask;
-	}
+    private Task SentSMS(MouseEventArgs args)
+    {
+        // Implement SMS sending
+        return Task.CompletedTask;
+    }
 
-	private Task SentEmail(MouseEventArgs args)
-	{
-		// Implement Email sending
-		return Task.CompletedTask;
-	}
+    private Task SentEmail(MouseEventArgs args)
+    {
+        // Implement Email sending
+        return Task.CompletedTask;
+    }
 
-	private async Task ClickMassage(MouseEventArgs args)
-	{
-		await JS!.InvokeVoidAsync("focusElement", "type");
+    private async Task ClickMassage(Guid Id)
+    {
+        SelectedClientInfo = await http.GetFromJsonAsync<List<ClientModelDto>>($"https://localhost:4000/api/Client/{Id}");
+        Load = true;
+        // await JS!.InvokeVoidAsync("focusElement", "type");
 	}
 }

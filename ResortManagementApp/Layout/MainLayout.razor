@@ -3,6 +3,7 @@
 @inherits LayoutComponentBase
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 
+<link href="css/MainLayout.css" rel="stylesheet" />
 
 
 <div class="page" style="font-family: cursive;">
@@ -10,33 +11,38 @@
         <NavMenu />
     </div>
 
-    <main >
-        
-        <div class="top-row auth px-4">
-            <LoginDisplay />
-            <div>
-                <h3>Welcome </h3> <label> @logerFName @logerLName</label>
-               
+    <main class="app-root">
+
+        <!-- Top Navigation Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <img src="/imgs/maindashboard/logo.png" class="logo" />
+                <span class="app-name">Solitary Green Resort</span>
             </div>
-            <div>
-                <button class="submit" @onclick="clickToLogout">LogOut</button>
 
+            <div class="topbar-center">
+                <h4>Welcome, <span>@logerFName @logerLName</span></h4>
             </div>
-            <img style="width:80px; height:80px" src="/imgs/maindashboard/logo.png" />
-            
-        </div>
-       
 
-        <div class="position-relative min-vh-100 bg-container">
-            <div class="bg-overlay"></div>
-            <BlazoredToasts />
-            <div class="position-relative z-1 container py-5">
-               
+            <div class="topbar-right">
+                <LoginDisplay />
+                <button class="logout-btn" @onclick="clickToLogout">
+                    Logout
+                </button>
+            </div>
+        </header>
 
+        <!-- Background Section -->
+        <section class="content-wrapper">
+            <div class="background-overlay"></div>
+
+            <div class="content-container">
                 @Body
             </div>
-        </div>
+        </section>
+
     </main>
+
 </div>
 
 <style>

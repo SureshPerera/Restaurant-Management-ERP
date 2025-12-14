@@ -7,67 +7,173 @@
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
 
-<div>
-	<h3 class="mb-3 text-center">Manage Extra Chargers</h3>
+<div class="container my-4">
+
+    <!-- Page Header -->
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold rounded py-3 text-white" style="background-color:#344e41;">
+            Manage Extra Charges
+        </h2>
+    </div>
+
+    <div class="row g-4" style="display:flex;">
+
+        <!-- Action Panel -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <a href="/Administration/ManageExtra/Create" class="btn btn-custom">
+                    + New Extra Charge
+                </a>
+            </div>
+            <div>
+                <a href="/Administration" class="btn btn-action">
+                    ← Back
+                </a>
+            </div>
+        </div>
+
+        <!-- Extra Charges Table -->
+        <div>
+            <div class="card shadow-sm">
+                <div class="card-header table-header">
+                    Extra Charges List
+                </div>
+
+                <div class="card-body p-0">
+                    @if (ExtraChargersDtos == null)
+                    {
+                        <div class="d-flex justify-content-center p-4">
+                            <Searching />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Extra Charge Type</th>
+                                        <th>Details</th>
+                                        <th>Rate LKR</th>
+                                        <th>Rate USD</th>
+                                        <th>Amount</th>
+                                        <th>Invoice Date-Time</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ExtraChargersDtos!)
+                                    {
+                                        <tr>
+                                            <td>@item.ExtraChargeType</td>
+                                            <td>@item.Details</td>
+                                            <td>@($"Rs {item.RateLKR}")</td>
+                                            <td>@($"USD {item.RateUSD}")</td>
+                                            <td>@item.Amount</td>
+                                            <td>@item.DateTime</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-custom" href="/Administration/ManageExtra/Invoice/@item.Id">
+                                                    PrintBill
+                                                </a>
+                                                <a class="btn btn-sm btn-edit" href="/Administration/ManageExtra/Edit/@item.Id">
+                                                    Edit
+                                                </a>
+                                                <a class="btn btn-sm btn-delete" href="/Administration/ManageExtra/Delete/@item.Id">
+                                                    Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
-<div>
-	<div>
-		<div>
-			<div>
-				<a href="/Administration/ManageExtra/Create" class="btn btn-primary mb-3">New Exchara Charge</a>
-			</div>
-			<div>
-				<a href="/Administration" class="btn btn-primary mb-3">Back</a>
-			</div>
-		</div>
-		<div>
-			@if (ExtraChargersDtos == null)
-			{
-				<Searching />
-			}
-			<table class="table">
-				<thead class="bg-light">
-					<tr class="table">
-						<td>Extra Charge Type</td>
-						<td>Details</td>
-						<td>RateLKR</td>
-						<td>RateUSD</td>
-						<td>Amount</td>
-						<td>Invoice Date-Time</td>
 
-						<td>Actions</td>
-					</tr>
-				</thead>
-				<tbody class="bg-light">
-					@if (ExtraChargersDtos == null)
-					{
-						<Searching />
-					}
-					@foreach (var item in ExtraChargersDtos!)
-					{
-						<tr>
-							<th>@(item.ExtraChargeType)</th>
-							<th>@(item.Details)</th>
-							<th>@("Rs "+item.RateLKR)</th>
-							<th>@("USD "+item.RateUSD)</th>
-							<th>@(item.Amount)</th>
-							<th>@(item.DateTime)</th>
-							
-							<th style="white-space:nowrap">
-								@* <button class="btn btn-primary btn-sm">PrintBill</button> *@
-								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Invoice/@item.Id">PrintBill</a>
-								<a class="btn btn-primary btn-sm" href="/Administration/ManageExtra/Edit/@item.Id">Edit</a>
-								<a class="btn btn-danger btn-sm" href="/Administration/ManageExtra/Delete/@item.Id">Delete</a>
-							</th>
+<style>
+    body {
+        background-color: #dad7cd;
+    }
 
-						</tr>
-					}
-				</tbody>
+    /* Buttons */
+    .btn-custom {
+        background-color: #3a5a40;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        margin-right: 4px;
+    }
 
-			</table>
-		</div>
-	</div>
-</div>
+        .btn-custom:hover {
+            background-color: #588157;
+            color: white;
+        }
+
+    .btn-action {
+        background-color: #a3b18a;
+        color: #344e41;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+        .btn-action:hover {
+            background-color: #588157;
+            color: white;
+        }
+
+    .btn-edit {
+        background-color: #3a5a40;
+        color: white;
+        margin-right: 4px;
+    }
+
+        .btn-edit:hover {
+            background-color: #588157;
+        }
+
+    .btn-delete {
+        background-color: #c0392b;
+        color: white;
+    }
+
+        .btn-delete:hover {
+            background-color: #e74c3c;
+        }
+
+    /* Card */
+    .card {
+        background-color: #ffffff;
+        border: none;
+        border-radius: 10px;
+    }
+
+    .table-header {
+        background-color: #588157;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    /* Table */
+    table thead {
+        background-color: #a3b18a;
+        color: #344e41;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9f5ec;
+    }
+</style>
+
 @inject HttpClient Http
 @code {
 	public ExtraChanrgers? ExtraChargers { get; set; }

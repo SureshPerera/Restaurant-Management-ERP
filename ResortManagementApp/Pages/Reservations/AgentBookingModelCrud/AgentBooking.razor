@@ -3,63 +3,171 @@
 @using ResortManagementApp.Models.Reservation
 @using ResortManagementApp.Pages.ComponentCss
 @layout MainLayout
+<div class="container my-4">
 
-<div>
-	<h3 class="mb-3 text-center">Agent Booking</h3>
+    <!-- Header -->
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold rounded py-3 text-white"
+            style="background-color:#344e41;">
+            Agent Booking Management
+        </h2>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <a href="/Reservations/AgentBooking/Create" class="btn btn-custom">
+                + Create Agent Booking
+            </a>
+        </div>
+        <div>
+            <a href="/Reservations" class="btn btn-back">
+                ← Back to Reservations
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card shadow-sm">
+        <div class="card-header table-header">
+            Agent Booking List
+        </div>
+
+        <div class="card-body p-0">
+            @if (Agents == null)
+            {
+                <div class="d-flex justify-content-center p-4">
+                    <Searching />
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Agent Name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>NIC</th>
+                                <th>Credit Limit</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Agents)
+                            {
+                                <tr>
+                                    <td>@item.AgentName</td>
+                                    <td>@item.Mobile</td>
+                                    <td>@item.AgentAddress</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.NIC</td>
+                                    <td>@item.CreditLimit</td>
+                                    <td class="text-center" style="white-space:nowrap">
+                                        <a class="btn btn-sm btn-edit"
+                                           href="/Reservations/AgentBooking/Edit/@item.Id">
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-sm btn-delete"
+                                           href="/Administration/ManageAgent/Delete/@item.Id">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
 </div>
-<div>
-	
-	<a href="/Reservations/AgentBooking/Create" class="btn btn-primary mb-3">Create Booking </a>
-	
-	<a href="/Reservations" class="btn btn-primary mb-3">Back</a>
-</div>
-<div>
-	@if (Agents == null)
-	{
-		<p><Searching/></p>
-	}
-	<div class="table-responsive rounded shadow-sm">
-		<table class="table" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);">
-			<thead class="bg-light">
-				<tr class="table" style=" background-color: #A3B18A; font-weight: bold; font-size: 16px;">
-					<td>Name</td>
-					<td>Phone Number</td>
-					<td>Address</td>
-					<td>EmailAddress</td>
-					<td>NIC</td>
-					<td>CreditLimit</td>
-					<td>Acctions</td>
+<style>
+    body {
+        background-color: #dad7cd;
+    }
 
-				</tr>
-			</thead>
-			<tbody class="bg-light">
-				@if (Agents == null)
-				{
-					<Searching />
-				}
-				@foreach (var item in Agents!)
-				{
-					<tr style="background-color: #DAD7CD">
-						<th>@(item.AgentName)</th>
+    /* Buttons */
+    .btn-custom {
+        background-color: #3a5a40;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 8px 16px;
+    }
 
-						<th>@item.Mobile</th>
-						<th>@item.AgentAddress</th>
-						<th>@item.Email</th>
-						<th>@item.NIC</th>
-						<th>@item.CreditLimit</th>
-						<th style="white-space:nowrap">
-							<a class="btn btn-primary btn-sm" href="/Reservations/AgentBooking/Edit/@item.Id">Edit</a>
-							<a class="btn btn-danger btn-sm" href="/Administration/ManageAgent/Delete/@item.Id">Delete</a>
-						</th>
+        .btn-custom:hover {
+            background-color: #588157;
+            color: #fff;
+        }
 
-					</tr>
-				}
-			</tbody>
+    .btn-back {
+        background-color: #a3b18a;
+        color: #344e41;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 8px 16px;
+    }
 
-		</table>
-	</div>
-	
-</div>
+        .btn-back:hover {
+            background-color: #588157;
+            color: #fff;
+        }
+
+    /* Card */
+    .card {
+        border-radius: 12px;
+        border: none;
+        background-color: #ffffff;
+    }
+
+    /* Table */
+    .table-header {
+        background-color: #588157;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    table thead {
+        background-color: #a3b18a;
+        color: #344e41;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9f5ec;
+    }
+
+    /* Action Buttons */
+    .btn-edit {
+        background-color: #3a5a40;
+        color: #fff;
+        margin-right: 5px;
+    }
+
+        .btn-edit:hover {
+            background-color: #588157;
+            color: #fff;
+        }
+
+    .btn-delete {
+        background-color: #bc4749;
+        color: #fff;
+    }
+
+        .btn-delete:hover {
+            background-color: #a4161a;
+            color: #fff;
+        }
+
+</style>
 @inject HttpClient Http
 @code {
 

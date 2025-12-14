@@ -4,12 +4,11 @@ namespace ResortManagementApp.Models.ClientManagement.Message
 {
     public class Message
     {
-        [Key]
         public Guid Id { get; set; }
-        [Required]
-        public string? Type{ get; set; }
-        [Required]
-        public string? Messages{ get; set; }
+        public string Type { get; set; } = "SMS";
+        public string? Messages { get; set; }
+        public string? ReceiverPhone { get; set; }
+        public string? ReceiverEmail { get; set; }
 
     }
 }
